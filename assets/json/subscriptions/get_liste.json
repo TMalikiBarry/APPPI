@@ -1,0 +1,108 @@
+{
+    "data": [
+        {
+            "montant": 1000.00,
+            "compte": "123456789",
+            "sens": "debit",
+            "clientNom": "Seini Doucoure",
+            "clientPays": "SN",
+            "clientAlias": "e35bf776-a2d3-4693-9461-df5bfab95472",
+            "endToEndId": "ESNB00120230818141522TRANS633ProgrC",
+            "dateDebut": "2025-04-15T00:00:00.000Z",
+            "canal": "633"
+        },
+        {
+            "montant": 8000.00,
+            "compte": "123456789",
+            "sens": "debit",
+            "clientNom": "Christian Soro",
+            "clientPays": "SN",
+            "clientPSP": "SNB000",
+            "clientCompte": "Compte123",
+            "endToEndId": "ESNB00120230818141522TRANS633ProgrD",
+            "dateDebut": "2024-11-10T00:00:00.000Z",
+            "canal": "633",
+            "motif": "Eau"
+        },
+        {
+            "montant": 45000.00,
+            "compte": "123456789",
+            "sens": "debit",
+            "clientNom": "Mariama Yaourt",
+            "clientPays": "CI",
+            "clientPSP": "CIB000",
+            "clientCompte": "Compte123",
+            "endToEndId": "ESNB00120230818141522TRANS633ProgDe",
+            "dateDebut": "2025-05-02T00:00:00.000Z",
+            "canal": "633",
+            "statut": "desactive"
+        },
+        {
+            "montant": 10000.00,
+            "compte": "123456789",
+            "sens": "debit",
+            "clientNom": "Legumes frais & bio",
+            "clientPays": "SN",
+            "clientAlias": "e35bf776-a2d3-4693-9461-df5bfab95482",
+            "endToEndId": "ESNB00120230818141522TRANS633FrequeS",
+            "dateDebut": "2025-04-21T00:00:00.000Z",
+            "frequence": "S",
+            "canal": "633"
+        },
+        {
+            "montant": 50000.00,
+            "compte": "123456789",
+            "sens": "debit",
+            "clientNom": "Service X",
+            "clientPays": "SN",
+            "clientAlias": "e35bf776-a2d3-4693-9461-df5bfab95382",
+            "endToEndId": "ESNB00120230818141522TRANS633FrequeM",
+            "dateDebut": "2024-11-02T00:00:00.000Z",
+            "frequence": "M",
+            "dateFin": "2025-06-02T00:00:00.000Z",
+            "canal": "633"
+        },
+        {
+            "montant": 100000.00,
+            "compte": "123456789",
+            "sens": "debit",
+            "clientNom": "Ecole de l'excellence",
+            "clientPays": "SN",
+            "clientAlias": "e35bf776-a2d3-4693-9461-df5bfab95482",
+            "endToEndId": "ESNB00120230818141522TRANS633FrequeA",
+            "dateDebut": "2023-02-02T00:00:00.000Z",
+            "frequence": "M",
+            "dateFin": "2025-02-02T00:00:00.000Z",
+            "canal": "633"
+        },
+        {
+            "montant": 100000.00,
+            "compte": "123456789",
+            "sens": "debit",
+            "clientNom": "Salle de sport Z",
+            "clientPays": "SN",
+            "clientAlias": "e35bf774-a2d3-4693-9461-df5bfab95482",
+            "endToEndId": "ESNB00120230818141522TRANS633FrequeP",
+            "dateDebut": "2024-12-05T00:00:00.000Z",
+            "frequence": "M",
+            "periodicite": 3,
+            "canal": "633"
+        },
+        {
+            "montant": 65000.00,
+            "compte": "123456789",
+            "sens": "debit",
+            "clientNom": "Google Play",
+            "clientPays": "SN",
+            "clientAlias": "e35bf774-a2d3-4693-9461-df5bfab95481",
+            "endToEndId": "ESNB00120230818141522TRANS633FrequAn",
+            "dateDebut": "2023-12-05T00:00:00.000Z",
+            "frequence": "A",
+            "canal": "633"
+        }
+    ],
+    "meta": {
+        "total": 5,
+        "limit": 20
+    }
+}

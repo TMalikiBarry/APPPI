@@ -1,0 +1,15 @@
+{
+    "compte": "123456789",
+    "sens": "credit",
+    "montant": 1000.00,
+    "clientAlias": "539335b7-ed13-408a-995e-83cb0f3ce0a5",
+    "clientPays": "GW",
+    "clientNom": "Christian Doucoure",
+    "clientPhoto": "string",
+    "clientPSP": "CIC000",
+    "canal": "631",
+    "endToEndId": "ESNB00120230221153554RTPok1pNvhUk9e",
+    "statut": "initie",
+    "dateOperation": "2024-05-18T14:15:22.999Z",
+    "dateExpiration": "2024-08-18T14:15:22.999Z"
+}

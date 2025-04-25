@@ -1,0 +1,18 @@
+{
+    "compte": "123456789",
+    "sens": "debit",
+    "montant": 200000.00,
+    "clientAlias": "539335b7-ed13-408a-995e-83cb0f3ce0a5",
+    "clientPays": "SN",
+    "clientNom": "Salons de luxe",
+    "clientPSP": "SNB001",
+    "canal": "521",
+    "endToEndId": "ESNB00120240518153554RTPre500DebitD",
+    "statut": "initie",
+    "dateOperation": "2024-05-18T14:15:22.999Z",
+    "dateExpiration": "2024-08-18T14:15:22.999Z",
+    "differe": true,
+    "differeFrequence": "M",
+    "differeOccurence": 3,
+    "differeMontant": 70000
+}

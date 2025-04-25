@@ -1,0 +1,217 @@
+name: pi_mobile_app
+description: Application mobile de PI_SPI - BCEAO
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.2.1+1
+
+environment:
+  sdk: ">=3.0.6 <4.0.0"
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Flutter plugin for Firebase Core, enabling connecting to Firebase app.
+  # Première dépendance nécessaire contenant les utilitaires de l'App
+  firebase_core: ^3.12.1
+
+  # Pour la gestion des erreurs
+  firebase_crashlytics: ^4.3.4
+
+  # Pour gérer les états selon le pattern Bloc
+  flutter_bloc: ^9.1.0
+
+  # Pour enregistrer les préférences de l'utilisateur / paramètres de l'application
+  go_router: ^14.8.1
+
+  # Pour la gestion de la comparaison des objets
+  equatable: ^2.0.7
+
+  # Les instructions print() ou debugPrint() sont des moyens pratiques pour consigner des erreurs dans la console ou pour déboguer le code.
+  # Initialement, avoir quelques instructions print dans l'application n'est pas une source d'inquiétude.
+  # Cependant, ce n'est pas une manière durable de construire une application à long terme.
+  # Une excellente façon de garantir que toutes les fonctionnalités de votre projet fonctionnent correctement est d'utiliser la journalisation.
+  # Un système de journalisation bien défini peut contribuer à réduire les maux de tête lors de la construction d'applications
+  # et à fournir des informations concises à l'utilisateur et au développeur pendant l'exécution de l'application.
+  logger: ^2.5.0
+
+  # Pour enregistrer les préférences des utilisateurs
+  shared_preferences: ^2.2.2
+
+  # Pour avoir un lecteur vidéo
+  video_player: ^2.9.3
+
+  # Pour l'internationalisation et la localisation
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
+  # Pour faciliter la gestion des données transmises en JSON avec l'API
+  json_annotation: ^4.9.0
+
+  # Pour les requetes Https
+  dio: ^5.7.0
+
+  # Pour enregistrer  de façon sécurisé dans le keychain IOS ou keystore Android
+  flutter_secure_storage: ^10.0.0-beta.4
+
+  # Pour utiliser des fonctions cryptographiques de hachage comme sha 256
+  crypto: ^3.0.6
+
+  # Pour l'authentification locale avec la biométrie
+  local_auth: ^2.1.7
+
+  # Simplifie le processus de demande et de vérification des autorisations
+  permission_handler: ^11.4.0
+
+  # OAuth2 PKCE
+  oauth2: ^2.0.3
+
+  # Pour ouvrir la page de connexion avec le serveur d'auth comme Keycloak
+  webview_flutter: ^4.10.0
+
+  # Pour ecouter sur les mouvements de bascule du télépphone pour afficher/cacher le montant
+  sensors_plus: ^6.1.1
+
+  # Pour cacher / stocker des données localement
+  # hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Afficher des images au format SVG
+  flutter_svg: ^2.0.17
+
+  # Pour lister les contacts, modifier alias
+  flutter_contacts: ^1.1.9+2
+
+  # Permet d'affchier l'image qrcode à partir de la chaine
+  qr_flutter: ^4.1.0
+
+  # Pour lire la valeur d'un qrcode depuis une image et la camera
+  mobile_scanner: ^6.0.0
+
+  # Pour partager des fichiers
+  share_plus: ^10.1.4
+
+  # Pour recuperer une image dans la galery du téléphone
+  image_picker: ^1.1.2
+
+  # Obtenir position GPS du client
+  geolocator: ^13.0.3
+
+  # EMV encode decode Qr Code
+  emvqrcode: ^1.0.5
+
+  # Pour l'affichage personnalisé du calandrier
+  calendar_date_picker2: ^1.1.9
+
+  # Server Side Events
+  flutter_client_sse: ^2.0.3
+
+  # Emoji picker category
+  emoji_picker_flutter: ^4.3.0
+
+  # For Push Notifications using Firebase
+  firebase_messaging: ^15.2.4
+  flutter_local_notifications: ^19.0.0
+
+  # Utilisé pour obtenir les infos sur l'appareil (notifications et appareils connectés)
+  device_info_plus: ^11.3.3
+
+  # Permet de générer les fichiers pdf
+  pdf: ^3.10.4
+
+  # Pour les sons de notifications dans l'application
+  audioplayers: ^6.4.0
+
+  # Pour accéder aux fichiers du répertoire documents de l'appareil
+  path_provider: ^2.1.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^5.0.0
+
+  build_runner: ^2.4.14
+
+  # Pour générer les fromJSON et toJSON
+  json_serializable: ^6.9.4
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/
+    - assets/gif/
+    - assets/icons/
+    - assets/icons/categories/
+    - assets/videos/
+    - assets/sounds/
+    - assets/json/security/
+    - assets/json/alias/
+    - assets/json/comptes/
+    - assets/json/transferts/
+    - assets/json/notifications/
+    - assets/json/subscriptions/
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
+
+  #
+  generate: true

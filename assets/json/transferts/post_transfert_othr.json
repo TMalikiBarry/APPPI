@@ -1,0 +1,14 @@
+{
+    "montant": 500,
+    "compte": "123456789",
+    "clientCompte": "123698752",
+    "clientPays": "TG",
+    "clientNom": "Drissa Sanou",
+    "clientPSP": "TGD000",
+    "clientPSPNom": "Participant virtuel du togo",
+    "clientPhoto": "https://static.euronews.com/articles/stories/07/35/63/70/1440x810_cmsv2_52be993f-0568-57fd-92d9-8b08cfbfadfa-7356370.jpg",
+    "canal": "633",
+    "latitude": 14.6707583,
+    "longitude": -17.426762,
+    "endToEndId": "ESNB00120230505153555KXvozkpNvh8f6c"
+}

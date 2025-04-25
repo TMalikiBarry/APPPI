@@ -1,0 +1,78 @@
+{
+    "data": [
+        {
+            "montant": 5000.00,
+            "compte": "123456789",
+            "sens": "debit",
+            "clientNom": "Rokhaya Doucoure",
+            "clientPays": "SN",
+            "clientAlias": "e35bf776-a2d3-4693-9461-df5bfab95472",
+            "endToEndId": "ESNB00120230818141522TRANS633Alias9",
+            "dateOperation": "2023-08-18T14:15:22.999Z",
+            "canal": "633",
+            "motif": "Gaz fini"
+        },
+        {
+            "sens": "debit",
+            "compte": "123456789",
+            "montant": 10000.00,
+            "clientAlias": "539335b7-ed13-408a-995e-83cb0f3ce0a5",
+            "clientPays": "SN",
+            "clientNom": "Khady Split",
+            "clientPSP": "SNB001",
+            "canal": "631",
+            "endToEndId": "ESNB00120240518153554RTPre631Split1",
+            "dateOperation": "2024-05-18T15:35:55.999Z",
+            "motif": "@SPLIT_100000_SN_Business Services_2024-08-18T14:15:22.999Z@"
+        },
+        {
+            "montant": 50000.00,
+            "compte": "123456789",
+            "sens": "credit",
+            "clientNom": "Fougnigue Marc Arnauld Soro",
+            "clientPays": "CI",
+            "clientCompte": "CI93CI0080111301134291200589",
+            "clientPSP": "CIB000",
+            "endToEndId": "ECIB00020240221183554TRANSreIBAN1e0",
+            "dateOperation": "2024-02-21T18:35:56.999Z"
+        },
+        {
+            "montant": 100000.00,
+            "compte": "123456789",
+            "sens": "credit",
+            "clientNom": "Mariam Traore",
+            "clientPays": "TG",
+            "clientAlias": "+221773242452",
+            "clientPSP": "TGB000",
+            "endToEndId": "ESNB0012023021915355TRANSrecAlias7a",
+            "dateOperation": "2023-08-18T14:15:22.999Z"
+        },
+        {
+            "montant": 8500.00,
+            "compte": "123456789",
+            "sens": "debit",
+            "clientNom": "Facturier X",
+            "clientPays": "SN",
+            "clientPSP": "SNB000",
+            "clientCompte": "Compte123",
+            "endToEndId": "ESNB00120240518153554TRANS401Factk9",
+            "canal": "401",
+            "dateOperation": "2023-08-24T14:15:22.999Z"
+        },
+        {
+            "compte": "123456789",
+            "montant": 100000.00,
+            "txId": "123455",
+            "sens": "debit",
+            "clientNom": "Kouakou Chérif",
+            "clientPays": "TG",
+            "clientAlias": "e35bf776-a2d3-4693-9461-df5bfab95472",
+            "endToEndId": "ESNB00120230219153554KXvozkpNvhUk7b",
+            "dateOperation": "2019-08-18T14:15:22.999Z"
+        }
+    ],
+    "meta": {
+        "total": 6,
+        "limit": 5
+    }
+}

@@ -1,0 +1,824 @@
+{
+  "@@locale": "en",
+  "appTitle": "PI",
+  "@appTitle": {
+    "description": "PI-SPI"
+  },
+  "welcome": "Welcome!",
+  "noFees": "No fees",
+  "@_ERROR": {},
+  "internetErrorTitle": "😔 Oooops",
+  "internetErrorSubtitle": "You don't seem to have an internet connection or the server may be offline!",
+  "serverErrorTitle": "😔 Oooops",
+  "serverErrorSubtitle": "An error has occurred, please try again later.",
+  "erreurInattendue": "An unexpected error has occurred",
+  "reessayer": "Retry",
+  "errorDialogOk": "Ok",
+  "@_ACTIONS": {},
+  "btnTextReject": "Reject",
+  "btnTextAccept": "Accept",
+  "btnTextConfirm": "Confirm",
+  "btnTextCancel": "Cancel",
+  "btnTextYes": "Yes",
+  "btnTextNo": "No",
+  "btnTextContinue": "Continue",
+  "btnTextSend": "Send",
+  "btnTextAsk": "Demander",
+  "btnTextPay": "Pay now",
+  "btnTextEdit": "Edit",
+  "btnTextDisable": "Disable",
+  "btnTextEnable": "Enable",
+  "btnTextDelete": "Delete",
+  "btnTextSave": "Save",
+  "@_STATUTS": {},
+  "statutLabel": "Statut",
+  "statutInitie": "Pending",
+  "statutRejete": "Rejected",
+  "statutAccepte": "Accepted",
+  "statutActive": "Enabled",
+  "statutDesactive": "Disabled",
+  "@_INTRODUCTION": {},
+  "introductionLegende": "Welcome to SPI",
+  "introductionItem1": "Manage expenses with budget allocation",
+  "introductionItem2": "Save gently to realise your dreams",
+  "introductionItem3": "Schedule your payments to free your mind",
+  "introductionItem4": "Free pay and transfers to any account",
+  "introductionItem5": "Save and split expenses with friends",
+  "introductionItem6": "Use aliases for privacy and accuracy",
+  "introductionLogin": "Log in",
+  "introductionFooterTitle": "Don’t have account?",
+  "introductionFooterSubtitle": "Find nearest agency",
+  "@_SECURITY_LOGIN_FORM": {},
+  "loginPageTitle": "Login to SPI",
+  "loginPageSubTitle": "Use the login you get from your financial institution",
+  "loginPageFooterIntro": "By continue, you agree to our ",
+  "loginPageFooterCGU": "Terms of use",
+  "loginPageFooterPC": "Privacy Policy",
+  "coordinationEt": "and",
+  "loginFormUsernameLabel": "Your login",
+  "loginFormUsernameHint": "Provided by your institution",
+  "loginUsernameErrorEmpty": "Mandatory username",
+  "loginUsernameErrorInvalid": "Username must have at least 3 chars",
+  "loginFormPasswordLabel": "Your password",
+  "loginFormPasswordHint": "Provided by your institution",
+  "loginPasswordErrorEmpty": "Mandatory password",
+  "loginPasswordErrorInvalid": "Invalid password policy",
+  "loginFormBtnConnexion": "Continue",
+  "@_SECURITY_CHANGE_PASSWORD_FORM": {},
+  "changePasswordPageTitle": "Change password",
+  "changePasswordPageSubTitle": "Please change your password to improve security",
+  "changePasswordFormPasswordHint": "Set a new password",
+  "changePasswordFormConfirmHint": "Confirm new password",
+  "changePasswordFormBtnConnexion": "Set Password",
+  "changePasswordErrorEmpty": "Mandatory new password",
+  "changePasswordErrorInvalid": "Password must contains at least one number, one letter and the @ or _ character",
+  "changePasswordErrorDifferent": "Passwords are differents",
+  "@_SECURITY_PIN_CREATE_FORM": {},
+  "createCodePinFormTitle": "Create passcode",
+  "createCodePinFormSubTitle": "It helps protect your confidential information the next time you open the app",
+  "@_SECURITY_BIOMETRIC_CONFIGURE_FORM": {},
+  "configureBiometryMethod": "Biometric auth",
+  "configureBiometryMethodFace": "Face ID",
+  "configureBiometryMethodFingerprint": "fingerprint auth",
+  "configureBiometryFormTitle": "Enable {method} for next time? ",
+  "@configureBiometryFormTitle": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "configureBiometryFormSubTitle": "Use {method} to log in instead of entering PIN",
+  "@configureBiometryFormSubTitle": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "configureBiometryFormSubmitBtn": "Use {method}",
+  "@configureBiometryFormSubmitBtn": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "configureBiometryFormNotNowBtn": "Not Now",
+  "@_SECURITY_BIOMETRIC_IDENTIFICATION_FORM": {},
+  "identificationFormLoginMessage": "Enter your passcode to log in",
+  "identificationFormForgotMessage": "Forgot your passcode?",
+  "identificationHelloUser": "Hello, {user}",
+  "@identificationHelloUser": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
+  "identificationErrorPinInvalid": "Invalid PIN Code",
+  "@_SECURITY_PERMISSIONS_PAGES": {},
+  "permissionNotificationTitle": "Don't miss a beat",
+  "permissionNotificationSubTitle": "Get notified about spending, incoming, security, wealth so you're always in the know",
+  "permissionNotificationEnableBtn": "Enable push notifications",
+  "permissionNotificationNotNowBtn": "Not Now",
+  "permissionContactTitle": "Find your friends",
+  "permissionContactSubTitle1": "You’re in control! ",
+  "permissionContactSubTitle2": "We never store your phone contacts. ",
+  "permissionContactEnableBtn": "Access and update contacts",
+  "permissionContactNotNowBtn": "Not now",
+  "permissionErrorTitle": "😔 Oooops",
+  "permissionErrorDevice": "Your device is not supported.",
+  "permissionErrorToken": "An error occurs. Please retry again!",
+  "permissionErrorApi": "Error communicating with the server. Check your Internet connection or retry again!",
+  "@_SECURITY_LOGOUT": {},
+  "securityLogoutTitle": "Are you sure you want to log out?",
+  "securityLogoutSubTitle": "If you wish to continue working, click 'Cancel' and you will be returned to your current state. If you really want to log out, click 'Log Out'.",
+  "securityLogoutBtnConfirmer": "Log Out",
+  "securityLogoutBtnAnnuler": "Cancel",
+  "@_ALIAS_CREATE": {},
+  "aliasCreatePageTitle": "Create account alias",
+  "aliasCreatePageSubTitle": "People can send you money by payment address or phone number",
+  "aliasCreateSHIDTitle": "Use Payment Address",
+  "aliasCreateSHIDSubTitle": "The payment address is created by SPI",
+  "aliasCreateMBNOTitle": "Use phone number",
+  "aliasCreateMBNOSubTitle": "Will be registered as the alias by SPI",
+  "@_ALIAS_SUCCESS": {},
+  "aliaSuccessPageTitle": "🤩 Great",
+  "aliaSuccessPageSubTitle": "Your alias created",
+  "aliaSuccessPageDescription": "You can effortlessly share it with others, enabling them to initiate transfers directly to you.Alias simplifies the process, allowing you to transact with ease while maintaining your privacy.",
+  "aliaSuccessPageBtnText": "Continue",
+  "aliaSuccessClaimPageTitle": "Claim sent successfully",
+  "@_ALIAS_MBNO": {},
+  "addPhoneNumberPageTitle": "Add phone number",
+  "addPhoneNumberPageSubTitle": "We will send a verification code to this number",
+  "addPhoneNumberFormHint": "Mobile phone",
+  "addPhoneNumberFormErrorEmpty": "Mandatory field",
+  "addPhoneNumberFormErrorInvalid": "Invalid number",
+  "addPhoneNumberFormBtnContinuer": "Continue",
+  "verifyPhoneNumberPageTitle": "6-digit code",
+  "verifyPhoneNumberPageSubTitle": "Please enter the code send to {number}",
+  "@verifyPhoneNumberPageSubTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "aliaMBNOResendMessage": "Resend code in {delay}",
+  "@aliaMBNOResendMessage": {
+    "placeholders": {
+      "delay": {
+        "type": "String"
+      }
+    }
+  },
+  "aliaMBNOResendMessageBtn": "Resend code",
+  "aliaMBNOInvalidOtpMessage": "Otp invalid",
+  "@_ALIAS_ERROR": {},
+  "aliaErrorPageTitle": "😔 Oooops",
+  "aliaErrorPageSubTitle": "This alias is taken",
+  "aliaErrorPageDescription": "Phone number is already registered as an alias by someone else.",
+  "aliaErrorPageReclamationBtnText": "Claim the phone number",
+  "aliaErrorPageChoisisserBtnText": "Choose another alias",
+  "aliaErrorClaimNotExistPageSubTitle": "Introuvable",
+  "aliaErrorClaimNotExistPageDescription": "Cette revendication n'est plus disponible. Elle est terminée, clôturée ou archivée !",
+  "aliaErrorClaimLockedPageSubTitle": "Another claim is already registered",
+  "aliaErrorClaimNotFoundPageSubTitle": "Alias deleted by the owner",
+  "@_ALIAS_CLAIM_DETAILS": {},
+  "aliasClaimDetailsHeadTitle": "Alias claim",
+  "aliasClaimDetailsHeadSubTitle": "Requested phone number",
+  "aliasClaimDetailsBtnConfirmer": "Accept",
+  "aliasClaimDetailsDateDemande": "Request date",
+  "aliasClaimDetailsDateAcceptation": "Accepted date",
+  "aliasClaimDetailsDateRefus": "Rejected date",
+  "aliasClaimDetailsAlert": "If you do not successfully reject this request by {dateVerrouillage}, you will no longer be able to make transactions with this alias. If the request is still pending on {dateCloture}, the alias will be deleted.",
+  "@aliasClaimDetailsAlert": {
+    "placeholders": {
+      "dateVerrouillage": {
+        "type": "String"
+      },
+      "dateCloture": {
+        "type": "String"
+      }
+    }
+  },
+  "aliasClaimAcceptDialogTitle": "Are you sure you want to accept the claim?",
+  "aliasClaimAcceptDialogMessage": "Upon acceptance, your alias {alias} will be deleted, and this action will be irreversible. You will no longer be able to receive payments with this alias.",
+  "@aliasClaimAcceptDialogMessage": {
+    "placeholders": {
+      "alias": {
+        "type": "String"
+      }
+    }
+  },
+  "aliasClaimAcceptSuccessTitle": "Claim accepted",
+  "aliasClaimAcceptSuccessDescription": "Your alias {alias} has been deleted.",
+  "@aliasClaimAcceptSuccessDescription": {
+    "placeholders": {
+      "alias": {
+        "type": "String"
+      }
+    }
+  },
+  "aliasClaimRejectSuccessTitle": "Claim rejected",
+  "aliasClaimRejectSuccessDescription": "Your alias {alias} has been retained.",
+  "@aliasClaimRejectSuccessDescription": {
+    "placeholders": {
+      "alias": {
+        "type": "String"
+      }
+    }
+  },
+  "aliasClaimDetailsRefusPageSubTitile": "The rejection can only be accepted if you prove that the phone number belongs to you by entering the OTP code.",
+  "aliasClaimConfirmError": "Confirmation failed. Please try again.",
+  "aliasClaimConfirmSuccessRejectTitle": "Alias retained",
+  "aliasClaimConfirmSuccessAcceptTitle": "Alias deleted",
+  "aliasFormLabel": "Alias",
+  "aliasFormHint": "Payment address or phone number",
+  "aliasFormEmpty": "Required",
+  "aliasFormInvalid": "Must be a 36-character payment address or a phone number with the country code",
+  "aliasFormNotFound": "The beneficiary's alias does not exist in PI",
+  "@_CONTACT": {},
+  "contactActionsTitle": "Contact",
+  "contactWithNoPhoneNumber": "This contact does not have a phone number",
+  "contactTransferTitle": "Transfer by contact",
+  "contactPhoneAsAccountAlias": "{phoneNumber} is an account alias",
+  "@contactPhoneAsAccountAlias": {
+    "placeholders": {
+      "phoneNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "contactPhoneAsAccountNumber": "{phoneNumber} is an account number",
+  "@contactPhoneAsAccountNumber": {
+    "placeholders": {
+      "phoneNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "contactCreateTitle": "Add a contact",
+  "contactCreateSubtitle": "Save a contact with their alias",
+  "contactCreateNameLabel": "First and last name",
+  "contactCreateNameErrorEmpty": "Name is required",
+  "contactBtnSave": "Save and continue",
+  "@_HOME_TOOLBAR": {},
+  "homePageToolbarTabbarCompte": "Account",
+  "homePageToolbarTabbarAbonnement": "Subscriptions",
+  "homePageToolbarTabbarEconomie": "Savings",
+  "@_HOME": {},
+  "homeSolde": "Balance",
+  "homeActionSend": "Send",
+  "homeActionRequest": "Receive",
+  "homeActionMore": "More",
+  "homeTransactions": "Transactions",
+  "homeTransactionsRecentsNombreTitle": "Last transactions",
+  "homeTransactionsRecentsNombreSubTitle": "Choose how many transactions you want to see in your widget",
+  "homeTransactionsRecentsNombreBtnSave": "Save",
+  "@_HOME_MORE": {},
+  "homeActionMoreSheetProgrammerTitle": "Schedule a transfer",
+  "homeActionMoreSheetProgrammerSubTitle": "Create new transfer",
+  "homeActionMoreSheetAbonnementTitle": "Find a subscription",
+  "homeActionMoreSheetAbonnementSubTitle": "Convert past payment in to subscription",
+  "homeActionMoreSheetPartagerTitle": "Split payments",
+  "homeActionMoreSheetPartagerSubTitle": "Split payment from your spending",
+  "homeActionMoreSheetTirelireTitle": "Open saving box",
+  "homeActionMoreSheetTirelireSubTitle": "Split payment from your spending",
+  "homeActionMoreSheetBudgetTitle": "Set budgets",
+  "homeActionMoreSheetBudgetSubTitle": "Create your budget for spending",
+  "homeActionMoreSheetWidgetTitle": "Add Widget",
+  "homeActionMoreSheetAWidgetSubTitle": "Manage widgets for home",
+  "@_TRANSACTIONS": {},
+  "transactionsSeeAll": "See All",
+  "transactionsSendInputHint": "Name, Alias",
+  "transactionsSendOptionAliasTitle": "Use Alias",
+  "transactionsSendOptionAliasSubtitle": "Payment address",
+  "transactionsSendOptionIbanTitle": "Use IBAN",
+  "transactionsSendOptionIbanSubtitle": "Recipient bank account",
+  "transactionsSendOptionOthrTitle": "Use Other Account number",
+  "transactionsSendOptionOthrSubtitle": "Microfinance or Mobile money account",
+  "transactionsSendOptionNewContactTitle": "New contact",
+  "transactionsSendOptionNewContactSubtitle": "Add a contact using alias",
+  "transactionsSendRecentItemYouSend": "You send ",
+  "transactionsSendRecentItemYouReceive": "You receive ",
+  "transactionsSendTitleTransfert": "Transfer",
+  "transactionsSendTitleRecents": "Recents transfers",
+  "transactionsSendTitleContacts": "From your contacts",
+  "transactionsSendTitleRequest2Pay": "Request to pay",
+  "transactionsSendTitleRequest2PayRecents": "Recents requests",
+  "transactionsSendScheduleTitle": "Qui payer",
+  "@_TRANSACTIONS_FORM_PAGE": {},
+  "transactionsSendFormAliasTitle": "Transfer by Alias",
+  "transactionsSendFormAliasSubtitle": "Use the phone number or Payment address alias",
+  "transactionsSendFormOthrTitle": "Transfer by Account number",
+  "transactionsSendFormOthrSubtitle": "Account number with a microfinance institution or electronic money issuer",
+  "transactionsSendFormIbanTitle": "Transfer by IBAN",
+  "transactionsSendFormIbanSubtitle": "Use the IBAN number of the payee",
+  "transactionsSendFormQrCodeTitleTransfer": "QR Code transfer",
+  "transactionsSendFormQrCodeTitlePayment": "QR Code payment",
+  "transactionsSendFormQrCodeSubtitle": "Enter the amount",
+  "transactionsSendSuccessBtnVoir": "Show details",
+  "transactionsSendSuccessBtnReessayer": "Retry",
+  "transactionsSendErrorTitle": "😔 Oooops",
+  "transactionsSendErrorDescription": "Transaction failed",
+  "transactionsSendErrorBtn": "Continue",
+  "@_TRANSACTIONS_FORM_FIELDS": {},
+  "transactionFormAmountHint": "Amount",
+  "transactionFormAmountEmpty": "Mandatory",
+  "transactionFormAmountInvalid": "Insufficient balance",
+  "transactionFormAmountLow": "Minimum amount 5 XOF",
+  "transactionFormMotifHint": "Add note",
+  "transactionFormMotifLabel": "Note",
+  "transactionFormMotifInvalid": "No more than 104 characters",
+  "transactionFormFactureLabel": "Facture",
+  "transactionFormIbanLabel": "IBAN",
+  "transactionFormIbanHint": "Recipient IBAN",
+  "transactionFormIbanEmpty": "Mandatory",
+  "transactionFormIbanInvalid": "Invalid IBAN format",
+  "transactionFormIbanPaysLabel": "Country of recipient’s bank",
+  "transactionFormIbanNomLabel": "Name of recipient’s bank",
+  "transactionFormOthrLabel": "Account number",
+  "transactionFormOthrHint": "Recipient account number",
+  "transactionFormOthrEmpty": "Mandatory",
+  "transactionFormOthrPaysLabel": "Country of recipient’s institution",
+  "transactionFormOthrNomLabel": "Name of recipient’s institution",
+  "transactionFormContinueBtn": "Continue",
+  "transactionFormSaveContactBtn": "Save and make transfer",
+  "transactionFormVerificationTitle": "Verification",
+  "transactionFormVerificationSubtitle": "Please check the information about the recipient before confirming",
+  "transactionFormVerificationTypeLabel": "Type",
+  "transactionFormVerificationTypeIBAN": "Transfer by IBAN",
+  "transactionFormVerificationTypeOTHR": "Transfer by Account number",
+  "transactionFormVerificationClientName": "Name",
+  "transactionFormVerificationBtnConfirm": "Confirm",
+  "transactionFormVerificationBtnReject": "Reject",
+  "@_TRANSACTIONS_SCHEDULE": {},
+  "transactionFormScheduleTitle": "Schedule",
+  "transactionFormScheduleSubtitle": "Your payment will be made on the selected date",
+  "transactionFormScheduleDateLabel": "Date",
+  "transactionFormScheduleDateRangeLabel": "Start Date - End Date",
+  "transactionFormScheduleDateSelectTitle": "Select a date",
+  "transactionFormScheduleDateRangeSelectTitle": "Select a date range",
+  "transactionFormScheduleFrequenceLabel": "Frequency",
+  "transactionFormScheduleFrequenceUnefois": "One time",
+  "transactionFormScheduleFrequenceQuotidienne": "Daily",
+  "transactionFormScheduleFrequenceHebdomadaire": "Weekly",
+  "transactionFormScheduleFrequenceMensuelle": "Monthly",
+  "transactionFormScheduleFrequenceAnnuelle": "Yearly",
+  "transactionFormScheduleFrequenceSurMesure": "Custom",
+  "transactionFormSchedulePeriodiciteLabel": "Periodicity",
+  "transactionFormScheduleFrequenceSelected": "Every {periodicite} {frequence}",
+  "@transactionFormScheduleFrequenceSelected": {
+    "placeholders": {
+      "periodicite": {
+        "type": "String"
+      },
+      "frequence": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionFormScheduleDateRange": "from {start} to {end}",
+  "@transactionFormScheduleDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionFormScheduleDateSelected": "Starting from {start}",
+  "@transactionFormScheduleDateSelected": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionFormScheduleSuccessMessage": "You have scheduled {montant} FCFA for {payee}",
+  "@transactionFormScheduleSuccessMessage": {
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      },
+      "payee": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionFormScheduleSuccessBtn": "View subscription",
+  "transactionsSendSuccessBtnTitle": "You sent money to {payee}",
+  "@transactionsSendSuccessBtnTitle": {
+    "placeholders": {
+      "payee": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionEmptyTitle": "Upcoming transactions",
+  "subscriptionEmptySubTitle": "Manage your subscriptions and scheduled payments in one place",
+  "subscriptionListOnceTitle": "Scheduled payments",
+  "subscriptionEmptyBtnCreate": "New",
+  "subscriptionListFrequenceTitle": "Subscriptions",
+  "subscriptionMenuScheduleTitle": "Schedule a payment",
+  "subscriptionMenuScheduleSubtitle": "Transfer to be executed at a future date",
+  "subscriptionMenuSubscribeTitle": "Create a subscription",
+  "subscriptionMenuSubscribeSubtitle": "Convert a payment into a subscription",
+  "subscriptionMenuSubscribeSubtitle2": "Search in your transactions and select a recurring payment",
+  "subscriptionDateScheduledForTitle": "Scheduled for",
+  "subscriptionDateScheduledFor": "Scheduled for {date}",
+  "@subscriptionDateScheduledFor": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionDateNextPaymentTitle": "Next payment",
+  "subscriptionDateNextPayment": "Next payment on {date}",
+  "@subscriptionDateNextPayment": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionDateEndsSince": "Ended since {date}",
+  "@subscriptionDateEndsSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionDateToday": "Payment for today",
+  "subscriptionDisabled": "Subscription disabled",
+  "subscriptionPaymentTo": "Payment to",
+  "subscriptionStartDate": "Start date",
+  "subscriptionEditNoteBtn": "Edit note",
+  "@_TRANSACTIONS_RTP": {},
+  "transactionsRtpSuccessBtnTitle": "You have sent a payment request to {payee}",
+  "@transactionsRtpSuccessBtnTitle": {
+    "placeholders": {
+      "payee": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionsRtpSuccessBtnVoir": "View request",
+  "transactionRtpDetailsTitleInitiee": "You requested from {payeur}",
+  "@transactionRtpDetailsTitleInitiee": {
+    "placeholders": {
+      "payeur": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpDetailsTitleRecue": "You owe {paye}",
+  "@transactionRtpDetailsTitleRecue": {
+    "placeholders": {
+      "paye": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpDetailsEcheanceDate": "Due date",
+  "transactionRtpDetailsRemiseTitle": "Immediate Payment",
+  "transactionRtpDetailsRemiseLabel": "Discount",
+  "transactionRtpDetailsRemiseHint": "valid until {dateReponse}",
+  "@transactionRtpDetailsRemiseHint": {
+    "description": "valid until 28/07/2023 at 23:59:59",
+    "placeholders": {
+      "dateReponse": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpDetailsSplitPaymentTitle": "Split Payment",
+  "transactionRtpDetailsSplitPaymentTo": "Payment to",
+  "transactionRtpDetailsPICOTitle": "Withdrawal with PICO purchase",
+  "transactionRtpDetailsPICASHTitle": "PICASh Withdrawal",
+  "transactionRtpDetailsAmtAchatTitle": "Purchase",
+  "transactionRtpDetailsAmtRetraitTitle": "Withdrawal",
+  "transactionRtpDetailsAmtFraisTitle": "Fees",
+  "transactionRtpDetailsDiffereTitle": "Deferred Debit",
+  "transactionRtpDetailsDiffereSubtitle": "Buy now, Pay later",
+  "transactionRtpDetailsDiffereDescription": "Your account will be debited at the end of the month",
+  "transactionRtpDetailsDifferePayFrequence": "Pay in {occurence} {frequence}",
+  "@transactionRtpDetailsDifferePayFrequence": {
+    "description": "Pay in 3 installments",
+    "placeholders": {
+      "occurence": {
+        "type": "int"
+      },
+      "frequence": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpDetailsDifferePayAmt": "{montant} per {frequence}",
+  "@transactionRtpDetailsDifferePayAmt": {
+    "description": "52,000 per month",
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      },
+      "frequence": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpRejectTitle": "Reject request from {paye}",
+  "@transactionRtpRejectTitle": {
+    "description": "Reject request from seini",
+    "placeholders": {
+      "paye": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpRejectSubtitle": "{montant} for {paye}",
+  "@transactionRtpRejectSubtitle": {
+    "description": "52,000 per month",
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      },
+      "paye": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpRejectRsnDemandeur": "Unknown requester",
+  "transactionRtpRejectRsnMontant": "Incorrect amount",
+  "transactionRtpRejectRsnRemittance": "Incorrect invoice",
+  "transactionRtpRejectMessage": "The payment request has been successfully rejected",
+  "transactionDetailsFrequenceMois": "months",
+  "transactionDetailsFrequenceSemaine": "weeks",
+  "transactionDetailsFrequenceJour": "days",
+  "@_TRANSACTIONS_DETAILS_PAGE": {},
+  "transactionDetailsRetourner": "Return",
+  "transactionDetailsAnnuler": "Cancel",
+  "transactionDetailsRecevoir": "Receive",
+  "transactionDetailsPartager": "Split",
+  "transactionDetailsPlanifier": "Schedule",
+  "transactionDetailsMotifCredit": "Received without note",
+  "transactionDetailsMotifDebit": "Sent without note",
+  "transactionDetailsReference": "Reference",
+  "transactionDetailsPays": "Country",
+  "transactionDetailsPayeLabel": "Payment to",
+  "transactionDetailsPayeurLabel": "Received from",
+  "transactionDetailsDateLabel": "Received at",
+  "transactionDetailsTelecharger": "Download",
+  "transactionDetailsRecuPaiement": "Statement",
+  "transactionDetailsAlias": "Alias",
+  "transactionDetailsCategorie": "Category",
+  "transactionDetailsTicket": "Receipt",
+  "transactionDetailsAnalytique": "Exclude from Analytics",
+  "transactionDetailsQuestion": "Select an issue",
+  "transactionDetailsTeleverser": "Upload",
+  "transactionDetailsRecuPaiementPDF": "Transaction Statement",
+  "transactionDetailsRecuPaiementPDFSousTitre": "You can download or share the PDF file",
+  "transactionDetailsTicketCaisse": "Transaction Statement",
+  "transactionDetailsTicketCaisseSubtitle": "You can share the receipt",
+  "transactionDetailsCompte": "Account",
+  "transactionDetailsInstitution": "Institution",
+  "@_TRANSACTIONS_DETAILS_RETURN": {},
+  "transactionDetailsReturnTitle": "Are you sure you want to return the funds ?",
+  "transactionDetailsReturnSuccessMessage": "You have successfully returned funds",
+  "transactionDetailsRetourDateLabel": "Returned on",
+  "@_TRANSACTIONS_DETAILS_CANCEL": {},
+  "transactionDetailsCancelTitle": "Cancellation request",
+  "transactionDetailsCancelSubTitle": "What is the reason for the request ?",
+  "transactionDetailsCancelRsnDestinataire": "Recipient error",
+  "transactionDetailsCancelRsnMontant": "Error on the amount",
+  "transactionDetailsCancelRsnService": "Service not delivered",
+  "transactionDetailsCancelRsnFraud": "Fraud attempted ",
+  "transactionDetailsCancelRsnDuplicate": "Already paid",
+  "transactionDetailsCancelBtnSend": "Request cancellation",
+  "transactionDetailsCancelSuccessMessage": "Request cancellation sent",
+  "transactionDetailsCancelSuccessDescription": "The request is pending processing.\n You will be notified as soon as the beneficiary responds.",
+  "transactionDetailsCancelDemandeLabel": "Requested on",
+  "transactionDetailsCancelDateLabel": "Cancelled on",
+  "transactionDetailsCancelHeadSubtitle": "{montant} received",
+  "@transactionDetailsCancelHeadSubtitle": {
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionDetailsCancelReasonLabel": "Reason",
+  "transactionDetailsCancelRejectMessage": "The cancellation request has been successfully rejected",
+  "@_TRANSACTIONS_DETAILS_PAGE_REÇU": {},
+  "transactionDetailsRecuTitle": "Transaction Statement",
+  "transactionDetailsRecuSubTitle": "You can download or share the PDF file",
+  "transactionDetailsRecuInfoIdentifiant": "Identifier",
+  "transactionDetailsRecuInfoReference": "Reference",
+  "transactionDetailsRecuInfoFrais": "Fees",
+  "transactionDetailsRecuInfoFraisDefault": "Free",
+  "transactionDetailsRecuInfoPayeLabel": "Payment to",
+  "transactionDetailsRecuInfoPayeurLabel": "Received from",
+  "transactionDetailsRecuInfoClientAlias": "Alias",
+  "transactionDetailsRecuInfoClientCompte": "Compte Number",
+  "transactionDetailsRecuInfoClientInstitution": "Institution",
+  "transactionDetailsRecuInfoDateReception": "Reception date",
+  "transactionDetailsRecuInfoDateEnvoi": "Send date",
+  "transactionDetailsRecuInfoMontant": "Amount",
+  "transactionDetailsTicketSaveTitle": "Save the transaction receipt",
+  "transactionDetailsTicketSaveGallery": "Open the gallery",
+  "@_TRANSACTIONS_SPLIT": {},
+  "transactionSplitTitle": "Split with",
+  "transactionSplitRepartitionTitle": "Split payment",
+  "transactionSplitRepartitionSubtitle1": "Selected payment",
+  "transactionSplitRepartitionSubtitle2": "Split between - {nombre}",
+  "@transactionSplitRepartitionSubtitle2": {
+    "placeholders": {
+      "nombre": {
+        "type": "int"
+      }
+    }
+  },
+  "transactionSplitRepartitionParMontant": "By amount",
+  "transactionSplitRepartitionSelf": "Me",
+  "transactionSplitRepartitionPartRegle": "Part paid",
+  "transactionSplitRepartitionPartDoit": "Own you",
+  "transactionSplitRepartitionSuccessMessage": "Payment requests sent",
+  "@_TRANSACTIONS_ERROR": {},
+  "transactionErrorSoldeInsuffisant": "Insufficient balance",
+  "transactionErrorDejaRetourne": "Transaction has already been returned",
+  "transactionErrorDelaiDepasse": "Deadline has passed",
+  "transactionErrorDestinataireIndisponible": "Institution of the recipient temporarily unavailable",
+  "transactionErrorUnknow": "Your request cannot be processed at the moment. \nPlease try again later.",
+  "@_TRANSACTIONS_SEARCH": {},
+  "transactionSearchTitle": "Transactions",
+  "transactionSearchInputSearchHint": "Search",
+  "transactionSearchInputFilterTitle": "Filter",
+  "transactionSearchInputFilterDateTitle": "Date range",
+  "transactionSearchInputFilterDateSubTitle": "Select the dates",
+  "transactionSearchInputFilterDateRange": "Dates From {debut} - To {fin}",
+  "@transactionSearchInputFilterDateRange": {
+    "placeholders": {
+      "debut": {
+        "type": "String"
+      },
+      "fin": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionSearchInputFilterDateSelectTitle": "Select the date range",
+  "transactionSearchInputFilterCategoriesTitle": "Category",
+  "transactionSearchInputFilterCategoriesSensRecus": "Received",
+  "transactionSearchInputFilterCategoriesSensPayes": "Paid",
+  "transactionSearchInputFilterBtnAppliquer": "Apply",
+  "@_QRCODE": {},
+  "qrcodePageBtnScan": "Scan",
+  "qrcodePageBtnMonCode": "QR Code",
+  "qrcodePagePartageTitle": "Share your contact",
+  "qrcodePagePartageQrCodeTitle": "Share the qr code",
+  "qrcodePagePartageQrCodeSubTitle": "Share as picture",
+  "qrcodePagePartageAliasTitle": "Share the alias",
+  "qrcodePagePartageAliasSubTitle": "Copy alias to clipboard",
+  "qrcodeScanPageMessage": "Point your camera at the QR code.\nScanning will be automatic",
+  "qrcodeEncodeErrorMsg": "Error displaying your QR Code!",
+  "qrcodeDecodeErrorNotQrImage": "QR Code image invalid",
+  "qrcodeDecodeErrorInvalideAlias": "Alias in the QR Code is invalid",
+  "qrcodeDecodeErrorInvalideFormat": "Invalid QR Code format",
+  "@_POPUP_SELECT_DATE": {},
+  "popupSelectDateBtnValider": "Set",
+  "@_PROFILE_PAGE_HOME": {},
+  "profilePageBtnInviter": "Invite friends",
+  "profilePageMenuCompteTitle": "Account",
+  "profilePageMenuSecurityTitle": "Security & privacy",
+  "profilePageMenuParametreTitle": "App settings",
+  "profilePageMenuHelpTitle": "Help Center",
+  "profilePageMenuAproposTitle": "About us",
+  "profilePageBtnDeconnexion": "Log out",
+  "profilePageAppVersion": "App version",
+  "@_PROFILE_SECURITE": {},
+  "profileSecuritePageTitle": "Security & Privacy",
+  "profileSecuriteMenuSecuriteTitle": "Security",
+  "profileSecuriteMenuItemPinTitle": "Change Passcode",
+  "profileSecuriteMenuItemTrustedTitle": "Trusted Parties",
+  "profileSecuriteMenuItemBlacklistTitle": "Blacklisted Parties",
+  "profileSecuriteMenuItemAppareilsTitle": "Devices",
+  "profileSecuriteMenuItemBiometryTitle": "Enable Biometrics",
+  "profileSecuriteMenuItemMontantTitle": "Hide Balances",
+  "profileSecuriteMenuItemMontantSubTitle": "Flip your device screen down to quickly hide and show balances. You can change it in the app settings later.",
+  "profileSecuriteMenuConfidentialiteTitle": "Privacy",
+  "profileSecuriteMenuItemShakeToPayTitle": "Make Me Discoverable",
+  "profileSecuriteMenuItemShakeToPaySubTitle": "When I shake the phone",
+  "@_PROFILE_SECURITE_MONTANT": {},
+  "profileSecuriteMontantPopupTitle": "Hide Balances",
+  "profileSecuriteMontantPopupSubTitle": "Flip your device screen down to quickly hide and show balances.",
+  "@_PROFILE_COMPTE": {},
+  "comptePageTitle": "Account",
+  "comptePageListeInfosTitle": "Personal details",
+  "comptePageListeDetailsTitle": "Account details",
+  "comptePageBtnFermer": "Close account",
+  "@_PROFILE_COMPTE_PERSONNEL": {},
+  "comptePersonnelPageTitle": "Personal details",
+  "comptePersonnelPageListeNomTitle": "Full name",
+  "comptePersonnelPageListeTelephoneTitle": "Phone",
+  "comptePersonnelPageListePaysTitle": "Country of residence",
+  "comptePersonnelPageListeAdresseTitle": "Address",
+  "@_PROFILE_COMPTE_DETAILS": {},
+  "compteDetailsPageTitle": "Account details",
+  "compteDetailsPageListeTypeComTitle": "Beneficiary",
+  "compteDetailsPageListeNumCompTitle": "Account number",
+  "compteDetailsPageListeAliasTitle": "Alias",
+  "compteDetailsPageBtnSupprimer": "Delete my alias",
+  "@_PROFILE_COMPTE_DETAILS_SUPPRIMER_ALIAS": {},
+  "compteDetailsPagePopupDeleteAliasTitle": "Are you sure you want to delete your alias?",
+  "compteDetailsPagePopupDeleteAliasSubTitle": "If you confirm the deletion of your alias, this action will be irreversible. Your alias will be completely removed from our system, and other users will no longer be able to make payments to you or find you using this alias.\nPlease note that you will also lose all associated data with the alias, including payment history and related information records.",
+  "compteDetailsPagePopupDeleteAliasBtnConfirmer": "Delete Alias",
+  "compteDetailsPagePopupDeleteAliasBtnAnnuler": "Cancel",
+  "compteDetailsPagePopupDeleteAliasErrorMsg": "Deleting your alias failed. Please try again later.",
+  "@_PROFILE_APP_SETTING": {},
+  "appSettingPageTitle": "Application settings",
+  "appSettingPageMenuLanguageTitle": "Language",
+  "appSettingPageMenuLanguageFr": "French",
+  "appSettingPageMenuLanguageEn": "English",
+  "appSettingPageMenuLanguagePt": "Portuguese",
+  "appSettingPageMenuLanguageSelectTitle": "We use the same language set for your device. but you can set specific for using the application",
+  "appSettingPageMenuThemeTitle": "Theme",
+  "appSettingPageMenuThemeDark": "Dark",
+  "appSettingPageMenuThemeLight": "Light",
+  "appSettingPageMenuThemeYellow": "Yellow",
+  "appSettingPageMenuThemeGreen": "Green",
+  "appSettingPageMenuThemeBlue": "Blue",
+  "appSettingPageMenuThemeDefault": "System",
+  "appSettingPageMenuThemePageTitle": "Apparence",
+  "appSettingPageMenuQrCodeTitle": "My QR code by default",
+  "appSettingPageMenuQrCodeSelectTitle": "Enable to display your QR Code by default",
+  "appSettingPageMenuQrCodeDeselectTitle": "Disable to display the camera by default",
+  "appSettingPageMenuNotificationTitle": "In App Notifications",
+  "appSettingPageMenuNotificationStyleTitle": "Alert Style",
+  "appSettingPageMenuNotificationStyleSnackBar": "Banners",
+  "appSettingPageMenuNotificationStyleDialog": "Alerts",
+  "appSettingPageMenuNotificationStyleDialogDesc": "Alerts require an action before continuing. Banners appear at the top of the screen and disappear automatically",
+  "appSettingPageMenuNotificationStyleNone": "Aucun",
+  "appSettingPageMenuNotificationSonTitle": "Sound",
+  "appSettingPageMenuNotificationSonPageTitle": "Sound Notification",
+  "appSettingPageMenuNotificationSonDefault": "Default",
+  "appSettingPageMenuNotificationVibrTitle": "Vibrations",
+  "appSettingPageMenuNotificationVibrSubtitle": "Vibrations for notifications",
+  "@_CATEGORIES": {},
+  "categorieDefaultTitle": "Default categories",
+  "categorieCustomTitle": "Custom categories",
+  "categorieCustomAdd": "Add category",
+  "categorieCustomEdit": "Edit",
+  "categorieFormNameLabel": "Name your category",
+  "categorieFormCreateBtn": "Add",
+  "categorieFormNameInvalid": "Name too long, don't exceed 25 chars",
+  "categorieFormNameAlready": "Category already exist",
+  "categorieEditBtn": "Edit",
+  "categorieFormSaveBtn": "Save",
+  "categorieFormIconSheetTitle": "Set cover image",
+  "categorieFormIconSheetEmojiTitle": "Use Emoji",
+  "categorieFormIconSheetGalleryTitle": "Select from your gallery",
+  "categorieFormIconSheetPhotoTitle": "Take a photo",
+  "@_NOTIFICATION_PAGE": {},
+  "notificationPageTitle": "Notification",
+  "notificationPageListeEmptyTitle": "You’re all caught up",
+  "notificationPageListeEmptySubTitle": "Check back later for informations and recommendations to keep your account up to date",
+  "notificationPageClaimTitle": "Alias claim",
+  "notificationPageClaimSubtitle": "You have received a claim on your alias {alias}",
+  "@notificationPageClaimSubtitle": {
+    "placeholders": {
+      "alias": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPageAnnulationRequestTitle": "Cancellation",
+  "notificationPageAnnulationRequestSubtitle": "Requested by {payeur}",
+  "@notificationPageAnnulationRequestSubtitle": {
+    "placeholders": {
+      "payeur": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPageRtpInitieeSubtitle": "Requested from {payeur}",
+  "@notificationPageRtpInitieeSubtitle": {
+    "placeholders": {
+      "payeur": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPageRtpRecueSubtitle": "Requested by {payeur}",
+  "@notificationPageRtpRecueSubtitle": {
+    "placeholders": {
+      "payeur": {
+        "type": "String"
+      }
+    }
+  }
+}

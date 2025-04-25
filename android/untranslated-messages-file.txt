@@ -1,0 +1,7 @@
+{
+  "fr": [
+    "serverUnavailabeTitle",
+    "serverUnavailabeMsg",
+    "loginFormUsernameError"
+  ]
+}

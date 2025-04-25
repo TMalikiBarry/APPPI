@@ -1,0 +1,54 @@
+{
+    "data": [
+        {
+            "compte": "123456789",
+            "montant": 100.00,
+            "sens": "debit",
+            "canal": "633",
+            "motif": "Achat en ligne",
+            "clientNom": "Christian Pouye",
+            "clientPays": "SN",
+            "clientPhoto": "https://sm.ign.com/ign_fr/cover/a/avatar-gen/avatar-generations_bssq.jpg",
+            "clientPSP": "SNB000",
+            "clientCompte": "Compte123",
+            "endToEndId": "E2E123",
+            "dateOperation": "2019-08-24T14:15:22.999Z",
+            "categorie": ""
+        },
+        {
+            "compte": "123456789",
+            "montant": 55500.00,
+            "sens": "credit",
+            "clientNom": "Fougnigue Marc Arnauld Soro",
+            "clientPays": "CI",
+            "montantFrais": 10.00,
+            "endToEndId": "ESNB00120230221153554KXvozkpNvhUk9e",
+            "dateOperation": "2019-08-20T14:15:22.999Z"
+        },
+        {
+            "compte": "123456789",
+            "montant": 100000.00,
+            "sens": "debit",
+            "clientNom": "Mariam Traore",
+            "clientPays": "TG",
+            "clientAlias": "e35bf776-a2d3-4693-9461-df5bfab95472",
+            "endToEndId": "ESNB00120230219153554KXvozkpNvhUk7a",
+            "dateOperation": "2019-08-18T14:15:22.999Z"
+        },
+        {
+            "compte": "123456789",
+            "montant": 100000.00,
+            "txId": "123455",
+            "sens": "debit",
+            "clientNom": "Kouakou Chérif",
+            "clientPays": "TG",
+            "clientAlias": "e35bf776-a2d3-4693-9461-df5bfab95472",
+            "endToEndId": "ESNB00120230219153554KXvozkpNvhUk7b",
+            "dateOperation": "2019-08-18T14:15:22.999Z"
+        }
+    ],
+    "meta": {
+        "total": 10,
+        "limit": 3
+    }
+}

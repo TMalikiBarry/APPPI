@@ -1,0 +1,15 @@
+{
+    "compte": "123456789",
+    "montant": 100.00,
+    "sens": "debit",
+    "motif": "Achat en ligne",
+    "clientNom": "Christian Pouye",
+    "clientPays": "SN",
+    "clientPhoto": "https://sm.ign.com/ign_fr/cover/a/avatar-gen/avatar-generations_bssq.jpg",
+    "clientPSP": "SNB000",
+    "clientCompte": "Compte123",
+    "endToEndId": "ESNB0012025012415355TRANSEmCNvhUk9e",
+    "dateOperation": "2025-01-24T14:15:22.999Z",
+    "dateExpiration": "2025-03-25T15:35:57.999Z",
+    "canal": "633"
+}

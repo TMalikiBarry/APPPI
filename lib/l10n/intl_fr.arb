@@ -1,0 +1,824 @@
+{
+  "@@locale": "fr",
+  "appTitle": "PI",
+  "@appTitle": {
+    "description": "PI-SPI"
+  },
+  "welcome": "Bienvenue!",
+  "noFees": "Gratuit",
+  "@_ERROR": {},
+  "internetErrorTitle": "😔 Oooops",
+  "internetErrorSubtitle": "Il semble que vous n'ayez pas de connexion internet ou que le serveur ne soit pas disponible!",
+  "serverErrorTitle": "😔 Oooops",
+  "serverErrorSubtitle": "Une erreur s'est produite, réessayez ultérieurement.",
+  "erreurInattendue": "Une erreur inattendue s'est produite",
+  "reessayer": "Réessayez",
+  "errorDialogOk": "Compris",
+  "@_ACTIONS": {},
+  "btnTextReject": "Rejeter",
+  "btnTextAccept": "Accepter",
+  "btnTextConfirm": "Confirmer",
+  "btnTextCancel": "Annuler",
+  "btnTextYes": "Oui",
+  "btnTextNo": "Non",
+  "btnTextContinue": "Continuer",
+  "btnTextSend": "Envoyer",
+  "btnTextAsk": "Demander",
+  "btnTextPay": "Payer",
+  "btnTextEdit": "Editer",
+  "btnTextDisable": "Désactiver",
+  "btnTextEnable": "Réactiver",
+  "btnTextDelete": "Supprimer",
+  "btnTextSave": "Enregistrer",
+  "@_STATUTS": {},
+  "statutLabel": "Statut",
+  "statutInitie": "En attente",
+  "statutRejete": "Rejetée",
+  "statutAccepte": "Acceptée",
+  "statutActive": "Activé",
+  "statutDesactive": "Désactivé",
+  "@_INTRODUCTION": {},
+  "introductionLegende": "Bienvenue sur SPI",
+  "introductionItem1": "Gérez vos dépenses en allouant des budgets",
+  "introductionItem2": "Économisez pour réaliser vos rêves",
+  "introductionItem3": "Planifiez vos paiements pour vous libérer l'esprit",
+  "introductionItem4": "Payez et transférez gratuitement vers n’importe quel compte",
+  "introductionItem5": "Économisez et partagez des dépenses entre amis",
+  "introductionItem6": "Utilisez l’alias pour la confidentialité et la précision",
+  "introductionLogin": "Connexion",
+  "introductionFooterTitle": "Vous n'avez pas de compte",
+  "introductionFooterSubtitle": "Trouvez une agence proche",
+  "@_SECURITY_LOGIN_FORM": {},
+  "loginPageTitle": "Connexion",
+  "loginPageSubTitle": "Utilisez l’identifiant obtenu de votre institution financière",
+  "loginPageFooterIntro": "En continuant, vous acceptez ",
+  "loginPageFooterCGU": "nos Conditions d'utilisation",
+  "loginPageFooterPC": "notre Politique de Confidentialité",
+  "coordinationEt": "et",
+  "loginFormUsernameLabel": "Identifiant",
+  "loginFormUsernameHint": "Fourni par l'institution",
+  "loginUsernameErrorEmpty": "Identifiant obligatoire",
+  "loginUsernameErrorInvalid": "Identifiant invalide",
+  "loginPasswordErrorEmpty": "Mot de passe obligatoire",
+  "loginPasswordErrorInvalid": "Mot de passe invalide",
+  "loginFormPasswordLabel": "Mot de passe",
+  "loginFormPasswordHint": "Mot de passe",
+  "loginFormBtnConnexion": "Continuer",
+  "@_SECURITY_CHANGE_PASSWORD_FORM": {},
+  "changePasswordPageTitle": "Changer mot de passe",
+  "changePasswordPageSubTitle": "Veuillez changer votre mot de passe pour la sécurité",
+  "changePasswordFormPasswordHint": "Définir un nouveau mot de passe",
+  "changePasswordFormConfirmHint": "Confirmez le nouveau mot de passe",
+  "changePasswordErrorEmpty": "Nouveau mot de passe obligatoire",
+  "changePasswordErrorInvalid": "Doit contenir au moins un chiffre, une lettre et le caractère  @ ou _",
+  "changePasswordFormBtnConnexion": "Valider",
+  "changePasswordErrorDifferent": "Les deux mots de passe sont différents",
+  "@_SECURITY_PIN_CREATE_FORM": {},
+  "createCodePinFormTitle": "Créez votre code pin",
+  "createCodePinFormSubTitle": "Il contribue à protéger vos informations confidentielles la prochaine fois que vous ouvrez l’app",
+  "@_SECURITY_BIOMETRIC_CONFIGURE_FORM": {},
+  "configureBiometryMethod": "la biométrie",
+  "configureBiometryMethodFace": "Face ID",
+  "configureBiometryMethodFingerprint": "l'empreinte",
+  "configureBiometryFormTitle": "Activez {method} pour la prochaine fois ?",
+  "@configureBiometryFormTitle": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "configureBiometryFormSubTitle": "Utilisez {method} plûtot que le code PIN",
+  "@configureBiometryFormSubTitle": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "configureBiometryFormSubmitBtn": "Utiliser {method}",
+  "@configureBiometryFormSubmitBtn": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "configureBiometryFormNotNowBtn": "Pas maintenant",
+  "@_SECURITY_BIOMETRIC_IDENTIFICATION_FORM": {},
+  "identificationFormLoginMessage": "Saisissez votre code PIN",
+  "identificationFormForgotMessage": "Code PIN oublié?",
+  "identificationHelloUser": "Bonjour, {user}",
+  "@identificationHelloUser": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
+  "identificationErrorPinInvalid": "Le code PIN est invalide",
+  "@_SECURITY_PERMISSIONS_PAGES": {},
+  "permissionNotificationTitle": "Ne ratez rien",
+  "permissionNotificationSubTitle": "Recevez des notifications sur les dépenses, la sécurité et vos économies afin d'être toujours au courant",
+  "permissionNotificationEnableBtn": "Activer les notifications",
+  "permissionNotificationNotNowBtn": "Pas maintenant",
+  "permissionContactTitle": "Trouvez vos amis",
+  "permissionContactSubTitle1": "Vous gardez le contrôle! ",
+  "permissionContactSubTitle2": "Nous ne conservons jamais vos contacts téléphoniques.",
+  "permissionContactEnableBtn": "Accès et mise à jour des contacts",
+  "permissionContactNotNowBtn": "Pas maintenant",
+  "permissionErrorTitle": "😔 Oooops",
+  "permissionErrorDevice": "Votre appareil n'est pas supporté.",
+  "permissionErrorToken": "Une erreur est survenue. Réessayer à nouveau",
+  "permissionErrorApi": "Erreur de communication - Vérifier votre connexion internet ou réessayer plus tard!",
+  "@_SECURITY_LOGOUT": {},
+  "securityLogoutTitle": "Êtes-vous sûr de vouloir vous déconnecter ?",
+  "securityLogoutSubTitle": "Si vous souhaitez continuer à travailler, cliquez sur « Annuler » et vous reviendrez à votre état actuel. Si vous souhaitez vraiment vous déconnecter, cliquez sur « Déconnecter ».",
+  "securityLogoutBtnConfirmer": "Déconnecter",
+  "securityLogoutBtnAnnuler": "Annuler",
+  "@_ALIAS": {},
+  "aliasCreatePageTitle": "Créer un alias",
+  "aliasCreatePageSubTitle": "Les gens peuvent vous envoyer de l'argent à partir de votre alias",
+  "aliasCreateSHIDTitle": "Choisir l’adresse de paiement",
+  "aliasCreateSHIDSubTitle": "L’adresse de paiement est créé par SPI",
+  "aliasCreateMBNOTitle": "Choisir le numéro de téléphone",
+  "aliasCreateMBNOSubTitle": "Sera enregistré comme alias par SPI",
+  "@_ALIAS_SUCCESS": {},
+  "aliaSuccessPageTitle": "🤩 Bravo",
+  "aliaSuccessPageSubTitle": "Votre alias est créé",
+  "aliaSuccessPageDescription": "Vous pouvez le partager avec d'autres personnes, ce qui leur permet d'effectuer des transferts sur votre compte. L’alias simplifie le processus et vous permet d'effectuer des transactions en toute simplicité tout en préservant votre vie privée",
+  "aliaSuccessPageBtnText": "Continuez",
+  "aliaSuccessClaimPageTitle": "Demande de revendication envoyée avec succès",
+  "@_ALIAS_MBNO": {},
+  "addPhoneNumberPageTitle": "Numéro de téléphone",
+  "addPhoneNumberPageSubTitle": "Un code de vérification sera envoyé sur ce numéro",
+  "addPhoneNumberFormHint": "Téléphone mobile",
+  "addPhoneNumberFormErrorEmpty": "Champ obligatoire",
+  "addPhoneNumberFormErrorInvalid": "Numero invalide",
+  "addPhoneNumberFormBtnContinuer": "Continuer",
+  "verifyPhoneNumberPageTitle": "Code de vérification",
+  "verifyPhoneNumberPageSubTitle": "Saisissez le code envoyé au {number}",
+  "@verifyPhoneNumberPageSubTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "aliaMBNOResendMessage": "Renvoyer le code dans {delay}",
+  "@aliaMBNOResendMessage": {
+    "placeholders": {
+      "delay": {
+        "type": "String"
+      }
+    }
+  },
+  "aliaMBNOResendMessageBtn": "Renvoyer le code",
+  "aliaMBNOInvalidOtpMessage": "Code otp invalide",
+  "@_ALIAS_ERROR": {},
+  "aliaErrorPageTitle": "😔 Oooops",
+  "aliaErrorPageSubTitle": "Cet alias est pris",
+  "aliaErrorPageDescription": "Le numéro de téléphone est déjà enregistré comme alias sur un autre compte",
+  "aliaErrorPageReclamationBtnText": "Revendiquer l'alias",
+  "aliaErrorPageChoisisserBtnText": "Choisissez un autre alias",
+  "aliaErrorClaimNotExistPageSubTitle": "Revendication introuvable",
+  "aliaErrorClaimNotExistPageDescription": "Cette revendication n'est plus disponible. Elle est terminée, clôturée ou archivée !",
+  "aliaErrorClaimLockedPageSubTitle": "Une revendication est en cours sur cet alias",
+  "aliaErrorClaimNotFoundPageSubTitle": "L'alias a été supprimé par son détenteur",
+  "@_ALIAS_CLAIM_DETAILS": {},
+  "aliasClaimDetailsHeadTitle": "Revendication d'alias",
+  "aliasClaimDetailsHeadSubTitle": "Numéro de téléphone réclamé",
+  "aliasClaimDetailsBtnConfirmer": "Accepter",
+  "aliasClaimDetailsDateDemande": "Date demande",
+  "aliasClaimDetailsDateAcceptation": "Date d'acceptation",
+  "aliasClaimDetailsDateRefus": "Date de rejet",
+  "aliasClaimDetailsAlert": "Si vous ne rejetez pas cette demande avec succès d'ici le {dateVerrouillage}, vous ne pourrez plus faire de transactions avec cet alias. Si à la date du {dateCloture} la demande est toujours en attente, l'alias sera supprimé.",
+  "@aliasClaimDetailsAlert": {
+    "placeholders": {
+      "dateVerrouillage": {
+        "type": "String"
+      },
+      "dateCloture": {
+        "type": "String"
+      }
+    }
+  },
+  "aliasClaimAcceptDialogTitle": "Etes-vous sûr(e) de vouloir accepter la revendication ?",
+  "aliasClaimAcceptDialogMessage": "A l'acceptation, votre alias {alias} sera supprimé, cette action sera irréversible. Vous ne pourrez plus recevoir de paiement avec cet alias. Cependant vous pourrez toujours utiliser l'adresse de paiement associée.",
+  "@aliasClaimAcceptDialogMessage": {
+    "placeholders": {
+      "alias": {
+        "type": "String"
+      }
+    }
+  },
+  "aliasClaimAcceptSuccessTitle": "Revendication acceptée",
+  "aliasClaimAcceptSuccessDescription": "Votre alias {alias} est supprimé",
+  "@aliasClaimAcceptSuccessDescription": {
+    "placeholders": {
+      "alias": {
+        "type": "String"
+      }
+    }
+  },
+  "aliasClaimRejectSuccessTitle": "Revendication refusée",
+  "aliasClaimRejectSuccessDescription": "Votre alias {alias} est conservé",
+  "@aliasClaimRejectSuccessDescription": {
+    "placeholders": {
+      "alias": {
+        "type": "String"
+      }
+    }
+  },
+  "aliasClaimDetailsRefusPageSubTitile": "Le refus ne peut être accepter que si vous prouvez que le numèro de téléphone vous appartient en renseignant le code OTP",
+  "aliasClaimConfirmError": "La confirmation a échouée veuillez réessayer svp",
+  "aliasClaimConfirmSuccessRejectTitle": "Alias conservé",
+  "aliasClaimConfirmSuccessAcceptTitle": "Alias supprimé",
+  "aliasFormLabel": "Alias",
+  "aliasFormHint": "Adresse de paiement ou n° de téléphone",
+  "aliasFormEmpty": "Obligatoire",
+  "aliasFormInvalid": "Doit être une adresse de paiement de 36 caractères ou un numéro de téléphone avec l'indicatif",
+  "aliasFormNotFound": "L’alias du bénéficiaire n’existe pas dans PI",
+  "@_CONTACT": {},
+  "contactActionsTitle": "Contact",
+  "contactWithNoPhoneNumber": "Ce contact ne dispose pas de numéro de téléphone",
+  "contactTransferTitle": "Transfert par contact",
+  "contactPhoneAsAccountAlias": "{phoneNumber} est un alias de compte",
+  "@contactPhoneAsAccountAlias": {
+    "placeholders": {
+      "phoneNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "contactPhoneAsAccountNumber": "{phoneNumber} est un numéro de compte",
+  "@contactPhoneAsAccountNumber": {
+    "placeholders": {
+      "phoneNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "contactCreateTitle": "Ajouter un contact",
+  "contactCreateSubtitle": "Enregistrer un contact avec son alias",
+  "contactCreateNameLabel": "Prénoms et nom",
+  "contactCreateNameErrorEmpty": "Nom obligatoire",
+  "contactBtnSave": "Enregistrer et continuer",
+  "@_HOME_TOOLBAR": {},
+  "homePageToolbarTabbarCompte": "Compte",
+  "homePageToolbarTabbarAbonnement": "Abonnements",
+  "homePageToolbarTabbarEconomie": "Economies",
+  "@_HOME": {},
+  "homeSolde": "Solde",
+  "homeActionSend": "Envoyer",
+  "homeActionRequest": "Recevoir",
+  "homeActionMore": "Plus",
+  "homeTransactions": "Transactions",
+  "homeTransactionsRecentsNombreTitle": "Dernières transactions",
+  "homeTransactionsRecentsNombreSubTitle": "Choisissez le nombre de transactions que vous souhaitez voir apparaître dans votre widget",
+  "homeTransactionsRecentsNombreBtnSave": "Enregistrer",
+  "@_HOME_MORE": {},
+  "homeActionMoreSheetProgrammerTitle": "Programmer un paiement",
+  "homeActionMoreSheetProgrammerSubTitle": "Créer un nouveau transfert",
+  "homeActionMoreSheetAbonnementTitle": "Trouver un abonnement",
+  "homeActionMoreSheetAbonnementSubTitle": "Convertir un paiement passé en abonnement",
+  "homeActionMoreSheetPartagerTitle": "Partager un paiement",
+  "homeActionMoreSheetPartagerSubTitle": "Répartir un paiement entre amis",
+  "homeActionMoreSheetTirelireTitle": "Nouvelle tirelire",
+  "homeActionMoreSheetTirelireSubTitle": "Ajouter une tirelire pour un besoin",
+  "homeActionMoreSheetBudgetTitle": "Définir un budget",
+  "homeActionMoreSheetBudgetSubTitle": "Créer un budget pour ses dépenses",
+  "homeActionMoreSheetWidgetTitle": "Ajouter un widget",
+  "homeActionMoreSheetAWidgetSubTitle": "Gérer les widgets de l’écran principal",
+  "@_TRANSACTIONS": {},
+  "transactionsSeeAll": "Tout afficher",
+  "transactionsSendInputHint": "Nom, Alias",
+  "transactionsSendOptionAliasTitle": "Par alias",
+  "transactionsSendOptionAliasSubtitle": "Alias du bénéficiaire",
+  "transactionsSendOptionIbanTitle": "Par IBAN",
+  "transactionsSendOptionIbanSubtitle": "Numéro du compte bancaire",
+  "transactionsSendOptionOthrTitle": "Par autre compte",
+  "transactionsSendOptionOthrSubtitle": "Numéro de compte SFD / EME",
+  "transactionsSendOptionNewContactTitle": "Nouveau contact",
+  "transactionsSendOptionNewContactSubtitle": "Ajouter un contact avec son alias",
+  "transactionsSendTitleTransfert": "Transfert",
+  "transactionsSendTitleRecents": "Transferts récents",
+  "transactionsSendTitleContacts": "Contacts",
+  "transactionsSendRecentItemYouSend": "Vous avez envoyé ",
+  "transactionsSendRecentItemYouReceive": "Vous avez reçu ",
+  "transactionsSendTitleRequest2Pay": "Demande de paiement",
+  "transactionsSendTitleRequest2PayRecents": "Demande récentes",
+  "transactionsSendScheduleTitle": "Qui payer",
+  "@_TRANSACTIONS_FORM_PAGE": {},
+  "transactionsSendFormAliasTitle": "Transfert par Alias",
+  "transactionsSendFormAliasSubtitle": "Coller ou saisissez l’alias",
+  "transactionsSendFormIbanTitle": "Transfert par IBAN",
+  "transactionsSendFormIbanSubtitle": "Coller ou saisissez l'IBAN",
+  "transactionsSendFormOthrTitle": "Transfert par autre compte",
+  "transactionsSendFormOthrSubtitle": "Numéro de compte d’un SFD ou d’un EME",
+  "transactionsSendFormQrCodeTitleTransfer": "Transfert par QR Code",
+  "transactionsSendFormQrCodeTitlePayment": "Paiement par QR Code",
+  "transactionsSendFormQrCodeSubtitle": "Saisissez le montant",
+  "transactionsSendSuccessBtnVoir": "Voir le paiement",
+  "transactionsSendSuccessBtnReessayer": "Rééssayer",
+  "transactionsSendSuccessBtnTitle": "Vous avez envoyé de l'argent à {payee}",
+  "@transactionsSendSuccessBtnTitle": {
+    "placeholders": {
+      "payee": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionsSendErrorTitle": "😔 Oooops",
+  "transactionsSendErrorDescription": "La transaction a échouée.",
+  "transactionsSendErrorBtn": "Continuer",
+  "@_TRANSACTIONS_FORM_FIELDS": {},
+  "transactionFormAmountHint": "Montant",
+  "transactionFormAmountEmpty": "Obligatoire",
+  "transactionFormAmountInvalid": "Solde insuffisant",
+  "transactionFormAmountLow": "Montant minimum 5 frcs",
+  "transactionFormMotifHint": "Ajouter une note",
+  "transactionFormMotifLabel": "Note",
+  "transactionFormFactureLabel": "Facture",
+  "transactionFormMotifInvalid": "Pas plus de 104 caractères",
+  "transactionFormIbanLabel": "IBAN",
+  "transactionFormIbanHint": "IBAN du bénéficiaire",
+  "transactionFormIbanEmpty": "Obligatoire",
+  "transactionFormIbanInvalid": "Format de l'IBAN invalide",
+  "transactionFormIbanPaysLabel": "Pays de la banque",
+  "transactionFormIbanNomLabel": "Nom de la banque",
+  "transactionFormOthrLabel": "Numéro de compte",
+  "transactionFormOthrHint": "Numéro de compte du bénéficiaire",
+  "transactionFormOthrEmpty": "Obligatoire",
+  "transactionFormOthrPaysLabel": "Pays de l'intitution financière",
+  "transactionFormOthrNomLabel": "Nom de l'intitution financière ",
+  "transactionFormContinueBtn": "Continuer",
+  "transactionFormSaveContactBtn": "Enregistrer et faire un transfert",
+  "transactionFormVerificationTitle": "Vérification",
+  "transactionFormVerificationSubtitle": "Voulez-vous vraiment effectuer un transfert au profit de ce bénéficiaire ?",
+  "transactionFormVerificationTypeLabel": "Type",
+  "transactionFormVerificationTypeIBAN": "Transfert par IBAN",
+  "transactionFormVerificationTypeOTHR": "Transfert par autre compte",
+  "transactionFormVerificationClientName": "Nom du client",
+  "transactionFormVerificationBtnConfirm": "Confirmer",
+  "transactionFormVerificationBtnReject": "Annuler",
+  "@_TRANSACTIONS_SCHEDULE": {},
+  "transactionFormScheduleTitle": "Programmer",
+  "transactionFormScheduleSubtitle": "Votre paiement sera effectué à la date choisie",
+  "transactionFormScheduleDateLabel": "Date",
+  "transactionFormScheduleDateRangeLabel": "Date de début - Date de fin",
+  "transactionFormScheduleDateSelectTitle": "Selectionner une date",
+  "transactionFormScheduleDateRangeSelectTitle": "Selectionner une plage de dates",
+  "transactionFormScheduleFrequenceLabel": "Fréquence",
+  "transactionFormScheduleFrequenceUnefois": "Une seule fois",
+  "transactionFormScheduleFrequenceQuotidienne": "Quotidienne",
+  "transactionFormScheduleFrequenceHebdomadaire": "Hebdomadaire",
+  "transactionFormScheduleFrequenceMensuelle": "Mensuelle",
+  "transactionFormScheduleFrequenceAnnuelle": "Annuelle",
+  "transactionFormScheduleFrequenceSurMesure": "Sur mesure",
+  "transactionFormSchedulePeriodiciteLabel": "Périodicité",
+  "transactionFormScheduleFrequenceSelected": "Tous les {periodicite} {frequence}",
+  "@transactionFormScheduleFrequenceSelected": {
+    "placeholders": {
+      "periodicite": {
+        "type": "String"
+      },
+      "frequence": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionFormScheduleDateRange": "du {start} au {end}",
+  "@transactionFormScheduleDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionFormScheduleDateSelected": "A partir du {start}",
+  "@transactionFormScheduleDateSelected": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionFormScheduleSuccessMessage": "Vous avez programmé {montant} FCFA pour {payee}",
+  "@transactionFormScheduleSuccessMessage": {
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      },
+      "payee": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionFormScheduleSuccessBtn": "Voir l'abonnement",
+  "subscriptionEmptyTitle": "Transactions à venir",
+  "subscriptionEmptySubTitle": "Gérer vos abonnements et vos paiements programmés en un seul endroit",
+  "subscriptionListOnceTitle": "Paiements programmés",
+  "subscriptionEmptyBtnCreate": "Nouveau",
+  "subscriptionListFrequenceTitle": "Abonnements",
+  "subscriptionMenuScheduleTitle": "Programmer un paiement",
+  "subscriptionMenuScheduleSubtitle": "Executer un paiement à une date donnée",
+  "subscriptionMenuSubscribeTitle": "Créer un abonnement",
+  "subscriptionMenuSubscribeSubtitle": "Convertir un paiement en un abonnement",
+  "subscriptionMenuSubscribeSubtitle2": "Recherchez dans vos transactions et sélectionnez un paiement récurrent",
+  "subscriptionDateScheduledForTitle": "Programmé pour",
+  "subscriptionDateScheduledFor": "Programmé pour le {date}",
+  "@subscriptionDateScheduledFor": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionDateNextPaymentTitle": "Prochain paiement",
+  "subscriptionDateNextPayment": "Prochain paiement le {date}",
+  "@subscriptionDateNextPayment": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionDateEndsSince": "Terminé depuis le {date}",
+  "@subscriptionDateEndsSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionDateToday": "Paiement pour aujourd'hui",
+  "subscriptionDisabled": "Abonnement désactivé",
+  "subscriptionPaymentTo": "Paiement à",
+  "subscriptionStartDate": "Date de début",
+  "subscriptionEditNoteBtn": "Modifier la note",
+  "@_TRANSACTIONS_RTP": {},
+  "transactionsRtpSuccessBtnTitle": "Vous avez envoyé une demande de paiement à {payee}",
+  "@transactionsRtpSuccessBtnTitle": {
+    "placeholders": {
+      "payee": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionsRtpSuccessBtnVoir": "Voir la demande",
+  "transactionRtpDetailsTitleInitiee": "Vous avez demandé à {payeur}",
+  "@transactionRtpDetailsTitleInitiee": {
+    "placeholders": {
+      "payeur": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpDetailsTitleRecue": "Vous devez à {paye}",
+  "@transactionRtpDetailsTitleRecue": {
+    "placeholders": {
+      "paye": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpDetailsEcheanceDate": "Date d'échéance",
+  "transactionRtpDetailsRemiseTitle": "Paiement immédiat",
+  "transactionRtpDetailsRemiseLabel": "Remise",
+  "transactionRtpDetailsRemiseHint": "valable jusqu’au {dateReponse}",
+  "@transactionRtpDetailsRemiseHint": {
+    "description": "valable jusqu’au 28/07/2023 à 23:59:59",
+    "placeholders": {
+      "dateReponse": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpDetailsSplitPaymentTitle": "Paiement partagé",
+  "transactionRtpDetailsSplitPaymentTo": "Payé à",
+  "transactionRtpDetailsPICOTitle": "Retrait avec achat PICO",
+  "transactionRtpDetailsPICASHTitle": "Retrait PICASH",
+  "transactionRtpDetailsAmtAchatTitle": "Achat",
+  "transactionRtpDetailsAmtRetraitTitle": "Retrait",
+  "transactionRtpDetailsAmtFraisTitle": "Frais",
+  "transactionRtpDetailsDiffereTitle": "Débit différé",
+  "transactionRtpDetailsDiffereSubtitle": "Achetez maintenant, Payez plus tard!",
+  "transactionRtpDetailsDiffereDescription": "Votre compte sera débité à la fin du mois",
+  "transactionRtpDetailsDifferePayFrequence": "Payer en {occurence} {frequence}",
+  "@transactionRtpDetailsDifferePayFrequence": {
+    "description": "Payer en 3 mois",
+    "placeholders": {
+      "occurence": {
+        "type": "int"
+      },
+      "frequence": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpDetailsDifferePayAmt": "{montant} par {frequence}",
+  "@transactionRtpDetailsDifferePayAmt": {
+    "description": "52 000 par mois",
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      },
+      "frequence": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpRejectTitle": "Rejeter la demande de {paye}",
+  "@transactionRtpRejectTitle": {
+    "description": "Rejeter la demande de seini",
+    "placeholders": {
+      "paye": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpRejectSubtitle": "{montant} pour {paye}",
+  "@transactionRtpRejectSubtitle": {
+    "description": "52 000 par mois",
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      },
+      "paye": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionRtpRejectRsnDemandeur": "Demandeur inconnu",
+  "transactionRtpRejectRsnMontant": "Montant incorrect",
+  "transactionRtpRejectRsnRemittance": "Facture incorrecte",
+  "transactionRtpRejectMessage": "La demande de paiement est rejetée avec succès",
+  "transactionDetailsFrequenceMois": "mois",
+  "transactionDetailsFrequenceSemaine": "semaines",
+  "transactionDetailsFrequenceJour": "jours",
+  "@_TRANSACTIONS_DETAILS_PAGE": {},
+  "transactionDetailsRetourner": "Retourner",
+  "transactionDetailsAnnuler": "Annuler",
+  "transactionDetailsRecevoir": "Recevoir",
+  "transactionDetailsPartager": "Partager",
+  "transactionDetailsPlanifier": "Planifier",
+  "transactionDetailsMotifCredit": "Reçu sans note",
+  "transactionDetailsMotifDebit": "Envoyé sans note",
+  "transactionDetailsReference": "Référence",
+  "transactionDetailsPays": "Pays",
+  "transactionDetailsPayeLabel": "Payé à",
+  "transactionDetailsPayeurLabel": "Reçu de",
+  "transactionDetailsDateLabel": "Reçu à",
+  "transactionDetailsTelecharger": "Télécharger",
+  "transactionDetailsRecuPaiement": "Reçu du paiement",
+  "transactionDetailsAlias": "Alias",
+  "transactionDetailsCategorie": "Catégorie",
+  "transactionDetailsTicket": "Ticket de caisse",
+  "transactionDetailsAnalytique": "Exclure de l’analytique",
+  "transactionDetailsQuestion": "Sélectionner une question",
+  "transactionDetailsTeleverser": "Téléverser",
+  "transactionDetailsRecuPaiementPDF": "Reçu du paiement",
+  "transactionDetailsRecuPaiementPDFSousTitre": "Vous pouvez partager ou télécharger le PDF",
+  "transactionDetailsTicketCaisse": "Reçu réglé",
+  "transactionDetailsTicketCaisseSubtitle": "Vous pouvez partager le ticket de caisse",
+  "transactionDetailsCompte": "Compte",
+  "transactionDetailsInstitution": "Institution",
+  "@_TRANSACTIONS_DETAILS_RETURN": {},
+  "transactionDetailsReturnTitle": "Êtes-vous sûr de vouloir retourner les fonds ?",
+  "transactionDetailsReturnSuccessMessage": "Vous avez retourné les fonds avec succès",
+  "transactionDetailsRetourDateLabel": "Retourné le",
+  "@_TRANSACTIONS_DETAILS_CANCEL": {},
+  "transactionDetailsCancelTitle": "Demande d'annulation",
+  "transactionDetailsCancelSubTitle": "Quelle est la raison de la demande ?",
+  "transactionDetailsCancelRsnDestinataire": "Erreur sur le destinataire",
+  "transactionDetailsCancelRsnMontant": "Erreur sur le montant",
+  "transactionDetailsCancelRsnService": "Service non rendu",
+  "transactionDetailsCancelRsnFraud": "Tentative de fraude",
+  "transactionDetailsCancelRsnDuplicate": "Déjà payé",
+  "transactionDetailsCancelBtnSend": "Demander l'annulation",
+  "transactionDetailsCancelSuccessMessage": "Demande d’annulation envoyée",
+  "transactionDetailsCancelSuccessDescription": "La demande est en attente de traitement. \n Vous serez notifié dès que le bénéficiaire aura répondu.",
+  "transactionDetailsCancelDemandeLabel": "Demandé le",
+  "transactionDetailsCancelDateLabel": "Demande d'annulation",
+  "transactionDetailsCancelHeadSubtitle": "{montant} reçu",
+  "@transactionDetailsCancelHeadSubtitle": {
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionDetailsCancelReasonLabel": "Raison",
+  "transactionDetailsCancelRejectMessage": "La demande d’annulation est rejetée avec succès",
+  "@_TRANSACTIONS_DETAILS_PAGE_REÇU": {},
+  "transactionDetailsRecuTitle": "Reçu du paiement",
+  "transactionDetailsRecuSubTitle": "Vous pouvez partager ou télécharger le PDF",
+  "transactionDetailsRecuInfoIdentifiant": "Identifiant",
+  "transactionDetailsRecuInfoReference": "Référence",
+  "transactionDetailsRecuInfoFrais": "Frais",
+  "transactionDetailsRecuInfoFraisDefault": "Gratuit",
+  "transactionDetailsRecuInfoPayeLabel": "Envoyé à",
+  "transactionDetailsRecuInfoPayeurLabel": "Reçu de",
+  "transactionDetailsRecuInfoClientAlias": "Alias",
+  "transactionDetailsRecuInfoClientCompte": "Numéro de compte",
+  "transactionDetailsRecuInfoClientInstitution": "Institution",
+  "transactionDetailsRecuInfoDateReception": "Date reception",
+  "transactionDetailsRecuInfoDateEnvoi": "Date envoi",
+  "transactionDetailsRecuInfoMontant": "Montant",
+  "transactionDetailsTicketSaveTitle": "Enregistrer le ticket de caisse",
+  "transactionDetailsTicketSaveGallery": "Ouvrir la galerie",
+  "@_TRANSACTIONS_SPLIT": {},
+  "transactionSplitTitle": "Partager avec",
+  "transactionSplitRepartitionTitle": "Partager le paiement",
+  "transactionSplitRepartitionSubtitle1": "Paiement partagé",
+  "transactionSplitRepartitionSubtitle2": "Répartir entre - {nombre}",
+  "@transactionSplitRepartitionSubtitle2": {
+    "placeholders": {
+      "nombre": {
+        "type": "int"
+      }
+    }
+  },
+  "transactionSplitRepartitionParMontant": "Par montant",
+  "transactionSplitRepartitionSelf": "Moi",
+  "transactionSplitRepartitionPartRegle": "Part réglée",
+  "transactionSplitRepartitionPartDoit": "Vous doit",
+  "transactionSplitRepartitionSuccessMessage": "Demandes de paiement envoyées",
+  "@_TRANSACTIONS_ERROR": {},
+  "transactionErrorSoldeInsuffisant": "Solde insuffisant",
+  "transactionErrorDejaRetourne": "Transaction déja retournée",
+  "transactionErrorDelaiDepasse": "La date limite est dépassée",
+  "transactionErrorDestinataireIndisponible": "Institution du bénéficiaire momentanément indisponible",
+  "transactionErrorUnknow": "Votre demande ne peut pas être traitée pour le moment. Veuillez réessayez ultérieurement",
+  "@_TRANSACTIONS_SEARCH": {},
+  "transactionSearchTitle": "Transactions",
+  "transactionSearchInputSearchHint": "Recherche",
+  "transactionSearchInputFilterTitle": "Filtrer",
+  "transactionSearchInputFilterDateTitle": "Plage de dates",
+  "transactionSearchInputFilterDateSubTitle": "Sélectionner la plage",
+  "transactionSearchInputFilterDateRange": "Dates de {debut} - à {fin}",
+  "@transactionSearchInputFilterDateRange": {
+    "placeholders": {
+      "debut": {
+        "type": "String"
+      },
+      "fin": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionSearchInputFilterDateSelectTitle": "Sélectionner une plage de dates",
+  "transactionSearchInputFilterCategoriesTitle": "Categories",
+  "transactionSearchInputFilterCategoriesSensRecus": "Reçus",
+  "transactionSearchInputFilterCategoriesSensPayes": "Payés",
+  "transactionSearchInputFilterBtnAppliquer": "Appliquer",
+  "@_QRCODE": {},
+  "qrcodePageBtnScan": "Scan",
+  "qrcodePageBtnMonCode": "Mon Code",
+  "qrcodePagePartageTitle": "Partager",
+  "qrcodePagePartageQrCodeTitle": "Votre QR Code",
+  "qrcodePagePartageQrCodeSubTitle": "Partage de l’image",
+  "qrcodePagePartageAliasTitle": "Votre alias",
+  "qrcodePagePartageAliasSubTitle": "Copie l’alias dans le presse-papiers",
+  "qrcodeScanPageMessage": "Pointez votre appareil photo sur le QR code.\nLe scan se fait automatiquement",
+  "qrcodeEncodeErrorMsg": "Erreur d'affichage de votre QR Code !",
+  "qrcodeDecodeErrorNotQrImage": "Image du QR Code invalide",
+  "qrcodeDecodeErrorInvalideAlias": "Alias contenu dans le QR Code est invalide",
+  "qrcodeDecodeErrorInvalideFormat": "Format du QR Code invalide",
+  "@_POPUP_SELECT_DATE": {},
+  "popupSelectDateBtnValider": "Valider",
+  "@_PROFILE_PAGE_HOME": {},
+  "profilePageBtnInviter": "Inviter vos amis",
+  "profilePageMenuCompteTitle": "Compte",
+  "profilePageMenuSecurityTitle": "Sécurité & Confidentialité",
+  "profilePageMenuParametreTitle": "Paramètres de l'application",
+  "profilePageMenuHelpTitle": "Centre d'Aide",
+  "profilePageMenuAproposTitle": "A propos de nous",
+  "profilePageBtnDeconnexion": "Déconnexion",
+  "profilePageAppVersion": "App version",
+  "@_PROFILE_SECURITE": {},
+  "profileSecuritePageTitle": "Sécurité & Confidentialité",
+  "profileSecuriteMenuSecuriteTitle": "Sécurité",
+  "profileSecuriteMenuItemPinTitle": "Modifier le code PIN",
+  "profileSecuriteMenuItemTrustedTitle": "Personnes de confiance",
+  "profileSecuriteMenuItemBlacklistTitle": "Liste noire",
+  "profileSecuriteMenuItemAppareilsTitle": "Appareils",
+  "profileSecuriteMenuItemBiometryTitle": "Autoriser biométrie",
+  "profileSecuriteMenuItemMontantTitle": "Cacher les montants",
+  "profileSecuriteMenuItemMontantSubTitle": "Basculez l'écran de votre appareil vers le bas pour masquer et afficher rapidement les montants",
+  "profileSecuriteMenuConfidentialiteTitle": "Confidentialité",
+  "profileSecuriteMenuItemShakeToPayTitle": "Rendez-moi découvrable",
+  "profileSecuriteMenuItemShakeToPaySubTitle": "Lorsque je secoue le téléphone",
+  "@_PROFILE_SECURITE_MONTANT": {},
+  "profileSecuriteMontantPopupTitle": "Affichage des montants",
+  "profileSecuriteMontantPopupSubTitle": "Basculez l'écran de votre appareil vers le bas pour masquer et afficher les soldes.",
+  "@_PROFILE_COMPTE": {},
+  "comptePageTitle": "Compte",
+  "comptePageListeInfosTitle": "Informations personnelles",
+  "comptePageListeDetailsTitle": "Détails du compte",
+  "comptePageBtnFermer": "Fermer le compte",
+  "@_PROFILE_COMPTE_PERSONNEL": {},
+  "comptePersonnelPageTitle": "Informations personnelles",
+  "comptePersonnelPageListeNomTitle": "Prénom et Nom",
+  "comptePersonnelPageListeTelephoneTitle": "Numéro de téléphone",
+  "comptePersonnelPageListePaysTitle": "Pays de résidence",
+  "comptePersonnelPageListeAdresseTitle": "Adresse",
+  "@_PROFILE_COMPTE_DETAILS": {},
+  "compteDetailsPageTitle": "Détails du compte",
+  "compteDetailsPageListeTypeComTitle": "Type de compte",
+  "compteDetailsPageListeNumCompTitle": "Numéro de compte",
+  "compteDetailsPageListeAliasTitle": "Alias",
+  "compteDetailsPageBtnSupprimer": "Supprimer mon alias",
+  "@_PROFILE_COMPTE_DETAILS_SUPPRIMER_ALIAS": {},
+  "compteDetailsPagePopupDeleteAliasTitle": "Êtes-vous sûr de vouloir supprimer votre alias ?",
+  "compteDetailsPagePopupDeleteAliasSubTitle": "Si vous confirmez la suppression de votre alias, cette action sera irréversible. Votre alias sera complètement supprimé de notre système et les autres utilisateurs ne pourront plus effectuer de paiements en votre faveur ou vous trouver à l'aide de cet alias. Veuillez noter que vous perdrez également toutes les données associées à l'alias, y compris l'historique des paiements et les enregistrements d'informations connexes.",
+  "compteDetailsPagePopupDeleteAliasBtnConfirmer": "Supprimer l'alias",
+  "compteDetailsPagePopupDeleteAliasBtnAnnuler": "Annuler",
+  "compteDetailsPagePopupDeleteAliasErrorMsg": "La suppression de votre alias à échoué, veuillez réessayer ultérieurement",
+  "@_PROFILE_APP_SETTING": {},
+  "appSettingPageTitle": "Paramètres de l’application",
+  "appSettingPageMenuLanguageTitle": "Langue",
+  "appSettingPageMenuLanguageFr": "Français",
+  "appSettingPageMenuLanguageEn": "Anglais",
+  "appSettingPageMenuLanguagePt": "Portugais",
+  "appSettingPageMenuLanguageSelectTitle": "Choisissez la langue pour l'application",
+  "appSettingPageMenuThemeTitle": "Thème",
+  "appSettingPageMenuThemeDark": "Sombre",
+  "appSettingPageMenuThemeLight": "Clair",
+  "appSettingPageMenuThemeYellow": "Jaune",
+  "appSettingPageMenuThemeGreen": "Vert",
+  "appSettingPageMenuThemeBlue": "Bleu",
+  "appSettingPageMenuThemeDefault": "Système",
+  "appSettingPageMenuThemePageTitle": "Apparence",
+  "appSettingPageMenuQrCodeTitle": "Mon QR code par défaut",
+  "appSettingPageMenuQrCodeSelectTitle": "Activer pour afficher votre QR Code par défaut",
+  "appSettingPageMenuQrCodeDeselectTitle": "Désactiver pour afficher la caméra par défaut",
+  "appSettingPageMenuNotificationTitle": "Notifications dans l'app",
+  "appSettingPageMenuNotificationStyleTitle": "Style d'alerte",
+  "appSettingPageMenuNotificationStyleSnackBar": "Bannières",
+  "appSettingPageMenuNotificationStyleDialog": "Alertes",
+  "appSettingPageMenuNotificationStyleDialogDesc": "Les alertes requièrent une action avant de poursuivre. Les bannières apparaissent en haut de l'écran et disparaissent automatiquement",
+  "appSettingPageMenuNotificationStyleNone": "Aucun",
+  "appSettingPageMenuNotificationSonTitle": "Son",
+  "appSettingPageMenuNotificationSonPageTitle": "Notification Sonore",
+  "appSettingPageMenuNotificationSonDefault": "Par défaut",
+  "appSettingPageMenuNotificationVibrTitle": "Vibreur",
+  "appSettingPageMenuNotificationVibrSubtitle": "Vibrations pour notification",
+  "@_CATEGORIES": {},
+  "categorieDefaultTitle": "Catégories par défault",
+  "categorieCustomTitle": "Catégories personnalisées",
+  "categorieCustomAdd": "Ajouter une catégorie",
+  "categorieCustomEdit": "Modifier",
+  "categorieFormNameLabel": "Nom de la catégorie",
+  "categorieFormCreateBtn": "Créer",
+  "categorieFormNameInvalid": "Le nom ne doit pas avoir plus de 25 caractères",
+  "categorieFormNameAlready": "Cette catégorie existe déjà",
+  "categorieEditBtn": "Modifier",
+  "categorieFormSaveBtn": "Enregistrer",
+  "categorieFormIconSheetTitle": "Définir l'image de couverture",
+  "categorieFormIconSheetEmojiTitle": "Utiliser les Emoji",
+  "categorieFormIconSheetGalleryTitle": "Sélectionnez dans la galerie",
+  "categorieFormIconSheetPhotoTitle": "Prendre une photo",
+  "@_NOTIFICATION_PAGE": {},
+  "notificationPageTitle": "Notification",
+  "notificationPageListeEmptyTitle": "Vous êtes au courant de tout",
+  "notificationPageListeEmptySubTitle": "Revenez plus tard pour obtenir des informations et des recommandations afin de maintenir votre compte à jour",
+  "notificationPageClaimTitle": "Revendication d'alias",
+  "notificationPageClaimSubtitle": "Vous avez reçu une revendication sur votre alias {alias}",
+  "@notificationPageClaimSubtitle": {
+    "placeholders": {
+      "alias": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPageAnnulationRequestTitle": "Annulation",
+  "notificationPageAnnulationRequestSubtitle": "Demandée par {payeur}",
+  "@notificationPageAnnulationRequestSubtitle": {
+    "placeholders": {
+      "payeur": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPageRtpInitieeSubtitle": "Demandée à {payeur}",
+  "@notificationPageRtpInitieeSubtitle": {
+    "placeholders": {
+      "payeur": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationPageRtpRecueSubtitle": "Demandée par {payeur}",
+  "@notificationPageRtpRecueSubtitle": {
+    "placeholders": {
+      "payeur": {
+        "type": "String"
+      }
+    }
+  }
+}

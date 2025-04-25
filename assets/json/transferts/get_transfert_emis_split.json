@@ -1,0 +1,14 @@
+{
+    "compte": "123456789",
+    "sens": "debit",
+    "montant": 10000.00,
+    "clientAlias": "539335b7-ed13-408a-995e-83cb0f3ce0a5",
+    "clientPays": "SN",
+    "clientNom": "Khady Split DIOP",
+    "clientPSP": "SNB001",
+    "canal": "631",
+    "endToEndId": "ESNB00120240518153554RTPre631Split1",
+    "dateOperation": "2024-05-18T15:35:55.999Z",
+    "dateExpiration": "2024-08-18T14:15:22.999Z",
+    "motif": "@SPLIT_100000_SN_Business Services_2024-08-18T14:15:22.999Z@"
+}

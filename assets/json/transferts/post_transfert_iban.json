@@ -1,0 +1,14 @@
+{
+    "montant": 1000,
+    "compte": "123456789",
+    "clientCompte": "539335b7-ed13-408a-995e-83cb0f3ce0a5",
+    "clientPays": "GW",
+    "clientNom": "Abibabou Seck",
+    "clientPSP": "SNB000",
+    "clientPSPNom": "Participant virtuel de mariam",
+    "clientPhoto": "https://static.euronews.com/articles/stories/07/35/63/70/1440x810_cmsv2_52be993f-0568-57fd-92d9-8b08cfbfadfa-7356370.jpg",
+    "canal": "333",
+    "latitude": 14.6707583,
+    "longitude": -17.426762,
+    "endToEndId": "ESNB00120230314153554KXvozkpNvhUk7c"
+}

@@ -1,0 +1,159 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/assets.dart';
+import '../../../../core/theme.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../../shared/widgets/loading_page.dart';
+import '../../../contacts/presentation/bloc/contact_bloc.dart';
+import '../../../contacts/presentation/bloc/contact_event.dart';
+import '../../../notification/presentation/pages/notification_btn_open_widget.dart';
+import '../../../profile/presentation/bloc/hide_amount/hide_amount_bloc.dart';
+import '../../../profile/presentation/bloc/hide_amount/hide_amount_event.dart';
+import '../../../security/presentation/bloc/login/login_bloc.dart';
+import '../../../security/presentation/bloc/login/login_state.dart';
+import '../../../subscription/presentation/pages/subscription_list/subscription_list_widget.dart';
+import 'home_bottom_navigation_bar.dart';
+import 'home_tab_compte.dart';
+import 'home_toolbar_leading.dart';
+
+class HomePage extends StatefulWidget {
+  //
+  const HomePage({super.key, this.selectedTab});
+  final int? selectedTab;
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    // Compte numéro
+    // Initialize hide amount / Eye Off Listener
+    context
+        .read<ParametreHideAmountBloc>()
+        .add(const ParametreHideAmountInitEvent());
+
+    // Pre fetch contacts
+    context.read<ContactBloc>().add(const ContactListEvent(null));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    //
+    AppLocalizations traductions = AppLocalizations.of(context)!;
+
+    return BlocBuilder<LoginBloc, LoginState>(
+      buildWhen: (previous, current) => current is LoginSuccessState,
+      builder: (context, state) {
+        if (state is! LoginSuccessState) {
+          return const LoadingPage();
+        }
+        return DefaultTabController(
+          length: 3,
+          initialIndex: widget.selectedTab ?? 0,
+          child: Scaffold(
+            // Pour avoir le bouton de retour
+            appBar: AppBar(
+              leading: HomeToolbarLeading(user: state.user!),
+              leadingWidth: 200, // default is 56
+              actions: actionsBtns(context),
+              bottom: TabBar(
+                splashBorderRadius: BorderRadius.circular(12.2),
+                overlayColor: WidgetStateProperty.resolveWith<Color?>(
+                  (Set<WidgetState> states) {
+                    return Colors.transparent;
+                  },
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                // Le style appliquée a tous les textes du tabBar
+                labelStyle: Theme.of(context).textTheme.bodySmall,
+                labelPadding: const EdgeInsets.symmetric(horizontal: 2),
+                // La couleur du text de la tab selectionnée
+                labelColor: Colors.white,
+                // La couleur du text des tabs non sélectionnée
+                unselectedLabelColor: Themer.neural04Color,
+                // La largeur de la tab sélectionner
+                indicatorSize: TabBarIndicatorSize.label,
+                // Bordure - couleur de fond de la tab sélectionnée
+                indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.2),
+                  color: const Color(0xFF151413),
+                ),
+                //
+                indicatorPadding: const EdgeInsets.symmetric(vertical: 5),
+                dividerColor: Colors.transparent,
+                //
+                tabs: [
+                  // Compte
+                  Tab(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(traductions.homePageToolbarTabbarCompte),
+                    ),
+                  ),
+                  // Abonnements
+                  Tab(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(traductions.homePageToolbarTabbarAbonnement),
+                    ),
+                  ),
+                  // Savings
+                  Tab(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(traductions.homePageToolbarTabbarEconomie),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Contenu de la page principale
+            body: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: TabBarView(
+                children: [
+                  HomeTabCompte(),
+                  SubscriptionListWidget(),
+                  Icon(Icons.games),
+                ],
+              ),
+            ),
+            extendBody: true,
+            // Barre de navigation
+            bottomNavigationBar: const HomeBottomNavigationBar(),
+          ),
+        );
+      },
+    );
+  }
+
+  /// Boutons toolbar
+  List<Widget> actionsBtns(BuildContext context) {
+    return [
+      // Search
+      IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: () {
+          //
+        },
+      ),
+      // Budgets
+      IconButton(
+        icon: ImageIcon(
+          const AssetImage(Images.iconAnalytique),
+          color: Theme.of(context).colorScheme.onSurface,
+          size: 24,
+        ),
+        onPressed: () {
+          //
+        },
+      ),
+      // Notifications
+      const NotificationBtnOpenWidget(),
+    ];
+  }
+}

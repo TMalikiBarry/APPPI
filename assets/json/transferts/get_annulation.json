@@ -1,0 +1,17 @@
+{
+    "compte": "123456789",
+    "sens": "credit",
+    "montant": 1000.00,
+    "clientAlias": "539335b7-ed13-408a-995e-83cb0f3ce0a5",
+    "clientPays": "GW",
+    "clientNom": "Christian Doucoure",
+    "clientPhoto": "string",
+    "clientPSP": "CIC000",
+    "canal": "633",
+    "endToEndId": "ESNB00120240105153554CancelpNvhUk9e",
+    "statut": "irrevocable",
+    "dateOperation": "2024-01-05T15:35:59.999Z",
+    "annulationRaison": "AM09",
+    "annulationDate": "2024-03-02T14:15:22.999Z",
+    "annulationStatut": "initie"
+}

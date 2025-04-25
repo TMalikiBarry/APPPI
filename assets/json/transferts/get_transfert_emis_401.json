@@ -1,0 +1,13 @@
+{
+    "compte": "123456789",
+    "montant": 8500.00,
+    "sens": "debit",
+    "clientNom": "Facturier X",
+    "clientPays": "SN",
+    "clientPSP": "SNC000",
+    "clientCompte": "Compte123",
+    "endToEndId": "ESNB00120240518153554TRANS401Factk9",
+    "dateOperation": "2023-08-24T14:15:22.999Z",
+    "canal": "401",
+    "facture": "R_7896413"
+}

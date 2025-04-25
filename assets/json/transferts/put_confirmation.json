@@ -1,0 +1,13 @@
+{
+    "montant": 1000,
+    "compte": "123456789",
+    "clientAlias": "539335b7-ed13-408a-995e-83cb0f3ce0a5",
+    "clientPays": "GW",
+    "clientNom": "SeiChris Doucoure",
+    "clientPhoto": "string",
+    "clientPSP": "CIC000",
+    "canal": "633",
+    "latitude": 14.6707583,
+    "longitude": -17.426762,
+    "endToEndId": "ESNB00120230420153555KXvozkpNvhUk7c"
+}

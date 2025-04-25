@@ -1,0 +1,16 @@
+{
+    "compte": "123456789",
+    "sens": "debit",
+    "montant": 50050.00,
+    "clientAlias": "539335b7-ed13-408a-995e-83cb0f3ce0a5",
+    "clientPays": "SN",
+    "clientNom": "Boutique Du Coin",
+    "clientPSP": "SNB001",
+    "canal": "500",
+    "endToEndId": "ESNB00120240518153554RTPre500PICASH",
+    "statut": "initie",
+    "dateOperation": "2024-05-18T14:15:22.999Z",
+    "dateExpiration": "2024-08-18T14:15:22.999Z",
+    "retraitMontant": 50000,
+    "retraitFrais": 50
+}

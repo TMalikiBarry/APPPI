@@ -1,0 +1,5 @@
+synthetic-package: false
+# The files are generated into the path specified by `arb-dir`
+arb-dir: lib/l10n
+template-arb-file: intl_en.arb
+untranslated-messages-file: untranslated-messages-file.txt

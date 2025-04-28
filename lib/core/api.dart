@@ -294,7 +294,7 @@ class TokenInterceptor extends Interceptor {
   void onError(DioException error, ErrorInterceptorHandler handler) async {
     logger.e("Error HTTP - dans Token interceptor", error: error);
     // Si c'est un problème d'autorisations
-    if (error.response?.statusCode == 401) {
+    if (error.response?.statusCode == 40111) {
       // Si une réponse 401 est reçue, actualisez le jeton d'accès
       String? newAccessToken = await ConnexionOutputAuthpkce.refreshToken();
       if (newAccessToken != null) {

@@ -20,7 +20,7 @@ class ConnexionOutputAuthpkce implements ConnexionOutputPort {
   //
   static final dio = Dio();
   // L'identifiant du client Keycloak
-  static const clientId = 'mobile-app-flutter';
+  static const clientId = 'mytouchpoint-api';
   // Liste des scopes autorisés
   static const scopes = [
     'openid',
@@ -105,6 +105,7 @@ class ConnexionOutputAuthpkce implements ConnexionOutputPort {
       clientId,
       Uri.parse(authorizationEndpoint),
       Uri.parse(tokenEndpoint),
+      secret: "EAG1ehduLAeSGVye3FLPBvNJbumGi6uJ"
     );
   }
 
@@ -113,7 +114,7 @@ class ConnexionOutputAuthpkce implements ConnexionOutputPort {
   Future<ConnectedUser> _handleAuthorizationResponse(
       AuthorizationCodeGrant grant, Map<String, String> queryParams) async {
     logger.i("HANDLE Authorization RESPONSE");
-    logger.i(queryParams.toString());
+    //logger.i(queryParams.toString());
 
     try {
       final httpClient = await grant.handleAuthorizationResponse(queryParams);
@@ -168,10 +169,10 @@ class ConnexionOutputAuthpkce implements ConnexionOutputPort {
           : null,
       address: json["address"] != null && json["address"]["locality"] != null
           ? json["address"]["locality"]
-          : null,
+          : "DK",
       telephone: json["phone_number"],
       email: json["email"],
-      avatar: json["profile"],
+      avatar: "",
     );
     logger.i("USER INFO : $userInfos");
     return userInfos;

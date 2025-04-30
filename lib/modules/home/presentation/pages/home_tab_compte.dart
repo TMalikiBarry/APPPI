@@ -31,7 +31,7 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
     //
     return RefreshIndicator(
       color: Colors.white,
-      backgroundColor: Colors.blue,
+      backgroundColor: const Color(0xFF282C5D),
       onRefresh: _handleRefresh,
       child: ListView(
         key: _refreshKey,

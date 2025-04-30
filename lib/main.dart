@@ -32,6 +32,26 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+/*  if (Firebase.apps.isEmpty) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }*/
+
+/*
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } on FirebaseException catch (e) {
+    if (e.code != 'duplicate-app') {
+      // si ce n’est pas l’erreur de duplication, on remonte
+      rethrow;
+    }
+    // sinon on l’ignore
+  }
+*/
+
   // Avant toute chose initialiser le système de journalisation
   await AppLogger.config();
 

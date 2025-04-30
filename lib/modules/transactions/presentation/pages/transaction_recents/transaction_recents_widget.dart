@@ -59,9 +59,13 @@ class _TransactionRecentsWidgetState extends State<TransactionRecentsWidget> {
         child: BlocBuilder<TransactionRecentsBloc, TransactionRecentsState>(
           bloc: transactionsBloc,
           builder: (context, state) {
+
+            if(state is TransactionRecentsLoadingState) {
+              // return Container();
+              return const TransactionListLoadingWidget();
+            }
             // Liste des transactions récupérée
-            if (state is TransactionRecentsListState ||
-                state is TransactionRecentsLoadingState) {
+            if (state is TransactionRecentsListState) {
               List<Transaction> transactions = state.transactions.data;
               // Si la liste est vide, n'affiche rien
               if (transactions.isEmpty) {
@@ -69,7 +73,7 @@ class _TransactionRecentsWidgetState extends State<TransactionRecentsWidget> {
               } else {
                 return Column(
                   children: [
-                    // Entete : titre et icon button
+                    // En tête : titre et icon button
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,

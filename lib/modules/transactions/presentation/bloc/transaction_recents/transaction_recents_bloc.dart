@@ -16,6 +16,8 @@ class TransactionRecentsBloc
 
   final intdefaultSize = 3;
 
+  final int defaultSize = 5;
+
   // Bloc de gestion de la config
   final ConfigBloc configBloc;
 
@@ -36,7 +38,39 @@ class TransactionRecentsBloc
   }
 
   /// Quand on demande la liste des transactions
+
   Future<void> _onTransactionRecentsListEvent(
+      TransactionRecentsListEvent event,
+      Emitter<TransactionRecentsState> emit,
+      ) async {
+    // 1) Affiche un état de loading, en gardant la liste actuelle
+    emit(TransactionRecentsLoadingState(state.transactions));
+
+    /*emit(TransactionRecentsLoadingState(
+        TransactionListe(data: [], meta: ListeMeta(total: 0, limit: defaultSize))
+    ));*/
+
+    // 2) Récupère le nb d'items depuis la config
+    String? nb = configBloc.getParamValue(ConfigKey.transactionsRecentNbItems);
+    final limit = nb != null ? int.parse(nb) : defaultSize;
+
+    // 3) Détermine la période
+    final now   = DateTime.now();
+    final start = now.subtract(const Duration(days: 7));
+
+    // 4) Appel serveur unique
+    final history = await transactionsInputPort.fetchHistory(
+      startDate: start,
+      endDate: now,
+      size: limit,
+      page: 0,
+    );
+
+    // 5) Émet la nouvelle liste
+    emit(TransactionRecentsListState(history));
+  }
+
+  /*Future<void> _onTransactionRecentsListEvent(
     TransactionRecentsListEvent event,
     Emitter<TransactionRecentsState> emit,
   ) async {
@@ -60,5 +94,5 @@ class TransactionRecentsBloc
       limit: nbItems,
     );
     emit(TransactionRecentsListState(recents));
-  }
+  }*/
 }

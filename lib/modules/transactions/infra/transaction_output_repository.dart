@@ -1,5 +1,7 @@
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/modules/transactions/domain/models/mappers/movement_mappers.dart';
 
+import '../../../shared/models/liste_meta.dart';
 import '../domain/models/transaction.dart';
 import '../domain/models/transaction_cancel_reason.dart';
 import '../domain/models/transaction_liste.dart';
@@ -161,5 +163,25 @@ class TransactionOutputRepository implements TransactionOutputPort {
     transaction = await repoRemote.reject(transaction, reason);
     await repoLocal.save(transaction);
     return transaction;
+  }
+
+  @override
+  Future<TransactionListe> fetchHistory({
+    required DateTime startDate,
+    required DateTime endDate,
+    required int size,
+    required int page,
+  }) async {
+    final dto = await repoRemote.history(
+      startDate: startDate,
+      endDate: endDate,
+      size: size,
+      page: page,
+    );
+    // mappe MovementDetailsDTO → Transaction
+    final txs = dto.data.map((md) => md.toTransaction()).toList();
+    // reconstruis la meta
+    final meta = ListeMeta(total: dto.total, limit: dto.size);
+    return TransactionListe(data: txs, meta: meta);
   }
 }

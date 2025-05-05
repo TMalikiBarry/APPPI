@@ -51,8 +51,10 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                     const SizedBox(height: 20),
                     // Principales actions: Envoyer, Recevoir, Plus
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
+                      padding: const EdgeInsets.only(right: 70,),
+                      //padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child:
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [

@@ -1,3 +1,5 @@
+import 'package:pi_mobile_app/modules/transactions/domain/models/transaction_liste.dart';
+
 import '../../../../shared/models/frequence_command.dart';
 import 'transaction_canal.dart';
 import 'transaction_cancel_reason.dart';
@@ -61,7 +63,7 @@ class Transaction {
   //
   final double montant;
   final double? montantFrais;
-  final TransactionSens sens;
+  late final TransactionSens sens;
   String? motif;
   final String? canal;
   // Si sens c'est débit , le client c'est le payeur
@@ -382,4 +384,5 @@ class Transaction {
         ' differeMontant: $differeMontant'
         ' }';
   }
+
 }

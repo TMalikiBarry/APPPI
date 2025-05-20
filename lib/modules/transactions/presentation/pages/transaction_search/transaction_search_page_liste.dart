@@ -62,7 +62,7 @@ class _TransactionSearchPageListeState
 
         // Liste groupé par jour
         if (state is TransactionSearchListState) {
-          if (state.transactions.isNotEmpty) {
+          if (state.transactions.data.isNotEmpty) {
             List<TransactionGroup> transactionsGroupList =
                 groupTransactions(transactions);
             return Expanded(

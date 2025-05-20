@@ -4,9 +4,19 @@ import 'dart:convert';
 import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
 import 'package:flutter_client_sse/flutter_client_sse.dart';
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/modules/transactions/domain/models/mappers/movement_mappers.dart';
+
+// 1) On importe le modèle Transaction en n'important QUE les symboles dont on a besoin
+import '../domain/models/transaction.dart'
+    show Transaction, TransactionSens;
+
+// 2) On importe la réponse de send transaction sans ramener TransactionSens
+import '../domain/models/transaction_send/transaction_send_response.dart'
+    hide TransactionSens;
 
 import '../../../core/api.dart';
 import '../../../core/env.dart';
+import '../../../shared/models/liste_meta.dart';
 import '../domain/models/new/movement_list_dto.dart';
 import '../domain/models/transaction.dart';
 import '../domain/models/transaction_cancel_reason.dart';
@@ -14,7 +24,6 @@ import '../domain/models/transaction_liste.dart';
 import '../domain/models/transaction_send/transaction_confirm_command.dart';
 import '../domain/models/transaction_send/transaction_send_command.dart';
 import '../domain/models/transaction_send/transaction_send_command_schedule.dart';
-import '../domain/models/transaction_send/transaction_send_response.dart';
 
 /// Online repository
 class TransactionOutputRemote {
@@ -24,10 +33,10 @@ class TransactionOutputRemote {
   ///
   final logger = Logger();
 
-  final String token = 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVMkhtakpleFlmWHNJdzAwVU9GeUI0S1cxaEhmZ2dtRDZaSWRqdjhfTmlBIn0.eyJleHAiOjE3NDU5NTIwMzIsImlhdCI6MTc0NTk1MDIzMiwianRpIjoiZDIzNGIwYjEtYjRmNy00MWJlLWI3MjAtOWI2NTc5ZGU5MTRkIiwiaXNzIjoiaHR0cHM6Ly9pbnRvdWNoZ3UyLXFsZi53b3JsZGxpbmUtc29sdXRpb25zLmNvbS9hdXRoL3JlYWxtcy9zc28taW50b3VjaC1pYWNjIiwiYXVkIjpbImFnZW50YXBpIiwiYWNjb3VudCJdLCJzdWIiOiJkZjNkYzI5NS1kMGIxLTQ3YTctYjM0Mi05ZjViNTFiMDU5NGEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJteXRvdWNocG9pbnQtYXBpIiwic2Vzc2lvbl9zdGF0ZSI6IjBkOWZmMmMwLTFiMTItNDJlMi04MjgxLTdkNTY1NDE5NDA5OSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDgyIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXNzby1pbnRvdWNoLXFsZiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhZ2VudGFwaSI6eyJyb2xlcyI6WyJhZ2VudCIsImNsaWVudCIsImdyb3NzaXN0ZSJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiMGQ5ZmYyYzAtMWIxMi00MmUyLTgyODEtN2Q1NjU0MTk0MDk5IiwiY291bnRyeSI6IlNOIiwiYWNjb3VudF9udW1iZXIiOiJTTkNDVVNUMjUwMDAwMDE2OCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZ2VuZGVyIjoiTUFMRSIsImlkZW50aWZpYW50IjoiMjIxNzYxOTkyMjExIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiMjIxNzYxOTkyMjExIiwicHJvZHVjdF9jb2RlIjoiTVlUUCIsImdpdmVuX25hbWUiOiJNYWxpa2kiLCJwaG9uZU51bWJlciI6IisyMjE3NjE5OTIyMTEiLCJuYW1lIjoiTWFsaWtpIEJhcnJ5IiwicGhvbmVfbnVtYmVyIjoiKzIyMTc2MTk5MjIxMSIsImZhbWlseV9uYW1lIjoiQmFycnkiLCJlbWFpbCI6InRoaWVybm8uYmFycnkwMUBpbnRvdWNoZ3JvdXAubmV0In0.BwzEQ2lTPrw61Hc0OMOHRVuX_1mByt7J8pp1KyPLM16tvBB0xg4uOUao_89SxxCaxb0lMGl1JKSxr-TX6W1jOhZk0GRir_tOHOcPnVy-e2oUDWX39q2hi9UPtr_t886ZQ9tonOh6JjuqEOdW6a6CdJvE5dDH0pZHTcxUImjmGTxsaM1OfwVP0nCKaXY7hyPKp3jhcI2CSx9OjdGTUft20hbhQfDLHXZBny5HcvQU7a-Mg8rvKaoXtFDhJxnabiVH3Ef0kzZcOf_YRqY_TRbxof9Iw9Osl7IRacJ4wN1mSUnEjLNfZLOXJq9h1a-6o2ormYBAqgq9EHE7c3iGjm-Qkw';
+  final String token = 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVMkhtakpleFlmWHNJdzAwVU9GeUI0S1cxaEhmZ2dtRDZaSWRqdjhfTmlBIn0.eyJleHAiOjE3NDYwMTAwNTAsImlhdCI6MTc0NjAwODI1MCwianRpIjoiMGRlNmYzZGItMGM3My00ZmUzLTliZmItYjE5YTlkMDczYTJhIiwiaXNzIjoiaHR0cHM6Ly9pbnRvdWNoZ3UyLXFsZi53b3JsZGxpbmUtc29sdXRpb25zLmNvbS9hdXRoL3JlYWxtcy9zc28taW50b3VjaC1pYWNjIiwiYXVkIjpbImFnZW50YXBpIiwiYWNjb3VudCJdLCJzdWIiOiJkZjNkYzI5NS1kMGIxLTQ3YTctYjM0Mi05ZjViNTFiMDU5NGEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJteXRvdWNocG9pbnQtYXBpIiwic2Vzc2lvbl9zdGF0ZSI6IjI4MzBmNDFhLTIwZGEtNDU2MC1iODk0LWM2NTRhOWZmNTgxNSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDgyIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXNzby1pbnRvdWNoLXFsZiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhZ2VudGFwaSI6eyJyb2xlcyI6WyJhZ2VudCIsImNsaWVudCIsImdyb3NzaXN0ZSJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiMjgzMGY0MWEtMjBkYS00NTYwLWI4OTQtYzY1NGE5ZmY1ODE1IiwiY291bnRyeSI6IlNOIiwiYWNjb3VudF9udW1iZXIiOiJTTkNDVVNUMjUwMDAwMDE2OCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZ2VuZGVyIjoiTUFMRSIsImlkZW50aWZpYW50IjoiMjIxNzYxOTkyMjExIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiMjIxNzYxOTkyMjExIiwicHJvZHVjdF9jb2RlIjoiTVlUUCIsImdpdmVuX25hbWUiOiJNYWxpa2kiLCJwaG9uZU51bWJlciI6IisyMjE3NjE5OTIyMTEiLCJuYW1lIjoiTWFsaWtpIEJhcnJ5IiwicGhvbmVfbnVtYmVyIjoiKzIyMTc2MTk5MjIxMSIsImZhbWlseV9uYW1lIjoiQmFycnkiLCJlbWFpbCI6InRoaWVybm8uYmFycnkwMUBpbnRvdWNoZ3JvdXAubmV0In0.E0rmbtYiT7MTrBtjrykWnShvpv-WFZHPf1vA_z88IZyo2Znv9CgxGA_SCXgkNv2quH_GH4E7S68G78F84Kaxrgc30IxHSPbhxYI3Ti05imzmLI7GtAAlazip244YmZLmJV-iaeVYcyI1LvHjBN9_OCVIZHJyNdLX8xX8tAY6_Mpk0oSK0kt8vMwlERXS7yaGbHGpLxvjVxSRlUUe8OHHGOkEl1bQ4BC0dizKu3cYsAR34SGUDWkTyimax98MewQFtDI3hze9-W0Io06-Flojza24pSRBhNIdrgEavRf1JnW7pKSXrokXIcAyWJv41I_Calg_tyRQUtp86MPwlxi1oQ';
 
   /// Historique des transactions à partir du serveur
-  Future<MovementListDTO> history({
+  Future<TransactionListe> history({
     DateTime? startDate,
     DateTime? endDate,
     int size = 10,
@@ -43,35 +52,63 @@ class TransactionOutputRemote {
       'size'     : size.toString(),
       'page'     : page.toString(),
     };
-    // Si tu veux hard-coder le token temporairement
     final headers = {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
     };
 
-    // ← chemin RELATIF ici
+    // 1) Appel relatif
     final resp = await Api.get(
       '/movement/history',
       queryParameters: qs,
       headers: headers,
     );
 
+    // 2) Log pour debug
     logger.i('← history() status=${resp.statusCode}');
     logger.i('← history() data=${resp.data}');
-    logger.i('← payload() data=${resp.data['response']}');
 
+    // 3) Validation minimale
     final raw = resp.data;
     if (raw == null || raw is! Map<String, dynamic>) {
       throw Exception('history() returned invalid data: $raw');
     }
 
-    final payload = raw['response'];
-    if (payload == null || payload is! Map<String, dynamic>) {
+    final envelope = raw['response'];
+    if (envelope == null || envelope is! Map<String, dynamic>) {
       throw Exception('history() missing "response" field: $raw');
     }
 
-    return MovementListDTO.fromJson(payload);
+    // 4) Désérialisation DTO
+    final dto = MovementListDTO.fromJson(envelope);
+
+    // 5) Récupère ton numéro (ou une valeur par défaut)
+    final myPhone = await Api.secureStorage.read(key: 'PHONE') ?? '';
+
+    // 6) Mappe en Transaction en calculant le sens
+    final txs = dto.data.map((md) {
+      final tx = md.toTransaction();
+      final isDebit = (tx.compte == myPhone)
+          || (tx.clientCompte == myPhone);
+      tx.sens = isDebit
+          ? TransactionSens.debit
+          : TransactionSens.credit;
+      return tx;
+    }).toList();
+
+    // 7) Reconstruit la meta
+    final meta = ListeMeta(total: dto.total, limit: dto.size);
+
+    // 8) Retourne la liste enrichie des infos HTTP
+    return TransactionListe(
+      data: txs,
+      meta: meta,
+      httpStatusCode: resp.statusCode,
+      httpMessage: raw['message'] as String?,
+      httpStatus: raw['status'] as int?,
+    );
   }
+
 
   /// Lister les transactions
   Future<TransactionListe> list({

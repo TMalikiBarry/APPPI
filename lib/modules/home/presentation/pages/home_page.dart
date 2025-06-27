@@ -79,8 +79,8 @@ class _HomePageState extends State<HomePage> {
                 indicatorSize: TabBarIndicatorSize.label,
                 // Bordure - couleur de fond de la tab sélectionnée
                 indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.2),
-                  color: const Color(0xFF151413),
+                  borderRadius: BorderRadius.circular(20),
+                  color: const Color(0xFF282C5D),
                 ),
                 //
                 indicatorPadding: const EdgeInsets.symmetric(vertical: 5),

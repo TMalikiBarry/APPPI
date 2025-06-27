@@ -31,6 +31,9 @@ class CtaWidget extends StatelessWidget {
           backgroundColor: disabled != null && disabled == true
               ? Themer.gray
               : Theme.of(context).colorScheme.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30), // Rayon souhaité
+          ),
           child: icon ??
               ImageIcon(
                 AssetImage(image!),

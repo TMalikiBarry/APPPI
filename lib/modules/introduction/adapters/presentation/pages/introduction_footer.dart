@@ -40,7 +40,8 @@ class IntroductionFooter extends StatelessWidget {
             child: Text(
               traductions.introductionLogin,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleSmall,
+              style: TextStyle(color: Themer.whiteColor, fontSize: 28,
+                fontWeight: FontWeight.w600,),
             ),
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../firebase_options.dart';
@@ -26,11 +27,26 @@ Future<void> main() async {
   // Temporairement à cause du certificat autosigné
   // utilisé sur keycloak dans l'env de test
   HttpOverrides.global = MyHttpOverrides();
+  final logger = Logger();
 
-  // Initialisation de firebase: Système de journalisation, de notification
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // // Initialisation de firebase: Système de journalisation, de notification
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+
+  // Initialisation de Firebase avec gestion des erreurs
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } on FirebaseException catch (e) {
+    if (e.code != 'duplicate-app') {
+      logger.w('Firebase Initialisation Erreur ', error: e);
+      rethrow; // Relance les erreurs non gérées
+    }
+    // Ignore spécifiquement l'erreur de duplication
+    logger.w('Firebase déjà initialisé ');
+  }
 
 /*  if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(

@@ -1,11 +1,18 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:pi_mobile_app/core/storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../firebase_options.dart';
 import '../l10n/app_localizations.dart';
+import '../main.dart';
 import '../modules/alias/presentation/bloc/alias_bloc.dart';
 import '../modules/categorie/presentation/bloc/categorie_bloc.dart';
 import '../modules/categorie/presentation/bloc/categorie_event.dart';
@@ -17,10 +24,15 @@ import '../modules/profile/presentation/bloc/hide_amount/hide_amount_bloc.dart';
 import '../modules/security/presentation/bloc/identification/identification_bloc.dart';
 import '../modules/security/presentation/bloc/login/login_bloc.dart';
 import '../modules/transactions/presentation/bloc/transaction_send/transaction_send_bloc.dart';
+import 'api.dart';
 import 'di.dart';
 import 'languages.dart';
+import 'logger.dart';
+import 'notifications.dart';
+import 'observer.dart';
 import 'router.dart';
 import 'theme.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// Premier widget Application lancée par le main
 class App extends StatelessWidget {
@@ -29,8 +41,57 @@ class App extends StatelessWidget {
   const App({super.key});
 
   ///
+  ///
+  config() async {
+    // It’s worth noting that calling ensureInitialized()
+    // more than once will throw an exception,
+    // so it’s important to make sure that this method
+    // is only called once per app execution.
+    // https://api.flutter.dev/flutter/widgets/WidgetsFlutterBinding/ensureInitialized.html
+    WidgetsFlutterBinding.ensureInitialized();
+
+    // Temporairement à cause du certificat autosigné
+    // utilisé sur keycloak dans l'env de test
+    HttpOverrides.global = MyHttpOverrides();
+
+    // Initialisation de firebase: Système de journalisation, de notification
+    //await Firebase.initializeApp(
+    //  options: DefaultFirebaseOptions.currentPlatform,
+    //);
+
+    // Avant toute chose initialiser le système de journalisation
+    await AppLogger.config();
+
+    // Créer une instance de stockage sécurisée
+    // Keychain pour IOS et keystore pour android
+    const secureStorage = FlutterSecureStorage();
+
+    // Créer une instance de SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+
+    // Initaliser le client API
+    Api.initClient(secureStorage);
+
+    // Initialize the caching service
+    await AppStorage.init(secureStorage);
+
+    // Initialise le système d'injection des dépendances
+    Di.init(prefs, secureStorage);
+
+    // Observer les bloc
+    Bloc.observer = AppObserver(); // Ajoutez un observer personnalisé
+
+    // Initialisation du système de gestion des notifications
+    await AppNotifications.init(prefs);
+
+    // Run the app
+    runApp(const App());
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    config();
     // Alors afficher maintenant l'application
     // En considérant les données de configuration
 

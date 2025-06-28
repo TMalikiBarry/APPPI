@@ -18,6 +18,8 @@ class ConnectedUser {
   //
   final String? avatar;
 
+  static ConnectedUser? current;
+
   ConnectedUser({
     //
     required this.id,

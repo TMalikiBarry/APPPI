@@ -113,6 +113,20 @@ class Di {
       return configService;
     }
   }
+  static ConfigInputPort getConfigInputPort2(sharedPreferences) {
+    if (pConfigInputPort != null) {
+      return pConfigInputPort!;
+    } else {
+      ConfigService configService =
+      ConfigService(ConfigOutputPrefs(sharedPreferences));
+      pConfigInputPort = configService;
+      return configService;
+    }
+  }
+
+   initSP() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+  }
 
   /// Retourne l'implementation de ConnexionInputPort
   static ConnexionInputPort getConnexionInputPort() {

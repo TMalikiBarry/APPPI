@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +21,11 @@ import '../modules/config/adapters/ui/bloc/config_bloc.dart';
 import '../modules/config/adapters/ui/bloc/config_state.dart';
 import '../modules/config/domain/models/config_keys.dart';
 import '../modules/contacts/presentation/bloc/contact_bloc.dart';
+import '../modules/pi_app_events.dart';
 import '../modules/profile/presentation/bloc/hide_amount/hide_amount_bloc.dart';
+import '../modules/security/domain/models/connected_user.dart';
+import '../modules/security/infra/connexion_output_authpkce.dart';
+import '../modules/security/ports/input/connexion_input_port.dart';
 import '../modules/security/presentation/bloc/identification/identification_bloc.dart';
 import '../modules/security/presentation/bloc/login/login_bloc.dart';
 import '../modules/transactions/presentation/bloc/transaction_send/transaction_send_bloc.dart';
@@ -38,18 +43,46 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class App extends StatelessWidget {
   //
   /// Constructeur de l'app
-  const App({super.key});
+  App({super.key});
 
-  ///
-  ///
-  config() async {
+
+  Future<void> _decodeIdToken(idToken) async {
+
+    if (idToken == null || !idToken.contains('.')) {
+      throw Exception('Token JWT invalide ou null');
+    }
+
+    final parts = idToken.split('.');
+    if (parts.length != 3) throw Exception('JWT mal formé');
+
+    final payload = utf8.decode(base64Url.decode(base64Url.normalize(parts[1])));
+    final Map<String, dynamic> json = jsonDecode(payload);
+
+    ConnectedUser.current = ConnectedUser(
+      id: json["sub"],
+      username: json["preferred_username"],
+      firstName: json["given_name"],
+      lastName: json["family_name"],
+      country: json["address"]?["country"] ?? "SN",
+      address: json["address"]?["locality"] ?? "DK",
+      telephone: json["phone_number"],
+      email: json["email"],
+      avatar: "",
+    );
+
+    print("ConnectedUser.current1");
+    print(ConnectedUser.current);
+  }
+  Future<void> _config() async {
     // It’s worth noting that calling ensureInitialized()
     // more than once will throw an exception,
     // so it’s important to make sure that this method
     // is only called once per app execution.
     // https://api.flutter.dev/flutter/widgets/WidgetsFlutterBinding/ensureInitialized.html
-    WidgetsFlutterBinding.ensureInitialized();
+    print("ConnectedUser.currentg1");
 
+    WidgetsFlutterBinding.ensureInitialized();
+    _decodeIdToken(idToken);
     // Temporairement à cause du certificat autosigné
     // utilisé sur keycloak dans l'env de test
     HttpOverrides.global = MyHttpOverrides();
@@ -64,7 +97,6 @@ class App extends StatelessWidget {
 
     // Créer une instance de stockage sécurisée
     // Keychain pour IOS et keystore pour android
-    const secureStorage = FlutterSecureStorage();
 
     // Créer une instance de SharedPreferences
     final prefs = await SharedPreferences.getInstance();
@@ -85,79 +117,92 @@ class App extends StatelessWidget {
     await AppNotifications.init(prefs);
 
     // Run the app
-    runApp(const App());
+    //runApp(const App());
   }
+
+  static const keyIdToken = "ID_TOKEN";
+
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+  String? idToken;
+
+
 
   @override
   Widget build(BuildContext context) {
-
-    config();
+    final args = ModalRoute.of(context)!.settings.arguments as BceaoPiAppEvent;
+    print("args.user");
+    print(args.user);
+    idToken = args.user;
     // Alors afficher maintenant l'application
     // En considérant les données de configuration
+    secureStorage.write(key: keyIdToken, value: args.user);
+    return FutureBuilder(
+        future: _config(),
+        builder: (context, snapshot) {
+          ConfigBloc configBloc = ConfigBloc(Di.getConfigInputPort());
+          CategorieBloc categorieBloc = CategorieBloc(
+            Di.getCategorieInputPort(),
+          )..add(CategorieListEvent());
 
-    // Blocs
-    ConfigBloc configBloc = ConfigBloc(Di.getConfigInputPort());
-    CategorieBloc categorieBloc = CategorieBloc(
-      Di.getCategorieInputPort(),
-    )..add(CategorieListEvent());
+          return MultiBlocProvider(
+            providers: [
+              // Configuration
+              BlocProvider<ConfigBloc>(create: (BuildContext context) => configBloc),
+              // Security - Login
+              BlocProvider<LoginBloc>(
+                create: (BuildContext context) => LoginBloc(
+                  Di.getConnexionInputPort(),
+                ),
+              ),
+              // Security - Identification
+              BlocProvider<IdentificationBloc>(
+                create: (BuildContext context) => IdentificationBloc(
+                  Di.getIdentificationInputPort(),
+                ),
+              ),
+              // Alias
+              BlocProvider<AliasBloc>(
+                create: (BuildContext context) => AliasBloc(
+                  Di.getAliasInputPort(),
+                ),
+              ),
+              // Categories
+              BlocProvider<CategorieBloc>(
+                create: (BuildContext context) => categorieBloc,
+              ),
+              // Contacts list
+              BlocProvider(
+                create: (BuildContext context) => ContactBloc(),
+              ),
+              // Listener to phone movement to hide / show amount
+              BlocProvider(
+                create: (BuildContext context) => ParametreHideAmountBloc(
+                  configBloc,
+                ),
+              ),
+              // Transactions
+              BlocProvider(
+                create: (BuildContext context) => TransactionSendBloc(
+                  Di.getTransactionInputPort(),
+                  Di.getCompteInputPort(),
+                  Di.getParticipantInputPort(),
+                  Di.getPermissionInputPort(),
+                ),
+              ),
+            ],
+            child: BlocBuilder<ConfigBloc, ConfigState>(
+              bloc: configBloc,
+              buildWhen: (previous, current) =>
+              current is ConfigLoadedState &&
+                  (current.updatedKey == ConfigKey.preferedTheme ||
+                      current.updatedKey == ConfigKey.preferedLanguage),
+              builder: (context, state) =>
+                  _appLayout(configBloc.state as ConfigLoadedState),
+            ),
+            //_appLayout(configBloc.state as ConfigLoadedState),
+          );
+        });
 
-    return MultiBlocProvider(
-      providers: [
-        // Configuration
-        BlocProvider<ConfigBloc>(create: (BuildContext context) => configBloc),
-        // Security - Login
-        BlocProvider<LoginBloc>(
-          create: (BuildContext context) => LoginBloc(
-            Di.getConnexionInputPort(),
-          ),
-        ),
-        // Security - Identification
-        BlocProvider<IdentificationBloc>(
-          create: (BuildContext context) => IdentificationBloc(
-            Di.getIdentificationInputPort(),
-          ),
-        ),
-        // Alias
-        BlocProvider<AliasBloc>(
-          create: (BuildContext context) => AliasBloc(
-            Di.getAliasInputPort(),
-          ),
-        ),
-        // Categories
-        BlocProvider<CategorieBloc>(
-          create: (BuildContext context) => categorieBloc,
-        ),
-        // Contacts list
-        BlocProvider(
-          create: (BuildContext context) => ContactBloc(),
-        ),
-        // Listener to phone movement to hide / show amount
-        BlocProvider(
-          create: (BuildContext context) => ParametreHideAmountBloc(
-            configBloc,
-          ),
-        ),
-        // Transactions
-        BlocProvider(
-          create: (BuildContext context) => TransactionSendBloc(
-            Di.getTransactionInputPort(),
-            Di.getCompteInputPort(),
-            Di.getParticipantInputPort(),
-            Di.getPermissionInputPort(),
-          ),
-        ),
-      ],
-      child: BlocBuilder<ConfigBloc, ConfigState>(
-        bloc: configBloc,
-        buildWhen: (previous, current) =>
-            current is ConfigLoadedState &&
-            (current.updatedKey == ConfigKey.preferedTheme ||
-                current.updatedKey == ConfigKey.preferedLanguage),
-        builder: (context, state) =>
-            _appLayout(configBloc.state as ConfigLoadedState),
-      ),
-      //_appLayout(configBloc.state as ConfigLoadedState),
-    );
   }
 
   /// Affiche l'application selon le theme de l'utilisateur
@@ -187,7 +232,9 @@ class App extends StatelessWidget {
     // Afficher la page principale
     String pageInitiale = params[ConfigKey.introductionPassed.code] == null
         ? AppRouter.introduction
-        : AppRouter.login;
+        : AppRouter.home;
+    //: AppRouter.identificationInitial;
+    // : AppRouter.login;
 
     // Passer également la configuration pour le routage dans l'Application
     return MaterialApp.router(
@@ -225,3 +272,5 @@ class App extends StatelessWidget {
     );
   }
 }
+
+

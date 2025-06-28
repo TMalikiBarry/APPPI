@@ -12,8 +12,8 @@ class BceaoPIResolver implements MicroApp {
 
   @override
   Map<String, WidgetBuilderArgs> get routes => {
-    microAppName: (context, args) => const App(), // Try to find a way to merge the to path
-    Routes.bceaoPI.value: (context, args) => const App(), // Home PI
+    microAppName: (context, args) =>  App(), // Try to find a way to merge the to path
+    Routes.bceaoPI.value: (context, args) =>  App(), // Home PI
   };
 
   @override

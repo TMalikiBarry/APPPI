@@ -48,8 +48,7 @@ class _HomePageState extends State<HomePage> {
     return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (previous, current) => current is LoginSuccessState,
       builder: (context, state) {
-        if (state is! LoginSuccessState) {
-          return const LoadingPage();
+        if (state is! LoginSuccessState) {  return const LoadingPage();
         }
         return DefaultTabController(
           length: 3,

@@ -24,6 +24,7 @@ class NotificationPageListeEmpty extends StatelessWidget {
             Images.notificationCloche,
             width: 140,
             height: 140,
+              package: 'common_dependencies'
           ),
         ),
         const SizedBox(height: 30.0),

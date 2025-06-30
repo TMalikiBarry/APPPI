@@ -54,6 +54,7 @@ class HideAmountIllustrationSheet extends StatelessWidget {
                   Images.imagesEyeOffIllustration,
                   width: 200,
                   //height: 180,
+                    package: 'common_dependencies'
                 ),
               ),
               const SizedBox(

@@ -49,7 +49,7 @@ class TransactionListItemWidget extends StatelessWidget {
       leading: Stack(
         children: [
           const CircleAvatar(
-            backgroundImage: AssetImage(Images.transactionAvatar),
+            backgroundImage: AssetImage(Images.transactionAvatar,package: 'common_dependencies'),
           ),
           Positioned(
             right: -2,

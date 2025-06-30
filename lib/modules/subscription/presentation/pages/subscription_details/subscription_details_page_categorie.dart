@@ -46,6 +46,7 @@ class SubscriptionDetailsPageCategorie extends StatelessWidget {
               categorie.icon,
               width: 24,
               color: Theme.of(context).primaryColorDark,
+              package: 'common_dependencies'
             )
           : Text(
               categorie.icon,

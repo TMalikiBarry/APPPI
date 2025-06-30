@@ -79,6 +79,7 @@ class NotificationDialog extends StatelessWidget {
                         image,
                         width: 100,
                         height: 100,
+                        package: 'common_dependencies'
                       ),
                     ),
                   if (image != null) const SizedBox(height: 32),

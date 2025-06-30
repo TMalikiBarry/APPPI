@@ -75,7 +75,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
 
     // Commencer la construction de la page
     return Scaffold(
-      backgroundColor: Themer.brownColor,
+      backgroundColor: Themer.moonColor2,
       body: SafeArea(
         // Lazy load page
         child: Stack(

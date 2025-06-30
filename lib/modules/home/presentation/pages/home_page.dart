@@ -10,6 +10,7 @@ import '../../../contacts/presentation/bloc/contact_event.dart';
 import '../../../notification/presentation/pages/notification_btn_open_widget.dart';
 import '../../../profile/presentation/bloc/hide_amount/hide_amount_bloc.dart';
 import '../../../profile/presentation/bloc/hide_amount/hide_amount_event.dart';
+import '../../../security/domain/models/connected_user.dart';
 import '../../../security/presentation/bloc/login/login_bloc.dart';
 import '../../../security/presentation/bloc/login/login_state.dart';
 import '../../../subscription/presentation/pages/subscription_list/subscription_list_widget.dart';
@@ -42,21 +43,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //
+    print("Into home page");   //
     AppLocalizations traductions = AppLocalizations.of(context)!;
 
     return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (previous, current) => current is LoginSuccessState,
       builder: (context, state) {
-        if (state is! LoginSuccessState) {  return const LoadingPage();
-        }
+        //if (state is! LoginSuccessState) {  return const LoadingPage();
+        //}
         return DefaultTabController(
           length: 3,
           initialIndex: widget.selectedTab ?? 0,
           child: Scaffold(
             // Pour avoir le bouton de retour
             appBar: AppBar(
-              leading: HomeToolbarLeading(user: state.user!),
+              //leading: HomeToolbarLeading(user: state.user!),
+              leading: HomeToolbarLeading(user: ConnectedUser.current!),
               leadingWidth: 200, // default is 56
               actions: actionsBtns(context),
               bottom: TabBar(
@@ -143,7 +145,7 @@ class _HomePageState extends State<HomePage> {
       // Budgets
       IconButton(
         icon: ImageIcon(
-          const AssetImage(Images.iconAnalytique),
+          const AssetImage(Images.iconAnalytique, package: 'common_dependencies'),
           color: Theme.of(context).colorScheme.onSurface,
           size: 24,
         ),

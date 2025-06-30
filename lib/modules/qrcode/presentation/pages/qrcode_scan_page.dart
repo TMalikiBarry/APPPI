@@ -166,6 +166,7 @@ class _QrcodeScanPageState extends State<QrcodeScanPage> {
                           : Images.IconFlashOff,
                       width: 24,
                       height: 24,
+                      package: 'common_dependencies'
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -205,7 +206,8 @@ class _QrcodeScanPageState extends State<QrcodeScanPage> {
                     elevation: 0,
                     heroTag: "galery",
                     child:
-                        Image.asset(Images.iconsGalerie, width: 24, height: 24),
+                        Image.asset(Images.iconsGalerie, width: 24, height: 24,
+                            package: 'common_dependencies'),
                   ),
                 ],
               ),

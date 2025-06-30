@@ -34,7 +34,7 @@ class TransactionSendPageInput extends StatelessWidget {
             prefixIcon: const Icon(Icons.search, color: Themer.neural03Color),
             suffixIcon: IconButton(
               icon: const ImageIcon(
-                AssetImage(Images.homeFooterQrcode),
+                AssetImage(Images.homeFooterQrcode,package: 'common_dependencies'),
                 color: Themer.neural03Color,
                 size: 18,
               ),

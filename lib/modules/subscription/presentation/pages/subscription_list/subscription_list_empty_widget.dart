@@ -36,7 +36,7 @@ class SubscriptionListEmptyWidget extends StatelessWidget {
                 child: const Align(
                   alignment: Alignment.centerRight,
                   child: Image(
-                    image: AssetImage(Images.subscriptionCalendar),
+                    image: AssetImage(Images.subscriptionCalendar,package: 'common_dependencies'),
                     width: 142,
                     height: 142,
                   ),

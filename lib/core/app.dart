@@ -81,7 +81,6 @@ class App extends StatelessWidget {
     // https://api.flutter.dev/flutter/widgets/WidgetsFlutterBinding/ensureInitialized.html
     print("ConnectedUser.currentg1");
 
-    WidgetsFlutterBinding.ensureInitialized();
     _decodeIdToken(idToken);
     // Temporairement à cause du certificat autosigné
     // utilisé sur keycloak dans l'env de test
@@ -99,7 +98,7 @@ class App extends StatelessWidget {
     // Keychain pour IOS et keystore pour android
 
     // Créer une instance de SharedPreferences
-    final prefs = await SharedPreferences.getInstance();
+    //final prefs = await SharedPreferences.getInstance();
 
     // Initaliser le client API
     Api.initClient(secureStorage);
@@ -107,35 +106,40 @@ class App extends StatelessWidget {
     // Initialize the caching service
     await AppStorage.init(secureStorage);
 
-    // Initialise le système d'injection des dépendances
-    Di.init(prefs, secureStorage);
 
     // Observer les bloc
     Bloc.observer = AppObserver(); // Ajoutez un observer personnalisé
 
     // Initialisation du système de gestion des notifications
-    await AppNotifications.init(prefs);
+    await AppNotifications.init(prefs!);
 
     // Run the app
     //runApp(const App());
   }
 
   static const keyIdToken = "ID_TOKEN";
+  static const accesToken = "ACCESS_TOKEN";
 
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   String? idToken;
+  SharedPreferences? prefs;
 
 
 
   @override
   Widget build(BuildContext context) {
+    WidgetsFlutterBinding.ensureInitialized();
     final args = ModalRoute.of(context)!.settings.arguments as BceaoPiAppEvent;
     print("args.user");
     print(args.user);
     idToken = args.user;
+    prefs = args.prefs;
+    // Initialise le système d'injection des dépendances
+    Di.init(prefs!, secureStorage);
     // Alors afficher maintenant l'application
     // En considérant les données de configuration
     secureStorage.write(key: keyIdToken, value: args.user);
+    secureStorage.write(key: accesToken, value: args.user);
     return FutureBuilder(
         future: _config(),
         builder: (context, snapshot) {

@@ -76,7 +76,7 @@ class CategorieAddPage extends StatelessWidget {
                     const Align(
                       alignment: Alignment.center,
                       child: Image(
-                        image: AssetImage(Images.categorie),
+                        image: AssetImage(Images.categorie,package: 'common_dependencies'),
                         width: 128,
                       ),
                     ),

@@ -20,12 +20,12 @@ class Alias {
   /// Convertit du JSON en objet Alias
   factory Alias.fromJson(Map<dynamic, dynamic> json) {
     return Alias(
-      cle: json['cle'] as String,
-      shid: json['shid'] as String?,
-      compte: json['compte'] as String,
-      pays: json['pays'] as String,
+      cle: json['alias'] as String,
+      shid: json['alias'] as String?,
+      compte: json['clientPhoneNumber'] as String,
+      pays: json['clientResidenceCountry'] as String,
       type: AliasType.values
-          .firstWhere((element) => element.code == json['type'] as String),
+          .firstWhere((element) => element.code == json['aliasType'] as String),
     );
   }
 

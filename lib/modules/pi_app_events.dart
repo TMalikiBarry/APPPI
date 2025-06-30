@@ -1,4 +1,5 @@
 import 'package:micro_core/micro_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// * Micro App Events
 /// Register the micro app events here
@@ -8,7 +9,8 @@ import 'package:micro_core/micro_core.dart';
 
 class BceaoPiAppEvent extends RouteEvent {
   final String user;
-  BceaoPiAppEvent(this.user);
+  SharedPreferences? prefs;
+  BceaoPiAppEvent(this.user, this.prefs);
 }
 
 ///
@@ -16,5 +18,5 @@ class BceaoPiAppEvent extends RouteEvent {
 /// them from other micro apps. LoginEvents will be used by [RouteEvents]
 ///
 class BceaoPIEvents extends RouteEvent {
-  RouteEvent userTFSBceaoPIEvent(String user) => BceaoPiAppEvent(user);
+  RouteEvent userTFSBceaoPIEvent(String user, SharedPreferences prefs) => BceaoPiAppEvent(user, prefs);
 }

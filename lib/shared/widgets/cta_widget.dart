@@ -36,7 +36,7 @@ class CtaWidget extends StatelessWidget {
           ),
           child: icon ??
               ImageIcon(
-                AssetImage(image!),
+                AssetImage(image!,package: 'common_dependencies'),
                 color: disabled != null && disabled == true
                     ? Themer.blackColor
                     : Theme.of(context).colorScheme.onPrimary,

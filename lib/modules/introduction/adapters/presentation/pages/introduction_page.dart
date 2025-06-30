@@ -37,7 +37,7 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem> {
     super.initState();
 
     setState(() {
-      videoPlayerController = VideoPlayerController.asset(widget.item.video);
+      videoPlayerController = VideoPlayerController.asset(widget.item.video, package: 'common_dependencies');
       _videoInitializer = videoPlayerController.initialize();
       videoPlayerController.setLooping(true);
       videoPlayerController.setVolume(1.0);

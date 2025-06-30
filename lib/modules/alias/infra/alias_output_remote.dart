@@ -13,8 +13,8 @@ class AliasOutputRemote {
 
   Future<Alias?> recuperer(String compte) async {
     try {
-      final ApiResponse response = await Api.get('/alias/$compte');
-      return response.data != null ? Alias.fromJson(response.data) : null;
+      final ApiResponse response = await Api.get('/alias/sync/search/+$compte');
+      return response.data != null ? Alias.fromJson(response.data["response"]) : null;
     } //
     catch (e) {
       // Si l'api retourne 404 c'est qu'il y'a pas d'alias

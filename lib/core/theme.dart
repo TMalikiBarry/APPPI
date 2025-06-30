@@ -98,6 +98,7 @@ class Themer {
   static const primaryColor = Color(0xFF282C5D);
   static const bgCircleColor = Color(0xFFE7E9FF);
   static const moonColor = Color(0xffbbc0fb);
+  static const moonColor2 = Color(0xFFE7E9FF);
   static const secondaryColor = Color(0xFF282C5D);
 
   static const TextStyle _defaultStyleLight = TextStyle(

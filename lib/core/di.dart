@@ -98,6 +98,8 @@ class Di {
     SharedPreferences sharedPreferences,
     FlutterSecureStorage secureStorage,
   ) {
+    print("sharedPreferences");
+    print(sharedPreferences);
     Di.sharedPreferences = sharedPreferences;
     Di.secureStorage = secureStorage;
   }

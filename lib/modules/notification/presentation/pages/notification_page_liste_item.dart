@@ -60,7 +60,7 @@ class NotificationPageListeItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: ImageIcon(
-          AssetImage(icon),
+          AssetImage(icon,package: 'common_dependencies'),
           color: Theme.of(context).colorScheme.onSurface,
           size: 40,
         ),

@@ -33,6 +33,7 @@ class ErrorPage extends StatelessWidget {
               Images.gifError,
               width: 100,
               height: 100,
+              package: 'common_dependencies',
             ),
             const SizedBox(height: 15),
             Text(

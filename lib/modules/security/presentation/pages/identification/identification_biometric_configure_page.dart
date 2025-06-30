@@ -93,7 +93,8 @@ class IdentificationBiometricConfigurePage extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   child: Center(
                     child: Image.asset(image,
-                        width: tailleImage, height: tailleImage),
+                        width: tailleImage, height: tailleImage,
+                        package: 'common_dependencies'),
                   ),
                 ),
 

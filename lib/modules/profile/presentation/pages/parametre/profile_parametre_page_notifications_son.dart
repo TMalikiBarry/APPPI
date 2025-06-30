@@ -174,7 +174,7 @@ class _ProfileParametrePageNotificationsSonState
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: ImageIcon(
-                AssetImage(Images.iconsCloche),
+                AssetImage(Images.iconsCloche,package: 'common_dependencies'),
                 color: Theme.of(context).colorScheme.onSurface,
                 size: 30,
               ),

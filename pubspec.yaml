@@ -28,6 +28,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  micro_core:
+    path: ../../micro_core
+  common_dependencies:
+    path: ../../micro_commons
   flutter:
     sdk: flutter
 
@@ -39,7 +43,7 @@ dependencies:
   firebase_crashlytics: ^4.3.4
 
   # Pour gérer les états selon le pattern Bloc
-  flutter_bloc: ^9.1.0
+  #flutter_bloc: ^9.1.0
 
   # Pour enregistrer les préférences de l'utilisateur / paramètres de l'application
   go_router: ^14.8.1
@@ -73,7 +77,7 @@ dependencies:
   dio: ^5.7.0
 
   # Pour enregistrer  de façon sécurisé dans le keychain IOS ou keystore Android
-  flutter_secure_storage: ^10.0.0-beta.4
+  #flutter_secure_storage: ^10.0.0-beta.4
 
   # Pour utiliser des fonctions cryptographiques de hachage comme sha 256
   crypto: ^3.0.6
@@ -107,10 +111,10 @@ dependencies:
   qr_flutter: ^4.1.0
 
   # Pour lire la valeur d'un qrcode depuis une image et la camera
-  mobile_scanner: ^6.0.0
+  mobile_scanner: ^7.0.1
 
   # Pour partager des fichiers
-  share_plus: ^10.1.4
+  #share_plus: ^10.1.4
 
   # Pour recuperer une image dans la galery du téléphone
   image_picker: ^1.1.2
@@ -132,7 +136,7 @@ dependencies:
 
   # For Push Notifications using Firebase
   firebase_messaging: ^15.2.4
-  flutter_local_notifications: ^19.0.0
+  #flutter_local_notifications: ^19.0.0
 
   # Utilisé pour obtenir les infos sur l'appareil (notifications et appareils connectés)
   device_info_plus: ^11.3.3
@@ -155,7 +159,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^5.0.0
+  #flutter_lints: ^5.0.0
 
   build_runner: ^2.4.14
 

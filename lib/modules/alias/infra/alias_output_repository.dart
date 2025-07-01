@@ -29,6 +29,8 @@ class AliasOutputRepository implements AliasOutputPort {
   Future<Alias?> recuperer(String compte) async {
     try {
       Alias? alias = await repoRemote.recuperer(compte);
+      print("alias");
+      print(alias);
       if (alias != null) {
         repoLocal.enregistrer(alias);
       }

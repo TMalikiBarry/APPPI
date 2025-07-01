@@ -175,7 +175,7 @@ class _TransactionDetailsPageTicketState
                               borderRadius: BorderRadius.circular(12),
                             ),
                             image: const DecorationImage(
-                              image: AssetImage(Images.ticketCaisse),
+                              image: AssetImage(Images.ticketCaisse,package: 'common_dependencies'),
                             ),
                           ),
                           child: const Icon(

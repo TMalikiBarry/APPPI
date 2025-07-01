@@ -204,7 +204,7 @@ class ProfileParametrePageNotifications extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: ImageIcon(
-                AssetImage(Images.iconsCloche),
+                AssetImage(Images.iconsCloche,package: 'common_dependencies'),
                 color: Theme.of(context).colorScheme.onSurface,
                 size: 30,
               ),
@@ -297,7 +297,7 @@ class ProfileParametrePageNotifications extends StatelessWidget {
               color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.all(Radius.circular(8.0)),
               image: DecorationImage(
-                image: AssetImage(icon),
+                image: AssetImage(icon,package: 'common_dependencies'),
                 fit: BoxFit.cover,
                 colorFilter:
                     (!enabled && style == null) || selectedStyle == style
@@ -353,7 +353,7 @@ class ProfileParametrePageNotifications extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: ImageIcon(
-                AssetImage(Images.iconsCloche),
+                AssetImage(Images.iconsCloche,package: 'common_dependencies'),
                 color: Theme.of(context).colorScheme.onSurface,
                 size: 30,
               ),

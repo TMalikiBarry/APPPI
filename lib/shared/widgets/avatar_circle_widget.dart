@@ -21,7 +21,7 @@ class AvatarCircleWidget extends StatelessWidget {
       return CircleAvatar(
         backgroundImage: photo!.startsWith("http")
             ? NetworkImage(photo!)
-            : AssetImage(photo!) as ImageProvider,
+            : AssetImage(photo!,package: 'common_dependencies') as ImageProvider,
         radius: radius ?? 22,
       );
     } //

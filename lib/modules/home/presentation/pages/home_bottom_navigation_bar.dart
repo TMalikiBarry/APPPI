@@ -82,7 +82,7 @@ class HomeBottomNavigationBar extends StatelessWidget {
                   heroTag: "qrcode",
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   child: ImageIcon(
-                    const AssetImage(Images.homeFooterQrcode),
+                    const AssetImage(Images.homeFooterQrcode,package: 'common_dependencies'),
                     color: Theme.of(context).colorScheme.onSurface,
                     size: 24,
                   ),
@@ -95,7 +95,7 @@ class HomeBottomNavigationBar extends StatelessWidget {
                   heroTag: "transfer",
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   child: ImageIcon(
-                    const AssetImage(Images.homeFooterTransfer),
+                    const AssetImage(Images.homeFooterTransfer,package: 'common_dependencies'),
                     color: Theme.of(context).colorScheme.onSurface,
                     size: 24,
                   ),

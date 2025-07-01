@@ -29,7 +29,8 @@ class ProfilePageInvitation extends StatelessWidget {
               Image.asset(Images.iconsAddUser,
                   color: Theme.of(context).colorScheme.onSurface,
                   width: 20,
-                  height: 20),
+                  height: 20,
+                  package: 'common_dependencies'),
               const SizedBox(width: 10.0),
               Text(
                 traductions.profilePageBtnInviter,

@@ -85,7 +85,7 @@ class CategorieEditPage extends StatelessWidget {
                         ),
                         child: command.icon!.startsWith("assets")
                             ? Image(
-                                image: AssetImage(command.icon!),
+                                image: AssetImage(command.icon!,package: 'common_dependencies'),
                                 width: 96,
                               )
                             : Text(

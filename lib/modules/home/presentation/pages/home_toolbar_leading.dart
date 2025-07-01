@@ -70,7 +70,7 @@ class HomeToolbarLeading extends StatelessWidget {
                 image: DecorationImage(
                   image: AssetImage(
                     theme.brightness == Brightness.light  ?
-                    Images.logoSpiLight : Images.logoSpiDark),
+                    Images.logoSpiLight : Images.logoSpiDark, package: 'common_dependencies'),
                   fit: BoxFit.fill,
                 ),
               ),

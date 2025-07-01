@@ -32,7 +32,8 @@ class LogoutBtn extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(Images.iconsLogout, width: 20, height: 20),
+                  Image.asset(Images.iconsLogout, width: 20, height: 20,
+                      package: 'common_dependencies'),
                   const SizedBox(width: 15),
                   Text(
                     traductions.profilePageBtnDeconnexion,

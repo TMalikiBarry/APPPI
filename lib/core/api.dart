@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import 'package:common_dependencies/utils/constants.dart';
+import 'package:common_dependencies/utils/utils.dart';
 import '../modules/security/infra/connexion_output_authpkce.dart';
 import 'api_mock.dart';
 import 'env.dart';
@@ -29,7 +30,8 @@ class Api {
 
     // Recuperer l'URL de l'API
 
-    String apiUrl = const String.fromEnvironment("API_URL");
+    //String apiUrl = const String.fromEnvironment("API_URL");
+    String apiUrl = BASE_API_URL;
     logger.i("API URL $apiUrl");
     url = apiUrl;
 
@@ -332,7 +334,7 @@ class LoggingInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) {
     logger.i('''--> ${options.method.toUpperCase()} 
-        ${options.baseUrl} ${options.path}''');
+        ${options.baseUrl}${options.path}''');
     logger.i("Request Headers:");
     options.headers.forEach((k, v) => logger.i('$k: $v'));
     logger.i("Request queryParameters:");

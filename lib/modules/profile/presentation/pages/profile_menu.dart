@@ -36,7 +36,8 @@ class ProfilePageMenu extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurface,
                 item.icon, 
                 width: 24, 
-                height: 24
+                height: 24,
+                  package: 'common_dependencies'
               ),
               title: Text(
                 item.title,

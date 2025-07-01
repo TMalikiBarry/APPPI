@@ -20,6 +20,7 @@ class LoadingPage extends StatelessWidget {
           Images.gifLogoLoading,
           width: 100,
           height: 100,
+          package: 'common_dependencies'
         ),
       ),
     );

@@ -331,6 +331,12 @@ abstract class AppLocalizations {
   /// **'Log in'**
   String get introductionLogin;
 
+  /// No description provided for @introductionGotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get introductionGotIt;
+
   /// No description provided for @introductionFooterTitle.
   ///
   /// In en, this message translates to:

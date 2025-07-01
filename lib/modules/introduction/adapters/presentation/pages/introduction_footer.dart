@@ -32,13 +32,13 @@ class IntroductionFooter extends StatelessWidget {
           context
               .read<ConfigBloc>()
               .add(const ConfigChangeEvent(ConfigKey.introductionPassed, "1"));
-          AppRouter.pushReplacement(context, AppRouter.login);
+          AppRouter.pushReplacement(context, AppRouter.home);
         },
         child: SizedBox(
           height: 60,
           child: Center(
             child: Text(
-              traductions.introductionLogin,
+              traductions.introductionGotIt,
               textAlign: TextAlign.center,
               style: TextStyle(color: Themer.whiteColor, fontSize: 28,
                 fontWeight: FontWeight.w600,),

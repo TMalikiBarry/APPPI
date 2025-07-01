@@ -72,6 +72,7 @@ class PermissionsNotification extends StatelessWidget {
                 Images.permissionNotification,
                 width: tailleImage,
                 height: tailleImage,
+                package: 'common_dependencies'
               ),
             ),
           ),

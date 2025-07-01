@@ -33,7 +33,7 @@ class AliasOutputRemote {
 
   Future<Alias> creer(AliasCreateCommand alias) async {
     final ApiResponse response = await Api.post('/alias/create', data: alias.toJson());
-    return Alias.fromJson(response.data);
+    return Alias.fromJson(response.data["response"]);
   }
 
   Future<void> supprimer(String cle) async {
@@ -44,11 +44,11 @@ class AliasOutputRemote {
     try {
       Map<String, dynamic> request = alias.toJson();
       request.addAll({"otpCode": otp});
-      final ApiResponse response = await Api.put(
+      final ApiResponse response = await Api.post(
         '/alias/create',
         data: request,
       );
-      return Alias.fromJson(response.data);
+      return Alias.fromJson(response.data["response"]);
     } //
     on ApiException catch (e) {
       if (e.error == ApiError.badRequest) {

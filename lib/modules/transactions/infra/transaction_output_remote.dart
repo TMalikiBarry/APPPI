@@ -50,7 +50,7 @@ class TransactionOutputRemote {
     };
 
     final ApiResponse response = await Api.get(
-      '/transferts',
+      '/movement/history',
       queryParameters: queryParameters,
     );
 

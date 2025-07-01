@@ -144,7 +144,7 @@ class TransactionSendPageRecentsItem extends StatelessWidget {
       // Montant envoyé ou reçu
       subtitle: AmountWidget(
         montant: transaction.montant,
-        prefixText: transaction.sens.name == TransactionSens.debit.name
+        prefixText: transaction.sens?.name == TransactionSens.debit.name
             ? traductions.transactionsSendRecentItemYouSend
             : traductions.transactionsSendRecentItemYouReceive,
         // surfixText: 'francs CFA',

@@ -275,7 +275,7 @@ class MockInterceptor extends Interceptor {
           // Filter by Sens
           if (sens != null) {
             transactions =
-                transactions.where((tx) => tx.sens.name == sens).toList();
+                transactions.where((tx) => tx.sens?.name == sens).toList();
           }
           // Limit
           int limit = options.queryParameters["limit"] ?? 5;

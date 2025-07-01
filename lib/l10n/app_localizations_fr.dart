@@ -528,6 +528,21 @@ class AppLocalizationsFr extends AppLocalizations {
   String get homeTransactions => 'Transactions';
 
   @override
+  String get homeTransactionsRecent => 'Transactions récentes';
+
+  @override
+  String get transactionsNoRecent => 'Aucune transaction récente';
+
+  @override
+  String get transactionsNoRecentSubtitle => 'Vos transactions récentes apparaîtront ici';
+
+  @override
+  String get transactionsErrorLoading => 'Erreur de chargement des transactions';
+
+  @override
+  String get retry => 'Réessayer';
+
+  @override
   String get homeTransactionsRecentsNombreTitle => 'Dernières transactions';
 
   @override

@@ -44,6 +44,147 @@ class _TransactionRecentsWidgetState extends State<TransactionRecentsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations traductions = AppLocalizations.of(context)!;
+
+    return BlocProvider<TransactionRecentsBloc>(
+      create: (_) => transactionsBloc,
+      child: BlocBuilder<TransactionRecentsBloc, TransactionRecentsState>(
+        bloc: transactionsBloc,
+        builder: (context, state) {
+          return Column(
+            children: [
+              // Titre et bouton paramètres
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    traductions.homeTransactions,
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayLarge!
+                        .copyWith(color: Themer.neural04Color),
+                  ),
+                  IconButton(
+                    onPressed: () => showModalBottomSheet<int?>(
+                      context: context,
+                      builder: (_) => const TransactionRecentsNombreWidget(),
+                      isScrollControlled: true,
+                    ),
+                    icon: const Icon(Icons.more_horiz),
+                  ),
+                ],
+              ),
+
+              // Contenu principal
+              _buildContent(context, state, traductions),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildContent(BuildContext context, TransactionRecentsState state, AppLocalizations trad) {
+    if (state is TransactionRecentsLoadingState) {
+      return const TransactionListLoadingWidget();
+    }
+
+    if (state is TransactionRecentsListState) {
+      return _buildTransactionList(state.transactions.data, trad);
+    }
+
+    if (state is TransactionRecentsEmptyState) {
+      return _buildEmptyState(trad);
+    }
+
+    if (state is TransactionRecentsErrorState) {
+      return _buildErrorState(state, trad);
+    }
+
+    return const TransactionListLoadingWidget();
+  }
+
+  Widget _buildTransactionList(List<Transaction> transactions, AppLocalizations trad) {
+    return Column(
+      children: [
+        ...transactions.map((transaction) => TransactionListItemWidget(
+          transaction: transaction,
+          detailsBackRoute: AppRouter.home,
+        )),
+        const SizedBox(height: 12),
+        TextButton(
+          onPressed: () => AppRouter.push(context, AppRouter.transactionSearch),
+          child: Text(trad.transactionsSeeAll),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEmptyState(AppLocalizations trad) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 24),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        children: [
+          Icon(Icons.receipt_long, size: 48, color: Themer.neural03Color),
+          const SizedBox(height: 16),
+          Text(
+            trad.transactionsNoRecent,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            trad.transactionsNoRecentSubtitle,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Themer.neural03Color,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildErrorState(TransactionRecentsErrorState state, AppLocalizations trad) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 24),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.errorContainer,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        children: [
+          const Icon(Icons.error_outline, size: 48, color: Colors.red),
+          const SizedBox(height: 16),
+          Text(
+            trad.transactionsErrorLoading,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            state.error,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 16),
+          FilledButton.icon(
+            onPressed: () => transactionsBloc.add(TransactionRecentsListEvent(compte)),
+            icon: const Icon(Icons.refresh),
+            label: Text(trad.retry),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /*@override
+  Widget build(BuildContext context) {
     //
     AppLocalizations traductions = AppLocalizations.of(context)!;
 
@@ -130,5 +271,7 @@ class _TransactionRecentsWidgetState extends State<TransactionRecentsWidget> {
         ),
       ),
     );
-  }
+  }*/
+
+
 }

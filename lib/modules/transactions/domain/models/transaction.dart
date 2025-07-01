@@ -15,7 +15,7 @@ class Transaction {
     this.alias,
     required this.montant,
     this.montantFrais,
-    required this.sens,
+    this.sens,
     this.motif,
     this.canal,
     required this.clientNom,
@@ -63,7 +63,7 @@ class Transaction {
   //
   final double montant;
   final double? montantFrais;
-  late final TransactionSens sens;
+  TransactionSens? sens;
   String? motif;
   final String? canal;
   // Si sens c'est débit , le client c'est le payeur
@@ -189,9 +189,7 @@ class Transaction {
       montantFrais: json['montantFrais'] != null
           ? double.parse(json['montantFrais'].toString())
           : null,
-      sens: json['sens'] == 'debit'
-          ? TransactionSens.debit
-          : TransactionSens.credit,
+      sens: json['sens'],
       motif: json['motif'] as String?,
       canal: json['canal'] as String?,
       clientNom: json['clientNom'] as String,
@@ -299,7 +297,8 @@ class Transaction {
       'alias': alias,
       'montant': montant.toString(),
       'montantFrais': montantFrais?.toString(),
-      'sens': sens == TransactionSens.debit ? 'debit' : 'credit',
+      // 'sens': sens == TransactionSens.debit ? 'debit' : 'credit',
+      'sens': sens,
       'motif': motif,
       'clientNom': clientNom,
       'clientPays': clientPays,

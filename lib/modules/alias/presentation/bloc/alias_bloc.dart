@@ -156,12 +156,13 @@ class AliasBloc extends Bloc<AliasEvent, AliasState> {
     Emitter<AliasState> emit,
   ) async {
     //
-    emit(AliasMBNOVerificationState(event.values, [], null));
-    await aliasInputPort.creer(AliasCreateCommand(
-      type: AliasType.mbno,
-      phoneNumber: event.values.phoneNumber!,
-      compte: event.values.compte,
-    ));
+    try {
+      await aliasInputPort.envoyerOtp("${event.values.phoneNumber!.indicatif}${event.values.phoneNumber!.phone}");
+      emit(AliasMBNOVerificationState(event.values, [], null));
+    } on ApiException catch (e) {
+        // Erreur non gérée
+        emit(AliasFetchErrorState(event.values.compte, AliasError.unknow));
+    }
   }
 
   /// Quand on verifie le code de vérification envoyé à un numéro de téléphone

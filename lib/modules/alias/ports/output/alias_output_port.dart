@@ -9,6 +9,11 @@ abstract class AliasOutputPort {
   Future<Alias?> recuperer(String compte);
 
   ///
+  /// Envoyer l'otp à l'utilisateur
+  ///
+  Future<void> envoyerOtp(String phone);
+
+  ///
   /// Créer l'alias de l'utilisateur
   ///
   Future<Alias> creer(AliasCreateCommand alias);

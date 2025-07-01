@@ -11,10 +11,14 @@ class AliasOutputRemote {
   //
   static final logger = Logger();
 
+  Future<void> envoyerOtp(String phone) async {
+    await Api.post('/customer/send-otp', data: {"phone": phone});
+  }
+
   Future<Alias?> recuperer(String compte) async {
     try {
-      final ApiResponse response = await Api.get('/alias/$compte');
-      return response.data != null ? Alias.fromJson(response.data) : null;
+      final ApiResponse response = await Api.get('/alias/sync/search/+$compte');
+      return response.data != null ? Alias.fromJson(response.data["response"]) : null;
     } //
     catch (e) {
       // Si l'api retourne 404 c'est qu'il y'a pas d'alias
@@ -28,7 +32,7 @@ class AliasOutputRemote {
   }
 
   Future<Alias> creer(AliasCreateCommand alias) async {
-    final ApiResponse response = await Api.post('/alias', data: alias.toJson());
+    final ApiResponse response = await Api.post('/alias/create', data: alias.toJson());
     return Alias.fromJson(response.data);
   }
 
@@ -39,9 +43,9 @@ class AliasOutputRemote {
   Future<Alias> confirmer(AliasCreateCommand alias, String otp) async {
     try {
       Map<String, dynamic> request = alias.toJson();
-      request.addAll({"otp": otp});
+      request.addAll({"otpCode": otp});
       final ApiResponse response = await Api.put(
-        '/alias/${alias.phoneNumber!.value()}',
+        '/alias/create',
         data: request,
       );
       return Alias.fromJson(response.data);

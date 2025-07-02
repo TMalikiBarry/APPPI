@@ -29,7 +29,29 @@ class TransactionSearchPageFilters extends StatelessWidget {
     return BlocBuilder<TransactionSearchBloc, TransactionSearchState>(
       bloc: transactionSearchBloc,
       builder: (context, state) {
-        TransactionSearchCommand command = state.command;
+        TransactionSearchCommand command;
+        if (state is TransactionSearchInitialState) {
+          command = state.command;
+        }
+        else if (state is TransactionSearchListState) {
+          command = state.command;
+        }
+        else if (state is TransactionSearchPaginateState) {
+          command = state.command;
+        }
+        else if (state is TransactionSearchFilterState) {
+          command = state.command;
+        }
+        else if (state is TransactionSearchEmptyState) {
+          command = state.command;
+        }
+        else if (state is TransactionSearchErrorState) {
+          command = state.command;
+        }
+        else {
+          // Fallback pour les états non gérés
+          return const Center(child: CircularProgressIndicator());
+        }
         return SizedBox(
           height: MediaQuery.of(context).size.height - 48,
           child: DecoratedBox(

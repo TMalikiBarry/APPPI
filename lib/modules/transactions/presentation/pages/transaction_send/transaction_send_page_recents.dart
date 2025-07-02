@@ -34,7 +34,7 @@ class TransactionSendPageRecents extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (transactions != null && transactions!.isNotEmpty) ...[
+          if (transactions != null && transactions!.data.isNotEmpty) ...[
             Text(
               traductions.transactionsSendTitleRecents,
               style: Theme.of(context)
@@ -144,7 +144,7 @@ class TransactionSendPageRecentsItem extends StatelessWidget {
       // Montant envoyé ou reçu
       subtitle: AmountWidget(
         montant: transaction.montant,
-        prefixText: transaction.sens.name == TransactionSens.debit.name
+        prefixText: transaction.sens?.name == TransactionSens.debit.name
             ? traductions.transactionsSendRecentItemYouSend
             : traductions.transactionsSendRecentItemYouReceive,
         // surfixText: 'francs CFA',

@@ -1,1 +1,11 @@
-{}
+{
+  "pt": [
+    "homeTransactionsRecent",
+    "transactionsNoRecent",
+    "transactionsNoRecentSubtitle",
+    "transactionsErrorLoading",
+    "retry",
+    "transactionSearchEmptySubtitle",
+    "transactionSearchEmptyTitle"
+  ]
+}

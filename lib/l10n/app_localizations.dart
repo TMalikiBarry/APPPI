@@ -1093,6 +1093,36 @@ abstract class AppLocalizations {
   /// **'Transactions'**
   String get homeTransactions;
 
+  /// No description provided for @homeTransactionsRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Transactions'**
+  String get homeTransactionsRecent;
+
+  /// No description provided for @transactionsNoRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent transactions'**
+  String get transactionsNoRecent;
+
+  /// No description provided for @transactionsNoRecentSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your recent transactions will appear here'**
+  String get transactionsNoRecentSubtitle;
+
+  /// No description provided for @transactionsErrorLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading transactions'**
+  String get transactionsErrorLoading;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get retry;
+
   /// No description provided for @homeTransactionsRecentsNombreTitle.
   ///
   /// In en, this message translates to:
@@ -2412,6 +2442,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transactions'**
   String get transactionSearchTitle;
+
+  /// No description provided for @transactionSearchEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Aucune transaction ne correspond à votre recherche'**
+  String get transactionSearchEmptySubtitle;
+
+  /// No description provided for @transactionSearchEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Aucun résultat'**
+  String get transactionSearchEmptyTitle;
 
   /// No description provided for @transactionSearchInputSearchHint.
   ///

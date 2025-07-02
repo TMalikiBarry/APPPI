@@ -9,6 +9,14 @@ import '../../domain/models/transaction_send/transaction_send_command_schedule.d
 abstract class TransactionOutputPort {
   //
 
+  /// Récupère l’historique via l’API movement/history
+  Future<TransactionListe> fetchHistory({
+    required DateTime startDate,
+    required DateTime endDate,
+    required int size,
+    required int page,
+  });
+
   /// Lister les transactions (local)
   Future<TransactionListe> list({
     required String compte,

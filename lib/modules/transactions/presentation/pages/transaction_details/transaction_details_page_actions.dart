@@ -45,7 +45,7 @@ class TransactionDetailsPageActions extends StatelessWidget {
               action: () => _actionSend(context, transaction),
             ),
             // Transfert émis
-            if (transaction.sens.name == TransactionSens.debit.name) ...[
+            if (transaction.sens?.name == TransactionSens.debit.name) ...[
               // Demander l'annulation
               CtaWidget(
                 image: Images.transactionCancel,
@@ -59,7 +59,7 @@ class TransactionDetailsPageActions extends StatelessWidget {
               ),
             ],
             // Transfert reçu
-            if (transaction.sens.name == TransactionSens.credit.name) ...[
+            if (transaction.sens?.name == TransactionSens.credit.name) ...[
               // Demander le paiement
               CtaWidget(
                 image: Images.arrowDown,
@@ -85,14 +85,14 @@ class TransactionDetailsPageActions extends StatelessWidget {
             CtaWidget(
               image: Images.transactionPartager,
               label: traductions.transactionDetailsPartager,
-              disabled: transaction.sens.name == TransactionSens.credit.name,
-              action: transaction.sens.name == TransactionSens.debit.name
+              disabled: transaction.sens?.name == TransactionSens.credit.name,
+              action: transaction.sens?.name == TransactionSens.debit.name
                   ? () => _actionSplit(context, transaction)
                   : null,
             ),
 
             // Programmer le paiement
-            if (transaction.sens.name == TransactionSens.debit.name) ...[
+            if (transaction.sens?.name == TransactionSens.debit.name) ...[
               CtaWidget(
                 image: Images.transactionPlanifier,
                 label: traductions.transactionDetailsPlanifier,

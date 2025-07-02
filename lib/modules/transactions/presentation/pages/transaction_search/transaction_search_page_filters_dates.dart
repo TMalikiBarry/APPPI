@@ -27,6 +27,7 @@ class TransactionSearchPageFiltersDatesState
     //
     TransactionSearchBloc transactionSearchBloc =
         context.read<TransactionSearchBloc>();
+
     TransactionSearchCommand command = transactionSearchBloc.state.command;
 
     dateDebut = command.filters.dateDebut;

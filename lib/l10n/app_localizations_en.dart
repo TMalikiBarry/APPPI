@@ -531,6 +531,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeTransactions => 'Transactions';
 
   @override
+  String get homeTransactionsRecent => 'Recent Transactions';
+
+  @override
+  String get transactionsNoRecent => 'No recent transactions';
+
+  @override
+  String get transactionsNoRecentSubtitle => 'Your recent transactions will appear here';
+
+  @override
+  String get transactionsErrorLoading => 'Error loading transactions';
+
+  @override
+  String get retry => 'Try Again';
+
+  @override
   String get homeTransactionsRecentsNombreTitle => 'Last transactions';
 
   @override
@@ -1225,6 +1240,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get transactionSearchTitle => 'Transactions';
+
+  @override
+  String get transactionSearchEmptySubtitle => 'Aucune transaction ne correspond à votre recherche';
+
+  @override
+  String get transactionSearchEmptyTitle => 'Aucun résultat';
 
   @override
   String get transactionSearchInputSearchHint => 'Search';

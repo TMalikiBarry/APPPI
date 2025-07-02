@@ -8,6 +8,7 @@ import '../../../../core/theme.dart';
 import '../../../config/adapters/ui/bloc/config_bloc.dart';
 import '../../../config/adapters/ui/bloc/config_state.dart';
 import '../../../config/domain/models/config_keys.dart';
+import 'package:micro_core/micro_core.dart';
 
 class HomeBottomNavigationBar extends StatelessWidget {
   ///
@@ -98,6 +99,22 @@ class HomeBottomNavigationBar extends StatelessWidget {
                     const AssetImage(Images.homeFooterTransfer,package: 'common_dependencies'),
                     color: Theme.of(context).colorScheme.onSurface,
                     size: 24,
+                  ),
+                ),
+                FloatingActionButton.small(
+                  onPressed: () {
+                    // Redirection vers la page principale
+                    AppRouter.go(context, Routes.customerApp as String);
+                  },
+                  elevation: 0,
+                  heroTag: "customer App",
+                  backgroundColor: Theme.of(context).colorScheme.surface,
+                  child: Image.asset(
+                    "assets/images/touch-logo.png",
+                    package: 'common_dependencies',
+                    width: 24,  // Ajusté pour correspondre aux autres icônes
+                    height: 24, // Ajusté pour correspondre aux autres icônes
+                    fit: BoxFit.contain,
                   ),
                 ),
               ],

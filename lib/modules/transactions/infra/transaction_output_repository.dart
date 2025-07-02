@@ -1,7 +1,6 @@
 import 'package:logger/logger.dart';
 
-import '../../../shared/models/liste_meta.dart';
-import '../domain/models/new/movement_list_dto.dart';
+
 import '../domain/models/transaction.dart';
 import '../domain/models/transaction_cancel_reason.dart';
 import '../domain/models/transaction_liste.dart';
@@ -76,7 +75,8 @@ class TransactionOutputRepository implements TransactionOutputPort {
     List<String>? categories,
     String? keyword,
   }) async {
-    return await repoLocal.list(
+
+    /*return await repoLocal.list(
       compte: compte,
       alias: alias,
       page: page,
@@ -87,6 +87,19 @@ class TransactionOutputRepository implements TransactionOutputPort {
       dateOperationDebut: dateOperationDebut,
       dateOperationFin: dateOperationFin,
       categories: categories,
+      keyword: keyword,
+    );*/
+
+    return await repoRemote.list(
+      compte: compte,
+      alias: alias,
+      page: page,
+      limit: limit,
+      sortBy: sortBy,
+      fields: fields,
+      sens: sens,
+      dateOperationDebut: dateOperationDebut,
+      dateOperationFin: dateOperationFin,
       keyword: keyword,
     );
   }

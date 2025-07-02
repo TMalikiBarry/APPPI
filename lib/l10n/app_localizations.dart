@@ -2437,6 +2437,18 @@ abstract class AppLocalizations {
   /// **'Transactions'**
   String get transactionSearchTitle;
 
+  /// No description provided for @transactionSearchEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Aucune transaction ne correspond à votre recherche'**
+  String get transactionSearchEmptySubtitle;
+
+  /// No description provided for @transactionSearchEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Aucun résultat'**
+  String get transactionSearchEmptyTitle;
+
   /// No description provided for @transactionSearchInputSearchHint.
   ///
   /// In en, this message translates to:

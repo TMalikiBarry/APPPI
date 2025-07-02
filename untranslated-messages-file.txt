@@ -4,6 +4,8 @@
     "transactionsNoRecent",
     "transactionsNoRecentSubtitle",
     "transactionsErrorLoading",
-    "retry"
+    "retry",
+    "transactionSearchEmptySubtitle",
+    "transactionSearchEmptyTitle"
   ]
 }

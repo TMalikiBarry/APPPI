@@ -1239,6 +1239,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get transactionSearchTitle => 'Transactions';
 
   @override
+  String get transactionSearchEmptySubtitle => 'Aucune transaction ne correspond à votre recherche';
+
+  @override
+  String get transactionSearchEmptyTitle => 'Aucun résultat';
+
+  @override
   String get transactionSearchInputSearchHint => 'Recherche';
 
   @override

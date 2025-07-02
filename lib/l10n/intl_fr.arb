@@ -661,6 +661,8 @@
   "transactionErrorUnknow": "Votre demande ne peut pas être traitée pour le moment. Veuillez réessayez ultérieurement",
   "@_TRANSACTIONS_SEARCH": {},
   "transactionSearchTitle": "Transactions",
+  "transactionSearchEmptySubtitle" : "Aucune transaction ne correspond à votre recherche",
+  "transactionSearchEmptyTitle": "Aucun résultat",
   "transactionSearchInputSearchHint": "Recherche",
   "transactionSearchInputFilterTitle": "Filtrer",
   "transactionSearchInputFilterDateTitle": "Plage de dates",

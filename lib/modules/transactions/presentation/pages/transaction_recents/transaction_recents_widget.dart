@@ -48,39 +48,47 @@ class _TransactionRecentsWidgetState extends State<TransactionRecentsWidget> {
 
     return BlocProvider<TransactionRecentsBloc>(
       create: (_) => transactionsBloc,
-      child: BlocBuilder<TransactionRecentsBloc, TransactionRecentsState>(
-        bloc: transactionsBloc,
-        builder: (context, state) {
-          return Column(
-            children: [
-              // Titre et bouton paramètres
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    traductions.homeTransactions,
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayLarge!
-                        .copyWith(color: Themer.neural04Color),
-                  ),
-                  IconButton(
-                    onPressed: () => showModalBottomSheet<int?>(
-                      context: context,
-                      builder: (_) => const TransactionRecentsNombreWidget(),
-                      isScrollControlled: true,
-                    ),
-                    icon: const Icon(Icons.more_horiz),
-                  ),
-                ],
-              ),
-
-              // Contenu principal
-              _buildContent(context, state, traductions),
-            ],
-          );
+      child: BlocListener<ConfigBloc, ConfigState>(
+          listenWhen: (previous, current) =>
+          current is ConfigLoadedState &&
+          current.updatedKey == ConfigKey.transactionsRecentNbItems,
+          listener: (context, state) {
+          transactionsBloc.add(TransactionRecentsListEvent(compte));
         },
+        child: BlocBuilder<TransactionRecentsBloc, TransactionRecentsState>(
+          bloc: transactionsBloc,
+          builder: (context, state) {
+            return Column(
+              children: [
+                // Titre et bouton paramètres
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      traductions.homeTransactions,
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayLarge!
+                          .copyWith(color: Themer.neural04Color),
+                    ),
+                    IconButton(
+                      onPressed: () => showModalBottomSheet<int?>(
+                        context: context,
+                        builder: (_) => const TransactionRecentsNombreWidget(),
+                        isScrollControlled: true,
+                      ),
+                      icon: const Icon(Icons.more_horiz),
+                    ),
+                  ],
+                ),
+
+                // Contenu principal
+                _buildContent(context, state, traductions),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

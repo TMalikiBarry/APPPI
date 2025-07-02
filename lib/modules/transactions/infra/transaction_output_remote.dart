@@ -33,8 +33,6 @@ class TransactionOutputRemote {
   ///
   final logger = Logger();
 
-  final String token = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVMkhtakpleFlmWHNJdzAwVU9GeUI0S1cxaEhmZ2dtRDZaSWRqdjhfTmlBIn0.eyJleHAiOjE3NTE0NTExMTEsImlhdCI6MTc1MTQ0OTMxMSwianRpIjoiNzdjODcwZWQtYzdlMy00OTM4LWE5NjEtZTc1NDgwYTUyZGE5IiwiaXNzIjoiaHR0cHM6Ly9pbnRvdWNoZ3UyLXFsZi53b3JsZGxpbmUtc29sdXRpb25zLmNvbS9hdXRoL3JlYWxtcy9zc28taW50b3VjaC1pYWNjIiwiYXVkIjpbImFnZW50YXBpIiwiYWNjb3VudCJdLCJzdWIiOiJkZjNkYzI5NS1kMGIxLTQ3YTctYjM0Mi05ZjViNTFiMDU5NGEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJteXRvdWNocG9pbnQtYXBpIiwic2Vzc2lvbl9zdGF0ZSI6IjZiZTU5MGE1LTE4ZTctNDZjOC1iMzI0LWU1YTk0ZDVlOWUxZCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDgyIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXNzby1pbnRvdWNoLXFsZiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhZ2VudGFwaSI6eyJyb2xlcyI6WyJhZ2VudCIsImNsaWVudCIsImdyb3NzaXN0ZSJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiNmJlNTkwYTUtMThlNy00NmM4LWIzMjQtZTVhOTRkNWU5ZTFkIiwiY291bnRyeSI6IlNOIiwiYWNjb3VudF9udW1iZXIiOiJTTkNDVVNUMjUwMDAwMDE2OCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZ2VuZGVyIjoiTUFMRSIsImlkZW50aWZpYW50IjoiMjIxNzYxOTkyMjExIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiMjIxNzYxOTkyMjExIiwicHJvZHVjdF9jb2RlIjoiTVlUUCIsImdpdmVuX25hbWUiOiJNYWxpa2kiLCJwaG9uZU51bWJlciI6IisyMjE3NjE5OTIyMTEiLCJuYW1lIjoiTWFsaWtpIEJhcnJ5IiwicGhvbmVfbnVtYmVyIjoiKzIyMTc2MTk5MjIxMSIsImZhbWlseV9uYW1lIjoiQmFycnkiLCJlbWFpbCI6InRoaWVybm8uYmFycnkwMUBpbnRvdWNoZ3JvdXAubmV0In0.mlN4OibNgA84XqZnlruDiLDk4dZ1YwlwyKIQxeIjMPHQA1ZDDGSokLYNY-UmnQTZnfkgalgQIY0Ihb5BDGCkV8p_Uc-J0AzK5JOk5TemzZJw4EJK7p2K6-1eiJVH0zHARQmxjtd8POlXLpw8hhxQKtntOmHobc2sQOy75X9fkhddtooV_UDiWVm0KHrSDxiM0RoRemayFBlw4AfBRL17ZYtJeFavtHNTN3eXF50cNmqLE-ar3ueJEZWfEQEkGPyIznkR2gOlnUwKfyLnVHuWNoMYtjGv2mR_NhqoM0-Ypmf9phFGspIaTNSARdZwE5bYvqmOf7C0h8yO94XSMJMGMg";
-
   /// Historique des transactions à partir du serveur
   Future<TransactionListe> history({
     DateTime? startDate,
@@ -52,16 +50,12 @@ class TransactionOutputRemote {
       'size'     : size.toString(),
       'page'     : page.toString(),
     };
-    final headers = {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json',
-    };
 
     // 1) Appel relatif
     final resp = await Api.get(
       '/movement/history',
       queryParameters: qs,
-      headers: headers,
+      // headers: headers,
     );
 
     // 2) Log pour debug

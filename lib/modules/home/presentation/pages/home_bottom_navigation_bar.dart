@@ -41,7 +41,7 @@ class HomeBottomNavigationBar extends StatelessWidget {
                       : const Color(0xEF202020),
                   blurRadius: 8.0, // soften the shadow
                   spreadRadius: 0.0, //extend the shadow
-                  offset: Offset(
+                  offset: const Offset(
                     8.0, // Move to right 5  horizontally
                     8.0, // Move to bottom 5 Vertically
                   ), // Shadow position

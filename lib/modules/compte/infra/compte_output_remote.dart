@@ -14,8 +14,8 @@ class CompteOutputRemote {
   Future<double> getSolde(String compteId) async {
     try {
       final Response response =
-          await Api.client.get('/comptes/$compteId/soldes');
-      return response.data["solde"] + 0.0;
+          await Api.client.get('/customer/compte');
+      return response.data["response"]["balance"]["balance"] + 0.0;
     } //
     on ApiException catch (e) {
       if (e.error == ApiError.notFound) {

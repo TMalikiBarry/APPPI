@@ -104,7 +104,7 @@ class HomeBottomNavigationBar extends StatelessWidget {
                 FloatingActionButton.small(
                   onPressed: () {
                     // Redirection vers la page principale
-                    AppRouter.go(context, Routes.customerApp as String);
+                    AppRouter.go(context, AppRouter.homePage);
                   },
                   elevation: 0,
                   heroTag: "customer App",

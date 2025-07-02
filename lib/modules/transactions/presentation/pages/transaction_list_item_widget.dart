@@ -78,7 +78,8 @@ class TransactionListItemWidget extends StatelessWidget {
           // Nom et prenoms du client
           Expanded(
             child: Text(
-              transaction.clientNom,
+              transaction.sens == TransactionSens.debit ?
+                transaction.clientNom : transaction.acquirerAccountLabel!,
               style: Theme.of(context).textTheme.headlineSmall,
               overflow: TextOverflow.ellipsis,
             ),

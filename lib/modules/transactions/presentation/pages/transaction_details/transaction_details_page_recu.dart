@@ -157,7 +157,7 @@ class TransactionDetailsPageRecu extends StatelessWidget {
   
         _recuItem(
           context,
-          traductions.transactionDetailsRecuInfoIdentifiant, 
+          traductions.transactionDetailsRecuInfoReference,
           data : transaction.endToEndId,
           rapportSmallTitle: rapportSmallTitle,
           rapportSubTitle: rapportSubTitle
@@ -166,7 +166,7 @@ class TransactionDetailsPageRecu extends StatelessWidget {
         const SizedBox(height: 10,),
                               
         // Référence
-        if(transaction.txId != null)...[
+        /*if(transaction.txId != null)...[
           _recuItem(
             context,
             traductions.transactionDetailsRecuInfoReference, 
@@ -176,7 +176,7 @@ class TransactionDetailsPageRecu extends StatelessWidget {
           ),
           //
           const SizedBox(height: 10,),
-        ],
+        ],*/
                               
         // Montant
         _recuItem(
@@ -199,21 +199,38 @@ class TransactionDetailsPageRecu extends StatelessWidget {
         ),
         //
         const SizedBox(height: 10,),
-                              
+
         // Emetteur/ Recepteur
+        /*_recuItem(
+            context, transaction.sens == TransactionSens.credit
+            ? traductions.transactionDetailsRecuInfoPayeurLabel
+            : traductions.transactionDetailsRecuInfoPayeLabel,
+            data : transaction.clientNom,
+            rapportSmallTitle: rapportSmallTitle,
+            rapportSubTitle: rapportSubTitle
+        ),*/
+        // Emetteur
         _recuItem(
-          context, transaction.sens == TransactionSens.credit 
-          ? traductions.transactionDetailsRecuInfoPayeurLabel 
-          : traductions.transactionDetailsRecuInfoPayeLabel, 
+          context,  traductions.transactionDetailsRecuInfoPayeurLabel,
           data : transaction.clientNom,
           rapportSmallTitle: rapportSmallTitle,
           rapportSubTitle: rapportSubTitle
         ),
         //
         const SizedBox(height: 10,),
+
+        // Recepteur
+        _recuItem(
+            context, traductions.transactionDetailsRecuInfoPayeLabel,
+            data : transaction.acquirerAccountLabel!,
+            rapportSmallTitle: rapportSmallTitle,
+            rapportSubTitle: rapportSubTitle
+        ),
+        //
+        const SizedBox(height: 10,),
                               
         // identifiant de l' Emetteur/ Recepteur
-        _recuItem(
+        /*_recuItem(
           context,
           transaction.clientAlias != null 
           ? traductions.transactionDetailsRecuInfoClientAlias 
@@ -223,15 +240,36 @@ class TransactionDetailsPageRecu extends StatelessWidget {
           rapportSubTitle: rapportSubTitle
         ),
         //
+        const SizedBox(height: 10,),*/
+
+        // identifiant de l' Emetteur
+        _recuItem(
+            context,traductions.transactionDetailsRecuInfoPayeurID,
+            data : transaction.compte,
+            rapportSmallTitle: rapportSmallTitle,
+            rapportSubTitle: rapportSubTitle
+        ),
+        //
         const SizedBox(height: 10,),
+
+        // identifiant du Recepteur
+        _recuItem(
+            context,traductions.transactionDetailsRecuInfoPayeID,
+            data : transaction.acquirerAccount!,
+            rapportSmallTitle: rapportSmallTitle,
+            rapportSubTitle: rapportSubTitle
+        ),
+        //
+        const SizedBox(height: 10,),
+
+
                               
         // institution
-        if(transaction.clientCompte != null 
-          && transaction.clientPSPNom != null)...[
+        if(transaction.canal != null)...[
           _recuItem(
             context, 
             traductions.transactionDetailsRecuInfoClientInstitution,
-            data : transaction.clientPSPNom!,
+            data : transaction.canal!,
             rapportSmallTitle: rapportSmallTitle,
             rapportSubTitle: rapportSubTitle
           ),

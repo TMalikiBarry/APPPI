@@ -205,7 +205,8 @@ class TransactionVerificationPage extends StatelessWidget {
                     labelText:
                         traductions.transactionFormVerificationClientName,
                     controller: TextEditingController(
-                      text: transaction.clientNom,
+                      text: transaction.sens == TransactionSens.debit ?
+                      transaction.clientNom : transaction.acquirerAccountLabel!,
                     ),
                     readOnly: true,
                   ),

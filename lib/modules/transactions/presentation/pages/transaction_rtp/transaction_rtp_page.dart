@@ -304,8 +304,10 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
       sens: TransactionSens.debit,
       clientNom: parts[3],
       clientPays: parts[2],
-      endToEndId: "",
+      endToEndId: transaction.endToEndId,
       dateOperation: DateTime.parse(parts[4].replaceAll('@', '')),
+      acquirerPhoneNumber: transaction.acquirerPhoneNumber,
+      acquirerAccountLabel: transaction.acquirerAccountLabel,
     );
     // Afficher la transaction payée par le demandeur et le destinataire
     return Column(

@@ -62,7 +62,7 @@ class TransactionRecentsBloc
       // 4) Appel serveur unique
       final history = await transactionsInputPort.fetchHistory(
         startDate: start,
-        endDate: now,
+        endDate: now.add(const Duration(days: 1)),
         size: limit,
         page: 0,
       );

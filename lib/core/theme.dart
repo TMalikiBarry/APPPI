@@ -52,10 +52,10 @@ class Themer {
   static const Color blackColor = Color(0xFF000000);
 
   /// Couleur marron
-  static const Color brownColor = Color(0xFF542D00);
+  static const Color brownColor = Color(0xFF282C5D);
 
   /// Couleur jaune
-  static const Color amberColor = Color(0xFFF2A900);
+  static const Color amberColor = Color(0xFFA81735);
 
   /// Couleur neural 01
   static const Color neural01Color = Color(0xFFE6E4E2);
@@ -73,13 +73,13 @@ class Themer {
   static const Color neural05Color = Color(0xFF5C5451);
 
   // Primary
-  static const Color primary = Color(0xFFF2A900);
+  static const Color primary = Color(0xFFA81735);
 
   /// Primary Light
-  static const Color primaryLight = Color(0xFFF9EBC2);
+  static const Color primaryLight = Color(0xffbbc0fb);
 
   /// Primary Light
-  static const Color primaryDark = Color(0xFFC08507);
+  static const Color primaryDark = Color(0xFFA81735);
 
   /// Couleur primaire bordure
   static const Color primaryStroke = Color(0xFFFFD573);
@@ -94,6 +94,12 @@ class Themer {
 
   /// Gray
   static const Color gray = Color(0xFFA1A5AC);
+
+  static const primaryColor = Color(0xFF282C5D);
+  static const bgCircleColor = Color(0xFFE7E9FF);
+  static const moonColor = Color(0xffbbc0fb);
+  static const moonColor2 = Color(0xFFE7E9FF);
+  static const secondaryColor = Color(0xFF282C5D);
 
   static const TextStyle _defaultStyleLight = TextStyle(
     color: blackColor,
@@ -111,7 +117,7 @@ class Themer {
   static const double btnSmallHeight = 38;
 
   /// Light theme data
-  static ThemeData lightTheme = ThemeData(
+  static ThemeData lightBlueTheme = ThemeData(
     useMaterial3: true,
     appBarTheme: const AppBarTheme(
       backgroundColor: whiteColor,
@@ -125,7 +131,7 @@ class Themer {
     primaryColor: primary,
     primaryColorDark: primaryDark,
     secondaryHeaderColor: primaryLight,
-    cardColor: const Color(0xFFFAF8F6),
+    cardColor: const Color(0xFFF6F8FB),
     scaffoldBackgroundColor: whiteColor,
     dialogTheme: const DialogTheme(
       surfaceTintColor: whiteColor,
@@ -173,7 +179,7 @@ class Themer {
         fontWeight: FontWeight.w400,
       ),
       // Default / Regular / Title1 et Default / Regular / Title1 (Semi)
-      titleSmall: _defaultStyleLight.copyWith(
+      titleSmall: _defaultStyleDark.copyWith(
         fontSize: 28,
         fontWeight: FontWeight.w600,
       ),
@@ -233,7 +239,7 @@ class Themer {
       ),
     ),
     cardTheme: const CardTheme(
-      color: Color(0xFFFAF8F6),
+      color: Color(0xFFF6F8FB),
       elevation: 0.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -257,7 +263,7 @@ class Themer {
     // Style des champs inputs de formulaire
     inputDecorationTheme: const InputDecorationTheme(
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 5.0),
-      fillColor: Color(0xFFFAF8F6),
+      fillColor: Color(0xFFF6F8FB),
       filled: true,
       border: InputBorder.none,
       //floatingLabelStyle: textstyle(color: colors.red),
@@ -316,7 +322,7 @@ class Themer {
         backgroundColor: WidgetStateProperty.resolveWith<Color?>(
           (Set<WidgetState> states) {
             if (states.contains(WidgetState.pressed)) {
-              return const Color(0xFFE1A009);
+              return const Color(0xFFA81735);
             } else if (states.contains(WidgetState.disabled)) {
               return const Color(0xFFF5F5F1);
             } else {
@@ -649,7 +655,7 @@ class Themer {
         backgroundColor: WidgetStateProperty.resolveWith<Color?>(
           (Set<WidgetState> states) {
             if (states.contains(WidgetState.pressed)) {
-              return const Color(0xFFE1A009);
+              return const Color(0xFFA81735);
             } else if (states.contains(WidgetState.disabled)) {
               return const Color(0xFF2E2E2E);
             } else {
@@ -792,7 +798,7 @@ class Themer {
     primaryColor: Color(0xFFF3DC88),
     primaryColorDark: Color(0xFFF3DC88),
     secondaryHeaderColor: Color(0xFFF3DC88),
-    cardColor: const Color(0xFFFAF8F6),
+    cardColor: const Color(0xFFF6F8FB),
     scaffoldBackgroundColor: whiteColor,
     dialogTheme: const DialogTheme(
       surfaceTintColor: whiteColor,
@@ -900,7 +906,7 @@ class Themer {
       ),
     ),
     cardTheme: const CardTheme(
-      color: Color(0xFFFAF8F6),
+      color: Color(0xFFF6F8FB),
       elevation: 0.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -924,7 +930,7 @@ class Themer {
     // Style des champs inputs de formulaire
     inputDecorationTheme: const InputDecorationTheme(
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 5.0),
-      fillColor: Color(0xFFFAF8F6),
+      fillColor: Color(0xFFF6F8FB),
       filled: true,
       border: InputBorder.none,
       //floatingLabelStyle: textstyle(color: colors.red),
@@ -1111,8 +1117,8 @@ class Themer {
     ),
   );
 
-  /// Light Blue theme data
-  static ThemeData lightBlueTheme = ThemeData(
+  /// Light Blue theme data using one
+  static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     appBarTheme: const AppBarTheme(
       backgroundColor: whiteColor,
@@ -1123,21 +1129,21 @@ class Themer {
       elevation: 0,
     ),
     brightness: Brightness.light,
-    primaryColor: Color(0xFF3B63DB),
-    primaryColorDark: Color(0xFF3B63DB),
-    secondaryHeaderColor: Color(0xFF3B63DB),
-    cardColor: const Color(0xFFFAF8F6),
+    primaryColor: Color(0xFFA81735),
+    primaryColorDark: Color(0xFFA81735),
+    secondaryHeaderColor: secondaryColor,
+    cardColor: const Color(0xFFF6F8FB),
     scaffoldBackgroundColor: whiteColor,
     dialogTheme: const DialogTheme(
       surfaceTintColor: whiteColor,
     ),
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
-      primary: Color(0xFF3B63DB),
+      primary: Color(0xFFA81735),
       onPrimary: whiteColor,
       secondary: primaryLight,
       onSecondary: blackColor,
-      tertiary: Color(0xFF3B63DB),
+      tertiary: Color(0xFFA81735),
       onTertiary: blackColor,
       error: systemErrorColor,
       onError: blackColor,
@@ -1147,11 +1153,11 @@ class Themer {
     buttonTheme: const ButtonThemeData(
       colorScheme: ColorScheme(
         brightness: Brightness.light,
-        primary: Color(0xFF3B63DB),
+        primary: Color(0xFFA81735),
         onPrimary: blackColor,
-        secondary: Color(0xFF3B63DB),
+        secondary: Color(0xFFA81735),
         onSecondary: blackColor,
-        tertiary: Color(0xFF3B63DB),
+        tertiary: Color(0xFFA81735),
         onTertiary: blackColor,
         error: systemErrorColor,
         onError: blackColor,
@@ -1160,7 +1166,7 @@ class Themer {
       ),
     ),
     primaryIconTheme: const IconThemeData(
-      color: Color(0xFF3B63DB),
+      color: Color(0xFFA81735),
     ),
     textTheme: TextTheme(
       // Default / Regular / LargeTitle (Semi)
@@ -1234,7 +1240,7 @@ class Themer {
       ),
     ),
     cardTheme: const CardTheme(
-      color: Color(0xFFFAF8F6),
+      color: Color(0xFFF6F8FB),
       elevation: 0.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -1258,7 +1264,7 @@ class Themer {
     // Style des champs inputs de formulaire
     inputDecorationTheme: const InputDecorationTheme(
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 5.0),
-      fillColor: Color(0xFFFAF8F6),
+      fillColor: Color(0xFFF6F8FB),
       filled: true,
       border: InputBorder.none,
       //floatingLabelStyle: textstyle(color: colors.red),
@@ -1285,7 +1291,7 @@ class Themer {
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
         //borderSide: BorderSide.none,
         borderSide: BorderSide(
-          color: Color(0xFF3B63DB),
+          color: Color(0xFFA81735),
         ),
       ),
       //border: InputBorder.none,
@@ -1317,11 +1323,11 @@ class Themer {
         backgroundColor: WidgetStateProperty.resolveWith<Color?>(
           (Set<WidgetState> states) {
             if (states.contains(WidgetState.pressed)) {
-              return const Color(0xFF3B63DB);
+              return const Color(0xFFA81735);
             } else if (states.contains(WidgetState.disabled)) {
               return const Color(0xFFF5F5F1);
             } else {
-              return Color(0xFF3B63DB); // Defer to the widget's default.
+              return Color(0xFFA81735); // Defer to the widget's default.
             }
           },
         ),
@@ -1330,7 +1336,7 @@ class Themer {
             if (states.contains(WidgetState.disabled)) {
               return neural03Color;
             } else {
-              return blackColor; // Defer to the widget's default.
+              return whiteColor; // Defer to the widget's default.
             }
           },
         ),
@@ -1343,7 +1349,7 @@ class Themer {
         elevation: const WidgetStatePropertyAll(0.0),
         textStyle: WidgetStateProperty.all(
           const TextStyle(
-            color: blackColor, // Text color
+            color: whiteColor, // Text color
             fontSize: 17,
             fontWeight: FontWeight.w600, // Text size
           ),
@@ -1354,15 +1360,15 @@ class Themer {
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
-        foregroundColor: const WidgetStatePropertyAll(Color(0xFF3B63DB)),
+        foregroundColor: const WidgetStatePropertyAll(Color(0xFFA81735)),
         textStyle: const WidgetStatePropertyAll(
           TextStyle(
-            color: Color(0xFF3B63DB),
+            color: Color(0xFFA81735),
             fontSize: 17,
             fontWeight: FontWeight.w400,
           ),
         ),
-        overlayColor: WidgetStateProperty.all<Color>(Color(0xFF3B63DB)),
+        overlayColor: WidgetStateProperty.all<Color>(Color(0xFFA81735)),
         padding: const WidgetStatePropertyAll(EdgeInsets.zero),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         minimumSize: const WidgetStatePropertyAll(Size(55, 26)),
@@ -1374,7 +1380,7 @@ class Themer {
       trackColor: WidgetStateProperty.resolveWith<Color?>(
         (Set<WidgetState> states) {
           if (states.contains(WidgetState.selected)) {
-            return Color(0xFF3B63DB);
+            return Color(0xFFA81735);
           } else {
             return neural01Color;
           }
@@ -1460,7 +1466,7 @@ class Themer {
     primaryColor: const Color(0xFF9FF796),
     primaryColorDark: const Color(0xFF7FC077),
     secondaryHeaderColor: const Color(0xFF9FF796),
-    cardColor: const Color(0xFFFAF8F6),
+    cardColor: const Color(0xFFF6F8FB),
     scaffoldBackgroundColor: whiteColor,
     dialogTheme: const DialogTheme(
       surfaceTintColor: whiteColor,
@@ -1568,7 +1574,7 @@ class Themer {
       ),
     ),
     cardTheme: const CardTheme(
-      color: Color(0xFFFAF8F6),
+      color: Color(0xFFF6F8FB),
       elevation: 0.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -1592,7 +1598,7 @@ class Themer {
     // Style des champs inputs de formulaire
     inputDecorationTheme: const InputDecorationTheme(
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 5.0),
-      fillColor: Color(0xFFFAF8F6),
+      fillColor: Color(0xFFF6F8FB),
       filled: true,
       border: InputBorder.none,
       //floatingLabelStyle: textstyle(color: colors.red),
@@ -1651,7 +1657,7 @@ class Themer {
         backgroundColor: WidgetStateProperty.resolveWith<Color?>(
           (Set<WidgetState> states) {
             if (states.contains(WidgetState.pressed)) {
-              return const Color(0xFFE1A009);
+              return const Color(0xFFA81735);
             } else if (states.contains(WidgetState.disabled)) {
               return const Color(0xFFF5F5F1);
             } else {

@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import 'package:common_dependencies/utils/constants.dart';
+import 'package:common_dependencies/utils/utils.dart';
 import '../modules/security/infra/connexion_output_authpkce.dart';
 import 'api_mock.dart';
 import 'env.dart';
@@ -29,7 +30,8 @@ class Api {
 
     // Recuperer l'URL de l'API
 
-    String apiUrl = const String.fromEnvironment("API_URL");
+    //String apiUrl = const String.fromEnvironment("API_URL");
+    String apiUrl = BASE_API_URL;
     logger.i("API URL $apiUrl");
     url = apiUrl;
 
@@ -296,7 +298,7 @@ class TokenInterceptor extends Interceptor {
   void onError(DioException error, ErrorInterceptorHandler handler) async {
     logger.e("Error HTTP - dans Token interceptor", error: error);
     // Si c'est un problème d'autorisations
-    if (error.response?.statusCode == 40111) {
+    if (error.response?.statusCode == 401) {
       // Si une réponse 401 est reçue, actualisez le jeton d'accès
       String? newAccessToken = await ConnexionOutputAuthpkce.refreshToken();
       if (newAccessToken != null) {
@@ -334,7 +336,7 @@ class LoggingInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) {
     logger.i('''--> ${options.method.toUpperCase()} 
-        ${options.baseUrl} ${options.path}''');
+        ${options.baseUrl}${options.path}''');
     logger.i("Request Headers:");
     options.headers.forEach((k, v) => logger.i('$k: $v'));
     logger.i("Request queryParameters:");

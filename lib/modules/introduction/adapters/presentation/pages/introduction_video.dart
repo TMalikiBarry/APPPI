@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../../../core/theme.dart';
 import '../../../../../l10n/app_localizations.dart';
 import 'introduction_item.dart';
 
@@ -55,18 +56,25 @@ class IntroductionVideo extends StatelessWidget {
         // Bienvenue
         Text(
           AppLocalizations.of(context)!.introductionLegende,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: const Color(0xFF8B887E),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                //color: const Color(0xFF282C5D),
+                color: Themer.primaryLight,
               ),
         ),
         // Distance entre Bienvenue et titre de la vidéo
         const SizedBox(height: 10),
         // Titre de la vidéo introductive
-        Text(
-          item.titre,
-          textAlign: TextAlign.center,
-          style: textSize.copyWith(color: Colors.white),
-        ),
+        Padding(
+          padding:const EdgeInsets.only(left: 30,right: 30) ,
+          child: Text(
+            item.titre,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Themer.primaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 18
+            ),
+          ),),
       ],
     );
   }

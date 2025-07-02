@@ -225,7 +225,7 @@ class IdentificationPinEnterPage extends StatelessWidget {
       // alors si IOS affiche face sinon fingerprint
       var biometryIcon = highlightedMethod == BiometricMethod.face //
           ? ImageIcon(
-              AssetImage(Images.virtualKeyboardIconsFace),
+              AssetImage(Images.virtualKeyboardIconsFace,package: 'common_dependencies'),
               color: Theme.of(context).colorScheme.onSurface,
               size: 24,
             ) //

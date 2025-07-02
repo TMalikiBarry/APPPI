@@ -118,7 +118,7 @@ class ProfileParametrePageTheme extends StatelessWidget {
               color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.all(Radius.circular(8.0)),
               image: DecorationImage(
-                image: AssetImage(_themeIcon(theme)),
+                image: AssetImage(_themeIcon(theme),package: 'common_dependencies'),
                 fit: BoxFit.cover,
               ),
             ),

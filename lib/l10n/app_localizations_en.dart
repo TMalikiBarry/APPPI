@@ -126,6 +126,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introductionLogin => 'Log in';
 
   @override
+  String get introductionGotIt => 'Got it';
+
+  @override
   String get introductionFooterTitle => 'Don’t have account?';
 
   @override

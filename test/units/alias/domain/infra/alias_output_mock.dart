@@ -68,6 +68,11 @@ class MockAliasOutputPort implements AliasOutputPort {
         dateCloture: DateTime.now()
       );
   }
+
+  @override
+  Future<void> envoyerOtp(String phone) async {
+    //
+  }
 }
 
 class MockAliasErrorOutputPort implements AliasOutputPort {
@@ -122,6 +127,9 @@ class MockAliasErrorOutputPort implements AliasOutputPort {
     // TODO: implement revendicationRepondre
     throw UnimplementedError();
   }
-  
-  
+
+  @override
+  Future<void> envoyerOtp(String phone) async {
+    //
+  }
 }

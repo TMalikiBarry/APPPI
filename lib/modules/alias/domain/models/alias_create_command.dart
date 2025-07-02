@@ -23,11 +23,11 @@ class AliasCreateCommand {
   /// Convertit un objet Alias en JSON
   Map<String, dynamic> toJson() {
     return {
-      'cle': phoneNumber != null && phoneNumber!.value() != null
+      'clientPhoneNumber': phoneNumber != null && phoneNumber!.value() != null
           ? phoneNumber!.value()
           : null,
-      'type': type.code,
-      'compte': compte
+      'aliasType': type.code,
+      'compte': compte,
     };
   }
 }

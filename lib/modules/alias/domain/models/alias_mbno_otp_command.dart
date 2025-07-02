@@ -3,7 +3,7 @@ class AliasMbnoOtpCommand {
   //
   AliasMbnoOtpCommand(this.value);
 
-  static const int otpSize = 6;
+  static const int otpSize = 4;
   List<int> value;
 
   bool isValid() {

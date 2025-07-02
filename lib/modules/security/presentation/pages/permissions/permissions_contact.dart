@@ -64,6 +64,7 @@ class PermissionsContact extends StatelessWidget {
               Images.permissionContact,
               width: tailleImage,
               height: tailleImage,
+              package: 'common_dependencies'
             ),
           ),
         ),

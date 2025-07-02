@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/core/di.dart';
 
 import '../../../domain/models/connected_user.dart';
 import '../../../domain/models/connexion_response.dart';
@@ -11,6 +14,7 @@ import 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   //
   final logger = Logger();
+  static const keyIdToken = "ID_TOKEN";
 
   /// Service de gestion des identifications
   final ConnexionInputPort connexionInputPort;
@@ -31,9 +35,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   ConnectedUser? getConnectedUser() {
+    print("ConnectedUser.current");
+    print(ConnectedUser.current);
     return state is LoginSuccessState
         ? (state as LoginSuccessState).user!
-        : null;
+        : ConnectedUser.current;
   }
 
   void _onPasswordToggledEvent(

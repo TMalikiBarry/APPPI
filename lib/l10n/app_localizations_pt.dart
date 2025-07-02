@@ -126,6 +126,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get introductionLogin => 'Conectar';
 
   @override
+  String get introductionGotIt => 'Got it';
+
+  @override
   String get introductionFooterTitle => 'Você não tem uma conta';
 
   @override

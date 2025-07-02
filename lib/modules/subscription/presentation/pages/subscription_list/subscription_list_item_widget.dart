@@ -31,7 +31,7 @@ class SubscriptionListItemWidget extends StatelessWidget {
       leading: Stack(
         children: [
           const CircleAvatar(
-            backgroundImage: AssetImage(Images.transactionAvatar),
+            backgroundImage: AssetImage(Images.transactionAvatar,package: 'common_dependencies'),
           ),
           if (subscription.clientAlias != null)
             Positioned(
@@ -49,7 +49,8 @@ class SubscriptionListItemWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: Image.asset(Images.iconsPiBadge),
+                child: Image.asset(Images.iconsPiBadge,
+                    package: 'common_dependencies'),
               ),
             ),
         ],

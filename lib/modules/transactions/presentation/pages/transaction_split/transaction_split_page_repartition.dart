@@ -199,7 +199,7 @@ class _TransactionSplitPageState
       leading: Stack(
         children: [
           const CircleAvatar(
-            backgroundImage: AssetImage(Images.transactionAvatar),
+            backgroundImage: AssetImage(Images.transactionAvatar,package: 'common_dependencies'),
           ),
           Positioned(
             right: 0,
@@ -215,7 +215,8 @@ class _TransactionSplitPageState
               ),
               child: contact.name == self
                   ? Icon(Icons.check_circle, size: 18, color: Colors.green)
-                  : Image.asset(Images.iconsPiBadge),
+                  : Image.asset(Images.iconsPiBadge,
+                  package: 'common_dependencies'),
             ),
           ),
         ],

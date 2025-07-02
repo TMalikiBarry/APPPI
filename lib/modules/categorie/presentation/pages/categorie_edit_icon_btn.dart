@@ -26,6 +26,7 @@ class CategorieEditIconBtn extends StatelessWidget {
         Images.categorieImageSelect,
         width: 24,
         height: 24,
+        package: 'common_dependencies'
       ),
       onPressed: () {
         showModalBottomSheet<void>(

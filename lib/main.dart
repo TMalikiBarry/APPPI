@@ -94,7 +94,7 @@ Future<void> main() async {
   await AppNotifications.init(prefs);
 
   // Run the app
-  runApp(const App());
+  runApp(App());
 }
 
 // TODO Supprimer cette logique avant mise en production

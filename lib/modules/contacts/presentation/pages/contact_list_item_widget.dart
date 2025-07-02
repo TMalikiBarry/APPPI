@@ -50,7 +50,7 @@ class ContactListItemWidget extends StatelessWidget {
       leading: Stack(
         children: [
           const CircleAvatar(
-            backgroundImage: AssetImage(Images.transactionAvatar),
+            backgroundImage: AssetImage(Images.transactionAvatar,package: 'common_dependencies'),
           ),
           if (alias != null)
             Positioned(
@@ -65,7 +65,8 @@ class ContactListItemWidget extends StatelessWidget {
                     side: BorderSide(width: 2, color: Colors.white),
                   ),
                 ),
-                child: Image.asset(Images.iconsPiBadge),
+                child: Image.asset(Images.iconsPiBadge,
+                    package: 'common_dependencies'),
               ),
             ),
         ],

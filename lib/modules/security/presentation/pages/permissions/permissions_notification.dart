@@ -49,7 +49,8 @@ class PermissionsNotification extends StatelessWidget {
               // Titre de la page
               Text(
                 traductions.permissionNotificationTitle,
-                style: Theme.of(context).textTheme.titleSmall,
+                style: TextStyle(color: Themer.blackColor, fontSize: 28,
+                  fontWeight: FontWeight.w600,),
               ),
 
               // Séparateur
@@ -71,6 +72,7 @@ class PermissionsNotification extends StatelessWidget {
                 Images.permissionNotification,
                 width: tailleImage,
                 height: tailleImage,
+                package: 'common_dependencies'
               ),
             ),
           ),
@@ -91,7 +93,8 @@ class PermissionsNotification extends StatelessWidget {
                   child: Center(
                     child: Text(
                       traductions.permissionNotificationEnableBtn,
-                      style: Theme.of(context).textTheme.headlineSmall,
+                      style: TextStyle(color: Themer.whiteColor, fontSize: 17,
+                        fontWeight: FontWeight.w500, height: 1.53),
                     ),
                   ),
                 ),

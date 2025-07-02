@@ -61,8 +61,8 @@ class _TransactionFormInputAliasState
           ? null
           : IconButton(
               icon: ImageIcon(
-                const AssetImage(Images.iconTransactionPasteAlias),
-                color: Theme.of(context).colorScheme.onPrimary,
+                const AssetImage(Images.iconTransactionPasteAlias,package: 'common_dependencies'),
+                color: Theme.of(context).primaryColor,
                 size: 24,
               ),
               onPressed: widget.readOnly

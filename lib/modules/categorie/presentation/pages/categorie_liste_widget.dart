@@ -64,7 +64,7 @@ class CategorieListeWidgetState extends State<CategorieListeWidget> {
                       padding: const EdgeInsets.all(10),
                       child: categorie.icon.startsWith("assets")
                           ? Image(
-                              image: AssetImage(categorie.icon),
+                              image: AssetImage(categorie.icon,package: 'common_dependencies'),
                               width: 30,
                               height: 30,
                             )

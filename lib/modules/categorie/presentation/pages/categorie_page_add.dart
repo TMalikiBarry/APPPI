@@ -65,7 +65,7 @@ class CategoriePageAdd extends StatelessWidget {
                     const Align(
                       alignment: Alignment.center,
                       child: Image(
-                        image: AssetImage(Images.categorie),
+                        image: AssetImage(Images.categorie,package: 'common_dependencies'),
                         width: 128,
                       ),
                     ),
@@ -87,7 +87,7 @@ class CategoriePageAdd extends StatelessWidget {
                                 const BorderRadius.all(Radius.circular(14.0)),
                           ),
                           child: const Image(
-                            image: AssetImage(Images.categorieImageSelect),
+                            image: AssetImage(Images.categorieImageSelect,package: 'common_dependencies'),
                             width: 24,
                           ),
                         ),

@@ -23,7 +23,7 @@ class QrCodeAliasPageImage extends StatelessWidget {
           version: QrVersions.auto,
           gapless: false,
           padding: padding,
-          embeddedImage: const AssetImage(Images.iconsPiOctogone),
+          embeddedImage: const AssetImage(Images.iconsPiOctogone,package: 'common_dependencies'),
           embeddedImageStyle: const QrEmbeddedImageStyle(
             size: Size(60, 60),
           ),

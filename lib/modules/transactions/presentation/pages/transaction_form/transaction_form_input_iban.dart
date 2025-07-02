@@ -57,7 +57,7 @@ class _TransactionFormInputIbanState
       // Btn coller alias
       suffixIcon: IconButton(
         icon: ImageIcon(
-          const AssetImage(Images.iconTransactionPasteAlias),
+          const AssetImage(Images.iconTransactionPasteAlias,package: 'common_dependencies'),
           color: Theme.of(context).colorScheme.onPrimary,
           size: 24,
         ),

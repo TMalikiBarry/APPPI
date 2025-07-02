@@ -126,6 +126,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get introductionLogin => 'Connexion';
 
   @override
+  String get introductionGotIt => 'J\'ai compris';
+
+  @override
   String get introductionFooterTitle => 'Vous n\'avez pas de compte';
 
   @override

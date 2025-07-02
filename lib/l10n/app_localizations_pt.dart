@@ -1174,6 +1174,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionDetailsRecuInfoClientAlias => 'Alias';
 
   @override
+  String get transactionDetailsRecuInfoPayeurID => 'Adresser ID';
+
+  @override
+  String get transactionDetailsRecuInfoPayeID => 'Grantee ID';
+
+  @override
   String get transactionDetailsRecuInfoClientCompte => 'Número de conta';
 
   @override

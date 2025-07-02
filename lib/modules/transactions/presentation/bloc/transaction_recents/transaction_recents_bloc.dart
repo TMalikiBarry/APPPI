@@ -16,6 +16,8 @@ class TransactionRecentsBloc
 
   final intdefaultSize = 3;
 
+  final int defaultSize = 5;
+
   // Bloc de gestion de la config
   final ConfigBloc configBloc;
 
@@ -27,7 +29,7 @@ class TransactionRecentsBloc
           TransactionRecentsInitialState(
             TransactionListe(
               data: [],
-              meta: ListeMeta(total: 0, limit: 3),
+              meta: ListeMeta(total: 0, limit: 5),
             ),
           ),
         ) {
@@ -36,7 +38,56 @@ class TransactionRecentsBloc
   }
 
   /// Quand on demande la liste des transactions
+
   Future<void> _onTransactionRecentsListEvent(
+      TransactionRecentsListEvent event,
+      Emitter<TransactionRecentsState> emit,
+      ) async {
+    // 1) Affiche un état de loading, en gardant la liste actuelle
+    emit(TransactionRecentsLoadingState());
+
+    /*emit(TransactionRecentsLoadingState(
+        TransactionListe(data: [], meta: ListeMeta(total: 0, limit: defaultSize))
+    ));*/
+
+    try {
+      // 2) Récupère le nb d'items depuis la config
+      String? nb = configBloc.getParamValue(ConfigKey.transactionsRecentNbItems);
+      final limit = nb != null ? int.parse(nb) : defaultSize;
+
+      // 3) Détermine la période
+      final now   = DateTime.now();
+      final start = now.subtract(const Duration(days: 7));
+
+      // 4) Appel serveur unique
+      final history = await transactionsInputPort.fetchHistory(
+        startDate: start,
+        endDate: now,
+        size: limit,
+        page: 0,
+      );
+      // 3) Gestion des résultats
+      if (history.data.isEmpty) {
+        emit(const TransactionRecentsEmptyState());
+      } else {
+        emit(TransactionRecentsListState(history));
+      }
+    } catch (e, stackTrace) {
+      // 4) Gestion des erreurs
+      logger.e("Error fetching recent transactions", error: e,
+          stackTrace: stackTrace);
+      emit(TransactionRecentsErrorState(
+        error: e.toString(),
+        stackTrace: stackTrace.toString(),
+      ));
+    }
+
+
+    // // 5) Émet la nouvelle liste
+    // emit(TransactionRecentsListState(history));
+  }
+
+  /*Future<void> _onTransactionRecentsListEvent(
     TransactionRecentsListEvent event,
     Emitter<TransactionRecentsState> emit,
   ) async {
@@ -60,5 +111,5 @@ class TransactionRecentsBloc
       limit: nbItems,
     );
     emit(TransactionRecentsListState(recents));
-  }
+  }*/
 }

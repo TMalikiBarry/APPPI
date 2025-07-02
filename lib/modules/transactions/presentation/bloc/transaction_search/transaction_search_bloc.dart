@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 
 import '../../../../../shared/models/liste_meta.dart';
-import '../../../domain/models/transaction.dart';
 import '../../../domain/models/transaction_liste.dart';
 import '../../../domain/models/transaction_search/transaction_search_command.dart';
 import '../../../domain/models/transaction_search/transaction_search_filter.dart';
@@ -20,20 +19,20 @@ class TransactionSearchBloc
 
   TransactionSearchBloc(this.transactionsInputPort)
       : super(
-          TransactionSearchInitialState(
-            transactions: TransactionListe(
-              data: [],
-              meta: ListeMeta(
-                total: 0,
-                limit: TransactionSearchCommand.defaultLimit,
-              ),
-            ),
-            command: TransactionSearchCommand(
-              filters: TransactionSearchFilter(categories: []),
-              limit: TransactionSearchCommand.defaultLimit,
-            ),
-          ),
-        ) {
+    TransactionSearchInitialState(
+      transactions: TransactionListe(
+        data: [],
+        meta: ListeMeta(
+          total: 0,
+          limit: TransactionSearchCommand.defaultLimit,
+        ),
+      ),
+      command: TransactionSearchCommand(
+        filters: TransactionSearchFilter(categories: []),
+        limit: TransactionSearchCommand.defaultLimit,
+      ),
+    ),
+  ) {
     // Pour recuperer la liste
     on<TransactionSearchListEvent>(_onTransactionSearchListEvent);
     // Pour paginer la liste
@@ -43,18 +42,14 @@ class TransactionSearchBloc
   }
 
   /// Quand on demande la liste des transactions
-  Future<void> _onTransactionSearchListEvent(
-    TransactionSearchListEvent event,
-    Emitter<TransactionSearchState> emit,
-  ) async {
+  Future<void> _onTransactionSearchListEvent(TransactionSearchListEvent event,
+      Emitter<TransactionSearchState> emit,) async {
     // En cours de rechargement
-    emit(TransactionSearchLoadingState(
-      transactions: state.transactions,
-      command: event.command,
-    ));
+    TransactionSearchCommand command = event.command;
+
+    emit(TransactionSearchLoadingState(command: command));
 
     // Appeler le service pour obtenir la liste
-    TransactionSearchCommand command = event.command;
     TransactionListe liste = await _rechercherTransactions(command);
     command.total = liste.meta.total;
     command.index = 0;
@@ -67,9 +62,8 @@ class TransactionSearchBloc
 
   /// Filtrer la liste en fonction des critères
   Future<void> _onTransactionSearchFilterEvent(
-    TransactionSearchFilterEvent event,
-    Emitter<TransactionSearchState> emit,
-  ) async {
+      TransactionSearchFilterEvent event,
+      Emitter<TransactionSearchState> emit,) async {
     // Réinitialiser l'index
     event.command.index = 0;
 
@@ -87,8 +81,7 @@ class TransactionSearchBloc
 
   /// Appeler le service pour filtrer les transactions
   Future<TransactionListe> _rechercherTransactions(
-    TransactionSearchCommand searchCommand,
-  ) async {
+      TransactionSearchCommand searchCommand,) async {
     return await transactionsInputPort.search(
       compte: searchCommand.compte!,
       limit: searchCommand.limit,
@@ -103,19 +96,20 @@ class TransactionSearchBloc
 
   /// Pagination
   Future<void> _onTransactionSearchPaginateEvent(
-    TransactionSearchPaginateEvent event,
-    Emitter<TransactionSearchState> emit,
-  ) async {
+      TransactionSearchPaginateEvent event,
+      Emitter<TransactionSearchState> emit,) async {
     TransactionSearchCommand command = event.command;
+    emit(TransactionSearchLoadingState(command: command));
+
     if (command.canLoadMore()) {
       try {
-        TransactionListe liste = await _rechercherTransactions(command);
+        /*TransactionListe liste = await _rechercherTransactions(command);
         command.total = liste.meta.total;
         List<Transaction> newTransactions = liste.data;
         if (newTransactions.isNotEmpty) {
-          List<Transaction> oldTransactions = state.transactions.data;
+          // List<Transaction> oldTransactions = state.transactions.data;
           List<Transaction> allTransactions = [
-            ...oldTransactions,
+            // ...oldTransactions,
             ...newTransactions,
           ];
           emit(TransactionSearchListState(
@@ -128,7 +122,28 @@ class TransactionSearchBloc
         }
       } catch (e) {
         logger.e("Error on pagination", error: e);
+      }*/
+        // 2) Appel serveur
+        final history = await _rechercherTransactions(command);
+
+        // 3) Gestion des résultats
+        if (history.data.isEmpty) {
+          emit(TransactionSearchEmptyState(event.command));
+        } else {
+          emit(TransactionSearchListState(
+              transactions: history, command: event.command));
+        }
+      } catch (e, stackTrace) {
+        // 4) Gestion des erreurs
+        logger.e(
+            "Error searching transactions", error: e, stackTrace: stackTrace);
+        emit(TransactionSearchErrorState(
+          error: e.toString(),
+          stackTrace: stackTrace.toString(),
+          command: event.command,
+        ));
       }
     }
   }
+
 }

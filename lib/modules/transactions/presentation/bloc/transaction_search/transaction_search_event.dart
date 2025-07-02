@@ -18,10 +18,10 @@ class TransactionSearchListEvent extends TransactionSearchEvent {
 
 /// Affichage de la page suivante , précédente des transactions
 class TransactionSearchPaginateEvent extends TransactionSearchEvent {
-  TransactionSearchPaginateEvent(this.index, {required super.command});
+  TransactionSearchPaginateEvent({required super.command});
 
   /// Index où on s'est arrete
-  final int index;
+  // final int index;
 }
 
 /// Filtrer les transactions en fonction des paramètres de recherche

@@ -331,4 +331,10 @@ class MockTransactionOutputPort implements TransactionOutputPort {
 
     return TransactionListe.fromJson(transactionJson);
   }
+
+  @override
+  Future<TransactionListe> fetchHistory({required DateTime startDate, required DateTime endDate, required int size, required int page}) {
+    // TODO: implement fetchHistory
+    throw UnimplementedError();
+  }
 }

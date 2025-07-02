@@ -212,7 +212,7 @@ void main() {
       final transactionListe = TransactionListe.fromJson(json);
 
       // Accept
-      expect(transactionListe.isNotEmpty, isTrue);
+      expect(transactionListe.data.isNotEmpty, isTrue);
     });
 
     test('addTransactions test', () {
@@ -345,7 +345,7 @@ void main() {
           TransactionListe(data: [], meta: ListeMeta(total: 0, limit: 0));
 
       // Accept
-      expect(transactionListe.isEmpty, isTrue);
+      expect(transactionListe.data.isEmpty, isTrue);
     });
   });
 }

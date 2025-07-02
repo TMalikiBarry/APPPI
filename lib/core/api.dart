@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:common_dependencies/utils/constants.dart';
 import 'package:common_dependencies/utils/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../modules/security/infra/connexion_output_authpkce.dart';
 import 'api_mock.dart';
 import 'env.dart';
@@ -284,10 +285,12 @@ class TokenInterceptor extends Interceptor {
   ) async {
     logger.i("Requete vers ${options.path}");
     // lire le token
-    String? accessToken = await Api.secureStorage.read(key: "ACCESS_TOKEN");
+    // String? accessToken = await Api.secureStorage.read(key: "ACCESS_TOKEN");
     // logger.i("Requete accessToken $accessToken");
     // Ajouter le jeton utilisateur à la demande s'il existe
-    options.headers['Authorization'] = 'Bearer $accessToken';
+    var pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("accessToken");
+    options.headers['Authorization'] = 'Bearer $token';
     return handler.next(options);
   }
 

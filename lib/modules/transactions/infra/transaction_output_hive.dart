@@ -39,7 +39,7 @@ class TransactionLocalHive {
 
     // Filter by sens
     if (sens != null) {
-      transactions = transactions.where((tx) => tx.sens.name == sens).toList();
+      transactions = transactions.where((tx) => tx.sens?.name == sens).toList();
     }
 
     // Filter by categorie

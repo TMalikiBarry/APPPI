@@ -4,7 +4,6 @@ import 'package:pi_mobile_app/l10n/app_localizations.dart';
 
 import '../../../../../core/di.dart';
 import '../../../../../shared/widgets/my_page_container.dart';
-import '../../../../alias/domain/models/alias.dart';
 import '../../../../alias/presentation/bloc/alias_bloc.dart';
 import '../../../../alias/presentation/bloc/alias_state.dart';
 import '../../../domain/models/transaction_search/transaction_search_command.dart';
@@ -21,6 +20,45 @@ class TransactionSearchPage extends StatelessWidget {
   });
 
   @override
+  Widget build(BuildContext context) {
+    final trad = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(trad.transactionSearchTitle),
+      ),
+      body: BlocProvider(
+        create: (context) {
+          final alias = (context.read<AliasBloc>().state as AliasExistState).alias;
+          final bloc = TransactionSearchBloc(
+            Di.getTransactionInputPort(),
+          )..add(TransactionSearchListEvent(
+            command: TransactionSearchCommand(
+              compte: alias.compte,
+              filters: TransactionSearchFilter(categories: []),
+            ),
+          ));
+          return bloc;
+        },
+        child: const MyPageContainer(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Barre de filtre: input et button
+              TransactionSearchPageInput(),
+
+              SizedBox(height: 32),
+
+              // Liste des transactions
+              Expanded(child: TransactionSearchPageListe()),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /*@override
   Widget build(BuildContext context) {
     AppLocalizations traductions = AppLocalizations.of(context)!;
 
@@ -69,5 +107,5 @@ class TransactionSearchPage extends StatelessWidget {
         ),
       ),
     );
-  }
+  }*/
 }

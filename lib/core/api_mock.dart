@@ -74,6 +74,12 @@ class MockInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+
+    // Si c'est l'historique, on ne mocke pas
+    if (options.path.startsWith('/movement/history')) {
+      return handler.next(options);
+    }
+
     // Réponse spécifique pour les requêtes /alias
     if (options.path.startsWith('/alias')) {
       return handler.resolve(await _alias(options));
@@ -269,7 +275,7 @@ class MockInterceptor extends Interceptor {
           // Filter by Sens
           if (sens != null) {
             transactions =
-                transactions.where((tx) => tx.sens.name == sens).toList();
+                transactions.where((tx) => tx.sens?.name == sens).toList();
           }
           // Limit
           int limit = options.queryParameters["limit"] ?? 5;

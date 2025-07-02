@@ -23,4 +23,20 @@ class TransactionSearchCommand {
   bool canLoadMore() {
     return (index * limit) < total;
   }
+
+  TransactionSearchCommand copyWith({
+    String? compte,
+    int? index,
+    int? limit,
+    TransactionSearchFilter? filters,
+    String? keyWord,
+  }) {
+    return TransactionSearchCommand(
+      compte: compte ?? this.compte,
+      index: index ?? this.index,
+      limit: limit ?? this.limit,
+      filters: filters ?? this.filters,
+      keyWord: keyWord ?? this.keyWord,
+    );
+  }
 }

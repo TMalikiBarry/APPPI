@@ -79,7 +79,7 @@ class TransactionListItemWidget extends StatelessWidget {
           Expanded(
             child: Text(
               transaction.sens == TransactionSens.debit ?
-                transaction.clientNom : transaction.acquirerAccountLabel!,
+                transaction.acquirerAccountLabel! : transaction.clientNom,
               style: Theme.of(context).textTheme.headlineSmall,
               overflow: TextOverflow.ellipsis,
             ),

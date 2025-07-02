@@ -212,8 +212,8 @@ class TransactionDetailsPage extends StatelessWidget {
                                 label: transaction.sens == TransactionSens.debit
                                     ? traductions.transactionDetailsPayeLabel
                                     : traductions.transactionDetailsPayeurLabel,
-                                description: transaction.sens == TransactionSens.debit ?
-                                transaction.clientNom : transaction.acquirerAccountLabel!,
+                                description:transaction.sens ==  TransactionSens.debit ?
+                                  transaction.acquirerAccountLabel! : transaction.clientNom,
                               ),
 
                               // Pays du client

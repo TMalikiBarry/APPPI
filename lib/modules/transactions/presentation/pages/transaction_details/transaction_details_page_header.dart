@@ -33,7 +33,8 @@ class TransactionDetailsPageHeader extends StatelessWidget {
               child: TextButton(
                 onPressed: () => "",
                 child: Text(
-                  transaction.clientNom,
+                  transaction.sens == TransactionSens.debit ?
+                    transaction.acquirerAccountLabel! : transaction.clientNom,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -52,7 +53,8 @@ class TransactionDetailsPageHeader extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 16),
           child: AvatarCircleWidget(
-            nom: transaction.clientNom,
+            nom: transaction.sens == TransactionSens.debit ?
+              transaction.acquirerAccountLabel! : transaction.clientNom ,
             photo: transaction.clientPhoto,
             rounded: true,
             radius: 32,

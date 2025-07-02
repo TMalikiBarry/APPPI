@@ -630,6 +630,8 @@
   "transactionDetailsRecuInfoPayeLabel": "Payment to",
   "transactionDetailsRecuInfoPayeurLabel": "Received from",
   "transactionDetailsRecuInfoClientAlias": "Alias",
+  "transactionDetailsRecuInfoPayeurID": "Adresser ID",
+  "transactionDetailsRecuInfoPayeID": "Grantee ID",
   "transactionDetailsRecuInfoClientCompte": "Compte Number",
   "transactionDetailsRecuInfoClientInstitution": "Institution",
   "transactionDetailsRecuInfoDateReception": "Reception date",

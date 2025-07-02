@@ -4,7 +4,7 @@ import '../transaction.dart';
 extension MovementDetailsMapper on MovementDetailsDTO {
   Transaction toTransaction() {
     // Choix du compte : soit accountNumber, soit issuerAccount, sinon chaîne vide
-    final compte = accountNumber ?? issuerAccount ?? '';
+    final compte =  issuerAccount ?? issuerPhoneNumber ?? accountNumber ?? '';
 
     // Mapping du sens à partir de flowCode (exemple, à adapter si besoin)
     final sens = (flowCode.toLowerCase() == 'debit')
@@ -16,6 +16,8 @@ extension MovementDetailsMapper on MovementDetailsDTO {
 
     return Transaction(
       compte: compte,
+      acquirerPhoneNumber: acquirerPhoneNumber!,
+      acquirerAccountLabel: acquirerAccountLabel!,
       alias: null,
       montant: amount,
       montantFrais: globalFees,
@@ -59,6 +61,16 @@ extension MovementDetailsMapper on MovementDetailsDTO {
       differeFrequence: null,
       differeOccurence: null,
       differeMontant: null,
+      bankCode: bankCode,
+      productCode: productCode,
+      clientId: clientId,
+      globalCommission: globalCommission,
+      legalEntityCode: legalEntityCode,
+      partnerDistId: partnerDistId,
+      partnerID: partnerID,
+      slipNumber: slipNumber,
+      userLogin: userLogin,
+      acquirerAccount: acquirerAccount,
     );
   }
 }

@@ -630,6 +630,8 @@
   "transactionDetailsRecuInfoPayeLabel": "Envoyé à",
   "transactionDetailsRecuInfoPayeurLabel": "Reçu de",
   "transactionDetailsRecuInfoClientAlias": "Alias",
+  "transactionDetailsRecuInfoPayeurID": "Expéditaire ID",
+  "transactionDetailsRecuInfoPayeID": "Bénéficiaire ID",
   "transactionDetailsRecuInfoClientCompte": "Numéro de compte",
   "transactionDetailsRecuInfoClientInstitution": "Institution",
   "transactionDetailsRecuInfoDateReception": "Date reception",

@@ -64,6 +64,7 @@ class HomeBottomNavigationBar extends StatelessWidget {
                     Images.homeFooterHome,
                     width: 24,
                     height: 24,
+                    package: 'common_dependencies',
                   ),
                 ),
                 // QR Code

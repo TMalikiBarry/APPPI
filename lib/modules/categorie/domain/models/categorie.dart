@@ -43,7 +43,7 @@ class Categorie {
 
   /// Default
   static Categorie defaultCategorie = Categorie(
-    id: "TRANSFERT",
+    id: "TRANSFER",
     label: "Transfert",
     icon: Images.iconsTransfert,
     bgColor: 0xFFF2C374,
@@ -100,7 +100,7 @@ class Categorie {
       bgColor: 0xFFF09EBC,
     ),
     Categorie(
-      id: "TRANSFERTS",
+      id: "TRANSFER",
       label: "Transferts",
       icon: Images.iconsTransfert,
       bgColor: 0xFFF2C374,

@@ -4,40 +4,43 @@ import '../transaction.dart';
 extension MovementDetailsMapper on MovementDetailsDTO {
   Transaction toTransaction() {
     // Choix du compte : soit accountNumber, soit issuerAccount, sinon chaîne vide
-    final compte =  issuerAccount ?? issuerPhoneNumber ?? accountNumber ?? '';
+    final compte =  accountNumber ?? issuerPhoneNumber ?? ' ----- ';
 
     // Mapping du sens à partir de flowCode (exemple, à adapter si besoin)
-    final sens = (flowCode.toLowerCase() == 'debit')
+/*    final sens = (flowCode.toLowerCase() == 'debit')
         ? TransactionSens.debit
-        : TransactionSens.credit;
+        : TransactionSens.credit;*/
+
+
 
     // Mapping du statut à partir de statusCode
     final statut = _mapStatusCode(statusCode);
 
     return Transaction(
       compte: compte,
-      acquirerPhoneNumber: acquirerPhoneNumber!,
-      acquirerAccountLabel: acquirerAccountLabel!,
+      acquirerPhoneNumber: acquirerPhoneNumber ?? ' --- ',
+      acquirerAccountLabel: acquirerAccountLabel ?? 'FirstName LastName',
       alias: null,
       montant: amount,
       montantFrais: globalFees,
-      sens: sens,
+      sens: TransactionSens.debit,
       motif: message ?? '',
       canal: serviceTypeCode,
       // on stocke serviceTypeCode dans canal
-      clientNom: issuerAccountLabel ?? '',
+      clientNom: issuerAccountLabel ?? 'FirstName LastName',
       clientPays: countryISOCode ?? '',
       clientPSP: null,
       clientPSPNom: null,
       clientPhoto: null,
-      clientCompte: issuerAccount,
+      clientCompte: issuerAccount ?? ' --- ',
       // on stocke ici l’issuerAccount
       clientAlias: null,
       endToEndId: guID,
       dateOperation: impactDate,
       statut: statut,
+      issuerPhoneNumber: issuerPhoneNumber,
       statutRaison: null,
-      categorie: null,
+      categorie: serviceTypeCode,
       facture: null,
       dateExpiration: null,
       txId: guID,
@@ -70,7 +73,7 @@ extension MovementDetailsMapper on MovementDetailsDTO {
       partnerID: partnerID,
       slipNumber: slipNumber,
       userLogin: userLogin,
-      acquirerAccount: acquirerAccount,
+      acquirerAccount: acquirerAccount ?? ' --- ',
     );
   }
 }

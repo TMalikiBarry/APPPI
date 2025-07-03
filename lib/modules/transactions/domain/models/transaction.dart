@@ -1,4 +1,3 @@
-import 'package:pi_mobile_app/modules/transactions/domain/models/transaction_liste.dart';
 
 import '../../../../shared/models/frequence_command.dart';
 import 'transaction_canal.dart';
@@ -19,6 +18,7 @@ class Transaction {
     this.sens,
     this.motif,
     this.canal,
+    this.issuerPhoneNumber,
     required this.clientNom,
     this.acquirerAccountLabel,
     required this.clientPays,
@@ -112,6 +112,8 @@ class Transaction {
   // Statut de la transaction
   TransactionStatut? statut;
   String? statutRaison;
+
+  final String? issuerPhoneNumber;
 
   /// Date de la première execution du paiement programmé
   DateTime? dateDebut;
@@ -223,6 +225,7 @@ class Transaction {
       clientPays: json['clientPays'] as String,
       clientPhoto: json['clientPhoto'] as String?,
       clientPSP: json['clientPSP'] as String?,
+      issuerPhoneNumber: json['issuerPhoneNumber'] as String?,
       clientCompte: json['clientCompte'] as String?,
       clientAlias: json['clientAlias'] as String?,
       bankCode: json['bankCode'] as String?,
@@ -356,6 +359,7 @@ class Transaction {
       'partnerID': partnerID,
       'slipNumber': slipNumber,
       'userLogin': userLogin,
+      'issuerPhoneNumber': issuerPhoneNumber,
       'acquirerAccount': acquirerAccount,
       'endToEndId': endToEndId,
       'canal': canal,
@@ -395,6 +399,7 @@ class Transaction {
         ' compte: $compte,'
         ' acquirerPhoneNumber: $acquirerPhoneNumber'
         ' acquirerAccountLabel: $acquirerAccountLabel'
+        'issuerPhoneNumber: $issuerPhoneNumber'
         ' alias: $alias,'
         ' montant: $montant,'
         ' sens: $sens,'

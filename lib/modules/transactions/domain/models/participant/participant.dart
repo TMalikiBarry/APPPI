@@ -17,12 +17,12 @@ class Participant {
   late final ParticipantEtat? statut;
 
   Participant.fromJson(Map<dynamic, dynamic> json) {
-    nomMembre = json['nomMembre'] as String;
-    codeMembre = json['codeMembre'] as String;
+    nomMembre = json['officialName'] as String;
+    codeMembre = json['participantMemberCode'] as String;
     //nomOfficiel = json['nomOfficiel'] as String;
-    codeBanque = json['codeBanque'] as String?;
+    codeBanque = json['bankCode'] as String?;
     pays = codeMembre.substring(0, 2);
-    statut = json['statut'] == ParticipantEtat.active.name
+    statut = json['status'] == ParticipantEtat.active.name
         ? ParticipantEtat.active
         : ParticipantEtat.desactive;
   }

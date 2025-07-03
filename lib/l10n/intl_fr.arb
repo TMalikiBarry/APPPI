@@ -666,6 +666,7 @@
   "transactionSearchTitle": "Transactions",
   "transactionSearchEmptySubtitle" : "Aucune transaction ne correspond à votre recherche",
   "transactionSearchEmptyTitle": "Aucun résultat",
+  "loadMore": "Charger Plus",
   "transactionSearchInputSearchHint": "Recherche",
   "transactionSearchInputFilterTitle": "Filtrer",
   "transactionSearchInputFilterDateTitle": "Plage de dates",

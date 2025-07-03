@@ -2452,6 +2452,8 @@ abstract class AppLocalizations {
   /// **'Aucune transaction ne correspond à votre recherche'**
   String get transactionSearchEmptySubtitle;
 
+  String get loadMore;
+
   /// No description provided for @transactionSearchEmptyTitle.
   ///
   /// In en, this message translates to:

@@ -1254,6 +1254,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get transactionSearchEmptyTitle => 'Aucun résultat';
 
   @override
+  String get loadMore => "Charger Plus";
+
+  @override
   String get transactionSearchInputSearchHint => 'Recherche';
 
   @override

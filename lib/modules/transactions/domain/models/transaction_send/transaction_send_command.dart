@@ -24,6 +24,7 @@ class TransactionSendCommand {
     this.othr,
     this.contact,
     this.amount,
+    this.issuerPhoneNumber,
     this.motif,
     this.pspCode,
     this.pspPays,
@@ -51,6 +52,7 @@ class TransactionSendCommand {
   TransactionSendCommandMotif? motif;
   TransactionSendCommandSchedule? schedule;
 
+  String? issuerPhoneNumber;
   // Participant payé Code
   String? pspCode;
   // Participant payé Pays
@@ -97,9 +99,14 @@ class TransactionSendCommand {
       'payePSP': pspCode,
       'latitude': latitude,
       'longitude': longitude,
+
     };
     if (txId != null) {
       json['txId'] = txId;
+    }
+
+    if(issuerPhoneNumber != null) {
+      json['issuerPhoneNumber'] = issuerPhoneNumber;
     }
     if (motif != null) {
       json['motif'] = motif?.value;
@@ -150,9 +157,9 @@ class TransactionSendCommand {
       alias: transaction.clientAlias != null
           ? TransactionSendCommandAlias(value: transaction.clientAlias)
           : null,
-      othr: transaction.clientAlias == null && transaction.clientCompte != null
-          ? TransactionSendCommandOthr(value: transaction.clientCompte)
-          : null,
+      othr: transaction.clientAlias == null && transaction.userLogin != null
+          ? TransactionSendCommandOthr(value: transaction.userLogin)
+          : (transaction.clientCompte != null ? TransactionSendCommandOthr(value: transaction.clientCompte): null),
       pspCode: transaction.clientPSP,
       pspPays: transaction.clientPays,
       pspNom: transaction.clientPSPNom,

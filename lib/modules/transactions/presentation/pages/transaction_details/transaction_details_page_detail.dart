@@ -39,7 +39,8 @@ class TransactionDetailsPageDetail extends StatelessWidget {
             // label
             Text(
               label,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.bodyLarge!
+                  .copyWith(color: Themer.brownColor),
               overflow: TextOverflow.ellipsis,
             ),
 
@@ -55,7 +56,7 @@ class TransactionDetailsPageDetail extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
-                        .copyWith(color: Themer.neural03Color),
+                        .copyWith(color: Themer.brownColor),
                   ),
                 ),
               ),

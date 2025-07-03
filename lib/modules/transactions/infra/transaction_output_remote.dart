@@ -60,7 +60,8 @@ class TransactionOutputRemote {
       'endDate'  : finish.toIso8601String().split('T').first,
       'size'     : size.toString(),
       'page'     : page.toString(),
-      // 'issuerAccount' : pref.getString("accountNumber"),
+      'issuerAccount' : pref.getString("accountNumber"),
+      // 'scope' : 'PI',
       'status': 'SUCCESSFUL',
     };
 

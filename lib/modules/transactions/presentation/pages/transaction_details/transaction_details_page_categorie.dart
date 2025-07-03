@@ -33,7 +33,7 @@ class TransactionDetailsPageCategorie extends StatelessWidget {
       ...categorieBloc.state.categories,
     ];
 
-    Categorie theCategorie = transaction.categorie != null ? categories
+    /*Categorie theCategorie = transaction.categorie != null ? categories
         .where((element) => (transaction.categorie!.contains(element.id) ||
         transaction.canal!.contains(element.id)))
         .first : Categorie.defaultCategorie;
@@ -43,7 +43,9 @@ class TransactionDetailsPageCategorie extends StatelessWidget {
         ? theCategorie
         : Categorie.defaultCategorie;
 
-    categorie = categorie == null ? Categorie.defaultCategorie: categorie;
+    categorie = categorie == null ? Categorie.defaultCategorie: categorie;*/
+
+    Categorie categorie = getCategorieForTransaction(transaction, categories);
 
     return TransactionDetailsPageDetail(
       label: traductions.transactionDetailsCategorie,
@@ -77,5 +79,31 @@ class TransactionDetailsPageCategorie extends StatelessWidget {
         }
       },
     );
+  }
+
+  Categorie getCategorieForTransaction(
+      Transaction transaction,
+      List<Categorie> categories
+      ) {
+    // 1. Chercher par catégorie
+    if (transaction.categorie != null) {
+      for (final categorie in categories) {
+        if (transaction.categorie!.contains(categorie.id)) {
+          return categorie;
+        }
+      }
+    }
+
+    // 2. Chercher par canal
+    if (transaction.canal != null) {
+      for (final categorie in categories) {
+        if (transaction.canal!.contains(categorie.id)) {
+          return categorie;
+        }
+      }
+    }
+
+    // 3. Retour par défaut
+    return Categorie.defaultCategorie;
   }
 }

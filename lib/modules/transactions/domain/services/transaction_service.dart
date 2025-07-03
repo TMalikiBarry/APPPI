@@ -1,3 +1,4 @@
+import '../../../../shared/models/liste_meta.dart';
 import '../../ports/input/transaction_input_port.dart';
 import '../../ports/output/transaction_output_port.dart';
 import '../models/transaction.dart';
@@ -125,5 +126,20 @@ class TransactionService implements TransactionInputPort {
     TransactionRejectReason reason,
   ) async {
     return await transactionOutputPort.reject(transaction, reason.code);
+  }
+
+  @override
+  Future<TransactionListe> fetchHistory({
+    required DateTime startDate,
+    required DateTime endDate,
+    required int size,
+    required int page,
+  }) {
+    return transactionOutputPort.fetchHistory(
+      startDate: startDate,
+      endDate: endDate,
+      size: size,
+      page: page,
+    );
   }
 }

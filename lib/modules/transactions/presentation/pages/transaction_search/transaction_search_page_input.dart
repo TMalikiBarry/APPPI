@@ -7,6 +7,7 @@ import '../../../../../core/theme.dart';
 import '../../../domain/models/transaction_search/transaction_search_command.dart';
 import '../../bloc/transaction_search/transaction_search_bloc.dart';
 import '../../bloc/transaction_search/transaction_search_event.dart';
+import '../../bloc/transaction_search/transaction_search_state.dart';
 
 class TransactionSearchPageInput extends StatelessWidget {
   //
@@ -47,14 +48,27 @@ class TransactionSearchPageInput extends StatelessWidget {
                       .copyWith(color: Themer.neural03Color),
                 ),
                 onChanged: (value) {
-                  TransactionSearchCommand command =
+
+                  /*TransactionSearchCommand command =
                       transactionSearchBloc.state.command;
                   // nouveau mot cle
                   command.keyWord = value;
                   // rechercher
                   transactionSearchBloc.add(TransactionSearchFilterEvent(
                     command: command,
-                  ));
+                  ));*/
+
+                  // Méthode sécurisée pour obtenir la commande
+                  final command = _getCurrentCommand(transactionSearchBloc.state);
+
+                  if (command != null) {
+                    // Créer une nouvelle commande plutôt que de muter l'existante
+                    final newCommand = command.copyWith(keyWord: value);
+
+                    transactionSearchBloc.add(TransactionSearchFilterEvent(
+                      command: newCommand,
+                    ));
+                  }
                 },
               ),
             ),
@@ -89,5 +103,15 @@ class TransactionSearchPageInput extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  TransactionSearchCommand? _getCurrentCommand(TransactionSearchState state) {
+    if (state is TransactionSearchInitialState) return state.command;
+    if (state is TransactionSearchListState) return state.command;
+    if (state is TransactionSearchPaginateState) return state.command;
+    if (state is TransactionSearchFilterState) return state.command;
+    if (state is TransactionSearchEmptyState) return state.command;
+    if (state is TransactionSearchErrorState) return state.command;
+    return null;
   }
 }

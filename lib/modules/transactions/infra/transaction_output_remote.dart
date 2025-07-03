@@ -4,17 +4,27 @@ import 'dart:convert';
 import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
 import 'package:flutter_client_sse/flutter_client_sse.dart';
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/modules/transactions/domain/models/mappers/movement_mappers.dart';
+
+// 1) On importe le modèle Transaction en n'important QUE les symboles dont on a besoin
+import '../domain/models/transaction.dart'
+    show Transaction, TransactionSens;
+
+// 2) On importe la réponse de send transaction sans ramener TransactionSens
+import '../domain/models/transaction_send/transaction_send_response.dart'
+    hide TransactionSens;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/api.dart';
 import '../../../core/env.dart';
+import '../../../shared/models/liste_meta.dart';
+import '../domain/models/new/movement_list_dto.dart';
 import '../domain/models/transaction.dart';
 import '../domain/models/transaction_cancel_reason.dart';
 import '../domain/models/transaction_liste.dart';
 import '../domain/models/transaction_send/transaction_confirm_command.dart';
 import '../domain/models/transaction_send/transaction_send_command.dart';
 import '../domain/models/transaction_send/transaction_send_command_schedule.dart';
-import '../domain/models/transaction_send/transaction_send_response.dart';
 
 /// Online repository
 class TransactionOutputRemote {
@@ -23,6 +33,77 @@ class TransactionOutputRemote {
 
   ///
   final logger = Logger();
+
+  /// Historique des transactions à partir du serveur
+  Future<TransactionListe> history({
+    DateTime? startDate,
+    DateTime? endDate,
+    int size = 10,
+    int page = 0,
+  }) async {
+    final now    = DateTime.now();
+    final start  = startDate ?? now.subtract(const Duration(days: 200));
+    final finish = endDate   ?? now;
+
+    final qs = {
+      'startDate': start.toIso8601String().split('T').first,
+      'endDate'  : finish.toIso8601String().split('T').first,
+      'size'     : size.toString(),
+      'page'     : page.toString(),
+    };
+
+    // 1) Appel relatif
+    final resp = await Api.get(
+      '/movement/history',
+      queryParameters: qs,
+      // headers: headers,
+    );
+
+    // 2) Log pour debug
+    logger.i('← history() status=${resp.statusCode}');
+    logger.i('← history() data=${resp.data}');
+
+    // 3) Validation minimale
+    final raw = resp.data;
+    if (raw == null || raw is! Map<String, dynamic>) {
+      throw Exception('history() returned invalid data: $raw');
+    }
+
+    final envelope = raw['response'];
+    if (envelope == null || envelope is! Map<String, dynamic>) {
+      throw Exception('history() missing "response" field: $raw');
+    }
+
+    // 4) Désérialisation DTO
+    final dto = MovementListDTO.fromJson(envelope);
+
+    // 5) Récupère ton numéro (ou une valeur par défaut)
+    final myPhone = await Api.secureStorage.read(key: 'PHONE') ?? '';
+
+    // 6) Mappe en Transaction en calculant le sens
+    final txs = dto.data.map((md) {
+      final tx = md.toTransaction();
+      final isDebit = (tx.compte == myPhone)
+          || (tx.clientCompte == myPhone);
+      tx.sens = isDebit
+          ? TransactionSens.debit
+          : TransactionSens.credit;
+      return tx;
+    }).toList();
+
+    // 7) Reconstruit la meta
+    final meta = ListeMeta(total: dto.total, limit: dto.size);
+
+    // 8) Retourne la liste enrichie des infos HTTP
+    return TransactionListe(
+      data: txs,
+      meta: meta,
+      httpStatusCode: resp.statusCode,
+      httpMessage: raw['message'] as String?,
+      httpStatus: raw['status'] as int?,
+    );
+  }
+
 
   /// Lister les transactions
   Future<TransactionListe> list({
@@ -50,12 +131,19 @@ class TransactionOutputRemote {
       if (keyword != null) 'keyword': keyword,
     };
 
-    final ApiResponse response = await Api.get(
-      '/movement/history',
+    final now    = DateTime.now();
+    final start  = dateOperationDebut ?? now.subtract(const Duration(days: 200));
+    final finish = dateOperationFin   ?? now;
+    /*final ApiResponse response = await Api.get(
+      '/transferts',
       queryParameters: queryParameters,
-    );
+    );*/
 
-    return TransactionListe.fromJson(response.data);
+    int xlimit = (limit== null || limit <20 ) ? 20: limit;
+
+    int xpage = page ?? 0;
+
+    return history(size: xlimit, page: xpage);
   }
 
   /// Recuperer une transaction

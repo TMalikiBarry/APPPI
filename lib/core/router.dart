@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:base_app/presenter/home.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:pi_mobile_app/modules/transactions/presentation/pages/transaction_split/transaction_split_page.dart';
@@ -70,6 +71,8 @@ class AppRouter {
 
   /// Liste des routes de l'application
   static const introduction = "/introduction";
+
+  static const homePage = "/";
 
   static const login = "/login";
   static const loginCgu = "/login/cgu";
@@ -238,6 +241,12 @@ class AppRouter {
         builder: (context, state) {
           return const IdentificationPage(action: 'initial');
         },
+      ),
+      GoRoute(
+          path: homePage,
+          builder: (context, state) {
+            return const CustomerApp();
+          }
       ),
       GoRoute(
         path: identificationCheck,

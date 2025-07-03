@@ -1,5 +1,6 @@
 import 'package:logger/logger.dart';
 
+
 import '../domain/models/transaction.dart';
 import '../domain/models/transaction_cancel_reason.dart';
 import '../domain/models/transaction_liste.dart';
@@ -74,7 +75,8 @@ class TransactionOutputRepository implements TransactionOutputPort {
     List<String>? categories,
     String? keyword,
   }) async {
-    return await repoLocal.list(
+
+    /*return await repoLocal.list(
       compte: compte,
       alias: alias,
       page: page,
@@ -85,6 +87,19 @@ class TransactionOutputRepository implements TransactionOutputPort {
       dateOperationDebut: dateOperationDebut,
       dateOperationFin: dateOperationFin,
       categories: categories,
+      keyword: keyword,
+    );*/
+
+    return await repoRemote.list(
+      compte: compte,
+      alias: alias,
+      page: page,
+      limit: limit,
+      sortBy: sortBy,
+      fields: fields,
+      sens: sens,
+      dateOperationDebut: dateOperationDebut,
+      dateOperationFin: dateOperationFin,
       keyword: keyword,
     );
   }
@@ -161,5 +176,25 @@ class TransactionOutputRepository implements TransactionOutputPort {
     transaction = await repoRemote.reject(transaction, reason);
     await repoLocal.save(transaction);
     return transaction;
+  }
+
+  @override
+  Future<TransactionListe> fetchHistory({
+    required DateTime startDate,
+    required DateTime endDate,
+    required int size,
+    required int page,
+  }) async {
+    return await repoRemote.history(
+      startDate: startDate,
+      endDate: endDate,
+      size: size,
+      page: page,
+    );
+    // mappe MovementDetailsDTO → Transaction
+    /*final txs = dto.data.map((md) => md.toTransaction()).toList();
+    // reconstruis la meta
+    final meta = ListeMeta(total: dto.total, limit: dto.size);
+    return TransactionListe(data: txs, meta: meta);*/
   }
 }

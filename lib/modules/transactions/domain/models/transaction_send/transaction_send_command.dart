@@ -91,10 +91,8 @@ class TransactionSendCommand {
   /// Convertit un objet TransactionSendCommand en JSON
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {
-      'compte': compte,
-      'canal': canal,
-      'montant': amount?.value,
-      'payePSP': pspCode,
+      'phoneNumberTo': alias?.value,
+      'amount': amount?.value,
       'latitude': latitude,
       'longitude': longitude,
     };
@@ -102,7 +100,7 @@ class TransactionSendCommand {
       json['txId'] = txId;
     }
     if (motif != null) {
-      json['motif'] = motif?.value;
+      json['reason'] = motif?.value;
     }
     if (schedule != null) {
       json['dateDebut'] = schedule!.dateDebut!;

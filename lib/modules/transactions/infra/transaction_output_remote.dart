@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
 import 'package:flutter_client_sse/flutter_client_sse.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/api.dart';
 import '../../../core/env.dart';
@@ -67,10 +68,19 @@ class TransactionOutputRemote {
 
   /// Initier une transaction
   Future<Transaction> initiate(TransactionSendCommand command) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var phoneNumberFrom = pref.getString("phone_number");
+    var userLogin = pref.getString('phoneNumber');
     // Send transfer
+    Map<String, dynamic> request = command.toJson();
+    request.addAll({
+      'aliasFrom': phoneNumberFrom,
+      'phoneNumberFrom': phoneNumberFrom,
+      'userLogin': userLogin,
+    });
     final ApiResponse response = await Api.post(
-      '/transferts',
-      data: command.toJson(),
+      '/transfer/eme/external',
+      data: request,
     );
     //
     return Transaction.fromJson(response.data);

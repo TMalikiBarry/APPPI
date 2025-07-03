@@ -17,7 +17,7 @@ class AliasOutputRemote {
 
   Future<Alias?> recuperer(String compte) async {
     try {
-      final ApiResponse response = await Api.get('/alias/sync/search/+$compte');
+      final ApiResponse response = await Api.get('/alias/sync/search/$compte');
       return response.data != null ? Alias.fromJson(response.data["response"]) : null;
     } //
     catch (e) {
@@ -33,11 +33,8 @@ class AliasOutputRemote {
 
   Future<Alias> creer(AliasCreateCommand alias) async {
     Map<String, dynamic> request = alias.toJson();
-    request.addAll({"clientPhoneNumber": '+${alias.compte}'});
-    final ApiResponse response = await Api.post(
-      '/alias/create',
-      data: request,
-    );
+    request.addAll({"clientPhoneNumber": "+${alias.compte}"});
+    final ApiResponse response = await Api.post('/alias/create', data: request);
     return Alias.fromJson(response.data["response"]);
   }
 

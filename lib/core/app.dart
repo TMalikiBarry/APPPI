@@ -67,6 +67,7 @@ class App extends StatelessWidget {
       address: json["address"]?["locality"] ?? "DK",
       telephone: json["phone_number"],
       email: json["email"],
+      alias: json["alias"],
       avatar: "",
     );
 

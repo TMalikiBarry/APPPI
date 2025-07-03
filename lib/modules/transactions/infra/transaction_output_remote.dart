@@ -15,6 +15,7 @@ import '../domain/models/transaction.dart'
 // 2) On importe la réponse de send transaction sans ramener TransactionSens
 import '../domain/models/transaction_send/transaction_send_response.dart'
     hide TransactionSens;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/api.dart';
 import '../../../core/env.dart';
@@ -173,10 +174,19 @@ class TransactionOutputRemote {
 
   /// Initier une transaction
   Future<Transaction> initiate(TransactionSendCommand command) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var phoneNumberFrom = pref.getString("phone_number");
+    var userLogin = pref.getString('phoneNumber');
     // Send transfer
+    Map<String, dynamic> request = command.toJson();
+    request.addAll({
+      'aliasFrom': phoneNumberFrom,
+      'phoneNumberFrom': phoneNumberFrom,
+      'userLogin': userLogin,
+    });
     final ApiResponse response = await Api.post(
-      '/transferts',
-      data: command.toJson(),
+      '/transfer/eme/external',
+      data: request,
     );
     //
     return Transaction.fromJson(response.data);

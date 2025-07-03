@@ -212,7 +212,8 @@ class TransactionDetailsPage extends StatelessWidget {
                                 label: transaction.sens == TransactionSens.debit
                                     ? traductions.transactionDetailsPayeLabel
                                     : traductions.transactionDetailsPayeurLabel,
-                                description: transaction.clientNom,
+                                description:transaction.sens ==  TransactionSens.debit ?
+                                  transaction.acquirerAccountLabel! : transaction.clientNom,
                               ),
 
                               // Pays du client
@@ -305,8 +306,10 @@ class TransactionDetailsPage extends StatelessWidget {
       sens: TransactionSens.debit,
       clientNom: parts[3],
       clientPays: parts[2],
-      endToEndId: "",
+      endToEndId: transaction.endToEndId,
       dateOperation: DateTime.parse(parts[4].replaceAll('@', '')),
+      acquirerPhoneNumber: transaction.acquirerPhoneNumber,
+      acquirerAccountLabel: transaction.acquirerAccountLabel,
     );
     // Afficher la transaction payée par le demandeur et le destinataire
     return Column(

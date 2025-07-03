@@ -81,6 +81,8 @@ class Themer {
   /// Primary Light
   static const Color primaryDark = Color(0xFFA81735);
 
+  static const Color error = Color(0xCCA81735);
+
   /// Couleur primaire bordure
   static const Color primaryStroke = Color(0xFFFFD573);
 
@@ -103,6 +105,16 @@ class Themer {
 
   static const TextStyle _defaultStyleLight = TextStyle(
     color: blackColor,
+    fontFamily: 'Inter',
+  );
+
+  static const TextStyle _defaultStyleDebit = TextStyle(
+    color: error,
+    fontFamily: 'Inter',
+  );
+
+  static const TextStyle _defaultStyleCredit = TextStyle(
+    color: brownColor,
     fontFamily: 'Inter',
   );
 
@@ -233,9 +245,13 @@ class Themer {
         fontSize: 12,
         fontWeight: FontWeight.w400,
       ),
-      labelMedium: _defaultStyleLight.copyWith(
-        fontSize: 11,
-        fontWeight: FontWeight.w400,
+      labelMedium: _defaultStyleDebit.copyWith(
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
+      ),
+      labelSmall: _defaultStyleCredit.copyWith(
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
       ),
     ),
     cardTheme: const CardTheme(
@@ -567,9 +583,13 @@ class Themer {
         fontSize: 12,
         fontWeight: FontWeight.w400,
       ),
-      labelMedium: _defaultStyleDark.copyWith(
-        fontSize: 11,
-        fontWeight: FontWeight.w400,
+      labelMedium: _defaultStyleDebit.copyWith(
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
+      ),
+      labelSmall: _defaultStyleCredit.copyWith(
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
       ),
     ),
     cardTheme: const CardTheme(
@@ -900,9 +920,13 @@ class Themer {
         fontSize: 12,
         fontWeight: FontWeight.w400,
       ),
-      labelMedium: _defaultStyleLight.copyWith(
-        fontSize: 11,
-        fontWeight: FontWeight.w400,
+      labelMedium: _defaultStyleDebit.copyWith(
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
+      ),
+      labelSmall: _defaultStyleCredit.copyWith(
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
       ),
     ),
     cardTheme: const CardTheme(
@@ -1234,9 +1258,13 @@ class Themer {
         fontSize: 12,
         fontWeight: FontWeight.w400,
       ),
-      labelMedium: _defaultStyleLight.copyWith(
-        fontSize: 11,
-        fontWeight: FontWeight.w400,
+      labelMedium: _defaultStyleDebit.copyWith(
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
+      ),
+      labelSmall: _defaultStyleCredit.copyWith(
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
       ),
     ),
     cardTheme: const CardTheme(
@@ -1568,9 +1596,13 @@ class Themer {
         fontSize: 12,
         fontWeight: FontWeight.w400,
       ),
-      labelMedium: _defaultStyleLight.copyWith(
-        fontSize: 11,
-        fontWeight: FontWeight.w400,
+      labelMedium: _defaultStyleDebit.copyWith(
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
+      ),
+      labelSmall: _defaultStyleCredit.copyWith(
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
       ),
     ),
     cardTheme: const CardTheme(

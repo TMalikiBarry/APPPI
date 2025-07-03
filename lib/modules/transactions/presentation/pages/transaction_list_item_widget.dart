@@ -78,8 +78,11 @@ class TransactionListItemWidget extends StatelessWidget {
           // Nom et prenoms du client
           Expanded(
             child: Text(
-              transaction.clientNom,
-              style: Theme.of(context).textTheme.headlineSmall,
+              transaction.sens == TransactionSens.debit ?
+                transaction.acquirerAccountLabel! : transaction.clientNom,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: transaction.sens == TransactionSens.credit ? Themer.brownColor : Themer.error
+              ),
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -88,7 +91,9 @@ class TransactionListItemWidget extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8),
             child: AmountWidget(
               montant: transaction.montant,
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                color: transaction.sens == TransactionSens.credit ? Themer.brownColor : Themer.error
+              ),
               sign: transaction.sens == TransactionSens.debit ? '-' : '',
             ),
           ),
@@ -100,8 +105,9 @@ class TransactionListItemWidget extends StatelessWidget {
         style: Theme.of(context)
             .textTheme
             .displaySmall!
-            . //
-            copyWith(color: Themer.neural04Color),
+            .copyWith(
+                color: transaction.sens == TransactionSens.credit ? Themer.brownColor : Themer.error
+            ),
       ),
       onTap: noLink != null && noLink == true
           ? null

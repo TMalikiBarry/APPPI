@@ -4,7 +4,9 @@ import 'dart:convert';
 import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
 import 'package:flutter_client_sse/flutter_client_sse.dart';
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/modules/security/domain/models/connected_user.dart';
 import 'package:pi_mobile_app/modules/transactions/domain/models/mappers/movement_mappers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // 1) On importe le modèle Transaction en n'important QUE les symboles dont on a besoin
 import '../domain/models/transaction.dart'
@@ -41,15 +43,27 @@ class TransactionOutputRemote {
     int size = 10,
     int page = 0,
   }) async {
+    var pref = await SharedPreferences.getInstance();
+    String? issuerAccount = pref.getString("accountNumber");
+
+    if(issuerAccount == null || issuerAccount.isEmpty) {
+      issuerAccount = pref.getString("phoneNumber");
+    }
+
+
+    // ConnectedUser.current?.username;
     final now    = DateTime.now();
     final start  = startDate ?? now.subtract(const Duration(days: 200));
-    final finish = endDate   ?? now;
+    final finish = endDate   ?? now.add(const Duration(days: 1));
 
     final qs = {
       'startDate': start.toIso8601String().split('T').first,
       'endDate'  : finish.toIso8601String().split('T').first,
       'size'     : size.toString(),
       'page'     : page.toString(),
+      'issuerAccount' : pref.getString("accountNumber"),
+      // 'scope' : 'PI',
+      'status': 'SUCCESSFUL',
     };
 
     // 1) Appel relatif
@@ -83,8 +97,10 @@ class TransactionOutputRemote {
     // 6) Mappe en Transaction en calculant le sens
     final txs = dto.data.map((md) {
       final tx = md.toTransaction();
-      final isDebit = (tx.compte == myPhone)
-          || (tx.clientCompte == myPhone);
+      /*final isDebit = (tx.compte == myPhone)
+          || (tx.clientCompte == myPhone);*/
+      final isDebit = tx.clientCompte == issuerAccount || tx.compte == issuerAccount;
+
       tx.sens = isDebit
           ? TransactionSens.debit
           : TransactionSens.credit;
@@ -133,13 +149,13 @@ class TransactionOutputRemote {
 
     final now    = DateTime.now();
     final start  = dateOperationDebut ?? now.subtract(const Duration(days: 200));
-    final finish = dateOperationFin   ?? now;
+    final finish = dateOperationFin   ?? now.add(const Duration(days: 1));
     /*final ApiResponse response = await Api.get(
       '/transferts',
       queryParameters: queryParameters,
     );*/
 
-    int xlimit = (limit== null || limit <20 ) ? 20: limit;
+    int xlimit = (limit== null || limit <5 ) ? 5: limit;
 
     int xpage = page ?? 0;
 
@@ -151,6 +167,8 @@ class TransactionOutputRemote {
     final ApiResponse response = await Api.get(
       '/transferts/$reference/details',
     );
+
+
     return Transaction.fromJson(response.data);
   }
 

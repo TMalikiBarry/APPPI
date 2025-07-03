@@ -148,7 +148,8 @@ class TransactionSendPageRecentsItem extends StatelessWidget {
             ? traductions.transactionsSendRecentItemYouSend
             : traductions.transactionsSendRecentItemYouReceive,
         // surfixText: 'francs CFA',
-        style: Theme.of(context).textTheme.displaySmall,
+        style: Theme.of(context).textTheme.displaySmall?.
+          copyWith(color: transaction.sens == TransactionSens.debit ? Themer.error: Themer.brownColor),
       ),
       onTap: () {
         // envoie à un client à qui tu as dejà payé ou à qui t'a payé

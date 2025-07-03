@@ -92,9 +92,9 @@ class TransactionSendCommand {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {
       'phoneNumberTo': alias?.value,
-      'amount': amount?.value,
-      'latitude': latitude,
-      'longitude': longitude,
+      'amount': "${amount?.value}",
+      'latitude': "$latitude",
+      'longitude': "$longitude",
     };
     if (txId != null) {
       json['txId'] = txId;

@@ -60,7 +60,7 @@ class TransactionOutputRemote {
       'endDate'  : finish.toIso8601String().split('T').first,
       'size'     : size.toString(),
       'page'     : page.toString(),
-      'issuerAccount' : pref.getString("accountNumber"),
+      // 'issuerAccount' : pref.getString("accountNumber"),
       'status': 'SUCCESSFUL',
     };
 
@@ -97,7 +97,7 @@ class TransactionOutputRemote {
       final tx = md.toTransaction();
       /*final isDebit = (tx.compte == myPhone)
           || (tx.clientCompte == myPhone);*/
-      final isDebit = tx.compte == issuerAccount;
+      final isDebit = tx.clientCompte == issuerAccount || tx.compte == issuerAccount;
 
       tx.sens = isDebit
           ? TransactionSens.debit
@@ -153,7 +153,7 @@ class TransactionOutputRemote {
       queryParameters: queryParameters,
     );*/
 
-    int xlimit = (limit== null || limit <20 ) ? 20: limit;
+    int xlimit = (limit== null || limit <5 ) ? 5: limit;
 
     int xpage = page ?? 0;
 
@@ -165,6 +165,8 @@ class TransactionOutputRemote {
     final ApiResponse response = await Api.get(
       '/transferts/$reference/details',
     );
+
+
     return Transaction.fromJson(response.data);
   }
 

@@ -32,12 +32,18 @@ class TransactionDetailsPageCategorie extends StatelessWidget {
       ...Categorie.defaultListe,
       ...categorieBloc.state.categories,
     ];
+
+    Categorie theCategorie = transaction.categorie != null ? categories
+        .where((element) => (transaction.categorie!.contains(element.id) ||
+        transaction.canal!.contains(element.id)))
+        .first : Categorie.defaultCategorie;
+
     // Determiner la categorie
-    Categorie categorie = transaction.categorie != null
-        ? categories
-            .where((element) => element.id == transaction.categorie)
-            .first
+    Categorie categorie = theCategorie != null
+        ? theCategorie
         : Categorie.defaultCategorie;
+
+    categorie = categorie == null ? Categorie.defaultCategorie: categorie;
 
     return TransactionDetailsPageDetail(
       label: traductions.transactionDetailsCategorie,

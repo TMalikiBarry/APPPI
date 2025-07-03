@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../core/theme.dart';
 import '../../../../../shared/widgets/amount_widget.dart';
 import '../../../../../shared/widgets/avatar_circle_widget.dart';
 import '../../../domain/models/transaction.dart';
@@ -24,7 +25,8 @@ class TransactionDetailsPageHeader extends StatelessWidget {
           children: [
             AmountWidget(
               montant: transaction.montant,
-              style: Theme.of(context).textTheme.titleSmall,
+              style: transaction.sens == TransactionSens.credit ?
+                Theme.of(context).textTheme.labelSmall : Theme.of(context).textTheme.labelMedium,
               sign: transaction.sens == TransactionSens.credit ? '+' : '-',
             ),
             // Nom du client
@@ -35,6 +37,9 @@ class TransactionDetailsPageHeader extends StatelessWidget {
                 child: Text(
                   transaction.sens == TransactionSens.debit ?
                     transaction.acquirerAccountLabel! : transaction.clientNom,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: transaction.sens == TransactionSens.credit ? Themer.brownColor : Themer.error
+                  ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -45,7 +50,9 @@ class TransactionDetailsPageHeader extends StatelessWidget {
               Text(
                 DateFormat('d MMM, HH:mm') //
                     .format(transaction.dateOperation!),
-                style: Theme.of(context).textTheme.displaySmall,
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                    color: transaction.sens == TransactionSens.credit ? Themer.brownColor : Themer.error
+                ),
               ),
           ],
         ),

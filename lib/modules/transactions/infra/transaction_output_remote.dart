@@ -163,7 +163,7 @@ class TransactionOutputRemote {
     Map<String, dynamic> request = command.toJson();
     request.addAll({
       'aliasFrom': phoneNumberFrom,
-      'phoneNumberFrom': phoneNumberFrom,
+      //'phoneNumberFrom': phoneNumberFrom,
       'userLogin': userLogin,
     });
     final ApiResponse response = await Api.post(
@@ -171,7 +171,7 @@ class TransactionOutputRemote {
       data: request,
     );
     //
-    return Transaction.fromJson(response.data);
+    return Transaction.fromJson(response.data["response"]);
   }
 
   /// Programmer une transaction

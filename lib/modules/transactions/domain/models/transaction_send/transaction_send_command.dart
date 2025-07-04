@@ -91,9 +91,9 @@ class TransactionSendCommand {
   /// Convertit un objet TransactionSendCommand en JSON
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {
-      'phoneNumberTo': alias?.value,
-      'amount': "${amount?.value}",
-      'latitude': "$latitude",
+      //'phoneNumberTo': alias?.value,
+      'amount': "${amount?.value!.toInt()}",
+      'lattitude': "$latitude",
       'longitude': "$longitude",
     };
     if (txId != null) {

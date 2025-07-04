@@ -183,17 +183,17 @@ class Transaction {
 
   static Transaction fromJson(Map<dynamic, dynamic> json) {
     return Transaction(
-      compte: json['compte'],
+      compte: json['clientPhoneNumber'],
       alias: json['alias'] as String?,
-      montant: double.parse(json['montant'].toString()),
+      montant: double.parse(json['amount'].toString()),
       montantFrais: json['montantFrais'] != null
           ? double.parse(json['montantFrais'].toString())
           : null,
       sens: json['sens'],
       motif: json['motif'] as String?,
       canal: json['canal'] as String?,
-      clientNom: json['clientNom'] as String,
-      clientPays: json['clientPays'] as String,
+      clientNom: json['clientName'] as String,
+      clientPays: json['country'] as String,
       clientPhoto: json['clientPhoto'] as String?,
       clientPSP: json['clientPSP'] as String?,
       clientCompte: json['clientCompte'] as String?,

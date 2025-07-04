@@ -47,7 +47,7 @@ class ConnectedUser {
   String reference() => username;
 
   // Reference client /  Numéro de compte du client
-  String? paymentAddress() => alias;
+  String? getAlias() => alias;
 
   /// Convertit du JSON en objet ConnectedUser
   static ConnectedUser fromJson(Map<String, dynamic> json) {

@@ -189,21 +189,21 @@ class TransactionSendBloc
         Transaction transaction = await transactionsInputPort.initiate(
           event.command,
         );
-        if (event.command.action == TransactionSendCommand.actionReceiveNow) {
+        // if (event.command.action == TransactionSendCommand.actionReceiveNow) {
           // La demande est envoyée
           emit(TransactionSendFormSuccessState(
             event.command,
             transaction,
             participants: state.participants,
           ));
-        } // Transferts
+       /* } // Transferts
         else {
           // Afficher la page de demande de vérification
           emit(TransactionSendFormVerificationAskingState(
             form,
             transaction,
           ));
-        }
+        }*/
       } on ApiException catch (e) {
         // Erreur de vérification : alias invalide ou autre
         if (e.error == ApiError.notFound) {

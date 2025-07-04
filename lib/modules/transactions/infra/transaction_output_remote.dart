@@ -172,8 +172,7 @@ class TransactionOutputRemote {
     return Transaction.fromJson(response.data);
   }
 
-  /// Initier une transaction
-  Future<Transaction> initiate(TransactionSendCommand command) async {
+  /*Future<Transaction> initiate(TransactionSendCommand command) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var phoneNumberFrom = pref.getString("phone_number");
     var userLogin = pref.getString('phoneNumber');
@@ -190,6 +189,30 @@ class TransactionOutputRemote {
     );
     //
     return Transaction.fromJsonTransfer(response.data["response"]);
+  }*/
+
+  /// Initier une transaction
+  Future<Transaction> initiate(TransactionSendCommand command) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var phoneNumberFrom = pref.getString("phone_number");
+    var userLogin = pref.getString('phoneNumber');
+
+    Map<String, dynamic> request = {
+      ...command.toJson(),
+      'aliasFrom': phoneNumberFrom,
+      'userLogin': userLogin,
+    };
+
+    final ApiResponse response = await Api.post(
+      '/transfer/eme/external',
+      data: request,
+    );
+
+    // Ajout des informations manquantes avant le mapping
+    final responseData = Map<dynamic, dynamic>.from(response.data["response"]);
+    responseData['issuerPhoneNumber'] = phoneNumberFrom;
+
+    return Transaction.fromJsonTransfer(responseData);
   }
 
   /// Programmer une transaction

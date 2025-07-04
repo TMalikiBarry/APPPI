@@ -82,6 +82,9 @@ class Images {
   static const String iconEdit = 'assets/icons/edit.png';
   static const String iconDelete = 'assets/icons/delete.png';
 
+  static const String iconSearchHeaderHP = 'assets/images/figma_hp_search-normal.png';
+  static const String iconNotificationHeaderHP = 'assets/images/figma_hp_notification_0.png';
+
   // Home page - More menu
   static const String homeMoreFindSubscription =
       'assets/icons/find_subscription.png';

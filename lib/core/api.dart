@@ -8,6 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../modules/security/infra/connexion_output_authpkce.dart';
 import 'api_mock.dart';
 import 'env.dart';
+import 'package:micro_core/micro_core.dart' as micro_core;
+import 'package:micro_core/services/routing/routes.dart';
+
 
 /// Core Api Service pour effectuer les appels aux APIs
 /// Dio est utilisé pour les appels Http dans le projet.
@@ -292,6 +295,8 @@ class TokenInterceptor extends Interceptor {
     var pref = await SharedPreferences.getInstance();
     String? token = pref.getString("accessToken");
     options.headers['Authorization'] = 'Bearer $token';
+    // options.headers["Accept"] = "application/json";
+    // options.headers["Content-Type"] = "application/json";
     return handler.next(options);
   }
 
@@ -300,13 +305,31 @@ class TokenInterceptor extends Interceptor {
   void onError(DioException error, ErrorInterceptorHandler handler) async {
     logger.e("Error HTTP - dans Token interceptor", error: error);
     // Si c'est un problème d'autorisations
+    final pref = await SharedPreferences.getInstance();
     if (error.response?.statusCode == 401) {
       // Si une réponse 401 est reçue, actualisez le jeton d'accès
-      String? newAccessToken = await ConnexionOutputAuthpkce.refreshToken();
-      if (newAccessToken != null) {
-        // Mettre à jour l'en-tête de la requête avec le nouveau jeton d'accès
+      // String? newAccessToken = await ConnexionOutputAuthpkce.refreshToken();
+      final refreshToken = pref.getString('refreshToken');
+
+      if (refreshToken == null) {
+        _triggerRefreshServiceEvent();
+        throw Exception("No refresh token available");
+      }
+
+      // Récupérer les dates d'expiration
+      final expirationDateStr = pref.getInt('tokenExpiration');
+      final refreshExpirationDateStr = pref.getInt('refreshTokenExpiration');
+      final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+
+      // Vérifier la validité du refresh token
+      if (refreshExpirationDateStr == null || now >= refreshExpirationDateStr) {
+        _triggerRefreshServiceEvent();
+        throw Exception("Refresh token expired");
+      }
+
+             // Mettre à jour l'en-tête de la requête avec le nouveau jeton d'accès
         error.requestOptions.headers['Authorization'] =
-            'Bearer $newAccessToken';
+            'Bearer $refreshToken';
         // Relancer la requête originale avec les mêmes options
         return handler.resolve(await client.request(
           error.requestOptions.path, // Garder le même endpoint
@@ -321,10 +344,19 @@ class TokenInterceptor extends Interceptor {
           queryParameters: error
               .requestOptions.queryParameters, // Garde les / paramètres GET
         ));
-      }
+
     }
     return handler.next(error);
   }
+
+  void _triggerRefreshServiceEvent() {
+    micro_core.CustomEventBus.emit(
+      RouteEvents.walletTFSEvents.refreshServiceEvent("USER"),
+    );
+    return;
+    //print("Événement refreshServiceEvent déclenché.");
+  }
+
 }
 
 /// Pour logger ce qui se passe

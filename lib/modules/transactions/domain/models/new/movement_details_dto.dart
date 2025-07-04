@@ -11,6 +11,7 @@ class MovementDetailsDTO {
   final double globalCommission;
   final double globalFees;
   final String guID;
+  final String? endToEndId;
   final List<MovementHistoryDTO> history;
   final DateTime impactDate;
   final String legalEntityCode;
@@ -35,6 +36,7 @@ class MovementDetailsDTO {
   MovementDetailsDTO({
     this.accountNumber,
     required this.amount,
+    this.endToEndId,
     this.bankCode,
     this.clientId,
     required this.countryISOCode,
@@ -72,6 +74,7 @@ class MovementDetailsDTO {
       clientId: json['clientId'] as String?,
       countryISOCode: json['countryISOCode'] as String,
       flowCode: json['flowCode'] as String,
+      endToEndId: json['endToEndId'] as String? ,
       globalCommission: (json['globalCommission'] as num).toDouble(),
       globalFees: (json['globalFees'] as num).toDouble(),
       guID: json['guID'] as String,

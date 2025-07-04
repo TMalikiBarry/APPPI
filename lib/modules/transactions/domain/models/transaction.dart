@@ -19,6 +19,8 @@ class Transaction {
     this.sens,
     this.motif,
     this.canal,
+    this.guID,
+    this.clientPhoneNumber,
     this.issuerPhoneNumber,
     required this.clientNom,
     this.acquirerAccountLabel,
@@ -65,6 +67,7 @@ class Transaction {
     this.retraitMontant,
     this.retraitFrais,
     this.differe,
+    this.serviceCode,
     this.differeFrequence,
     this.differeOccurence,
     this.differeMontant,
@@ -107,6 +110,9 @@ class Transaction {
   final String? partnerID;
   final String? slipNumber;
   final String? userLogin;
+  final String? guID;
+  final String? clientPhoneNumber;
+  final String? serviceCode;
   final String? acquirerAccount;
   // Date d'irrévocabilité
   DateTime? dateOperation;
@@ -240,6 +246,7 @@ class Transaction {
       partnerID: json['partnerID'] as String?,
       slipNumber: json['slipNumber'] as String?,
       userLogin: json['userLogin'] as String?,
+      guID: json['guID'] as String?,
       acquirerAccount: json['acquirerAccount'] as String?,
       endToEndId: json['endToEndId'] as String,
       dateOperation: json['dateOperation'] != null
@@ -321,114 +328,119 @@ class Transaction {
   }
 
   static Transaction fromJsonTransfer(Map<dynamic, dynamic> json) {
+    // Extraction des détails de réponse si présents
+    final responseDetails = json['responseDetails'] as Map<String, dynamic>?;
+    final status = responseDetails?['status'] as String?;
+    final message = responseDetails?['message'] as String?;
+
     return Transaction(
-      acquirerPhoneNumber: json['acquirerPhoneNumber'],
-      acquirerAccountLabel: json['acquirerAccountLabel'],
-      compte: json['clientPhoneNumber'],
+      // Champs directs
+      acquirerPhoneNumber: json['acquirerPhoneNumber'] as String?,
+      acquirerAccountLabel: json['acquirerAccountLabel'] ?? json['clientName'],
+      compte: json['compte'] as String? ?? '',
+      clientPhoneNumber: json['clientPhoneNumber'],
       alias: json['alias'] as String?,
       montant: double.parse(json['amount'].toString()),
-      montantFrais: json['montantFrais'] != null
-          ? double.parse(json['montantFrais'].toString())
-          : null,
-      sens: json['sens'],
-      motif: json['motif'] as String?,
-      canal: json['canal'] as String?,
-      clientNom: json['clientName'] as String,
-      clientPays: json['country'] as String,
+
+      // Champs dérivés
+      sens: _determineTransactionSens(json),
+      motif: message ?? json['motif'] as String? ?? '',
+      canal: json['serviceCode'] as String? ?? 'TRANSFER_PI',
+      serviceCode: json['serviceCode'] as String? ?? 'TRANSFER_PI',
+
+      // Informations client
+      clientNom: json['clientName'] as String? ?? '',
+      clientPays: json['country'] as String? ?? 'SN',
       clientPhoto: json['clientPhoto'] as String?,
-      clientPSP: json['clientPSP'] as String?,
-      issuerPhoneNumber: json['issuerPhoneNumber'] as String?,
-      clientCompte: json['clientCompte'] as String?,
-      clientAlias: json['clientAlias'] as String?,
-      bankCode: json['bankCode'] as String?,
-      productCode: json['productCode'] as String?,
-      clientId: json['clientId'] as String?,
-      globalCommission: json['globalCommission'] != null
-          ? double.parse(json['globalCommission'].toString())
-          : null,
+
+      // Identifiants techniques
+      guID: json['guID'] as String?,
+      endToEndId: json['endToEndId'] as String? ?? '',
       legalEntityCode: json['legalEntityCode'] as String?,
-      partnerDistId: json['partnerDistId'] as String?,
-      partnerID: json['partnerID'] as String?,
-      slipNumber: json['slipNumber'] as String?,
-      userLogin: json['userLogin'] as String?,
-      acquirerAccount: json['acquirerAccount'] as String?,
-      endToEndId: json['endToEndId'] as String,
-      dateOperation: json['dateOperation'] != null
-          ? DateTime.parse(json['dateOperation'] as String)
-          : null,
-      statut: _getStatut(json['statut']),
-      statutRaison: json['statutRaison'] as String?,
-      categorie: json['categorie'] as String?,
-      facture: json['facture'] as String?,
-      txId: json['txId'] as String?,
-      dateExpiration: json['dateExpiration'] != null
-          ? DateTime.parse(json['dateExpiration'] as String)
-          : null,
-      // Programmation
-      dateDebut: json['dateDebut'] != null
-          ? DateTime.parse(json['dateDebut'] as String)
-          : null,
-      dateFin: json['dateFin'] != null
-          ? DateTime.parse(json['dateFin'] as String)
-          : null,
-      subscriptionId: json['subscriptionId'] as String?,
-      frequence: json['frequence'] != null
-          ? Frequence.values.firstWhere(
-              (element) => element.code == json['frequence'] as String)
-          : null,
-      periodicite: json['periodicite'] != null
-          ? int.parse(json['periodicite'].toString())
-          : null,
 
-      // Annulation et retour de fond
-      retourDate: json['retourDate'] != null
-          ? DateTime.parse(json['retourDate'] as String)
-          : null,
-      retourStatut: _getStatut(json['retourStatut']),
-      retourStatutRaison: json['retourStatutRaison'] as String?,
-      annulationRaison: json['annulationRaison'] != null
-          ? TransactionCancelReason.values.firstWhere(
-              (element) => element.code == json['annulationRaison'] as String)
-          : null,
-      annulationDate: json['annulationDate'] != null
-          ? DateTime.parse(json['annulationDate'] as String)
-          : null,
-      annulationStatut: _getStatut(json['annulationStatut']),
-      annulationStatutRaison: json['annulationStatutRaison'] as String?,
+      // Statut et dates
+      dateOperation: DateTime.now(), // Date courante par défaut
+      statut: _mapTechnicalStatus(status),
+      statutRaison: message,
+      dateExpiration: _parseDateTime(json['dateExpiration']),
 
-      // Demande de paiement
-      dateDemande: json['dateDemande'] != null
-          ? DateTime.parse(json['dateDemande'] as String)
+      // Champs optionnels avec valeurs par défaut
+      montantFrais: json['globalFees'] != null
+          ? double.parse(json['globalFees'].toString())
           : null,
-      dateReponse: json['dateReponse'] != null
-          ? DateTime.parse(json['dateReponse'] as String)
-          : null,
-      remise: json['remise'] != null
-          ? double.parse(json['remise'].toString())
-          : null,
-      retraitAchat: json['retraitAchat'] != null
-          ? double.parse(json['retraitAchat'].toString())
-          : null,
-      retraitMontant: json['retraitMontant'] != null
-          ? double.parse(json['retraitMontant'].toString())
-          : null,
-      retraitFrais: json['retraitFrais'] != null
-          ? double.parse(json['retraitFrais'].toString())
-          : null,
-      differe: json['differe'] != null
-          ? bool.parse(json['differe'].toString())
-          : null,
-      differeFrequence: json['differeFrequence'] != null
-          ? Frequence.values.firstWhere(
-              (element) => element.code == json['differeFrequence'] as String)
-          : null,
-      differeOccurence: json['differeOccurence'] != null
-          ? int.parse(json['differeOccurence'].toString())
-          : null,
-      differeMontant: json['differeMontant'] != null
-          ? double.parse(json['differeMontant'].toString())
-          : null,
+      issuerPhoneNumber: json['issuerPhoneNumber'] as String?,
+      bankCode: json['bankCode'] as String?,
+      productCode: json['serviceCode'] as String?,
+
+      // Initialisation des champs non fournis à null
+      clientPSP: null,
+      clientCompte: null,
+      clientAlias: null,
+      clientId: null,
+      globalCommission: null,
+      partnerDistId: null,
+      partnerID: null,
+      slipNumber: null,
+      userLogin: null,
+      acquirerAccount: null,
+      categorie: null,
+      facture: null,
+      txId: null,
+      dateDebut: null,
+      dateFin: null,
+      frequence: null,
+      periodicite: null,
+      retourDate: null,
+      retourStatut: null,
+      retourStatutRaison: null,
+      annulationRaison: null,
+      annulationDate: null,
+      annulationStatut: null,
+      annulationStatutRaison: null,
+      dateDemande: null,
+      dateReponse: null,
+      remise: null,
+      retraitAchat: null,
+      retraitMontant: null,
+      retraitFrais: null,
+      differe: null,
+      differeFrequence: null,
+      differeOccurence: null,
+      differeMontant: null,
     );
+  }
+
+// Helpers supplémentaires
+  static DateTime? _parseDateTime(dynamic value) {
+    return value != null ? DateTime.tryParse(value.toString()) : null;
+  }
+
+  static TransactionStatut? _mapTechnicalStatus(String? status) {
+    if (status == null) return null;
+    switch (status) {
+      case 'SUCCESSFUL':
+      case 'success':
+        return TransactionStatut.irrevocable;
+      case 'PART_SUCCESSFUL':
+        return TransactionStatut.initie;
+      case 'REJECTED':
+      case 'rejete':
+        return TransactionStatut.rejete;
+      case 'DESACTIVE':
+        return TransactionStatut.desactive;
+      default:
+        return null;
+    }
+  }
+
+  static TransactionSens? _determineTransactionSens(Map<dynamic, dynamic> json) {
+    final issuer = json['issuerPhoneNumber']?.toString() ?? '';
+    final acquirer = json['acquirerPhoneNumber']?.toString() ?? '';
+    final currentAccount = json['clientPhoneNumber']?.toString() ?? '';
+
+    return (currentAccount == issuer)
+        ? TransactionSens.debit
+        : TransactionSens.credit;
   }
 
   static TransactionStatut? _getStatut(String? statut) {

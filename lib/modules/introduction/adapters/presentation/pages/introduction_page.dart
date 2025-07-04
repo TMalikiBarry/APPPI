@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pi_mobile_app/core/router.dart';
+import 'package:pi_mobile_app/modules/config/adapters/ui/bloc/config_event.dart';
+import 'package:pi_mobile_app/modules/config/domain/models/config_keys.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../../../core/theme.dart';
 import '../../../../../l10n/app_localizations.dart';
+import '../../../../config/adapters/ui/bloc/config_bloc.dart';
 import 'introduction_bar.dart';
 import 'introduction_footer.dart';
 import 'introduction_item.dart';
@@ -71,6 +76,29 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem> {
                     item: widget.item,
                     pageSize: widget.pageSize,
                     progressBarWidth: widget.progressBarWidth),
+                const SizedBox(height: 4),
+
+                // Skip button
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 24),
+                    child: TextButton(
+                      onPressed: () {
+                        AppRouter.pushReplacement(context, AppRouter.home);
+                      },
+                      style: TextButton.styleFrom(
+                      backgroundColor: Themer.gray, // 🌟 Couleur de fond
+                      foregroundColor: Themer.primaryColor,   // 🌟 Couleur du texte
+                      shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20), // 🌟 Bord arrondi
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      ),
+                      child: const Text("Ignorer"),
+                    ),
+                  ),
+                ),
                 // Video et titres
                 IntroductionVideo(
                   videoPlayerController: videoPlayerController,

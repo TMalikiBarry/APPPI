@@ -34,7 +34,7 @@ class IntroductionVideo extends StatelessWidget {
       children: [
         // Contenant de la vidéo fond blanc et bords arrondis
         Container(
-          width: 300,
+          width: 350,
           height: 350,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.0),

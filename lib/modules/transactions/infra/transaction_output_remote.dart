@@ -189,7 +189,7 @@ class TransactionOutputRemote {
       data: request,
     );
     //
-    return Transaction.fromJson(response.data["response"]);
+    return Transaction.fromJsonTransfer(response.data["response"]);
   }
 
   /// Programmer une transaction

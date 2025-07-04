@@ -120,6 +120,8 @@ class TransactionFormPage extends StatelessWidget {
                       onPressed: state.command.isValid()
                           ? () {
                               // initiate
+                              print("value : ${state.command.toJson()}");
+                              print("value : ${state.command.pspNom}");
                               context.read<TransactionSendBloc>().add(
                                   TransactionSendInitiateEvent(state.command));
                             }

@@ -83,7 +83,8 @@ class TransactionSendCommand {
     if (othr != null) othr!.isValid();
     if (schedule != null) schedule!.isValid();
     return ((alias != null && alias!.isValid()) ||
-            (iban != null && iban!.isValid()) ||
+            (iban != null && iban!.isValid() &&
+                pspNom != null) ||
             (othr != null && othr!.isValid())) &&
         (amount != null && amount!.isValid()) &&
         (schedule == null || (schedule != null && schedule!.isValid())) &&
@@ -93,7 +94,6 @@ class TransactionSendCommand {
   /// Convertit un objet TransactionSendCommand en JSON
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {
-      //'phoneNumberTo': alias?.value,
       'amount': "${amount?.value!.toInt()}",
       'lattitude': "$latitude",
       'longitude': "$longitude",
@@ -130,7 +130,8 @@ class TransactionSendCommand {
         break;
       case TransactionSendMethod.iban:
         json['iban'] = iban?.value;
-        json['payePSP'] = pspCode;
+        //json['payePSP'] = pspCode;
+        json['bankName'] = pspNom;
         break;
       case TransactionSendMethod.othr:
         json['othr'] = othr?.value;

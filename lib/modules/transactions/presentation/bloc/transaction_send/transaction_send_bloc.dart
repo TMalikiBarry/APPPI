@@ -401,17 +401,62 @@ class TransactionSendBloc
   Future<Position?> _getPosition() async {
     Position? position;
     try {
+      logger.i("_getPosition");
+
+      // Vérifier et demander l'autorisation avant d'obtenir la position
+      bool hasPermission = await _checkAndRequestLocationPermission();
+      logger.i("hasPermission $hasPermission");
+      if (!hasPermission) {
+        logger.i("_getPosition : Permission de localisation refusée");
+        return null;
+      }
+
       position = await _askPosition();
+      logger.i("_getPosition : '${position.longitude}' '${position.latitude}'");
     } //
     catch (e) {
+      logger.i("_getPosition : '${e.toString()}'");
       PermissionType permission = PermissionType.localisationGPS;
 
       bool granted = await permissionInputPort.grantPermission(permission);
+      logger.i("_getPosition : granted $granted");
       if (granted) {
         position = await _askPosition();
       }
     }
     return position;
+  }
+
+// Vérifier et demander l'autorisation de localisation
+  Future<bool> _checkAndRequestLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Vérifier si le service de localisation est activé
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      logger.i("_checkAndRequestLocationPermission : Service de localisation désactivé");
+      return false;
+    }
+
+    // Vérifier l'autorisation actuelle
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      // Demander l'autorisation
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        logger.i("_checkAndRequestLocationPermission : Autorisation refusée");
+        return false;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      logger.i("_checkAndRequestLocationPermission : Autorisation refusée définitivement");
+      return false;
+    }
+
+    logger.i("_checkAndRequestLocationPermission : Autorisation accordée");
+    return true;
   }
 
   // Demander position GPS

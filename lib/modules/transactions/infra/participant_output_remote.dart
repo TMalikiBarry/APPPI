@@ -12,9 +12,9 @@ class ParticipantOutputRemote {
   /// Lister les participants
   Future<List<Participant>> list() async {
     final ApiResponse response = await Api.get(
-      '/participants',
+      '/participant/index',
     );
-    ParticipantListe liste = ParticipantListe.fromJson(response.data);
+    ParticipantListe liste = ParticipantListe.fromJson(response.data["response"]);
     return liste.data;
   }
 }

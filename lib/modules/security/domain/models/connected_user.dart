@@ -20,6 +20,9 @@ class ConnectedUser {
 
   static ConnectedUser? current;
 
+  //
+  final String? alias;
+
   ConnectedUser({
     //
     required this.id,
@@ -31,6 +34,7 @@ class ConnectedUser {
     required this.telephone,
     this.email,
     this.avatar, //
+    this.alias, //
   });
 
   // Retourne le nom complet de l'utilisateur
@@ -41,6 +45,9 @@ class ConnectedUser {
 
   // Reference client /  Numéro de compte du client
   String reference() => username;
+
+  // Reference client /  Numéro de compte du client
+  String? getAlias() => alias;
 
   /// Convertit du JSON en objet ConnectedUser
   static ConnectedUser fromJson(Map<String, dynamic> json) {
@@ -54,6 +61,7 @@ class ConnectedUser {
       telephone: json['telephone'] as String,
       email: json['email'] as String?,
       avatar: json['avatar'] as String?,
+      alias: json['alias'] as String?,
     );
   }
 

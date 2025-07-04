@@ -303,7 +303,12 @@ class AppRouter {
             final loginBloc = context.read<LoginBloc>();
             ConnectedUser user = loginBloc.getConnectedUser()!;
             //
-            aliasBloc.add(FetchAliasEvent(user.reference()));
+            if(user.getAlias() != null) {
+              aliasBloc.add(FetchAliasEvent(user.getAlias()!));
+            }
+            else {
+              aliasBloc.add(FetchAliasEvent("+${user.reference()}"));
+            }
             //
             final completer = Completer<AliasState>();
             final listener = aliasBloc.stream.listen((aliasState) {

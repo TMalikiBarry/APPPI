@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:emvqrcode/emvqrcode.dart';
 import 'package:logger/logger.dart';
 
@@ -113,7 +115,7 @@ class QrcodeService implements QrcodeInputPort {
     emv.setPayloadFormatIndicator("01");
     emv.setTransactionCurrency(currency);
     emv.setCountryCode(alias.pays);
-
+print(jsonEncode(alias));
     /// merchant account information
     MerchantAccountInformation mAccountInfo = MerchantAccountInformation();
     mAccountInfo.setGloballyUniqueIdentifier(globallyUniqueIdentifier);

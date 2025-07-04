@@ -88,8 +88,7 @@ class SubscriptionListItemWidget extends StatelessWidget {
         style: Theme.of(context)
             .textTheme
             .displaySmall!
-            . //
-            copyWith(color: Themer.neural04Color),
+            .copyWith(color: Themer.neural04Color),
       ),
       onTap: noLink != null && noLink == true
           ? null

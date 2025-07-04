@@ -26,6 +26,8 @@ class Subscription extends Transaction {
     super.dateFin,
     super.frequence,
     super.periodicite,
+    super.acquirerPhoneNumber,
+    super.acquirerAccountLabel,
   });
 
   DateTime? nextPaymentDate;
@@ -55,6 +57,8 @@ class Subscription extends Transaction {
       dateFin: transaction.dateFin,
       frequence: transaction.frequence,
       periodicite: transaction.periodicite,
+      acquirerPhoneNumber: transaction.acquirerPhoneNumber,
+      acquirerAccountLabel: transaction.acquirerAccountLabel,
     );
     // Compute next payment date
     subs.nextPaymentDate = computeNextPaymentDate(subs, DateTime.now());
@@ -85,6 +89,9 @@ class Subscription extends Transaction {
       dateFin: transaction.dateFin,
       frequence: transaction.frequence,
       periodicite: transaction.periodicite,
+      acquirerPhoneNumber: transaction.acquirerPhoneNumber,
+      acquirerAccountLabel: transaction.acquirerAccountLabel,
+
     );
     // Compute next payment date
     subs.nextPaymentDate = computeNextPaymentDate(subs, DateTime.now());

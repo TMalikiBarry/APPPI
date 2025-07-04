@@ -84,7 +84,7 @@ class TransactionSendBloc
     // Récuperer la liste
     TransactionListe transactions = await transactionsInputPort.list(
       compte: event.compte,
-      limit: 3,
+      limit: 10,
     );
     // Retourner la liste
     emit(TransactionSendInitialState(transactions: transactions));

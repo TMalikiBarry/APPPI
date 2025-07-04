@@ -50,14 +50,15 @@ class Api {
     // - Ajouter l'intercepteur pour logger
     if (kDebugMode) client.interceptors.add(LoggingInterceptor());
 
-    if (AppEnv.mode != "demo") {
+    // if (AppEnv.mode != "demo") {
+
       // - Ajouter l'intercepteur qui ajoute le token
       client.interceptors.add(TokenInterceptor(client));
-    }
+    /*}
     // - Sinon mocker les APIs en mode démo
     else {
       client.interceptors.add(MockInterceptor());
-    }
+    }*/
 
     // - Ajouter l'intercepteur pour les erreurs
     client.interceptors.add(ErrorInterceptor());

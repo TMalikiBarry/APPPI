@@ -62,7 +62,7 @@ class TransactionOutputRemote {
       'size'     : size.toString(),
       'page'     : page.toString(),
       'issuerAccount' : pref.getString("accountNumber"),
-      'scope' : 'PI',
+      // 'scope' : 'PI',
       'status': 'SUCCESSFUL',
     };
 

@@ -60,7 +60,7 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                         children: [
                           // Envoyer
                           CtaWidget(
-                            image: Images.arrowUp,
+                            image: Images.iconMoneySendHeaderHP,
                             label: traductions.homeActionSend,
                             action: () => AppRouter.push(
                               context,
@@ -70,7 +70,7 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
 
                           // Recevoir
                           CtaWidget(
-                            image: Images.arrowDown,
+                            image: Images.iconMoneyReceiveHeaderHP,
                             label: traductions.homeActionRequest,
                             action: () => AppRouter.push(
                               context,
@@ -80,7 +80,8 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
 
                           // Plus
                           CtaWidget(
-                            icon: const Icon(Icons.more_horiz, size: 30),
+                            // icon: const Icon(Icons.more_horiz, size: 30),
+                            image: Images.iconMoreActionHeaderHP,
                             label: traductions.homeActionMore,
                             action: () => {
                               showModalBottomSheet<void>(

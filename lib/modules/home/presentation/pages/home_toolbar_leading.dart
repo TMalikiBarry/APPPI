@@ -28,8 +28,9 @@ class HomeToolbarLeading extends StatelessWidget {
       boxDecoration = ShapeDecoration(
         color: Colors.transparent,
         shape: border,
-        image: DecorationImage(
-          image: NetworkImage(user.avatar!),
+        image: const DecorationImage(
+          // image: NetworkImage(user.avatar!),
+          image: AssetImage(Images.iconSearchHeaderHP, package: 'common_dependencies'),
           fit: BoxFit.fill,
         ),
       );
@@ -58,8 +59,16 @@ class HomeToolbarLeading extends StatelessWidget {
             Container(
               width: 40,
               height: 40,
-              decoration: boxDecoration,
-              child: child,
+              // decoration: boxDecoration,
+              decoration: const BoxDecoration(
+                    image: DecorationImage(
+                    // image: NetworkImage(user.avatar!),
+                      image: AssetImage(Images.iconDefaultUserHeaderHP, package: 'common_dependencies'),
+                      fit: BoxFit.fill,
+                      filterQuality: FilterQuality.high,
+                    ),
+                ),
+              // child: child,
             ),
             // Logo SPI
             const SizedBox(width: 10),

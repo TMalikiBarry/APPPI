@@ -3,52 +3,59 @@ import 'package:flutter/material.dart';
 import '../../core/theme.dart';
 
 class CtaWidget extends StatelessWidget {
-  ///
   const CtaWidget({
     super.key,
     required this.label,
     required this.action,
     this.icon,
     this.image,
-    this.disabled,
+    this.disabled = false,
   });
 
   final String label;
   final Function()? action;
   final Icon? icon;
   final String? image;
-  final bool? disabled;
+  final bool disabled;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        FloatingActionButton(
-          onPressed: disabled != null && disabled == true ? null : action,
-          elevation: 0,
-          heroTag: label,
-          backgroundColor: disabled != null && disabled == true
-              ? Themer.gray
-              : Theme.of(context).colorScheme.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30), // Rayon souhaité
+    const Color bg = Colors.white;
+    final shadow = BoxShadow(
+      color: Colors.black.withOpacity(0.1),
+      blurRadius: 8,
+      offset: const Offset(0, 4),
+    );
+
+    return GestureDetector(
+      onTap: disabled ? null : action,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              color: bg,
+              shape: BoxShape.circle,
+              boxShadow: [shadow],
+            ),
+            child: Center(
+              child: icon ??
+                  ImageIcon(
+                    AssetImage(image!, package: 'common_dependencies'),
+                    size: 28,
+                    color: const Color(0xFF282C5D),
+                  ),
+            ),
           ),
-          child: icon ??
-              ImageIcon(
-                AssetImage(image!,package: 'common_dependencies'),
-                color: disabled != null && disabled == true
-                    ? Themer.blackColor
-                    : Theme.of(context).colorScheme.onPrimary,
-                size: 30,
-              ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-      ],
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
+      ),
     );
   }
 }

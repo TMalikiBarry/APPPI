@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                             traductions.homePageToolbarTabbarCompte,
                             style: const TextStyle(
                               fontFamily: 'Inter',
-                              fontSize: 14,
+                              fontSize: 13.5,
                               fontWeight: FontWeight.w500,
                             ),
                         ),
@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                             traductions.homePageToolbarTabbarAbonnement,
                             style: const TextStyle(
                               fontFamily: 'Inter',
-                              fontSize: 14,
+                              fontSize: 13.5,
                               fontWeight: FontWeight.w500,
                             ),
                         ),
@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                             traductions.homePageToolbarTabbarEconomie,
                             style: const TextStyle(
                               fontFamily: 'Inter',
-                              fontSize: 14,
+                              fontSize: 13.5,
                               fontWeight: FontWeight.w500,
                             ),
                         ),

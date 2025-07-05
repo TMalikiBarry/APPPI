@@ -40,7 +40,7 @@ class TransactionDetailsPageActions extends StatelessWidget {
           children: [
             // Envoyer au client
             CtaWidget(
-              image: Images.arrowUp,
+              image: Images.iconMoneySendHeaderHP,
               label: traductions.homeActionSend,
               action: () => _actionSend(context, transaction),
             ),
@@ -62,7 +62,7 @@ class TransactionDetailsPageActions extends StatelessWidget {
             if (transaction.sens?.name == TransactionSens.credit.name) ...[
               // Demander le paiement
               CtaWidget(
-                image: Images.arrowDown,
+                image: Images.iconMoneyReceiveHeaderHP,
                 label: traductions.transactionDetailsRecevoir,
                 disabled: transaction.clientAlias == null,
                 action: transaction.clientAlias != null

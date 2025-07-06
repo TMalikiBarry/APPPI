@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/assets.dart';
 import '../../../../core/theme.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../shared/widgets/loading_page.dart';
 import '../../../contacts/presentation/bloc/contact_bloc.dart';
 import '../../../contacts/presentation/bloc/contact_event.dart';
 import '../../../notification/presentation/pages/notification_btn_open_widget.dart';
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                     return Colors.transparent;
                   },
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 // Le style appliquée a tous les textes du tabBar
                 labelStyle: Theme.of(context).textTheme.bodySmall,
                 labelPadding: const EdgeInsets.symmetric(horizontal: 2),
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                 // Bordure - couleur de fond de la tab sélectionnée
                 indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: const Color(0xFF282C5D),
+                  color: Themer.amberColor,
                 ),
                 //
                 indicatorPadding: const EdgeInsets.symmetric(vertical: 5),
@@ -90,23 +90,53 @@ class _HomePageState extends State<HomePage> {
                 tabs: [
                   // Compte
                   Tab(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(traductions.homePageToolbarTabbarCompte),
-                    ),
+                    child: SizedBox(
+                      width: 80, // Largeur personnalisée
+                      child:  Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                            traductions.homePageToolbarTabbarCompte,
+                            style: const TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 13.5,
+                              fontWeight: FontWeight.w500,
+                            ),
+                        ),
+                      ),
+                    )
                   ),
                   // Abonnements
                   Tab(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(traductions.homePageToolbarTabbarAbonnement),
+                    child: SizedBox(
+                      width: 110, // Largeur personnalisée
+                      child:  Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                            traductions.homePageToolbarTabbarAbonnement,
+                            style: const TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 13.5,
+                              fontWeight: FontWeight.w500,
+                            ),
+                        ),
+                      ),
                     ),
                   ),
                   // Savings
                   Tab(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(traductions.homePageToolbarTabbarEconomie),
+                    child: SizedBox(
+                      width: 100, // Largeur personnalisée
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                            traductions.homePageToolbarTabbarEconomie,
+                            style: const TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 13.5,
+                              fontWeight: FontWeight.w500,
+                            ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -137,7 +167,11 @@ class _HomePageState extends State<HomePage> {
     return [
       // Search
       IconButton(
-        icon: const Icon(Icons.search),
+        icon: ImageIcon(
+          const AssetImage(Images.iconSearchHeaderHP, package: 'common_dependencies'),
+          color: Theme.of(context).colorScheme.onSurface,
+          size: 24,
+        ),
         onPressed: () {
           //
         },

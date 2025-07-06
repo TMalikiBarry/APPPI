@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/di.dart';
 import '../../../../core/notifications.dart';
+import '../../../../core/assets.dart';
 import '../../../../core/router.dart';
 import '../../../../core/sounds.dart';
 import '../../../../core/theme.dart';
@@ -59,7 +61,21 @@ class _NotificationBtnOpenWidgetState extends State<NotificationBtnOpenWidget> {
         builder: (context, state) => Stack(
           children: [
             IconButton(
-              icon: const Icon(Icons.notifications_none_outlined),
+              // icon: SvgPicture.asset(
+              //   Images.iconNotificationHeaderHP,
+              //   package: 'common_dependencies',
+              //   height: 24,
+              //   width: 24,
+              //   colorFilter: ColorFilter.mode(
+              //     Theme.of(context).colorScheme.onSurface,
+              //     BlendMode.srcIn,
+              //   ),
+              // ),
+              icon: ImageIcon(
+                const AssetImage(Images.iconNotificationHeaderHP, package: 'common_dependencies'),
+                color: Theme.of(context).colorScheme.onSurface,
+                size: 24,
+              ),
               onPressed: () {
                 // Aller sur la page notifications
                 AppRouter.push(

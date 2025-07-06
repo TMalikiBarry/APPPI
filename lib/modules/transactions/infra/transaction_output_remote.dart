@@ -188,8 +188,12 @@ class TransactionOutputRemote {
       '/transfer/eme/external',
       data: request,
     );
-    //
-    return Transaction.fromJson(response.data);
+    // Ajout des informations manquantes avant le mapping
+    final responseData = Map<dynamic, dynamic>.from(response.data["response"]);
+    responseData['issuerPhoneNumber'] = phoneNumberFrom;
+
+    return Transaction.fromJsonTransfer(responseData);
+
   }
 
   /// Programmer une transaction

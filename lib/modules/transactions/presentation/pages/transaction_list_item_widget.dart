@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/assets.dart';
 import '../../../../core/router.dart';
 import '../../../../core/theme.dart';
 import '../../../../shared/widgets/amount_widget.dart';
@@ -44,12 +43,24 @@ class TransactionListItemWidget extends StatelessWidget {
   }
 
   Widget _listTile(BuildContext context) {
+
+    final userName = transaction.sens == TransactionSens.debit
+        ? transaction.acquirerAccountLabel!
+        : transaction.clientNom;
+
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: Stack(
         children: [
-          const CircleAvatar(
-            backgroundImage: AssetImage(Images.transactionAvatar,package: 'common_dependencies'),
+          CircleAvatar(
+            backgroundColor: _generateColorFromString(userName),
+            child: Text(
+              _getInitials(userName),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           Positioned(
             right: -2,
@@ -81,7 +92,7 @@ class TransactionListItemWidget extends StatelessWidget {
               transaction.sens == TransactionSens.debit ?
                 transaction.acquirerAccountLabel! : transaction.clientNom,
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: transaction.sens == TransactionSens.credit ? Themer.brownColor : Themer.error
+                  color: Themer.brownColor
               ),
               overflow: TextOverflow.ellipsis,
             ),
@@ -106,7 +117,7 @@ class TransactionListItemWidget extends StatelessWidget {
             .textTheme
             .displaySmall!
             .copyWith(
-                color: transaction.sens == TransactionSens.credit ? Themer.brownColor : Themer.error
+                color: Themer.brownColor
             ),
       ),
       onTap: noLink != null && noLink == true
@@ -125,6 +136,42 @@ class TransactionListItemWidget extends StatelessWidget {
       },
     );
   }
+
+  String _getInitials(String name) {
+    final parts = name.trim().split(RegExp(r'\s+'));
+    if (parts.length == 1) {
+      return parts.first.substring(0, 1).toUpperCase();
+    } else {
+      return (parts.first[0] + parts.last[0]).toUpperCase();
+    }
+  }
+
+  Color _generateColorFromString(String input) {
+    final hash = input.runes.fold(0, (prev, code) => prev + code);
+    // Tu choisis un ensemble de couleurs prédéfinies
+    const palette = [
+      Color(0x33E57373),
+      Color(0x33BA68C8),
+      Color(0x3364B5F6),
+      Color(0x3381C784),
+      Color(0x33FFD54F),
+      Color(0x33A1887F),
+      Color(0x33204093),
+      Color(0x33DC1A36),
+      Color(0x33F6EA64),
+      Color(0x330BEA14),
+      Color(0x339A29E4),
+      Color(0x33A1887F),
+      Color(0x3304ECB5),
+      Color(0x33BD7F0C),
+      Color(0x330A8DF6),
+      Color(0x330FED19),
+      Color(0x33011423),
+      Color(0x335A349F),
+    ];
+    return palette[hash % palette.length];
+  }
+
   Color _getSensColor(BuildContext context, Transaction transaction) {
     if (transaction.sens == TransactionSens.debit) {
       return Theme.of(context).colorScheme.error;

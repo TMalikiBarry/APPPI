@@ -44,10 +44,10 @@ class TransactionDetailsBloc
     Emitter<TransactionDetailsState> emit,
   ) async {
     Transaction tx = await transactionInputPort.get(transaction.endToEndId);
-    //TODO remove before release
-    if (AppEnv.mode != "demo") {
+    // //TODO remove before release
+    // if (AppEnv.mode != "demo") {
       emit(TransactionDetailsInitialState(tx));
-    }
+    // }
   }
 
   /// Pour mettre à jour la catégorie de transaction

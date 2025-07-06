@@ -76,7 +76,7 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem> {
                     item: widget.item,
                     pageSize: widget.pageSize,
                     progressBarWidth: widget.progressBarWidth),
-                const SizedBox(height: 4),
+                const SizedBox(height: 2),
 
                 // Skip button
                 Align(

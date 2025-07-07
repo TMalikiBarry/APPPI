@@ -177,11 +177,11 @@ class TransactionOutputRemote {
   Future<Transaction> initiate(TransactionSendCommand command) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var aliasFrom = ConnectedUser.current?.alias;
-    //if (aliasFrom != null){
-    //  aliasFrom = ConnectedUser.current?.alias;
-    //} else {
+    if (aliasFrom != null){
+      aliasFrom = ConnectedUser.current?.alias;
+    } else {
       aliasFrom = pref.getString("phone_number");
-    //}
+    }
     var userLogin = pref.getString('phoneNumber');
     // Send transfer
     Map<String, dynamic> request = command.toJson();

@@ -406,6 +406,7 @@ class TransactionSendBloc
       // Vérifier et demander l'autorisation avant d'obtenir la position
       bool hasPermission = await _checkAndRequestLocationPermission();
       logger.i("hasPermission $hasPermission");
+
       if (!hasPermission) {
         logger.i("_getPosition : Permission de localisation refusée");
         return null;
@@ -413,15 +414,22 @@ class TransactionSendBloc
 
       position = await _askPosition();
       logger.i("_getPosition : '${position.longitude}' '${position.latitude}'");
-    } //
-    catch (e) {
+    } catch (e) {
       logger.i("_getPosition : '${e.toString()}'");
-      PermissionType permission = PermissionType.localisationGPS;
 
+      // Fallback avec votre système de permissions personnalisé
+      PermissionType permission = PermissionType.localisationGPS;
       bool granted = await permissionInputPort.grantPermission(permission);
       logger.i("_getPosition : granted $granted");
+
       if (granted) {
-        position = await _askPosition();
+        // Réessayer la vérification après avoir accordé la permission
+        bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+        if (serviceEnabled) {
+          position = await _askPosition();
+        } else {
+          logger.i("_getPosition : Service de localisation toujours désactivé");
+        }
       }
     }
     return position;
@@ -432,34 +440,63 @@ class TransactionSendBloc
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Vérifier si le service de localisation est activé
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      logger.i("_checkAndRequestLocationPermission : Service de localisation désactivé");
-      return false;
-    }
-
-    // Vérifier l'autorisation actuelle
+    // Vérifier l'autorisation actuelle d'abord
     permission = await Geolocator.checkPermission();
+    logger.i("_checkAndRequestLocationPermission : Permission actuelle: $permission");
+
     if (permission == LocationPermission.denied) {
-      // Demander l'autorisation
+      // Demander l'autorisation - ceci affichera le pop-up système
+      // Même si le GPS est désactivé, le pop-up peut permettre d'activer le GPS
+      logger.i("_checkAndRequestLocationPermission : Demande d'autorisation en cours...");
       permission = await Geolocator.requestPermission();
+      logger.i("_checkAndRequestLocationPermission : Réponse de l'utilisateur: $permission");
+
       if (permission == LocationPermission.denied) {
-        logger.i("_checkAndRequestLocationPermission : Autorisation refusée");
+        logger.i("_checkAndRequestLocationPermission : Autorisation refusée par l'utilisateur");
         return false;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       logger.i("_checkAndRequestLocationPermission : Autorisation refusée définitivement");
+
+      // Ouvrir les paramètres de l'application pour activation manuelle
+      await Geolocator.openAppSettings();
       return false;
     }
 
-    logger.i("_checkAndRequestLocationPermission : Autorisation accordée");
-    return true;
+    // Maintenant vérifier si le service de localisation est activé
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      logger.i("_checkAndRequestLocationPermission : Service de localisation désactivé");
+
+      // Si on a la permission mais le service est désactivé,
+      // ouvrir les paramètres système pour activer le GPS
+      await Geolocator.openLocationSettings();
+
+      // Attendre un peu que l'utilisateur puisse activer le service
+      await Future.delayed(Duration(seconds: 2));
+
+      // Vérifier à nouveau si le service est maintenant activé
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        logger.i("_checkAndRequestLocationPermission : Service de localisation toujours désactivé");
+        return false;
+      }
+      logger.i("_checkAndRequestLocationPermission : Service de localisation activé");
+    }
+
+    // Vérifier si on a au moins une permission partielle
+    if (permission == LocationPermission.whileInUse || permission == LocationPermission.always) {
+      logger.i("_checkAndRequestLocationPermission : Autorisation accordée ($permission)");
+      return true;
+    }
+
+    logger.i("_checkAndRequestLocationPermission : Permission non accordée: $permission");
+    return false;
   }
 
-  // Demander position GPS
+// Demander position GPS
   Future<Position> _askPosition() async {
     final LocationSettings locationSettings = LocationSettings(
       accuracy: LocationAccuracy.high,

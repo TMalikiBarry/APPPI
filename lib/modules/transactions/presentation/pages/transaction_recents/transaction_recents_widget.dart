@@ -59,6 +59,7 @@ class _TransactionRecentsWidgetState extends State<TransactionRecentsWidget> {
           bloc: transactionsBloc,
           builder: (context, state) {
             return Column(
+
               children: [
                 // Titre et bouton paramètres
                 Row(
@@ -70,7 +71,7 @@ class _TransactionRecentsWidgetState extends State<TransactionRecentsWidget> {
                       style: Theme.of(context)
                           .textTheme
                           .displayLarge!
-                          .copyWith(color: Themer.neural04Color),
+                          .copyWith(color: Themer.primaryColor, fontWeight: FontWeight.bold),
                     ),
                     IconButton(
                       onPressed: () => showModalBottomSheet<int?>(

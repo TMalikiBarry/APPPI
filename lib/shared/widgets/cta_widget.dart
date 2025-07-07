@@ -20,7 +20,7 @@ class CtaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color bg = Colors.white;
+    const Color bg = Themer.primaryLight;
     final shadow = BoxShadow(
       color: Colors.black.withOpacity(0.1),
       blurRadius: 8,
@@ -52,7 +52,7 @@ class CtaWidget extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             label,
-            style: Theme.of(context).textTheme.bodySmall,
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(color: const Color(0xFF282C5D)),
           ),
         ],
       ),

@@ -92,7 +92,8 @@ class TransactionListItemWidget extends StatelessWidget {
               transaction.sens == TransactionSens.debit ?
                 transaction.acquirerAccountLabel! : transaction.clientNom,
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Themer.brownColor
+                color: const Color(0xFF344054),
+                  fontWeight: FontWeight.w600
               ),
               overflow: TextOverflow.ellipsis,
             ),
@@ -102,9 +103,7 @@ class TransactionListItemWidget extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8),
             child: AmountWidget(
               montant: transaction.montant,
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                color: transaction.sens == TransactionSens.credit ? Themer.brownColor : Themer.error
-              ),
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(color:  Themer.primaryColor, fontWeight: FontWeight.bold),
               sign: transaction.sens == TransactionSens.debit ? '-' : '',
             ),
           ),
@@ -115,9 +114,9 @@ class TransactionListItemWidget extends StatelessWidget {
         DateFormat('d MMM, HH:mm').format(transaction.dateOperation!),
         style: Theme.of(context)
             .textTheme
-            .displaySmall!
+            .bodyMedium!
             .copyWith(
-                color: Themer.brownColor
+                color: const Color(0xFF667085)
             ),
       ),
       onTap: noLink != null && noLink == true

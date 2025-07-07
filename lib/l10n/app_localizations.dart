@@ -2311,7 +2311,16 @@ abstract class AppLocalizations {
   /// **'Alias'**
   String get transactionDetailsRecuInfoClientAlias;
 
+  /// No description provided for @transactionDetailsRecuInfoPayeurID.
+  ///
+  /// In en, this message translates to:
+  /// **'Adresser ID'**
   String get transactionDetailsRecuInfoPayeurID;
+
+  /// No description provided for @transactionDetailsRecuInfoPayeID.
+  ///
+  /// In en, this message translates to:
+  /// **'Grantee ID'**
   String get transactionDetailsRecuInfoPayeID;
 
   /// No description provided for @transactionDetailsRecuInfoClientCompte.
@@ -2452,13 +2461,17 @@ abstract class AppLocalizations {
   /// **'Aucune transaction ne correspond à votre recherche'**
   String get transactionSearchEmptySubtitle;
 
-  String get loadMore;
-
   /// No description provided for @transactionSearchEmptyTitle.
   ///
   /// In en, this message translates to:
-  /// **'Aucun résultat'**
+  /// **'No result'**
   String get transactionSearchEmptyTitle;
+
+  /// No description provided for @loadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Load More'**
+  String get loadMore;
 
   /// No description provided for @transactionSearchInputSearchHint.
   ///

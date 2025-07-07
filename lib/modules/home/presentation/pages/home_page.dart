@@ -15,6 +15,7 @@ import '../../../security/presentation/bloc/login/login_bloc.dart';
 import '../../../security/presentation/bloc/login/login_state.dart';
 import '../../../subscription/presentation/pages/subscription_list/subscription_list_widget.dart';
 import 'home_bottom_navigation_bar.dart';
+import 'home_bottom_navigation_bar_2.dart';
 import 'home_tab_compte.dart';
 import 'home_toolbar_leading.dart';
 
@@ -155,7 +156,8 @@ class _HomePageState extends State<HomePage> {
             ),
             extendBody: true,
             // Barre de navigation
-            bottomNavigationBar: const HomeBottomNavigationBar(),
+            //bottomNavigationBar: const HomeBottomNavigationBar(),
+            bottomNavigationBar: const BottomNavBarWidget(),
           ),
         );
       },

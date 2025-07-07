@@ -140,8 +140,8 @@ class _SoldeWidgetCardState extends State<SoldeWidgetCard> {
                               AppRouter.push(
                                 context,
                                 currentValue != null && currentValue == "1"
-                                    ? AppRouter.qrcodeShow
-                                    : AppRouter.qrcodeScan,
+                                    ? AppRouter.qrcodeScan
+                                    : AppRouter.qrcodeShow,
                               );
                             },
                           )

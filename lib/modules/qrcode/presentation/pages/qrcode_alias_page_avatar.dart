@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pi_mobile_app/core/theme.dart';
 
 import '../../../alias/presentation/bloc/alias_bloc.dart';
 import '../../../alias/presentation/bloc/alias_state.dart';
@@ -69,7 +70,7 @@ class QrcodeAliasPageAvatar extends StatelessWidget {
               // Nom
               Text(
                 "${user.firstName} ${user.lastName}",
-                style: Theme.of(context).textTheme.titleSmall,
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Themer.primaryColor, fontWeight: FontWeight.w600, fontSize: 18),
                 overflow: TextOverflow.ellipsis,
               ),
               //
@@ -84,7 +85,7 @@ class QrcodeAliasPageAvatar extends StatelessWidget {
                           .textTheme
                           .displayLarge! //
                           .copyWith(
-                            color: Theme.of(context).primaryColor,
+                            color: const Color(0xFF344054),
                           ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -101,10 +102,10 @@ class QrcodeAliasPageAvatar extends StatelessWidget {
                         ),
                       ).then((value) {});
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.copy,
                       size: 18,
-                      color: Theme.of(context).primaryColor,
+                      color: Color(0xFF344054),
                     ),
                   ),
                 ],

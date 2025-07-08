@@ -1,5 +1,6 @@
 import 'transaction_send_command_amount.dart';
 import 'transaction_send_command_motif.dart';
+import 'transaction_verification_result_command.dart';
 
 /// Modele de demande d'envoie d'un transfert
 class TransactionConfirmCommand {
@@ -12,6 +13,7 @@ class TransactionConfirmCommand {
     this.amount,
     this.latitude,
     this.longitude,
+    this.transactionVerificationResult,
   });
 
   // Transfert
@@ -33,6 +35,9 @@ class TransactionConfirmCommand {
       "send_schedule"; // paiement programmé
   static const String actionReceiveNow = "receive_now"; // demande de paiement
 
+  // infos supplémentaires
+  TransactionVerificationResult? transactionVerificationResult;
+
   bool isValid() {
     if (amount != null) amount!.isValid();
     if (motif != null) motif!.isValid();
@@ -43,19 +48,22 @@ class TransactionConfirmCommand {
   /// Convertit un objet TransactionSendCommand en JSON
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {
-      'montant': amount?.value,
-      'confirmationDate': confirmationDate,
-      'confirmationMethode': confirmationMethode,
+      'amount': "${amount?.value!.toInt()}",
+      //'confirmationDate': confirmationDate,
+      //'confirmationMethode': confirmationMethode,
     };
 
     if (motif != null) {
-      json['motif'] = motif?.value;
+      json['reason'] = motif?.value;
     }
     if (latitude != null) {
-      json['latitude'] = latitude;
+      json['lattitude'] = latitude;
     }
     if (longitude != null) {
       json['longitude'] = longitude;
+    }
+    if (transactionVerificationResult != null){
+      json['idVerification'] = transactionVerificationResult!.toJson();
     }
     return json;
   }

@@ -3,6 +3,7 @@ import 'package:pi_mobile_app/modules/transactions/domain/models/transaction_lis
 import '../../../../shared/models/frequence_command.dart';
 import 'transaction_canal.dart';
 import 'transaction_cancel_reason.dart';
+import 'transaction_send/transaction_verification_result_command.dart';
 
 enum TransactionSens { debit, credit }
 
@@ -71,6 +72,7 @@ class Transaction {
     this.differeFrequence,
     this.differeOccurence,
     this.differeMontant,
+    this.transactionVerificationResult,
   });
 
   /// Compte du client
@@ -175,6 +177,8 @@ class Transaction {
   int? differeOccurence;
   double? differeMontant;
 
+  TransactionVerificationResult? transactionVerificationResult;
+
   /// Est ce que c'est une demande de paiement
   bool isRTP() {
     return canal != null &&
@@ -254,7 +258,7 @@ class Transaction {
           : null,
       statut: _getStatut(json['statut']),
       statutRaison: json['statutRaison'] as String?,
-      categorie: json['categorie'] as String?,
+      categorie: json['clientCategory'] as String?,
       facture: json['facture'] as String?,
       txId: json['txId'] as String?,
       dateExpiration: json['dateExpiration'] != null
@@ -327,7 +331,7 @@ class Transaction {
     );
   }
 
-  static Transaction fromJsonTransfer(Map<dynamic, dynamic> json) {
+  static Transaction fromJsonSearch(Map<dynamic, dynamic> json) {
     // Extraction des détails de réponse si présents
     final responseDetails = json['responseDetails'] as Map<String, dynamic>?;
     final status = responseDetails?['status'] as String?;
@@ -350,7 +354,7 @@ class Transaction {
 
       // Informations client
       clientNom: json['clientName'] as String? ?? '',
-      clientPays: json['country'] as String? ?? 'SN',
+      clientPays: json['clientResidenceCountry'] as String? ?? 'SN',
       clientPhoto: json['clientPhoto'] as String?,
 
       // Identifiants techniques
@@ -368,7 +372,7 @@ class Transaction {
       montantFrais: json['globalFees'] != null
           ? double.parse(json['globalFees'].toString())
           : null,
-      issuerPhoneNumber: json['issuerPhoneNumber'] as String?,
+      issuerPhoneNumber: json['clientPhoneNumber'] as String?,
       bankCode: json['bankCode'] as String?,
       productCode: json['serviceCode'] as String?,
 
@@ -407,6 +411,65 @@ class Transaction {
       differeFrequence: null,
       differeOccurence: null,
       differeMontant: null,
+    );
+  }
+
+  static Transaction fromJsonTransfer(Map<dynamic, dynamic> json) {
+    // Extraction des détails de réponse si présents
+    final responseDetails = json['responseDetails'] as Map<String, dynamic>?;
+    final status = responseDetails?['status'] as String?;
+    final message = responseDetails?['message'] as String?;
+
+    return Transaction(
+      // Champs directs
+      acquirerPhoneNumber: json['acquirerPhoneNumber'] as String?,
+      acquirerAccountLabel: json['acquirerAccountLabel'] ?? json['clientName'],
+      compte: json['compte'] as String? ?? '',
+      clientPhoneNumber: json['clientPhoneNumber'],
+      alias: json['alias'] as String?,
+      montant: json['amount'] != null ? double.parse(json['amount']) : 0.0,
+
+      // Champs dérivés
+      sens: _determineTransactionSens(json),
+      motif: message ?? json['motif'] as String? ?? '',
+      canal: json['serviceCode'] as String? ?? 'TRANSFER_PI',
+      serviceCode: json['serviceCode'] as String? ?? 'TRANSFER_PI',
+
+      // Informations client
+      clientNom: json['clientName'] as String? ?? '',
+      clientPays: json['clientResidenceCountry'] as String? ?? 'SN',
+
+      // Identifiants techniques
+      guID: json['guID'] as String?,
+      endToEndId: json['endToEndId'] as String? ?? '',
+      legalEntityCode: json['legalEntityCode'] as String?,
+
+      // Statut et dates
+      dateOperation: DateTime.now(), // Date courante par défaut
+      statut: _mapTechnicalStatus(status),
+      statutRaison: message,
+      dateExpiration: _parseDateTime(json['dateExpiration']),
+
+      // Champs optionnels avec valeurs par défaut
+      montantFrais: json['globalFees'] != null
+          ? double.parse(json['globalFees'].toString())
+          : null,
+      issuerPhoneNumber: json['clientPhoneNumber'] as String?,
+      bankCode: json['bankCode'] as String?,
+      productCode: json['serviceCode'] as String?,
+    );
+  }
+
+  static Transaction fromJsonTransactionVerificationSearch(Map<dynamic, dynamic> json) {
+    return Transaction(
+      // Champs directs
+      compte: json['otherClient'] as String? ?? '',
+      montant: json['amount'] != null ? double.parse(json['amount']) : 0.0,
+      clientNom: json['nomClient'],
+      clientPays: json['paysResidence'],
+      endToEndId: json['endToEndId'],
+      acquirerAccountLabel: json['nomClient'],
+      transactionVerificationResult: TransactionVerificationResult.fromJson(json)
     );
   }
 

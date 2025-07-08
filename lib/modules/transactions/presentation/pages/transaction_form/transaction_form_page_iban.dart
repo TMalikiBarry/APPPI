@@ -62,7 +62,7 @@ class TransactionFormPageIban extends StatelessWidget {
           labelText: traductions.transactionFormIbanPaysLabel,
           controller: TextEditingController(
             text: formValues.pspPays != null
-                ? UEMOACountry.get(formValues.pspPays!)!.name
+                ? UEMOACountry.get(formValues.pspPays!)?.name
                 : null,
           ),
           readOnly: true,

@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pi_mobile_app/l10n/app_localizations.dart';
@@ -20,6 +21,15 @@ class TransactionFormPageOthr extends StatelessWidget {
   Widget build(BuildContext context) {
     ///
     AppLocalizations traductions = AppLocalizations.of(context)!;
+    final List<UEMOACountry> countries = [
+      UEMOACountry(
+        iso: "SN",
+        name: "Senegal",
+        phoneCode: "+221",
+        flag: "🇸🇳",
+      ),
+    ];
+    ;
 
     // BLOC
     TransactionSendBloc transactionSendBloc =
@@ -35,6 +45,17 @@ class TransactionFormPageOthr extends StatelessWidget {
           TransactionSendCommand formValues = state.command;
           //
           List<Participant>? participants = state.participants;
+
+          // Filtrer le pays au Sénégal si ce n'est pas déjà fait
+          if (formValues.pspPays != 'SN') {
+
+            formValues.pspPays = 'SN';
+            // Optionnel: déclencher l'événement pour mettre à jour le state
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              transactionSendBloc.add(TransactionSendFormChangedEvent(formValues));
+            });
+          }
+
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -94,7 +115,7 @@ class TransactionFormPageOthr extends StatelessWidget {
                         transactionSendBloc
                             .add(TransactionSendFormChangedEvent(formValues));
                       },
-                      items: UEMOACountry.liste
+                      items: countries
                           .map<DropdownMenuItem<String>>((UEMOACountry value) {
                         return DropdownMenuItem<String>(
                           value: value.iso,

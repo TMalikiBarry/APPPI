@@ -43,6 +43,11 @@ final class TransactionSendFormVerificationLoadingState
       {super.participants});
   final TransactionSendCommand command;
 }
+final class TransactionSendFormInitLoadingState
+    extends TransactionSendState {
+  TransactionSendFormInitLoadingState(this.command);
+  final TransactionSendCommand command;
+}
 
 /// Affiche les données de vérification
 final class TransactionSendFormVerificationAskingState

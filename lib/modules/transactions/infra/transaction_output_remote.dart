@@ -13,6 +13,7 @@ import '../domain/models/transaction.dart'
     show Transaction, TransactionSens;
 
 // 2) On importe la réponse de send transaction sans ramener TransactionSens
+import '../domain/models/transaction_send/transaction_send_method.dart';
 import '../domain/models/transaction_send/transaction_send_response.dart'
     hide TransactionSens;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,7 +63,7 @@ class TransactionOutputRemote {
       'size'     : size.toString(),
       'page'     : page.toString(),
       'issuerAccount' : pref.getString("accountNumber"),
-      // 'scope' : 'PI',
+      'scope' : 'PI',
       'status': 'SUCCESSFUL',
     };
 
@@ -172,47 +173,36 @@ class TransactionOutputRemote {
     return Transaction.fromJson(response.data);
   }
 
-  /*Future<Transaction> initiate(TransactionSendCommand command) async {
+  /// Initier une transaction
+  Future<Transaction> initiate(TransactionSendCommand command) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    var phoneNumberFrom = pref.getString("phone_number");
+    var aliasFrom = ConnectedUser.current?.alias;
+    if (aliasFrom != null){
+      aliasFrom = ConnectedUser.current?.alias;
+    } else {
+      aliasFrom = pref.getString("phone_number");
+    }
     var userLogin = pref.getString('phoneNumber');
     // Send transfer
     Map<String, dynamic> request = command.toJson();
     request.addAll({
-      'aliasFrom': phoneNumberFrom,
-      //'phoneNumberFrom': phoneNumberFrom,
+      'aliasFrom': aliasFrom,
       'userLogin': userLogin,
     });
-    final ApiResponse response = await Api.post(
-      '/transfer/eme/external',
-      data: request,
-    );
+    var url;
+    if(command.method == TransactionSendMethod.alias){
+      url = '/transfer/eme/external';
+    } else if (command.method == TransactionSendMethod.iban){
+      url = '/transfer/eme/external?transferType=IBAN';
+      /*request.addAll({
+        'alias': "+221762243970",
+      });*/
+    } else {
+      url = '/transfer/eme/external';
+    }
+    final ApiResponse response = await Api.post(url, data: request);
     //
     return Transaction.fromJsonTransfer(response.data["response"]);
-  }*/
-
-  /// Initier une transaction
-  Future<Transaction> initiate(TransactionSendCommand command) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    var phoneNumberFrom = pref.getString("phone_number");
-    var userLogin = pref.getString('phoneNumber');
-
-    Map<String, dynamic> request = {
-      ...command.toJson(),
-      'aliasFrom': phoneNumberFrom,
-      'userLogin': userLogin,
-    };
-
-    final ApiResponse response = await Api.post(
-      '/transfer/eme/external',
-      data: request,
-    );
-
-    // Ajout des informations manquantes avant le mapping
-    final responseData = Map<dynamic, dynamic>.from(response.data["response"]);
-    responseData['issuerPhoneNumber'] = phoneNumberFrom;
-
-    return Transaction.fromJsonTransfer(responseData);
   }
 
   /// Programmer une transaction

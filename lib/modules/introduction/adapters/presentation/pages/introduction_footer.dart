@@ -26,27 +26,29 @@ class IntroductionFooter extends StatelessWidget {
   ///
   @override
   Widget build(BuildContext context) {
-    if (item.position == pageSize - 1) {
-      return ElevatedButton(
-        onPressed: () {
-          context
-              .read<ConfigBloc>()
-              .add(const ConfigChangeEvent(ConfigKey.introductionPassed, "1"));
-          AppRouter.pushReplacement(context, AppRouter.home);
-        },
-        child: SizedBox(
-          height: 60,
-          child: Center(
-            child: Text(
-              traductions.introductionGotIt,
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Themer.whiteColor, fontSize: 28,
-                fontWeight: FontWeight.w600,),
+    //if (item.position == pageSize - 1) {
+      // Bouton suivant
+      return Padding(
+          padding: const EdgeInsets.only(bottom: 24),
+          child: ElevatedButton(
+            onPressed: () {
+              context
+                  .read<ConfigBloc>()
+                  .add(const ConfigChangeEvent(ConfigKey.introductionPassed, "1"));
+              AppRouter.pushReplacement(context, AppRouter.home);
+            },
+            style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              padding: const EdgeInsets.all(20),
+              backgroundColor: Colors.white,
+              elevation: 4,
+              shadowColor: Colors.black26,
             ),
+            child: const Icon(Icons.arrow_forward, color: Colors.red),
           ),
-        ),
       );
-    } else {
+
+   /* } else {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -73,6 +75,6 @@ class IntroductionFooter extends StatelessWidget {
           )
         ],
       );
-    }
+    }*/
   }
 }

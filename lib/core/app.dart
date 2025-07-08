@@ -73,6 +73,7 @@ class App extends StatelessWidget {
 
     print("ConnectedUser.current1");
     print(ConnectedUser.current);
+    print(ConnectedUser.current!.alias);
   }
   Future<void> _config() async {
     // It’s worth noting that calling ensureInitialized()

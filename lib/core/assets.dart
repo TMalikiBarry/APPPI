@@ -77,6 +77,7 @@ class Images {
   static const String arrowUp = 'assets/icons/arrow_up.png';
   static const String arrowDown = 'assets/icons/arrow_down.png';
   static const String homeFooterHome = 'assets/icons/home_outline.svg';
+  static const String homeFooterHome2 = 'assets/icons/home-22.svg';
   static const String homeFooterQrcode = 'assets/icons/qrcode.png';
   static const String homeFooterTransfer = 'assets/icons/transfer.png';
   static const String iconEdit = 'assets/icons/edit.png';

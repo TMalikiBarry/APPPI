@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pi_mobile_app/modules/compte/presentation/pages/solde_widget_card.dart';
 
 import '../../../../core/assets.dart';
 import '../../../../core/router.dart';
@@ -39,20 +40,23 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
           // Home Page Fixed Design
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(0),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Affiche le widget solde
-                    const SoldeWidget(),
+                    //const SoldeWidget(),
+                    const SoldeWidgetCard(),
                     // Séparateur
                     const SizedBox(height: 20),
                     // Principales actions: Envoyer, Recevoir, Plus
                     Padding(
-                      padding: const EdgeInsets.only(right: 70,),
-                      //padding: const EdgeInsets.symmetric(horizontal: 16),
+                      //padding: const EdgeInsets.only(right: 70,),
+                      //padding: const EdgeInsets.only(right: 86,),
+                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      //padding: const EdgeInsets.all(20),
                       child:
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,15 +100,17 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                         ],
                       ),
                     ),
-                    // Séparateur
                     const SizedBox(height: 24),
-                    // Liste des dernières transactions
-                    const TransactionRecentsWidget(),
+
                   ],
                 ),
               ),
             ),
           ),
+          // Séparateur
+          // Liste des dernières transactions
+          const Padding(padding: EdgeInsets.only(left: 15,right: 15),
+          child: TransactionRecentsWidget(),),
           // Separateur
           const SizedBox(height: 10),
           // Home Page Widgets

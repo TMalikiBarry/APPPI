@@ -1183,9 +1183,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transactionDetailsRecuInfoClientCompte => 'Compte Number';
 
   @override
-  String get loadMore => "Load More";
-
-  @override
   String get transactionDetailsRecuInfoClientInstitution => 'Institution';
 
   @override
@@ -1254,7 +1251,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transactionSearchEmptySubtitle => 'Aucune transaction ne correspond à votre recherche';
 
   @override
-  String get transactionSearchEmptyTitle => 'Aucun résultat';
+  String get transactionSearchEmptyTitle => 'No result';
+
+  @override
+  String get loadMore => 'Load More';
 
   @override
   String get transactionSearchInputSearchHint => 'Search';

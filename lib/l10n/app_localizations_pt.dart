@@ -1180,9 +1180,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionDetailsRecuInfoPayeID => 'Grantee ID';
 
   @override
-  String get loadMore => "Load More";
-
-  @override
   String get transactionDetailsRecuInfoClientCompte => 'Número de conta';
 
   @override
@@ -1254,7 +1251,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionSearchEmptySubtitle => 'Aucune transaction ne correspond à votre recherche';
 
   @override
-  String get transactionSearchEmptyTitle => 'Aucun résultat';
+  String get transactionSearchEmptyTitle => 'No result';
+
+  @override
+  String get loadMore => 'Load More';
 
   @override
   String get transactionSearchInputSearchHint => 'Pesquisar';

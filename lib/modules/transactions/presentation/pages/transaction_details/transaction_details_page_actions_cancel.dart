@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/theme.dart';
 import '../../../../../l10n/app_localizations.dart';
 import '../../../../../shared/widgets/loading_page.dart';
 import '../../../domain/models/transaction.dart';
@@ -71,12 +72,12 @@ class _TransactionDetailsPageActionsCancelState
                       child: ActionChip(
                         label: Text(
                           TransactionCancelReasonText.label(motif, traductions),
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Themer.primaryColor),
                         ),
                         avatar: reason != null && reason == motif
-                            ? Icon(Icons.check)
+                            ? const Icon(Icons.check)
                             : null,
-                        backgroundColor: Theme.of(context).secondaryHeaderColor,
+                        backgroundColor: Themer.primaryLight,
                         onPressed: () {
                           setState(() {
                             reason = motif;

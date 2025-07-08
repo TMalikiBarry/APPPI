@@ -23,7 +23,7 @@ class QrcodeSwitchBtn extends StatelessWidget {
             for (QrcodeBtnItem item in items)
               Expanded(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints.tightFor(height: 64),
+                  constraints: const BoxConstraints.tightFor(height: 54),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0.0,

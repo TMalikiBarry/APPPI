@@ -1,4 +1,5 @@
 import 'package:logger/logger.dart';
+import '../domain/models/notificationDTO.dart';
 import 'notification_output_local.dart';
 
 import '../domain/models/notification.dart';
@@ -43,6 +44,11 @@ class NotificationOutputRepository implements NotificationOutputPort {
         keyword: keyword,
         sortBy: sortBy,
         fields: fields);
+  }
+
+  @override
+  Future<List<NotificationModel>> fetchNotifications() async {
+    return repoRemote.fetchNotifications();
   }
 
   @override

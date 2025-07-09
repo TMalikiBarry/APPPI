@@ -36,7 +36,7 @@ class TransactionDetailsPageHeader extends StatelessWidget {
                 onPressed: () => "",
                 child: Text(
                   transaction.sens == TransactionSens.debit ?
-                    transaction.acquirerAccountLabel! : transaction.clientNom,
+                    transaction.acquirerAccountLabel ?? "" : transaction.clientNom,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: Themer.brownColor
                   ),
@@ -61,7 +61,7 @@ class TransactionDetailsPageHeader extends StatelessWidget {
           padding: const EdgeInsets.only(left: 16),
           child: AvatarCircleWidget(
             nom: transaction.sens == TransactionSens.debit ?
-              transaction.acquirerAccountLabel! : transaction.clientNom ,
+              transaction.acquirerAccountLabel ?? "" : transaction.clientNom ,
             photo: transaction.clientPhoto,
             rounded: true,
             radius: 32,

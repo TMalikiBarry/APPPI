@@ -172,8 +172,8 @@ class TransactionSendBloc
     Emitter<TransactionSendState> emit,
   ) async {
     // Loading
-    emit(TransactionSendFormVerificationLoadingState(event.command,
-        participants: state.participants));
+    //emit(TransactionSendFormVerificationLoadingState(event.command,
+    //    participants: state.participants));
 
     // Récuperer position GPS
     Position? position = await _getPosition();
@@ -189,21 +189,21 @@ class TransactionSendBloc
         Transaction transaction = await transactionsInputPort.initiate(
           event.command,
         );
-        // if (event.command.action == TransactionSendCommand.actionReceiveNow) {
+        if (event.command.action == TransactionSendCommand.actionReceiveNow) {
           // La demande est envoyée
           emit(TransactionSendFormSuccessState(
             event.command,
             transaction,
             participants: state.participants,
           ));
-       /* } // Transferts
+        } // Transferts
         else {
           // Afficher la page de demande de vérification
           emit(TransactionSendFormVerificationAskingState(
             form,
             transaction,
           ));
-        }*/
+        }
       } on ApiException catch (e) {
         // Erreur de vérification : alias invalide ou autre
         if (e.error == ApiError.notFound) {
@@ -239,42 +239,49 @@ class TransactionSendBloc
     Transaction transaction = event.transaction;
 
     // Loading
-    emit(TransactionSendFormSendingState(
+    /*emit(TransactionSendFormSendingState(
       event.command,
       transaction,
       participants: state.participants,
-    ));
+    ));*/
 
     // Initier
-    if (event.command.schedule != null) {
-      // Just schedule
-      try {
-        transaction = await transactionsInputPort.schedule(
-          transaction.endToEndId,
-          event.command.schedule!,
-        );
-        emit(TransactionSendFormSuccessState(
-          event.command,
-          transaction,
-          participants: state.participants,
-        ));
-      } catch (e) {
-        logger.e("Erreur de création de la souscription", error: e);
-        emit(TransactionSendFormErrorState(
-          event.command,
-          TransactionError.unknow.name,
-          participants: state.participants,
-        ));
-      }
+    /*if (event.command.schedule != null) {
+    // Just schedule
+    try {
+      transaction = await transactionsInputPort.schedule(
+        transaction.endToEndId,
+        event.command.schedule!,
+      );
+      emit(TransactionSendFormSuccessState(
+        event.command,
+        transaction,
+        participants: state.participants,
+      ));
+    } catch (e) {
+      logger.e("Erreur de création de la souscription", error: e);
+      emit(TransactionSendFormErrorState(
+        event.command,
+        TransactionError.unknow.name,
+        participants: state.participants,
+      ));
     }
+    //}
     // Send Now
-    else {
-      Stream<Transaction> stream =
-          await transactionsInputPort.confirm(TransactionConfirmCommand(
+    else {*/
+    Stream<Transaction> stream = await transactionsInputPort.confirm(
+        TransactionConfirmCommand(
         endToendId: transaction.endToEndId,
         confirmationDate: DateTime.now().toIso8601String(),
         confirmationMethode: event.method,
-      ));
+        latitude: event.command.latitude,
+        longitude: event.command.longitude,
+        amount: event.command.amount,
+        transactionVerificationResultAlias: event.transaction.transactionVerificationResultAlias,
+        transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
+        transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
+      )
+    );
 
       stream.listen(
         (trans) {
@@ -292,7 +299,7 @@ class TransactionSendBloc
           }
         },
       );
-    }
+    //}
   }
 
   /// Losq'une réponse est reçue aprés envoie d'une transaction
@@ -442,23 +449,28 @@ class TransactionSendBloc
 
     // Vérifier l'autorisation actuelle d'abord
     permission = await Geolocator.checkPermission();
-    logger.i("_checkAndRequestLocationPermission : Permission actuelle: $permission");
+    logger.i(
+        "_checkAndRequestLocationPermission : Permission actuelle: $permission");
 
     if (permission == LocationPermission.denied) {
       // Demander l'autorisation - ceci affichera le pop-up système
       // Même si le GPS est désactivé, le pop-up peut permettre d'activer le GPS
-      logger.i("_checkAndRequestLocationPermission : Demande d'autorisation en cours...");
+      logger.i(
+          "_checkAndRequestLocationPermission : Demande d'autorisation en cours...");
       permission = await Geolocator.requestPermission();
-      logger.i("_checkAndRequestLocationPermission : Réponse de l'utilisateur: $permission");
+      logger.i(
+          "_checkAndRequestLocationPermission : Réponse de l'utilisateur: $permission");
 
       if (permission == LocationPermission.denied) {
-        logger.i("_checkAndRequestLocationPermission : Autorisation refusée par l'utilisateur");
+        logger.i(
+            "_checkAndRequestLocationPermission : Autorisation refusée par l'utilisateur");
         return false;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      logger.i("_checkAndRequestLocationPermission : Autorisation refusée définitivement");
+      logger.i(
+          "_checkAndRequestLocationPermission : Autorisation refusée définitivement");
 
       // Ouvrir les paramètres de l'application pour activation manuelle
       await Geolocator.openAppSettings();
@@ -468,7 +480,8 @@ class TransactionSendBloc
     // Maintenant vérifier si le service de localisation est activé
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      logger.i("_checkAndRequestLocationPermission : Service de localisation désactivé");
+      logger.i(
+          "_checkAndRequestLocationPermission : Service de localisation désactivé");
 
       // Si on a la permission mais le service est désactivé,
       // ouvrir les paramètres système pour activer le GPS
@@ -480,19 +493,24 @@ class TransactionSendBloc
       // Vérifier à nouveau si le service est maintenant activé
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
-        logger.i("_checkAndRequestLocationPermission : Service de localisation toujours désactivé");
+        logger.i(
+            "_checkAndRequestLocationPermission : Service de localisation toujours désactivé");
         return false;
       }
-      logger.i("_checkAndRequestLocationPermission : Service de localisation activé");
+      logger.i(
+          "_checkAndRequestLocationPermission : Service de localisation activé");
     }
 
     // Vérifier si on a au moins une permission partielle
-    if (permission == LocationPermission.whileInUse || permission == LocationPermission.always) {
-      logger.i("_checkAndRequestLocationPermission : Autorisation accordée ($permission)");
+    if (permission == LocationPermission.whileInUse ||
+        permission == LocationPermission.always) {
+      logger.i(
+          "_checkAndRequestLocationPermission : Autorisation accordée ($permission)");
       return true;
     }
 
-    logger.i("_checkAndRequestLocationPermission : Permission non accordée: $permission");
+    logger.i(
+        "_checkAndRequestLocationPermission : Permission non accordée: $permission");
     return false;
   }
 

@@ -5,7 +5,10 @@
     "transactionsNoRecentSubtitle",
     "transactionsErrorLoading",
     "retry",
+    "transactionDetailsRecuInfoPayeurID",
+    "transactionDetailsRecuInfoPayeID",
     "transactionSearchEmptySubtitle",
-    "transactionSearchEmptyTitle"
+    "transactionSearchEmptyTitle",
+    "loadMore"
   ]
 }

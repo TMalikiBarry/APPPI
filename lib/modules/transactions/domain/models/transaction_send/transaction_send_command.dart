@@ -134,8 +134,8 @@ class TransactionSendCommand {
         json['bankName'] = pspNom;
         break;
       case TransactionSendMethod.othr:
-        json['othr'] = othr?.value;
-        json['payePSP'] = pspCode;
+        json['otherClient'] = othr?.value;
+        json['participantMemberCode'] = pspCode;
         break;
       case TransactionSendMethod.contact:
         json['alias'] = alias?.value;

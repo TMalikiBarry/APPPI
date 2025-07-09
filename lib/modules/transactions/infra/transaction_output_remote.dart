@@ -189,20 +189,26 @@ class TransactionOutputRemote {
       'aliasFrom': aliasFrom,
       'userLogin': userLogin,
     });
-    var url;
-    if(command.method == TransactionSendMethod.alias){
-      url = '/transfer/eme/external';
+    var url = '/transfer/eme/external';
+    if (command.method == TransactionSendMethod.alias){
+      final ApiResponse response = await Api.get('/alias/sync/search/${command.alias!.value}');
+      return Transaction.fromJsonTransactionVerificationSearchAlias(response.data["response"]);
     } else if (command.method == TransactionSendMethod.iban){
-      url = '/transfer/eme/external?transferType=IBAN';
-      /*request.addAll({
-        'alias': "+221762243970",
-      });*/
+      request = {
+        'clientIban': command.iban?.value,
+        'bankName': command.pspNom,
+        //'participantMemberCode': command.pspCode,
+      };
+      final ApiResponse response = await Api.post('/participant/identity-verification', data: request);
+      return Transaction.fromJsonTransactionVerificationSearchIban(response.data["response"]);
     } else {
-      url = '/transfer/eme/external';
+      request = {
+        'otherClient': command.othr?.value,
+        'participantMemberCode': command.pspCode,
+      };
+      final ApiResponse response = await Api.post('/participant/identity-verification', data: request);
+      return Transaction.fromJsonTransactionVerificationSearchOthr(response.data["response"]);
     }
-    final ApiResponse response = await Api.post(url, data: request);
-    //
-    return Transaction.fromJsonTransfer(response.data["response"]);
   }
 
   /// Programmer une transaction
@@ -231,13 +237,33 @@ class TransactionOutputRemote {
     String endToEndId,
     TransactionConfirmCommand command,
   ) async {
+    // Confirm transfer
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var aliasFrom = ConnectedUser.current?.alias;
+    if (aliasFrom != null){
+      aliasFrom = ConnectedUser.current?.alias;
+    } else {
+      aliasFrom = pref.getString("phone_number");
+    }
+    var userLogin = pref.getString('phoneNumber');
+    var url = '/transfer/eme/external';
+    Map<String, dynamic> request = command.toJson();
+    request.addAll({
+      'aliasFrom': aliasFrom,
+      'userLogin': userLogin,
+    });
+    if (command.confirmationMethode.toString() == TransactionSendMethod.alias.toString()){
+      logger.i(command.transactionVerificationResultAlias!.alias);
+      request['alias'] = command.transactionVerificationResultAlias!.alias;
+    } else if (command.confirmationMethode.toString() == TransactionSendMethod.iban.toString()){
+      logger.i("On est la");
+      url = '/transfer/eme/external?transferType=IBAN';
+    } else if (command.confirmationMethode.toString() == TransactionSendMethod.othr.toString()) {
+      url = '/transfer/eme/external?transferType=ACCOUNT';
+    }
     // Send transfer
-    final ApiResponse response = await Api.put(
-      '/transferts/$endToEndId',
-      data: command.toJson(),
-    );
-
-    Transaction transaction = Transaction.fromJson(response.data);
+    final ApiResponse response = await Api.post(url, data: request);
+    Transaction transaction = Transaction.fromJsonTransfer(response.data);
 
     // GET REQUEST
     try {
@@ -255,7 +281,14 @@ class TransactionOutputRemote {
         return controller.stream;
       } //
       else {
-        return streamResponse(transaction);
+        //return streamResponse(transaction);
+        // Return transaction directly without contacting SSE endpoint
+        final controller = StreamController<Transaction>();
+        transaction.dateOperation = DateTime.now();
+        transaction.statut = TransactionStatut.irrevocable; // or whatever default status you want
+        controller.add(transaction);
+        controller.close();
+        return controller.stream;
       }
     } catch (e) {
       logger.e("Reception reponse erreur", error: e);

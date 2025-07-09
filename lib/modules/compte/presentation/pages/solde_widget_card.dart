@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pi_mobile_app/core/router.dart';
 
 import '../../../../core/di.dart';
+import '../../../../core/theme.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/amount_widget.dart';
 import '../../../../shared/widgets/skeleton_widget.dart';
@@ -157,8 +158,7 @@ class _SoldeWidgetCardState extends State<SoldeWidgetCard> {
                               data: _qrData!,
                               size: 56,
                               roundEdges: true,
-                              elementColor:
-                              Theme.of(context).colorScheme.primary,
+                              elementColor: Themer.brownColor,
                             )
                                 : Image.asset(
                               "assets/images/qr_home.png",

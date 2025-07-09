@@ -357,7 +357,7 @@
   "transactionFormOthrHint": "Numéro de compte du bénéficiaire",
   "transactionFormOthrEmpty": "Obligatoire",
   "transactionFormOthrPaysLabel": "Pays de l'intitution financière",
-  "transactionFormOthrNomLabel": "Nom de l'intitution financière ",
+  "transactionFormOthrNomLabel": "Nom de l'institution financière ",
   "transactionFormContinueBtn": "Continuer",
   "transactionFormSaveContactBtn": "Enregistrer et faire un transfert",
   "transactionFormVerificationTitle": "Vérification",

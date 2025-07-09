@@ -148,6 +148,7 @@ class TransactionFormPageOthr extends StatelessWidget {
                   child: ButtonTheme(
                     minWidth: 100,
                     child: DropdownButtonFormField<String>(
+                      isExpanded: true,
                       // Valeur par défaut
                       value: formValues.pspCode,
                       // Taille du texte

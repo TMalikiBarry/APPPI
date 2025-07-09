@@ -37,7 +37,7 @@ class _TransactionFormInputOthrState
     super.initState();
     // Initialisation des données
     if (widget.command.othr?.value != null) {
-      pasteCtrl.text = widget.command.othr!.value!;
+      pasteCtrl.text = '+${widget.command.othr!.value!}';
       pasteCtrl.selection = TextSelection.fromPosition(TextPosition(
         offset: pasteCtrl.text.length,
       ));

@@ -172,7 +172,8 @@ class TransactionSendBloc
     Emitter<TransactionSendState> emit,
   ) async {
     // Loading
-    //emit(TransactionSendFormInitLoadingState(event.command));
+    //emit(TransactionSendFormVerificationLoadingState(event.command,
+    //    participants: state.participants));
 
     // Récuperer position GPS
     Position? position = await _getPosition();
@@ -268,16 +269,19 @@ class TransactionSendBloc
     //}
     // Send Now
     else {*/
-      Stream<Transaction> stream =
-          await transactionsInputPort.confirm(TransactionConfirmCommand(
+    Stream<Transaction> stream = await transactionsInputPort.confirm(
+        TransactionConfirmCommand(
         endToendId: transaction.endToEndId,
         confirmationDate: DateTime.now().toIso8601String(),
         confirmationMethode: event.method,
         latitude: event.command.latitude,
         longitude: event.command.longitude,
         amount: event.command.amount,
-        transactionVerificationResult: event.transaction.transactionVerificationResult
-      ));
+        transactionVerificationResultAlias: event.transaction.transactionVerificationResultAlias,
+        transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
+        transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
+      )
+    );
 
       stream.listen(
         (trans) {

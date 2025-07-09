@@ -3,7 +3,8 @@ import 'package:pi_mobile_app/modules/transactions/domain/models/transaction_lis
 import '../../../../shared/models/frequence_command.dart';
 import 'transaction_canal.dart';
 import 'transaction_cancel_reason.dart';
-import 'transaction_send/transaction_verification_result_command.dart';
+import 'transaction_send/transaction_verification_result_command_alias.dart';
+import 'transaction_send/transaction_verification_result_command_othr.dart';
 
 enum TransactionSens { debit, credit }
 
@@ -72,7 +73,9 @@ class Transaction {
     this.differeFrequence,
     this.differeOccurence,
     this.differeMontant,
-    this.transactionVerificationResult,
+    this.transactionVerificationResultAlias,
+    this.transactionVerificationResultIban,
+    this.transactionVerificationResultOthr,
   });
 
   /// Compte du client
@@ -177,7 +180,9 @@ class Transaction {
   int? differeOccurence;
   double? differeMontant;
 
-  TransactionVerificationResult? transactionVerificationResult;
+  TransactionVerificationResultAlias? transactionVerificationResultAlias;
+  TransactionVerificationResultOthr? transactionVerificationResultIban;
+  TransactionVerificationResultOthr? transactionVerificationResultOthr;
 
   /// Est ce que c'est une demande de paiement
   bool isRTP() {
@@ -460,17 +465,43 @@ class Transaction {
     );
   }
 
-  static Transaction fromJsonTransactionVerificationSearch(Map<dynamic, dynamic> json) {
+  static Transaction fromJsonTransactionVerificationSearchAlias(
+      Map<dynamic, dynamic> json) {
     return Transaction(
       // Champs directs
-      compte: json['otherClient'] as String? ?? '',
+        compte: json['clientPhoneNumber'] as String? ?? '',
+        montant: json['amount'] != null ? double.parse(json['amount']) : 0.0,
+        clientNom: json['clientName'],
+        clientPays: json['clientResidenceCountry'],
+        endToEndId: json['endToEndId'],
+        acquirerAccountLabel: json['clientName'],
+        transactionVerificationResultAlias: TransactionVerificationResultAlias.fromJson(json));
+  }
+
+  static Transaction fromJsonTransactionVerificationSearchIban(
+      Map<dynamic, dynamic> json) {
+    return Transaction(
+      // Champs directs
+      compte: json['ibanClient'] as String? ?? '',
       montant: json['amount'] != null ? double.parse(json['amount']) : 0.0,
       clientNom: json['nomClient'],
       clientPays: json['paysResidence'],
       endToEndId: json['endToEndId'],
       acquirerAccountLabel: json['nomClient'],
-      transactionVerificationResult: TransactionVerificationResult.fromJson(json)
-    );
+      transactionVerificationResultIban: TransactionVerificationResultOthr.fromJson(json));
+  }
+
+  static Transaction fromJsonTransactionVerificationSearchOthr(
+      Map<dynamic, dynamic> json) {
+    return Transaction(
+      // Champs directs
+        compte: json['otherClient'] as String? ?? '',
+        montant: json['amount'] != null ? double.parse(json['amount']) : 0.0,
+        clientNom: json['nomClient'],
+        clientPays: json['paysResidence'],
+        endToEndId: json['endToEndId'],
+        acquirerAccountLabel: json['nomClient'],
+        transactionVerificationResultOthr: TransactionVerificationResultOthr.fromJson(json));
   }
 
 // Helpers supplémentaires
@@ -496,7 +527,8 @@ class Transaction {
     }
   }
 
-  static TransactionSens? _determineTransactionSens(Map<dynamic, dynamic> json) {
+  static TransactionSens? _determineTransactionSens(
+      Map<dynamic, dynamic> json) {
     final issuer = json['issuerPhoneNumber']?.toString() ?? '';
     final acquirer = json['acquirerPhoneNumber']?.toString() ?? '';
     final currentAccount = json['clientPhoneNumber']?.toString() ?? '';
@@ -638,5 +670,4 @@ class Transaction {
         ' differeMontant: $differeMontant'
         ' }';
   }
-
 }

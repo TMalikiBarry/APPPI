@@ -26,14 +26,20 @@ class TransactionFormPage extends StatelessWidget {
 
     return BlocConsumer<TransactionSendBloc, TransactionSendState>(
       listenWhen: (previous, current) =>
+      // Afficher la page de vérification
           current is TransactionSendFormVerificationAskingState ||
+          // Afficher le loader
           current is TransactionSendFormVerificationLoadingState ||
+          // Retour au formulaire après le loader
           (previous is TransactionSendFormVerificationLoadingState &&
               current is TransactionSendFormInputState) ||
+          // UNIQUEMENT rediriger à l'accueil si on sort de VerificationAskingState
           (previous is TransactionSendFormVerificationAskingState &&
               current is TransactionSendInitialState) ||
+          // Succès RTP
           (current is TransactionSendFormSuccessState &&
               current.transaction.isRTP()) ||
+          // Erreur
           current is TransactionSendFormErrorState,
       listener: (context, state) async {
         if (state is TransactionSendFormVerificationLoadingState) {

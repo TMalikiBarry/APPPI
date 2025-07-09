@@ -61,7 +61,7 @@ class TransactionFormBtnConfirm extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // schedule
-            if (command.action !=
+            /*if (command.action !=
                 TransactionSendCommand.actionSendSchedule) ...[
               FloatingActionButton(
                 onPressed: () {
@@ -72,6 +72,7 @@ class TransactionFormBtnConfirm extends StatelessWidget {
                 child: const Icon(Icons.calendar_month_outlined, size: 24),
               ),
             ],
+             */
 
             // Séparateur
             const SizedBox(width: 16),

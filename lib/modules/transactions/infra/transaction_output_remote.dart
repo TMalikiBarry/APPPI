@@ -190,21 +190,24 @@ class TransactionOutputRemote {
       'userLogin': userLogin,
     });
     var url = '/transfer/eme/external';
-    if (command.method == TransactionSendMethod.iban){
-      url = '/transfer/eme/external?transferType=IBAN';
-    } else if (command.method == TransactionSendMethod.othr){
-      url = '/identity-verification';
+    if (command.method == TransactionSendMethod.alias){
+      final ApiResponse response = await Api.get('/alias/sync/search/${command.alias!.value}');
+      return Transaction.fromJsonTransactionVerificationSearchAlias(response.data["response"]);
+    } else if (command.method == TransactionSendMethod.iban){
       request = {
-        'otherClient': command.othr?.value,
-        'participantMemberCode': "BFC000",
+        'clientIban': command.iban?.value,
+        'bankName': command.pspNom,
         //'participantMemberCode': command.pspCode,
       };
-    }
-    final ApiResponse response = await Api.post(url, data: request);
-    if (command.method == TransactionSendMethod.othr) {
-      return Transaction.fromJsonTransactionVerificationSearch(response.data["response"]);
+      final ApiResponse response = await Api.post('/participant/identity-verification', data: request);
+      return Transaction.fromJsonTransactionVerificationSearchIban(response.data["response"]);
     } else {
-      return Transaction.fromJsonTransfer(response.data["response"]);
+      request = {
+        'otherClient': command.othr?.value,
+        'participantMemberCode': command.pspCode,
+      };
+      final ApiResponse response = await Api.post('/participant/identity-verification', data: request);
+      return Transaction.fromJsonTransactionVerificationSearchOthr(response.data["response"]);
     }
   }
 
@@ -243,15 +246,23 @@ class TransactionOutputRemote {
       aliasFrom = pref.getString("phone_number");
     }
     var userLogin = pref.getString('phoneNumber');
-    // Send transfer
+    var url = '/transfer/eme/external';
     Map<String, dynamic> request = command.toJson();
     request.addAll({
       'aliasFrom': aliasFrom,
       'userLogin': userLogin,
     });
-    var url = '/transfer/eme/external?transferType=ACCOUNT';
+    if (command.confirmationMethode.toString() == TransactionSendMethod.alias.toString()){
+      logger.i(command.transactionVerificationResultAlias!.alias);
+      request['alias'] = command.transactionVerificationResultAlias!.alias;
+    } else if (command.confirmationMethode.toString() == TransactionSendMethod.iban.toString()){
+      logger.i("On est la");
+      url = '/transfer/eme/external?transferType=IBAN';
+    } else if (command.confirmationMethode.toString() == TransactionSendMethod.othr.toString()) {
+      url = '/transfer/eme/external?transferType=ACCOUNT';
+    }
+    // Send transfer
     final ApiResponse response = await Api.post(url, data: request);
-
     Transaction transaction = Transaction.fromJsonTransfer(response.data);
 
     // GET REQUEST

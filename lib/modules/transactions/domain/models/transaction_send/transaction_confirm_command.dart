@@ -1,6 +1,8 @@
 import 'transaction_send_command_amount.dart';
 import 'transaction_send_command_motif.dart';
-import 'transaction_verification_result_command.dart';
+import 'transaction_send_method.dart';
+import 'transaction_verification_result_command_alias.dart';
+import 'transaction_verification_result_command_othr.dart';
 
 /// Modele de demande d'envoie d'un transfert
 class TransactionConfirmCommand {
@@ -13,7 +15,9 @@ class TransactionConfirmCommand {
     this.amount,
     this.latitude,
     this.longitude,
-    this.transactionVerificationResult,
+    this.transactionVerificationResultOthr,
+    this.transactionVerificationResultAlias,
+    this.transactionVerificationResultIban,
   });
 
   // Transfert
@@ -36,7 +40,9 @@ class TransactionConfirmCommand {
   static const String actionReceiveNow = "receive_now"; // demande de paiement
 
   // infos supplémentaires
-  TransactionVerificationResult? transactionVerificationResult;
+  TransactionVerificationResultAlias? transactionVerificationResultAlias;
+  TransactionVerificationResultOthr? transactionVerificationResultOthr;
+  TransactionVerificationResultOthr? transactionVerificationResultIban;
 
   bool isValid() {
     if (amount != null) amount!.isValid();
@@ -49,21 +55,21 @@ class TransactionConfirmCommand {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {
       'amount': "${amount?.value!.toInt()}",
-      //'confirmationDate': confirmationDate,
-      //'confirmationMethode': confirmationMethode,
+      'lattitude': latitude,
+      'longitude': longitude,
     };
 
     if (motif != null) {
       json['reason'] = motif?.value;
     }
-    if (latitude != null) {
-      json['lattitude'] = latitude;
+    if (transactionVerificationResultAlias != null) {
+      json['aliasTo'] = transactionVerificationResultAlias!.toJson();
     }
-    if (longitude != null) {
-      json['longitude'] = longitude;
+    if (transactionVerificationResultIban != null) {
+      json['idVerification'] = transactionVerificationResultIban!.toJsonIban();
     }
-    if (transactionVerificationResult != null){
-      json['idVerification'] = transactionVerificationResult!.toJson();
+    if (transactionVerificationResultOthr != null) {
+      json['idVerification'] = transactionVerificationResultOthr!.toJsonOthr();
     }
     return json;
   }

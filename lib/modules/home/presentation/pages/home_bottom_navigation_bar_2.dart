@@ -20,7 +20,7 @@ class BottomNavBarWidget extends StatelessWidget {
     );
 
     return Container(
-      padding: const EdgeInsets.only(bottom: 20, top: 20),
+      padding: const EdgeInsets.only(top: 20),
       color: Colors.transparent,
       child: Stack(
         children: [

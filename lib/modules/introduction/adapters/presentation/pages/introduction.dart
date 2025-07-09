@@ -90,6 +90,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
                 return IntroductionPageItem(
                   item: itemList[index],
                   pageSize: nbItems,
+                  pageController: _pageController,
                   progressBarWidth: progressBarItemWidth,
                 );
               },
@@ -106,7 +107,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
                       onTap: () {
                         if (_currentPage > 0) {
                           _pageController.previousPage(
-                            duration: Duration(milliseconds: 300),
+                            duration: const Duration(milliseconds: 300),
                             curve: Curves.ease,
                           );
                         }
@@ -125,7 +126,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
                       onTap: () {
                         if (_currentPage < nbItems - 1) {
                           _pageController.nextPage(
-                            duration: Duration(milliseconds: 300),
+                            duration: const Duration(milliseconds: 300),
                             curve: Curves.ease,
                           );
                         }

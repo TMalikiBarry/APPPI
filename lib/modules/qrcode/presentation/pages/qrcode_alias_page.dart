@@ -119,7 +119,7 @@ class QrCodeAliasPage extends StatelessWidget {
                 ),
               ),
               bottomNavigationBar: Container(
-                margin: const EdgeInsets.only(bottom: 150,left: 40, right: 40),
+                margin: const EdgeInsets.only(bottom: 50,left: 40, right: 40),
                 //margin: EdgeInsets.symmetric(
                 //    horizontal: MediaQuery.of(context).size.width / 5.2,
                  //   vertical: 80.0),

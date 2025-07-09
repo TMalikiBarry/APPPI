@@ -50,7 +50,8 @@ class TransactionDetailsPageActions extends StatelessWidget {
               CtaWidget(
                 image: Images.transactionCancel,
                 label: traductions.transactionDetailsAnnuler,
-                disabled: transaction.retourDate != null,
+                // disabled: transaction.retourDate != null,
+                disabled: true,
                 action: () => _actionCancel(
                   transaction,
                   context,
@@ -73,7 +74,8 @@ class TransactionDetailsPageActions extends StatelessWidget {
               CtaWidget(
                 image: Images.transactionCancel,
                 label: traductions.transactionDetailsRetourner,
-                disabled: transaction.retourDate != null,
+                // disabled: transaction.retourDate != null,
+                disabled: true,
                 action: () => _actionReturn(
                   transaction,
                   context,
@@ -96,7 +98,8 @@ class TransactionDetailsPageActions extends StatelessWidget {
               CtaWidget(
                 image: Images.transactionPlanifier,
                 label: traductions.transactionDetailsPlanifier,
-                disabled: transaction.subscriptionId != null,
+                // disabled: transaction.subscriptionId != null,
+                disabled: true,
                 action: transaction.subscriptionId == null
                     ? () => _actionSchedule(context, transaction)
                     : null,

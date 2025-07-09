@@ -56,7 +56,7 @@ class ProfilePage extends StatelessWidget {
             ),
 
             // Logout et version
-            Column(
+            /*Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -75,7 +75,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
+            ),*/
           ],
         ),
       ),

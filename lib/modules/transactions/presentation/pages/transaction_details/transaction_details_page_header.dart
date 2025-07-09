@@ -38,7 +38,7 @@ class TransactionDetailsPageHeader extends StatelessWidget {
                   transaction.sens == TransactionSens.debit ?
                     transaction.acquirerAccountLabel! : transaction.clientNom,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: transaction.sens == TransactionSens.credit ? Themer.brownColor : Themer.error
+                      color: Themer.brownColor
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -51,7 +51,7 @@ class TransactionDetailsPageHeader extends StatelessWidget {
                 DateFormat('d MMM, HH:mm') //
                     .format(transaction.dateOperation!),
                 style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                    color: transaction.sens == TransactionSens.credit ? Themer.brownColor : Themer.error
+                    color: Themer.brownColor
                 ),
               ),
           ],

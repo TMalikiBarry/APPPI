@@ -250,7 +250,7 @@ class TransactionDetailsPage extends StatelessWidget {
                               // Ticket de caisse
                               _ticketCaisse(context, traductions, transaction),
 
-                              // Exclure de l'ana..
+                              // Exclure de l'analytique
                               TransactionDetailsPageDetail(
                                 label: traductions.transactionDetailsAnalytique,
                                 action: Switch(

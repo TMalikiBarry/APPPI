@@ -10,7 +10,6 @@ import 'package:pretty_qr_code/pretty_qr_code.dart';
 import '../../../../core/di.dart';
 import '../../../../core/router.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../shared/widgets/amount_widget.dart';
 import '../../../../shared/widgets/skeleton_widget.dart';
 import '../../../alias/domain/models/alias.dart';
 import '../../../alias/presentation/bloc/alias_bloc.dart';
@@ -23,14 +22,14 @@ import '../bloc/solde/solde_bloc.dart';
 import '../bloc/solde/solde_event.dart';
 import '../bloc/solde/solde_state.dart';
 
-class SoldeWidget_OLD extends StatefulWidget {
-  const SoldeWidget_OLD({super.key});
+class SoldeWidgetOLD extends StatefulWidget {
+  const SoldeWidgetOLD({super.key});
 
   @override
-  State<SoldeWidget_OLD> createState() => _SoldeWidget_OLDState();
+  State<SoldeWidgetOLD> createState() => _SoldeWidgetOLDState();
 }
 
-class _SoldeWidget_OLDState extends State<SoldeWidget_OLD> {
+class _SoldeWidgetOLDState extends State<SoldeWidgetOLD> {
   late CompteSoldeBloc compteSoldeBloc;
   String? _qrData;
   Timer? _timer;
@@ -78,9 +77,9 @@ class _SoldeWidget_OLDState extends State<SoldeWidget_OLD> {
               Widget montantWidget;
 
               if (!displayAmount) {
-                montantWidget = Text(
+                montantWidget = const Text(
                   "••••••",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,

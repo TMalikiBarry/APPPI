@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pi_mobile_app/modules/compte/presentation/pages/solde_widget_card.dart';
 
 import '../../../../core/assets.dart';
 import '../../../../core/router.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/cta_widget.dart';
-import '../../../compte/presentation/pages/solde_widget.dart';
+import '../../../compte/presentation/pages/solde_widget_card.dart';
 import '../../../transactions/presentation/pages/transaction_recents/transaction_recents_widget.dart';
 import 'home_tab_compte_more_menu.dart';
 

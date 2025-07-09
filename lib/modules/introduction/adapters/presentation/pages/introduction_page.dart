@@ -18,11 +18,13 @@ class IntroductionPageItem extends StatefulWidget {
   final IntroductionItem item;
   final int pageSize;
   final double progressBarWidth;
+  final PageController pageController;
 
   const IntroductionPageItem({
     super.key, //
     required this.item, //
     required this.pageSize, //
+    required this.pageController, //
     required this.progressBarWidth, //
   });
 
@@ -82,18 +84,18 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem> {
                 Align(
                   alignment: Alignment.topRight,
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 24),
+                    padding: const EdgeInsets.only(right: 4),
                     child: TextButton(
                       onPressed: () {
                         AppRouter.pushReplacement(context, AppRouter.home);
                       },
                       style: TextButton.styleFrom(
-                      backgroundColor: Themer.gray, // 🌟 Couleur de fond
+                      backgroundColor: Themer.graySplash, // 🌟 Couleur de fond
                       foregroundColor: Themer.primaryColor,   // 🌟 Couleur du texte
                       shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20), // 🌟 Bord arrondi
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                       ),
                       child: const Text("Ignorer"),
                     ),
@@ -106,8 +108,10 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem> {
                 ),
                 // Pied de la page
                 IntroductionFooter(
-                  item: widget.item,
+                  currentPage: widget.item.position,    // ou utilisez un champ que vous passez
                   pageSize: widget.pageSize,
+                  // pageController: (context.findAncestorStateOfType<_IntroductionPageState>()!)._pageController,
+                  pageController: widget.pageController,
                   traductions: traductions,
                 )
               ],

@@ -21,15 +21,6 @@ class TransactionFormPageOthr extends StatelessWidget {
   Widget build(BuildContext context) {
     ///
     AppLocalizations traductions = AppLocalizations.of(context)!;
-    final List<UEMOACountry> countries = [
-      UEMOACountry(
-        iso: "SN",
-        name: "Senegal",
-        phoneCode: "+221",
-        flag: "🇸🇳",
-      ),
-    ];
-    ;
 
     // BLOC
     TransactionSendBloc transactionSendBloc =
@@ -111,11 +102,17 @@ class TransactionFormPageOthr extends StatelessWidget {
                       // Ne pas afficher l'icone de dropdown
                       // icon: const SizedBox.shrink(),
                       onChanged: (String? value) {
-                        formValues.pspPays = value;
-                        transactionSendBloc
-                            .add(TransactionSendFormChangedEvent(formValues));
+                        if (value != null && value != formValues.pspPays) {
+                          formValues.pspPays = value;
+
+                          // Déclencher l'événement pour récupérer les participants du nouveau pays
+                          transactionSendBloc.add(TransactionSendGetParticipantsByCountryEvent(
+                            value,
+                            formValues,
+                          ));
+                        }
                       },
-                      items: countries
+                      items: UEMOACountry.liste
                           .map<DropdownMenuItem<String>>((UEMOACountry value) {
                         return DropdownMenuItem<String>(
                           value: value.iso,

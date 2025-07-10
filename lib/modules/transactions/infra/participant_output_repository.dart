@@ -17,19 +17,19 @@ class ParticipantOutputRepository implements ParticipantOutputPort {
   final logger = Logger();
 
   @override
-  Future<List<Participant>> list() async {
+  Future<List<Participant>> list(String? countryCode) async {
     try {
-      List<Participant> liste = await repoRemote.list();
+      List<Participant> liste = await repoRemote.list(countryCode);
       if (liste.isNotEmpty) {
         // Save last version
-        repoLocal.save(liste);
+        repoLocal.save(liste, countryCode);
       }
       return liste;
     } //
     catch (e) {
       logger.e("Impossible de lister les PSPs", error: e);
       // try to fetch locally
-      return await repoLocal.list();
+      return await repoLocal.list(countryCode);
     }
   }
 }

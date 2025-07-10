@@ -11,6 +11,7 @@ class TransactionVerificationResultOthr {
     this.paysResidence,
     this.devise,
     this.typeClient,
+    this.otherClient,
     this.ibanClient,
     this.numeroIdentification,
     this.systemeIdentification,
@@ -27,6 +28,7 @@ class TransactionVerificationResultOthr {
   final String? paysResidence;
   final String? devise;
   final String? typeClient;
+  final String? otherClient;
 
   final String? ibanClient;
   final String? numeroIdentification;
@@ -62,6 +64,7 @@ class TransactionVerificationResultOthr {
       'paysResidence': paysResidence,
       'devise': devise,
       'typeClient': typeClient,
+      'otherClient': otherClient,
     };
   }
 
@@ -82,6 +85,7 @@ class TransactionVerificationResultOthr {
       paysResidence: json['paysResidence'] as String?,
       devise: json['devise'] as String?,
       typeClient: json['typeClient'] as String?,
+      otherClient: json['otherClient'] as String?,
     );
   }
 }

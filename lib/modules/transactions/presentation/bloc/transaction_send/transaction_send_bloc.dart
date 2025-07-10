@@ -74,6 +74,9 @@ class TransactionSendBloc
 
     //Pour partager un paiement
     on<TransactionSendSplitSendEvent>(_onTransactionSendSplitSendEvent);
+
+    // Pour récupérer les participants selon le pays
+    on<TransactionSendGetParticipantsByCountryEvent>(_onTransactionSendGetParticipantsByCountryEvent);
   }
 
   /// Pour obtenir la liste des transferts récents
@@ -116,7 +119,7 @@ class TransactionSendBloc
     //emit(TransactionSendFormInputState(form));
 
     // Recuperer liste des PSPs
-    List<Participant> psps = await participantInputPort.list();
+    List<Participant> psps = await participantInputPort.list(form.pspPays);
     if (event.command.pspCode != null) {
       try {
         Participant psp =
@@ -134,6 +137,7 @@ class TransactionSendBloc
     TransactionSendFormChangedEvent event,
     Emitter<TransactionSendState> emit,
   ) async {
+    logger.i("On est iciiii");
     TransactionSendCommand form = event.command;
     form.isValid();
     // Si IBAN, determine participant
@@ -163,6 +167,9 @@ class TransactionSendBloc
         form.pspNom = psp.nomMembre;
       }
     }
+    logger.i("On sort iciiii");
+    logger.i(form.toJson());
+    logger.i(event.command.toJson());
     emit(TransactionSendFormInputState(form, participants: state.participants));
   }
 
@@ -269,19 +276,20 @@ class TransactionSendBloc
     //}
     // Send Now
     else {*/
-    Stream<Transaction> stream = await transactionsInputPort.confirm(
-        TransactionConfirmCommand(
-        endToendId: transaction.endToEndId,
-        confirmationDate: DateTime.now().toIso8601String(),
-        confirmationMethode: event.method,
-        latitude: event.command.latitude,
-        longitude: event.command.longitude,
-        amount: event.command.amount,
-        transactionVerificationResultAlias: event.transaction.transactionVerificationResultAlias,
-        transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
-        transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
-      )
-    );
+    try {
+      Stream<Transaction> stream = await transactionsInputPort.confirm(
+          TransactionConfirmCommand(
+          endToendId: transaction.endToEndId,
+          confirmationDate: DateTime.now().toIso8601String(),
+          confirmationMethode: event.method,
+          latitude: event.command.latitude,
+          longitude: event.command.longitude,
+          amount: event.command.amount,
+          transactionVerificationResultAlias: event.transaction.transactionVerificationResultAlias,
+          transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
+          transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
+        )
+      );
 
       stream.listen(
         (trans) {
@@ -299,6 +307,14 @@ class TransactionSendBloc
           }
         },
       );
+    } catch (e) {
+      logger.e("Erreur de création de la souscription", error: e);
+      emit(TransactionSendFormErrorState(
+        event.command,
+        TransactionError.unknow.name,
+        participants: state.participants,
+      ));
+    }
     //}
   }
 
@@ -524,5 +540,42 @@ class TransactionSendBloc
     return await Geolocator.getCurrentPosition(
       locationSettings: locationSettings,
     );
+  }
+
+  /// Récupère les participants selon le pays sélectionné
+  void _onTransactionSendGetParticipantsByCountryEvent(
+      TransactionSendGetParticipantsByCountryEvent event,
+      Emitter<TransactionSendState> emit,
+      ) async {
+    try {
+      logger.i("CountryCode ${event.countryCode}");
+      logger.i("CountryCode ${event.command.toJson()}");
+      // Récupérer la liste des participants pour le pays sélectionné
+      List<Participant> participants = await participantInputPort.list(event.countryCode);
+
+      // Mettre à jour le command avec le nouveau pays
+      TransactionSendCommand updatedCommand = event.command;
+      updatedCommand.pspPays = event.countryCode;
+
+      // Réinitialiser le participant sélectionné si il n'existe pas dans la nouvelle liste
+      if (updatedCommand.pspCode != null) {
+        bool participantExists = participants.any((p) => p.codeMembre == updatedCommand.pspCode);
+        if (!participantExists) {
+          updatedCommand.pspCode = null;
+          updatedCommand.pspNom = null;
+        }
+      }
+
+      // Valider le formulaire
+      updatedCommand.isValid();
+
+      // Émettre le nouvel état avec la liste des participants mise à jour
+      emit(TransactionSendFormInputState(updatedCommand, participants: participants));
+
+    } catch (e) {
+      logger.e("Erreur lors de la récupération des participants: $e");
+      // Émettre un état d'erreur ou maintenir l'état actuel
+      emit(TransactionSendFormInputState(event.command, participants: []));
+    }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -75,55 +76,127 @@ class TransactionVerificationPage extends StatelessWidget {
         }
       },
       buildWhen: (previous, current) =>
-          current is TransactionSendFormVerificationAskingState,
+          current is TransactionSendFormVerificationAskingState ||
+          current is TransactionSendLoadingState,
       builder: (context, state) {
-        if (state is! TransactionSendFormVerificationAskingState) {
+        logger.i("transaction_form_page_verification state : $state");
+        /*if (state is! TransactionSendFormVerificationAskingState) {
           return const LoadingPage();
-        }
-        TransactionSendCommand command = state.command;
-        Transaction transaction = state.transaction;
-        return Scaffold(
-          // Pour avoir le bouton de retour
-          appBar: AppBar(),
-          // Contenu de la page de connexion
-          body: MyPageContainer(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Titre de la page
-                  Text(
-                    traductions.transactionFormVerificationTitle,
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                  //
-                  const SizedBox(height: 5.0),
-                  // Sous titre de la page
-                  Text(
-                    traductions.transactionFormVerificationSubtitle,
-                    style: Theme.of(context).textTheme.displaySmall,
-                  ),
-                  //
-                  const SizedBox(height: 32),
-
-                  // Alias
-                  if (command.alias != null)
-                    CustomTextInput(
-                      labelText: traductions.aliasFormLabel,
-                      controller: TextEditingController(
-                          text: command.alias!.value.toString()),
-                      readOnly: true,
+        }*/
+        if (state is TransactionSendFormVerificationAskingState) {
+          TransactionSendCommand command = state.command;
+          Transaction transaction = state.transaction;
+          return Scaffold(
+            // Pour avoir le bouton de retour
+            appBar: AppBar(),
+            // Contenu de la page de connexion
+            body: MyPageContainer(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Titre de la page
+                    Text(
+                      traductions.transactionFormVerificationTitle,
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
+                    //
+                    const SizedBox(height: 5.0),
+                    // Sous titre de la page
+                    Text(
+                      traductions.transactionFormVerificationSubtitle,
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    //
+                    const SizedBox(height: 32),
 
-                  // IBAN
-                  if (command.iban != null) ...[
-                    // Type
+                    // Alias
+                    if (command.alias != null)
+                      CustomTextInput(
+                        labelText: traductions.aliasFormLabel,
+                        controller: TextEditingController(
+                            text: command.alias!.value.toString()),
+                        readOnly: true,
+                      ),
+
+                    // IBAN
+                    if (command.iban != null) ...[
+                      // Type
+                      CustomTextInput(
+                        labelText:
+                            traductions.transactionFormVerificationTypeLabel,
+                        controller: TextEditingController(
+                          text: traductions.transactionFormVerificationTypeIBAN,
+                        ),
+                        readOnly: true,
+                      ),
+
+                      // Séparateur
+                      const SizedBox(height: 16),
+
+                      // Valeur de l'iban
+                      CustomTextInput(
+                        labelText: traductions.transactionFormIbanHint,
+                        controller: TextEditingController(
+                            text: command.iban!.value.toString()),
+                        readOnly: true,
+                      ),
+
+                      // Séparateur
+                      const SizedBox(height: 16),
+
+                      // Nom de la Banque
+                      CustomTextInput(
+                        labelText: traductions.transactionFormIbanNomLabel,
+                        controller: TextEditingController(text: command.pspNom!),
+                        readOnly: true,
+                      ),
+                    ],
+
+                    // Othr
+                    if (command.othr != null) ...[
+                      // Type
+                      CustomTextInput(
+                        labelText:
+                            traductions.transactionFormVerificationTypeLabel,
+                        controller: TextEditingController(
+                          text: traductions.transactionFormVerificationTypeOTHR,
+                        ),
+                        readOnly: true,
+                      ),
+
+                      // Séparateur
+                      const SizedBox(height: 16),
+
+                      // Valeur de l'oth
+                      CustomTextInput(
+                        labelText: traductions.transactionFormOthrLabel,
+                        controller: TextEditingController(
+                            text: command.othr!.value.toString()),
+                        readOnly: true,
+                      ),
+
+                      // Séparateur
+                      const SizedBox(height: 16),
+
+                      // Institution
+                      CustomTextInput(
+                        labelText: traductions.transactionFormOthrNomLabel,
+                        controller: TextEditingController(
+                            text: command.pspNom!.toString()),
+                        readOnly: true,
+                      ),
+                    ],
+
+                    // Séparateur
+                    const SizedBox(height: 16),
+
+                    // Pays  de l'institution
                     CustomTextInput(
-                      labelText:
-                          traductions.transactionFormVerificationTypeLabel,
+                      labelText: traductions.transactionFormOthrPaysLabel,
                       controller: TextEditingController(
-                        text: traductions.transactionFormVerificationTypeIBAN,
+                        text: UEMOACountry.get(transaction.clientPays)!.name,
                       ),
                       readOnly: true,
                     ),
@@ -131,33 +204,13 @@ class TransactionVerificationPage extends StatelessWidget {
                     // Séparateur
                     const SizedBox(height: 16),
 
-                    // Valeur de l'iban
-                    CustomTextInput(
-                      labelText: traductions.transactionFormIbanHint,
-                      controller: TextEditingController(
-                          text: command.iban!.value.toString()),
-                      readOnly: true,
-                    ),
-
-                    // Séparateur
-                    const SizedBox(height: 16),
-
-                    // Nom de la Banque
-                    CustomTextInput(
-                      labelText: traductions.transactionFormIbanNomLabel,
-                      controller: TextEditingController(text: command.pspNom!),
-                      readOnly: true,
-                    ),
-                  ],
-
-                  // Othr
-                  if (command.othr != null) ...[
-                    // Type
+                    // Nom du client
                     CustomTextInput(
                       labelText:
-                          traductions.transactionFormVerificationTypeLabel,
+                          traductions.transactionFormVerificationClientName,
                       controller: TextEditingController(
-                        text: traductions.transactionFormVerificationTypeOTHR,
+                        text: transaction.sens == TransactionSens.debit ?
+                        transaction.clientNom : transaction.acquirerAccountLabel!,
                       ),
                       readOnly: true,
                     ),
@@ -165,93 +218,49 @@ class TransactionVerificationPage extends StatelessWidget {
                     // Séparateur
                     const SizedBox(height: 16),
 
-                    // Valeur de l'oth
+                    // Montant
                     CustomTextInput(
-                      labelText: traductions.transactionFormOthrLabel,
+                      labelText: traductions.transactionFormAmountHint,
                       controller: TextEditingController(
-                          text: command.othr!.value.toString()),
+                          text: command.amount!.value.toString()),
                       readOnly: true,
                     ),
 
                     // Séparateur
                     const SizedBox(height: 16),
 
-                    // Institution
+                    // Motif
                     CustomTextInput(
-                      labelText: traductions.transactionFormOthrNomLabel,
+                      labelText: traductions.transactionFormMotifLabel,
                       controller: TextEditingController(
-                          text: command.pspNom!.toString()),
+                        text: command.motif?.value.toString(),
+                      ),
                       readOnly: true,
                     ),
+
+                    const SizedBox(height: 32),
+
+                    // Bouton de confirmation ou rejet ou programmation
+                    // Espacement de 32 pixels
+                    const SizedBox(height: 32),
                   ],
-
-                  // Séparateur
-                  const SizedBox(height: 16),
-
-                  // Pays  de l'institution
-                  CustomTextInput(
-                    labelText: traductions.transactionFormOthrPaysLabel,
-                    controller: TextEditingController(
-                      text: UEMOACountry.get(transaction.clientPays)!.name,
-                    ),
-                    readOnly: true,
-                  ),
-
-                  // Séparateur
-                  const SizedBox(height: 16),
-
-                  // Nom du client
-                  CustomTextInput(
-                    labelText:
-                        traductions.transactionFormVerificationClientName,
-                    controller: TextEditingController(
-                      text: transaction.sens == TransactionSens.debit ?
-                      transaction.clientNom : transaction.acquirerAccountLabel!,
-                    ),
-                    readOnly: true,
-                  ),
-
-                  // Séparateur
-                  const SizedBox(height: 16),
-
-                  // Montant
-                  CustomTextInput(
-                    labelText: traductions.transactionFormAmountHint,
-                    controller: TextEditingController(
-                        text: command.amount!.value.toString()),
-                    readOnly: true,
-                  ),
-
-                  // Séparateur
-                  const SizedBox(height: 16),
-
-                  // Motif
-                  CustomTextInput(
-                    labelText: traductions.transactionFormMotifLabel,
-                    controller: TextEditingController(
-                      text: command.motif?.value.toString(),
-                    ),
-                    readOnly: true,
-                  ),
-
-                  const SizedBox(height: 32),
-
-                  // Bouton de confirmation ou rejet ou programmation
-                  // Espacement de 32 pixels
-                  const SizedBox(height: 32),
-                ],
+                ),
               ),
             ),
-          ),
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-            child: TransactionFormBtnConfirm(
-              command: command,
-              transaction: transaction,
-              traductions: traductions,
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+              child: TransactionFormBtnConfirm(
+                command: command,
+                transaction: transaction,
+                traductions: traductions,
+              ),
             ),
-          ),
-        );
+          );
+        } else {
+          return const Scaffold(
+            body: LoadingPage(),
+          );
+        }
       },
     );
   }

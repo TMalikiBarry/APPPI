@@ -101,3 +101,9 @@ final class TransactionSendFormErrorState extends TransactionSendState {
   final TransactionSendCommand command;
   final String error;
 }
+
+final class TransactionSendLoadingState
+    extends TransactionSendState {
+  TransactionSendLoadingState(this.command);
+  final TransactionSendCommand command;
+}

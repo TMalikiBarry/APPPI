@@ -10,9 +10,13 @@ class ParticipantOutputRemote {
   static const String collectionId = "participants";
 
   /// Lister les participants
-  Future<List<Participant>> list() async {
+  Future<List<Participant>> list(String? countryCode) async {
+    var url = '/participant/index';
+    if (countryCode != null) {
+      url += '?countryCode=$countryCode';
+    }
     final ApiResponse response = await Api.get(
-      '/participant/index',
+      url,
     );
     ParticipantListe liste = ParticipantListe.fromJson(response.data["response"]);
     return liste.data;

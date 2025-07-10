@@ -16,7 +16,7 @@ void main() {
         "codeBanque": "SN012",
         "statut": "ACTIVE"
       };
-      await service.list().then((value) => () {
+      await service.list("SN").then((value) => () {
             expect(value, [Participant.fromJson(json)]);
           });
     });

@@ -10,7 +10,7 @@ class ParticipantService implements ParticipantInputPort {
   ParticipantService(this.participantOutputPort);
 
   @override
-  Future<List<Participant>> list() async {
-    return await participantOutputPort.list();
+  Future<List<Participant>> list(String? countryCode) async {
+    return await participantOutputPort.list(countryCode);
   }
 }

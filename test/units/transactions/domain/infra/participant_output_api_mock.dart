@@ -4,7 +4,7 @@ import 'package:pi_mobile_app/modules/transactions/ports/output/participant_outp
 /// Support offline mode and online mode
 class ParticipantOutputApiMock implements ParticipantOutputPort {
   @override
-  Future<List<Participant>> list() async {
+  Future<List<Participant>> list(String? countryCode) async {
     final json = {
       "pays": "SN",
       "codeMembre": "SNB000",

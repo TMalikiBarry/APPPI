@@ -1,4 +1,5 @@
 import 'package:pi_mobile_app/modules/notification/domain/models/notification.dart';
+import 'package:pi_mobile_app/modules/notification/domain/models/notificationDTO.dart';
 import 'package:pi_mobile_app/modules/notification/domain/models/notification_liste.dart';
 import 'package:pi_mobile_app/modules/notification/domain/models/notification_type.dart';
 import 'package:pi_mobile_app/modules/notification/ports/output/notification_output_port.dart';
@@ -72,6 +73,12 @@ class MockNotificationOutputPort implements NotificationOutputPort {
   @override
   Future<int> count(String compte) async {
     return 2;
+  }
+
+  @override
+  Future<List<NotificationModel>> fetchNotifications() {
+    // TODO: implement fetchNotifications
+    throw UnimplementedError();
   }
 }
 

@@ -1,6 +1,7 @@
 import '../../ports/input/notification_input_port.dart';
 import '../../ports/output/notification_output_port.dart';
 import '../models/notification.dart';
+import '../models/notificationDTO.dart';
 import '../models/notification_liste.dart';
 
 class NotificationService implements NotificationInputPort {
@@ -32,6 +33,11 @@ class NotificationService implements NotificationInputPort {
         keyword: keyword,
         sortBy: sortBy,
         fields: fields);
+  }
+
+  @override
+  Future<List<NotificationModel>> fetchNotifications() async {
+    return notificationOutputPort.fetchNotifications();
   }
 
   @override

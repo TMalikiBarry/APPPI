@@ -17,7 +17,7 @@ class HomeToolbarLeading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Themer.get(
-      context.read<ConfigBloc>().getParamValue(ConfigKey.preferedTheme)
+        context.read<ConfigBloc>().getParamValue(ConfigKey.preferedTheme)
     );
     RoundedRectangleBorder border = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(40 / 3),
@@ -28,9 +28,8 @@ class HomeToolbarLeading extends StatelessWidget {
       boxDecoration = ShapeDecoration(
         color: Colors.transparent,
         shape: border,
-        image: const DecorationImage(
-          // image: NetworkImage(user.avatar!),
-          image: AssetImage(Images.iconSearchHeaderHP, package: 'common_dependencies'),
+        image: DecorationImage(
+          image: NetworkImage(user.avatar!),
           fit: BoxFit.fill,
         ),
       );
@@ -59,16 +58,8 @@ class HomeToolbarLeading extends StatelessWidget {
             Container(
               width: 40,
               height: 40,
-              // decoration: boxDecoration,
-              decoration: const BoxDecoration(
-                    image: DecorationImage(
-                    // image: NetworkImage(user.avatar!),
-                      image: AssetImage(Images.iconDefaultUserHeaderHP, package: 'common_dependencies'),
-                      fit: BoxFit.fill,
-                      filterQuality: FilterQuality.high,
-                    ),
-                ),
-              // child: child,
+              decoration: boxDecoration,
+              child: child,
             ),
             // Logo SPI
             const SizedBox(width: 10),
@@ -78,8 +69,8 @@ class HomeToolbarLeading extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                    theme.brightness == Brightness.light  ?
-                    Images.logoSpiDark : Images.logoSpiLight, package: 'common_dependencies'),
+                      theme.brightness == Brightness.light  ?
+                      Images.logoSpiDark : Images.logoSpiLight, package: 'common_dependencies'),
                   fit: BoxFit.fill,
                 ),
               ),

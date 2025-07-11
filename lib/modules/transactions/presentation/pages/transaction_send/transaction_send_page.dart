@@ -111,11 +111,10 @@ class _TransactionSendPageState extends State<TransactionSendPage> {
 
                       // Contacts
                       const SizedBox(height: 32),
-                      Expanded(
-                        child: TransactionSendPageContacts(
+                      TransactionSendPageContacts(
                           action: widget.action,
-                        ),
                       ),
+
                     ],
                   ),
                 ),

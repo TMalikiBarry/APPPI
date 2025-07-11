@@ -4,18 +4,18 @@ import '../../../../core/assets.dart';
 import '../../../../core/router.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/cta_widget.dart';
-import '../../../compte/presentation/pages/solde_widget_card.dart';
+import '../../../compte/presentation/pages/solde_widget.dart';
 import '../../../transactions/presentation/pages/transaction_recents/transaction_recents_widget.dart';
 import 'home_tab_compte_more_menu.dart';
 
-class HomeTabCompte extends StatefulWidget {
-  const HomeTabCompte({super.key});
+class HomeTabCompteOLD extends StatefulWidget {
+  const HomeTabCompteOLD({super.key});
 
   @override
-  State<HomeTabCompte> createState() => _HomeTabCompteState();
+  State<HomeTabCompteOLD> createState() => _HomeTabCompteOLDState();
 }
 
-class _HomeTabCompteState extends State<HomeTabCompte> {
+class _HomeTabCompteOLDState extends State<HomeTabCompteOLD> {
   // Clé unique pour forcer le rebuilt des enfants
   UniqueKey _refreshKey = UniqueKey();
 
@@ -39,23 +39,20 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
           // Home Page Fixed Design
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(0),
+              padding: const EdgeInsets.all(16),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Affiche le widget solde
-                    //const SoldeWidget(),
-                    const SoldeWidgetCard(),
+                    const SoldeWidget(),
                     // Séparateur
                     const SizedBox(height: 20),
                     // Principales actions: Envoyer, Recevoir, Plus
                     Padding(
-                      //padding: const EdgeInsets.only(right: 70,),
-                      //padding: const EdgeInsets.only(right: 86,),
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
-                      //padding: const EdgeInsets.all(20),
+                      // padding: const EdgeInsets.only(right: 70,),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       child:
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,17 +96,15 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                         ],
                       ),
                     ),
+                    // Séparateur
                     const SizedBox(height: 24),
-
+                    // Liste des dernières transactions
+                    const TransactionRecentsWidget(),
                   ],
                 ),
               ),
             ),
           ),
-          // Séparateur
-          // Liste des dernières transactions
-          const Padding(padding: EdgeInsets.only(left: 15,right: 15),
-          child: TransactionRecentsWidget(),),
           // Separateur
           const SizedBox(height: 10),
           // Home Page Widgets

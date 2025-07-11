@@ -1,4 +1,5 @@
 import '../../domain/models/notification.dart';
+import '../../domain/models/notificationDTO.dart';
 import '../../domain/models/notification_liste.dart';
 
 /// Expose les services offerts dans la gestion des notifications
@@ -15,6 +16,8 @@ abstract class NotificationInputPort {
     String? sortBy,
     String? fields,
   });
+
+  Future<List<NotificationModel>> fetchNotifications();
 
   /// Rechercher des notifications depuis le serveur
   Future<NotificationListe> search({

@@ -77,6 +77,7 @@ class Themer {
 
   /// Primary Light
   static const Color primaryLight = Color(0xffbbc0fb);
+  static const Color primaryLighter = Color(0xffe7e9ff);
 
   /// Primary Light
   static const Color primaryDark = Color(0xFFA81735);
@@ -96,6 +97,7 @@ class Themer {
 
   /// Gray
   static const Color gray = Color(0xFFA1A5AC);
+  static const Color graySplash = Color(0xBFDADBDC);
 
   static const primaryColor = Color(0xFF282C5D);
   static const bgCircleColor = Color(0xFFE7E9FF);

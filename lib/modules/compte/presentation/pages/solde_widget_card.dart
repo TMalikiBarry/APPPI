@@ -1,8 +1,14 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:common_dependencies/components/emvqrcode.dart';
 import 'package:flutter/material.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pi_mobile_app/core/router.dart';
 
 import '../../../../core/di.dart';
+import '../../../../core/theme.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/amount_widget.dart';
 import '../../../../shared/widgets/skeleton_widget.dart';
@@ -27,15 +33,36 @@ class SoldeWidgetCard extends StatefulWidget {
 class _SoldeWidgetCardState extends State<SoldeWidgetCard> {
   late CompteSoldeBloc compteSoldeBloc;
 
+  String? _qrData;
+  Timer? _timer;
+
   @override
   void initState() {
     super.initState();
 
+    // Initialisation du CompteSoldeBloc
     Alias alias = (context.read<AliasBloc>().state as AliasExistState).alias;
-
     compteSoldeBloc = CompteSoldeBloc(Di.getCompteInputPort())
       ..add(GetSoldeCompteEvent(alias.compte));
+
+    // Génération QR initiale
+    _generateQr();
+    _timer = Timer.periodic(const Duration(seconds: 30), (_) => _generateQr());
   }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _generateQr() async {
+    String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
+    String encodedTs = base64Encode(utf8.encode(timestamp));
+    final qrData = await CPMService().generateQr(encodedTs, "123456");
+    setState(() => _qrData = qrData);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -121,12 +148,19 @@ class _SoldeWidgetCardState extends State<SoldeWidgetCard> {
                           margin: const EdgeInsets.only(right: 5),
                           padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            color: const Color(0xffbbc0fb),
+                            color: Themer.primaryLighter,
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(5)
                           ),
                           child: GestureDetector(
-                            child: Image.asset(
+                            child:  _qrData != null
+                                ? PrettyQr(
+                              data: _qrData!,
+                              size: 56,
+                              roundEdges: true,
+                              elementColor: Themer.brownColor,
+                            )
+                                : Image.asset(
                               "assets/images/qr_home.png",
                               package: 'common_dependencies',
                               width: 45,  // Ajusté pour correspondre aux autres icônes
@@ -140,8 +174,8 @@ class _SoldeWidgetCardState extends State<SoldeWidgetCard> {
                               AppRouter.push(
                                 context,
                                 currentValue != null && currentValue == "1"
-                                    ? AppRouter.qrcodeShow
-                                    : AppRouter.qrcodeScan,
+                                    ? AppRouter.qrcodeScan
+                                    : AppRouter.qrcodeShow,
                               );
                             },
                           )

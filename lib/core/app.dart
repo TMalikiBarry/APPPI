@@ -145,6 +145,13 @@ class App extends StatelessWidget {
     return FutureBuilder(
         future: _config(),
         builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            // Tant que _config() n'est pas fini, on affiche un écran de chargement
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+
           ConfigBloc configBloc = ConfigBloc(Di.getConfigInputPort());
           CategorieBloc categorieBloc = CategorieBloc(
             Di.getCategorieInputPort(),
@@ -278,5 +285,3 @@ class App extends StatelessWidget {
     );
   }
 }
-
-

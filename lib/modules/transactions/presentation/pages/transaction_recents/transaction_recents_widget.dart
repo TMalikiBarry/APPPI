@@ -139,7 +139,7 @@ class _TransactionRecentsWidgetState extends State<TransactionRecentsWidget> {
       ),
       child: Column(
         children: [
-          Icon(Icons.receipt_long, size: 48, color: Themer.neural03Color),
+          const Icon(Icons.receipt_long, size: 48, color: Themer.neural03Color),
           const SizedBox(height: 16),
           Text(
             trad.transactionsNoRecent,
@@ -191,96 +191,5 @@ class _TransactionRecentsWidgetState extends State<TransactionRecentsWidget> {
       ),
     );
   }
-
-  /*@override
-  Widget build(BuildContext context) {
-    //
-    AppLocalizations traductions = AppLocalizations.of(context)!;
-
-    return BlocProvider<TransactionRecentsBloc>(
-      create: (_) => transactionsBloc,
-      child: BlocListener<ConfigBloc, ConfigState>(
-        listenWhen: (previous, current) =>
-            current is ConfigLoadedState &&
-            current.updatedKey == ConfigKey.transactionsRecentNbItems,
-        listener: (context, state) {
-          transactionsBloc.add(TransactionRecentsListEvent(compte));
-        },
-        child: BlocBuilder<TransactionRecentsBloc, TransactionRecentsState>(
-          bloc: transactionsBloc,
-          builder: (context, state) {
-
-            if(state is TransactionRecentsLoadingState) {
-              // return Container();
-              return const TransactionListLoadingWidget();
-            }
-            // Liste des transactions récupérée
-            if (state is TransactionRecentsListState) {
-              List<Transaction> transactions = state.transactions.data;
-              // Si la liste est vide, n'affiche rien
-              if (transactions.isEmpty) {
-                return Container();
-              } else {
-                return Column(
-                  children: [
-                    // En tête : titre et icon button
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // Titre
-                        Text(
-                          traductions.homeTransactions,
-                          style: Theme.of(context)
-                              .textTheme
-                              .displayLarge!
-                              .copyWith(color: Themer.neural04Color),
-                        ),
-                        // Parametrer nombre d'éléments à afficher
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () => showModalBottomSheet<int?>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const TransactionRecentsNombreWidget();
-                            },
-                            isScrollControlled: true,
-                          ),
-                          icon: const Icon(Icons.more_horiz),
-                        ),
-                      ],
-                    ),
-                    // Liste
-                    Column(
-                      children: [
-                        for (var transaction in transactions)
-                          TransactionListItemWidget(
-                            transaction: transaction,
-                            detailsBackRoute: AppRouter.home,
-                          ),
-                      ],
-                    ),
-                    // Tout afficher Btn s'il reste d'autres éléments à afficher
-                    const SizedBox(height: 12),
-                    TextButton(
-                      onPressed: () {
-                        AppRouter.push(context, AppRouter.transactionSearch);
-                      },
-                      child: Text(traductions.transactionsSeeAll),
-                    ),
-                  ],
-                );
-              }
-            }
-            // TransactionRecentsInitial => Liste pas encore chargée
-            else {
-              return const TransactionListLoadingWidget();
-            }
-          },
-        ),
-      ),
-    );
-  }*/
-
 
 }

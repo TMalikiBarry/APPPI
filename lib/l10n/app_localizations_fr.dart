@@ -741,7 +741,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get transactionFormOthrPaysLabel => 'Pays de l\'intitution financière';
 
   @override
-  String get transactionFormOthrNomLabel => 'Nom de l\'intitution financière ';
+  String get transactionFormOthrNomLabel => 'Nom de l\'institution financière ';
 
   @override
   String get transactionFormContinueBtn => 'Continuer';

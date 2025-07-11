@@ -119,16 +119,23 @@ class QrCodeAliasPage extends StatelessWidget {
                 ),
               ),
               bottomNavigationBar: Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width / 5.2,
-                    vertical: 20.0),
-                height: 64,
+                margin: const EdgeInsets.only(bottom: 50,left: 40, right: 40),
+                //margin: EdgeInsets.symmetric(
+                //    horizontal: MediaQuery.of(context).size.width / 5.2,
+                 //   vertical: 80.0),
+                height: 54,
                 child: QrcodeSwitchBtn(
-                  cardBgColor: const Color(0x99151413),
+                  cardBgColor: const Color(0xFFE1E4EE),
                   items: [
                     QrcodeBtnItem(
+                      text: traductions.qrcodePageBtnMonCode,
+                      textColor: Themer.primary,
+                      btnColor: Themer.whiteColor,
+                      action: () {},
+                    ),
+                    QrcodeBtnItem(
                       text: traductions.qrcodePageBtnScan,
-                      textColor: Themer.whiteColor,
+                      textColor: const Color(0xFF667085),
                       btnColor: Colors.transparent,
                       action: () {
                         AppRouter.push(
@@ -136,12 +143,6 @@ class QrCodeAliasPage extends StatelessWidget {
                           AppRouter.qrcodeScan,
                         );
                       },
-                    ),
-                    QrcodeBtnItem(
-                      text: traductions.qrcodePageBtnMonCode,
-                      textColor: const Color(0xFF151413),
-                      btnColor: Themer.whiteColor,
-                      action: () {},
                     ),
                   ],
                 ),

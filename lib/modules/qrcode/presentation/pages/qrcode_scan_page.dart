@@ -175,13 +175,7 @@ class _QrcodeScanPageState extends State<QrcodeScanPage> {
                     child: QrcodeSwitchBtn(
                       cardBgColor: const Color(0xFF151413),
                       items: [
-                        // Scan
-                        QrcodeBtnItem(
-                          text: traductions.qrcodePageBtnScan,
-                          textColor: Theme.of(context).colorScheme.onSurface,
-                          btnColor: Theme.of(context).colorScheme.surface,
-                          action: () {},
-                        ),
+
                         // Mon code
                         QrcodeBtnItem(
                           text: traductions.qrcodePageBtnMonCode,
@@ -191,6 +185,13 @@ class _QrcodeScanPageState extends State<QrcodeScanPage> {
                             controller.stop();
                             AppRouter.push(context, AppRouter.qrcodeShow);
                           },
+                        ),
+                        // Scan
+                        QrcodeBtnItem(
+                          text: traductions.qrcodePageBtnScan,
+                          textColor: Theme.of(context).colorScheme.onSurface,
+                          btnColor: Theme.of(context).colorScheme.surface,
+                          action: () {},
                         ),
                       ],
                     ),

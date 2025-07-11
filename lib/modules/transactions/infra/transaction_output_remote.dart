@@ -189,7 +189,6 @@ class TransactionOutputRemote {
       'aliasFrom': aliasFrom,
       'userLogin': userLogin,
     });
-    var url = '/transfer/eme/external';
     if (command.method == TransactionSendMethod.alias){
       final ApiResponse response = await Api.get('/alias/sync/search/${command.alias!.value}');
       return Transaction.fromJsonTransactionVerificationSearchAlias(response.data["response"]);

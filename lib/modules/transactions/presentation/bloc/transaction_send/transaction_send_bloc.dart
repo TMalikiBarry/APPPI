@@ -116,7 +116,7 @@ class TransactionSendBloc
     TransactionSendCommand form = event.command;
     double? solde = await compteInputPort.getSolde(form.compte);
     form.solde = solde ?? 0.0;
-    //emit(TransactionSendFormInputState(form));
+    emit(TransactionSendFormInputState(form));
 
     // Recuperer liste des PSPs
     List<Participant> psps = await participantInputPort.list(form.pspPays);
@@ -137,7 +137,6 @@ class TransactionSendBloc
     TransactionSendFormChangedEvent event,
     Emitter<TransactionSendState> emit,
   ) async {
-    logger.i("On est iciiii");
     TransactionSendCommand form = event.command;
     form.isValid();
     // Si IBAN, determine participant
@@ -167,9 +166,6 @@ class TransactionSendBloc
         form.pspNom = psp.nomMembre;
       }
     }
-    logger.i("On sort iciiii");
-    logger.i(form.toJson());
-    logger.i(event.command.toJson());
     emit(TransactionSendFormInputState(form, participants: state.participants));
   }
 
@@ -181,6 +177,7 @@ class TransactionSendBloc
     // Loading
     //emit(TransactionSendFormVerificationLoadingState(event.command,
     //    participants: state.participants));
+    emit(TransactionSendLoadingState(event.command));
 
     // Récuperer position GPS
     Position? position = await _getPosition();
@@ -251,6 +248,7 @@ class TransactionSendBloc
       transaction,
       participants: state.participants,
     ));*/
+    emit(TransactionSendLoadingState(event.command));
 
     // Initier
     /*if (event.command.schedule != null) {
@@ -386,7 +384,7 @@ class TransactionSendBloc
     // Récuperer position GPS
     Position? position = await _getPosition();
     if (position == null) {
-      emit(TransactionSendInitialState());
+      emit(TransactionSendInitialState(transactions: state.transactions));
     } else {
       List<Transaction> transactions = [];
       List<String> errors = [];

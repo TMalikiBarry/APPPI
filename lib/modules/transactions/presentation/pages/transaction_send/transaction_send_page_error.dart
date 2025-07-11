@@ -60,7 +60,7 @@ class TransactionSendPageError extends StatelessWidget {
       return [
         NotificationBtn(
           btnText: localisation.transactionsSendErrorBtn,
-          btnAction: () => {AppRouter.pushReplacement(context, AppRouter.home)},
+          btnAction: () => {AppRouter.go(context, AppRouter.home)},
           btnColor: Theme.of(context).colorScheme.tertiary,
         ),
       ];

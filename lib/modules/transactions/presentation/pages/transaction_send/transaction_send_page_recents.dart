@@ -136,7 +136,8 @@ class TransactionSendPageRecentsItem extends StatelessWidget {
           // Nom et prenoms du client
           Expanded(
             child: Text(
-              transaction.clientNom,
+              transaction.sens == TransactionSens.debit ?
+              transaction.acquirerAccountLabel! : transaction.clientNom,
               style: Theme.of(context).textTheme.headlineSmall,
               overflow: TextOverflow.ellipsis,
             ),

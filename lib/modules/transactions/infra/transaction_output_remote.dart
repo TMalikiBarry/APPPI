@@ -45,7 +45,8 @@ class TransactionOutputRemote {
     int page = 0,
   }) async {
     var pref = await SharedPreferences.getInstance();
-    String? issuerAccount = pref.getString("accountNumber");
+    String? issuerAccount
+    = pref.getString("accountNumber");
 
     if(issuerAccount == null || issuerAccount.isEmpty) {
       issuerAccount = pref.getString("phoneNumber");
@@ -54,7 +55,7 @@ class TransactionOutputRemote {
 
     // ConnectedUser.current?.username;
     final now    = DateTime.now();
-    final start  = startDate ?? now.subtract(const Duration(days: 200));
+    final start  = startDate ?? now.subtract(const Duration(days: 1000));
     final finish = endDate   ?? now.add(const Duration(days: 1));
 
     final qs = {
@@ -62,7 +63,7 @@ class TransactionOutputRemote {
       'endDate'  : finish.toIso8601String().split('T').first,
       'size'     : size.toString(),
       'page'     : page.toString(),
-      'issuerAccount' : pref.getString("accountNumber"),
+      'issuerAccount' : issuerAccount,
       'scope' : 'PI',
       'status': 'SUCCESSFUL',
     };
@@ -77,6 +78,10 @@ class TransactionOutputRemote {
     // 2) Log pour debug
     logger.i('← history() status=${resp.statusCode}');
     logger.i('← history() data=${resp.data}');
+
+    logger.i("#### this is the value of accountNumber $issuerAccount");
+    logger.i("#### this is the value of phoneNumber ${pref.getString("phoneNumber")}");
+    logger.i("#### this is the value of phone_number ${pref.getString("phone_number")}");
 
     // 3) Validation minimale
     final raw = resp.data;
@@ -156,7 +161,7 @@ class TransactionOutputRemote {
       queryParameters: queryParameters,
     );*/
 
-    int xlimit = (limit== null || limit <5 ) ? 5: limit;
+    int xlimit = (limit== null || limit <1 ) ? 1: limit;
 
     int xpage = page ?? 0;
 

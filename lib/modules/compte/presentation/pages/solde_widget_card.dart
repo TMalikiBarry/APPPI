@@ -148,7 +148,7 @@ class _SoldeWidgetCardState extends State<SoldeWidgetCard> {
                           margin: const EdgeInsets.only(right: 5),
                           padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            color: const Color(0xffbbc0fb),
+                            color: Themer.primaryLighter,
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(5)
                           ),

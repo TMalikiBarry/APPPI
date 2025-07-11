@@ -8,14 +8,14 @@ import '../../../compte/presentation/pages/solde_widget.dart';
 import '../../../transactions/presentation/pages/transaction_recents/transaction_recents_widget.dart';
 import 'home_tab_compte_more_menu.dart';
 
-class HomeTabCompte_old extends StatefulWidget {
-  const HomeTabCompte_old({super.key});
+class HomeTabCompteOLD extends StatefulWidget {
+  const HomeTabCompteOLD({super.key});
 
   @override
-  State<HomeTabCompte_old> createState() => _HomeTabCompte_oldState();
+  State<HomeTabCompteOLD> createState() => _HomeTabCompteOLDState();
 }
 
-class _HomeTabCompte_oldState extends State<HomeTabCompte_old> {
+class _HomeTabCompteOLDState extends State<HomeTabCompteOLD> {
   // Clé unique pour forcer le rebuilt des enfants
   UniqueKey _refreshKey = UniqueKey();
 

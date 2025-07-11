@@ -84,7 +84,7 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem> {
                 Align(
                   alignment: Alignment.topRight,
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 4),
+                    padding: const EdgeInsets.only(right: 0),
                     child: TextButton(
                       onPressed: () {
                         AppRouter.pushReplacement(context, AppRouter.home);
@@ -95,7 +95,7 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem> {
                       shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20), // 🌟 Bord arrondi
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 13),
                       ),
                       child: const Text("Ignorer"),
                     ),

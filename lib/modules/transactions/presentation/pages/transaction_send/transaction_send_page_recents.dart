@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:pi_mobile_app/modules/transactions/domain/models/transaction_canal.dart';
 
-import '../../../../../core/assets.dart';
 import '../../../../../core/router.dart';
 import '../../../../../core/theme.dart';
 import '../../../../../l10n/app_localizations.dart';

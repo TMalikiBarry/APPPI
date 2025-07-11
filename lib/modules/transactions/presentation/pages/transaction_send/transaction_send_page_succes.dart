@@ -35,35 +35,40 @@ class TransactionSendPageSuccess extends StatelessWidget {
         if (transaction.isRTP() &&
             transaction.statut == TransactionStatut.initie) {
           if (!transaction.isSplit()) {
-            AppRouter.pushReplacement(
+            //AppRouter.pushReplacement(
+            //  context,
+            //  "/transaction/receive_now/${transaction.endToEndId}",
+            //);
+            AppRouter.go(
               context,
               "/transaction/receive_now/${transaction.endToEndId}",
             );
           } else {
-            AppRouter.pushReplacement(context, AppRouter.home);
+            //AppRouter.pushReplacement(context, AppRouter.home);
+            AppRouter.go(context, AppRouter.home);
           }
         }
         // Transaction now
         else if (!transaction.isRTP() && transaction.dateDebut == null) {
-          AppRouter.pushReplacement(
+          AppRouter.go(
             context,
             //AppRouter.transactionSendDetails,
             AppRouter.home,
-            params: {
+            /*params: {
               "tx": transaction,
               "route": AppRouter.home,
-            },
+            },*/
           );
         }
         // Transaction scheduled
         else if (!transaction.isRTP() && transaction.dateDebut != null) {
-          AppRouter.pushReplacement(
+          AppRouter.go(
             context,
-            AppRouter.subscriptionDetails,
-            params: {
+            AppRouter.home,
+            /*params: {
               "tx": transaction,
               "route": AppRouter.home,
-            },
+            },*/
           );
         }
         // Other
@@ -72,10 +77,10 @@ class TransactionSendPageSuccess extends StatelessWidget {
             context,
             //AppRouter.transactionSendDetails,
             AppRouter.home,
-            params: {
+            /*params: {
               "tx": transaction,
               "route": AppRouter.home,
-            },
+            },*/
           );
         }
       },

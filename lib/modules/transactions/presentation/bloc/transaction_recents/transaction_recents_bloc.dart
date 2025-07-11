@@ -57,7 +57,7 @@ class TransactionRecentsBloc
 
       // 3) Détermine la période
       final now   = DateTime.now();
-      final start = now.subtract(const Duration(days: 7));
+      final start = now.subtract(const Duration(days: 1000));
 
       // 4) Appel serveur unique
       final history = await transactionsInputPort.fetchHistory(

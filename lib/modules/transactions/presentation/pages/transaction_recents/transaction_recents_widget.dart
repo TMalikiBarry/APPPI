@@ -139,7 +139,7 @@ class _TransactionRecentsWidgetState extends State<TransactionRecentsWidget> {
       ),
       child: Column(
         children: [
-          Icon(Icons.receipt_long, size: 48, color: Themer.neural03Color),
+          const Icon(Icons.receipt_long, size: 48, color: Themer.neural03Color),
           const SizedBox(height: 16),
           Text(
             trad.transactionsNoRecent,

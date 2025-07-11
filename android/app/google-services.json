@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "909112733465",
-    "project_id": "pi-mobile-app-dev",
-    "storage_bucket": "pi-mobile-app-dev.appspot.com"
+    "project_number": "512860611530",
+    "project_id": "dev-customer-app-api",
+    "storage_bucket": "dev-customer-app-api.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:909112733465:android:3a2bb0936e62a5c3515f88",
+        "mobilesdk_app_id": "1:512860611530:android:4793178bc167f5ecf12533",
         "android_client_info": {
-          "package_name": "com.example.pi_mobile_app"
+          "package_name": "com.intouch.customer"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAqvGLykXlruT9Z8dBVLQsnI9FU7RVBLRs"
+          "current_key": "AIzaSyAP5unJKR3WtF31u4EOJSYqt7A7JMyV6oM"
         }
       ],
       "services": {

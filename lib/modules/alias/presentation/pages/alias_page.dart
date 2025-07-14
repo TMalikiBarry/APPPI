@@ -112,7 +112,11 @@ class AliasPage extends StatelessWidget {
                 aliasBloc.add(CreateAliasMBNOEvent(compte));
               } //
               else {
-                AppRouter.pushReplacement(context, AppRouter.homePage);
+                AppRouter.pushReplacement(
+                    context,
+                    AppRouter.introduction
+                    // AppRouter.homePage
+                );
               }
             },
           ),

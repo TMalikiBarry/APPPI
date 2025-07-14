@@ -190,6 +190,9 @@ class AliasBloc extends Bloc<AliasEvent, AliasState> {
       on AliasInvalidOtpException {
         emit(AliasMBNOVerificationState(
             event.values, otpCode.value, AliasError.invalidOtpCode));
+      } on ApiException catch (e) {
+        // Erreur non gérée
+        emit(AliasCreationErrorState(AliasError.unknow, event.values));
       }
     }
     // Code invalid => user n'a pas fini de saisir

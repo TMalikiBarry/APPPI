@@ -1,5 +1,8 @@
 import 'transaction_send_command_amount.dart';
 import 'transaction_send_command_motif.dart';
+import 'transaction_send_method.dart';
+import 'transaction_verification_result_command_alias.dart';
+import 'transaction_verification_result_command_othr.dart';
 
 /// Modele de demande d'envoie d'un transfert
 class TransactionConfirmCommand {
@@ -12,6 +15,9 @@ class TransactionConfirmCommand {
     this.amount,
     this.latitude,
     this.longitude,
+    this.transactionVerificationResultOthr,
+    this.transactionVerificationResultAlias,
+    this.transactionVerificationResultIban,
   });
 
   // Transfert
@@ -33,6 +39,11 @@ class TransactionConfirmCommand {
       "send_schedule"; // paiement programmé
   static const String actionReceiveNow = "receive_now"; // demande de paiement
 
+  // infos supplémentaires
+  TransactionVerificationResultAlias? transactionVerificationResultAlias;
+  TransactionVerificationResultOthr? transactionVerificationResultOthr;
+  TransactionVerificationResultOthr? transactionVerificationResultIban;
+
   bool isValid() {
     if (amount != null) amount!.isValid();
     if (motif != null) motif!.isValid();
@@ -43,19 +54,22 @@ class TransactionConfirmCommand {
   /// Convertit un objet TransactionSendCommand en JSON
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {
-      'montant': amount?.value,
-      'confirmationDate': confirmationDate,
-      'confirmationMethode': confirmationMethode,
+      'amount': "${amount?.value!.toInt()}",
+      'lattitude': latitude,
+      'longitude': longitude,
     };
 
     if (motif != null) {
-      json['motif'] = motif?.value;
+      json['reason'] = motif?.value;
     }
-    if (latitude != null) {
-      json['latitude'] = latitude;
+    if (transactionVerificationResultAlias != null) {
+      json['aliasTo'] = transactionVerificationResultAlias!.toJson();
     }
-    if (longitude != null) {
-      json['longitude'] = longitude;
+    if (transactionVerificationResultIban != null) {
+      json['idVerification'] = transactionVerificationResultIban!.toJsonIban();
+    }
+    if (transactionVerificationResultOthr != null) {
+      json['idVerification'] = transactionVerificationResultOthr!.toJsonOthr();
     }
     return json;
   }

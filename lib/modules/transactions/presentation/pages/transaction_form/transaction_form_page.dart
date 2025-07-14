@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,6 +16,7 @@ import '../transaction_send/transaction_send_page_succes.dart';
 import 'transaction_form_page_alias.dart';
 import 'transaction_form_page_iban.dart';
 import 'transaction_form_page_othr.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class TransactionFormPage extends StatelessWidget {
   ///
@@ -26,19 +28,32 @@ class TransactionFormPage extends StatelessWidget {
 
     return BlocConsumer<TransactionSendBloc, TransactionSendState>(
       listenWhen: (previous, current) =>
-          current is TransactionSendFormVerificationAskingState ||
+      // Afficher la page de vérification
+      current is TransactionSendFormVerificationAskingState ||
+          // Afficher le loader
           current is TransactionSendFormVerificationLoadingState ||
+          // Afficher le loader
+          current is TransactionSendLoadingState ||
+          // Retour au formulaire après le loader - FIX: Améliorer la condition
           (previous is TransactionSendFormVerificationLoadingState &&
               current is TransactionSendFormInputState) ||
+          // UNIQUEMENT rediriger à l'accueil si on sort de VerificationAskingState
           (previous is TransactionSendFormVerificationAskingState &&
               current is TransactionSendInitialState) ||
+          // Succès RTP
           (current is TransactionSendFormSuccessState &&
               current.transaction.isRTP()) ||
-          current is TransactionSendFormErrorState,
+          // Erreur
+          current is TransactionSendFormErrorState ||
+          // FIX: Ajouter cette condition pour gérer le retour depuis l'erreur
+          (previous is TransactionSendFormErrorState &&
+              current is TransactionSendFormInputState),
       listener: (context, state) async {
+        // FIX: Afficher le loader
         if (state is TransactionSendFormVerificationLoadingState) {
           CustomLoadingDialog.show(context);
         }
+        // FIX: Cacher le loader quand on revient au formulaire
         if (state is TransactionSendFormInputState) {
           CustomLoadingDialog.hide(context);
         }
@@ -98,8 +113,11 @@ class TransactionFormPage extends StatelessWidget {
         }
       },
       buildWhen: (previous, current) =>
-          current is TransactionSendFormInputState,
+      current is TransactionSendFormInputState ||
+          current is TransactionSendFormVerificationLoadingState ||
+          current is TransactionSendLoadingState,
       builder: (context, state) {
+        final bool isLoading = state is TransactionSendLoadingState;
         if (state is TransactionSendFormInputState) {
           return Scaffold(
             // Pour avoir le bouton de retour
@@ -117,21 +135,52 @@ class TransactionFormPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: ElevatedButton(
-                      onPressed: state.command.isValid()
+                      onPressed: isLoading ? null : state.command.isValid()
                           ? () {
-                              // initiate
-                              print("value : ${state.command.toJson()}");
-                              print("value : ${state.command.pspNom}");
-                              context.read<TransactionSendBloc>().add(
-                                  TransactionSendInitiateEvent(state.command));
-                            }
+                        // initiate
+                        context.read<TransactionSendBloc>().add(
+                            TransactionSendInitiateEvent(state.command));
+                      }
                           : null,
+                      child: isLoading
+                          ? LoadingAnimationWidget.flickr(
+                        leftDotColor: primaryColor,
+                        rightDotColor: secondaryColor,
+                        size: 25,
+                      ) :  Text(traductions.transactionFormContinueBtn),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        } else if (state is TransactionSendFormVerificationLoadingState) {
+          // Afficher le formulaire avec le loader par-dessus
+          return Scaffold(
+            appBar: AppBar(),
+            body: MyPageContainer(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: _buildForm(state.command),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: ElevatedButton(
+                      onPressed: null, // Désactivé pendant le chargement
                       child: Text(traductions.transactionFormContinueBtn),
                     ),
                   ),
                 ],
               ),
             ),
+          );
+        } else if (state is TransactionSendLoadingState) {
+          return const Scaffold(
+            body: LoadingPage(),
           );
         } else {
           return Container();

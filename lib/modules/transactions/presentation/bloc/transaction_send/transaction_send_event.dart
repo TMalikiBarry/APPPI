@@ -41,6 +41,13 @@ class TransactionSendFormChangedEvent extends TransactionSendEvent {
   final TransactionSendCommand command;
 }
 
+/// Événement pour récupérer la liste des participants selon le pays sélectionné
+class TransactionSendGetParticipantsByCountryEvent extends TransactionSendEvent {
+  TransactionSendGetParticipantsByCountryEvent(this.countryCode, this.command);
+  final String countryCode;
+  final TransactionSendCommand command;
+}
+
 /// Quand l'utilisateur veut continuer (initier le transfert)
 class TransactionSendInitiateEvent extends TransactionSendEvent {
   //

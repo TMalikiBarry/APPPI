@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pi_mobile_app/l10n/app_localizations.dart';
@@ -35,6 +36,17 @@ class TransactionFormPageOthr extends StatelessWidget {
           TransactionSendCommand formValues = state.command;
           //
           List<Participant>? participants = state.participants;
+
+          // Filtrer le pays au Sénégal si ce n'est pas déjà fait
+          if (formValues.pspPays != 'SN') {
+
+            formValues.pspPays = 'SN';
+            // Optionnel: déclencher l'événement pour mettre à jour le state
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              transactionSendBloc.add(TransactionSendFormChangedEvent(formValues));
+            });
+          }
+
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -90,9 +102,15 @@ class TransactionFormPageOthr extends StatelessWidget {
                       // Ne pas afficher l'icone de dropdown
                       // icon: const SizedBox.shrink(),
                       onChanged: (String? value) {
-                        formValues.pspPays = value;
-                        transactionSendBloc
-                            .add(TransactionSendFormChangedEvent(formValues));
+                        if (value != null && value != formValues.pspPays) {
+                          formValues.pspPays = value;
+
+                          // Déclencher l'événement pour récupérer les participants du nouveau pays
+                          transactionSendBloc.add(TransactionSendGetParticipantsByCountryEvent(
+                            value,
+                            formValues,
+                          ));
+                        }
                       },
                       items: UEMOACountry.liste
                           .map<DropdownMenuItem<String>>((UEMOACountry value) {

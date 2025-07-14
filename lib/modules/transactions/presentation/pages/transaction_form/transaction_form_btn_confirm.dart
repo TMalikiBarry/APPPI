@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,6 +34,9 @@ class TransactionFormBtnConfirm extends StatelessWidget {
           current is IdentificationRequiredState ||
           current is IdentificationSuccessState,
       listener: (context, state) async {
+        logger.i("transaction_form_btn_confirm state $state");
+        logger.i("commands : ${command.toJson()}");
+        logger.i("transactions : ${transaction.toJson()}");
         // Pour afficher page code pin form
         if (state is IdentificationRequiredState) {
           await AppRouter.push(context, AppRouter.identificationCheck);
@@ -57,7 +61,7 @@ class TransactionFormBtnConfirm extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // schedule
-            if (command.action !=
+            /*if (command.action !=
                 TransactionSendCommand.actionSendSchedule) ...[
               FloatingActionButton(
                 onPressed: () {
@@ -68,6 +72,7 @@ class TransactionFormBtnConfirm extends StatelessWidget {
                 child: const Icon(Icons.calendar_month_outlined, size: 24),
               ),
             ],
+             */
 
             // Séparateur
             const SizedBox(width: 16),
@@ -95,9 +100,18 @@ class TransactionFormBtnConfirm extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () async {
                     // Authorize
-                    context
+                    /*context
                         .read<IdentificationBloc>() //
                         .add(const AskIdentificationBeforeActionEvent());
+
+                     */
+                    context
+                        .read<TransactionSendBloc>() //
+                        .add(TransactionSendConfirmEvent(
+                      command,
+                      transaction,
+                      command.method.toString(),
+                    ));
                   },
                   child:
                       Text(traductions.transactionFormVerificationBtnConfirm),

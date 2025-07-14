@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pi_mobile_app/l10n/app_localizations.dart';
+import 'package:pi_mobile_app/modules/config/adapters/ui/bloc/config_bloc.dart';
+import 'package:pi_mobile_app/modules/config/domain/models/config_keys.dart';
 
 import '../../../../core/assets.dart';
 import '../../../../core/theme.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../config/adapters/ui/bloc/config_event.dart';
 import '../../../contacts/presentation/bloc/contact_bloc.dart';
 import '../../../contacts/presentation/bloc/contact_event.dart';
 import '../../../notification/presentation/pages/notification_btn_open_widget.dart';
@@ -37,7 +40,9 @@ class _HomePageState extends State<HomePage> {
     context
         .read<ParametreHideAmountBloc>()
         .add(const ParametreHideAmountInitEvent());
-
+    context
+        .read<ConfigBloc>()
+        .add(const ConfigChangeEvent(ConfigKey.introductionPassed, "1"));
     // Pre fetch contacts
     context.read<ContactBloc>().add(const ContactListEvent(null));
   }

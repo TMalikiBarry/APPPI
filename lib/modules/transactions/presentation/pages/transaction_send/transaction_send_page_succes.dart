@@ -47,7 +47,8 @@ class TransactionSendPageSuccess extends StatelessWidget {
         else if (!transaction.isRTP() && transaction.dateDebut == null) {
           AppRouter.pushReplacement(
             context,
-            AppRouter.transactionSendDetails,
+            //AppRouter.transactionSendDetails,
+            AppRouter.home,
             params: {
               "tx": transaction,
               "route": AppRouter.home,
@@ -69,7 +70,8 @@ class TransactionSendPageSuccess extends StatelessWidget {
         else {
           AppRouter.go(
             context,
-            AppRouter.transactionSendDetails,
+            //AppRouter.transactionSendDetails,
+            AppRouter.home,
             params: {
               "tx": transaction,
               "route": AppRouter.home,

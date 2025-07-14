@@ -55,7 +55,7 @@ abstract class TransactionInputPort {
 
   /// Confirmer une transaction
   Future<Stream<Transaction>> confirm(
-    TransactionConfirmCommand command,
+    TransactionConfirmCommand command
   );
 
   /// Programmer une transaction

@@ -43,6 +43,11 @@ final class TransactionSendFormVerificationLoadingState
       {super.participants});
   final TransactionSendCommand command;
 }
+final class TransactionSendFormInitLoadingState
+    extends TransactionSendState {
+  TransactionSendFormInitLoadingState(this.command);
+  final TransactionSendCommand command;
+}
 
 /// Affiche les données de vérification
 final class TransactionSendFormVerificationAskingState
@@ -95,4 +100,10 @@ final class TransactionSendFormErrorState extends TransactionSendState {
   });
   final TransactionSendCommand command;
   final String error;
+}
+
+final class TransactionSendLoadingState
+    extends TransactionSendState {
+  TransactionSendLoadingState(this.command);
+  final TransactionSendCommand command;
 }

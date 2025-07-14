@@ -114,8 +114,8 @@ class AliasPage extends StatelessWidget {
               else {
                 AppRouter.pushReplacement(
                     context,
-                    AppRouter.introduction
-                    // AppRouter.homePage
+                    // AppRouter.introduction
+                    AppRouter.homePage
                 );
               }
             },

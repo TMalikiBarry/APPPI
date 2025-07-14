@@ -24,7 +24,7 @@ class IntroductionBar extends StatelessWidget {
       children: List.generate(pageSize, (i) {
         if (i < currentIndex) {
           // déjà passé
-          return Container(width: segmentWidth, height: 4, color: Colors.white);
+          return Container(width: segmentWidth, height: 4, color: Colors.grey);
         } else if (i == currentIndex) {
           // segment en cours (animé)
           return AnimatedBuilder(
@@ -32,7 +32,7 @@ class IntroductionBar extends StatelessWidget {
             builder: (_, __) {
               return Stack(children: [
                 Container(width: segmentWidth, height: 4, color: Colors.white.withAlpha(24)),
-                Container(width: segmentWidth * progress.value, height: 4, color: Colors.white),
+                Container(width: segmentWidth * progress.value, height: 4, color: Colors.grey),
               ]);
             },
           );

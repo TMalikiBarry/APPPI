@@ -27,7 +27,7 @@ class NotificationPageListeItem extends StatelessWidget {
     context.read<NotificationBloc>();
     AppLocalizations traductions = AppLocalizations.of(context)!;
     return ListTile(
-        contentPadding: EdgeInsets.zero,
+        contentPadding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
         leading: _buildIcon(context, notification),
         title: _buildTitle(context, traductions, notification),
         subtitle: _buildSubtitle(context, traductions, notification),

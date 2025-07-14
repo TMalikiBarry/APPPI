@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -52,35 +53,33 @@ class TransactionSendPageSuccess extends StatelessWidget {
         else if (!transaction.isRTP() && transaction.dateDebut == null) {
           AppRouter.go(
             context,
-            //AppRouter.transactionSendDetails,
-            AppRouter.home,
-            /*params: {
+            AppRouter.transactionSendDetails,
+            params: {
               "tx": transaction,
               "route": AppRouter.home,
-            },*/
+            },
           );
         }
         // Transaction scheduled
         else if (!transaction.isRTP() && transaction.dateDebut != null) {
           AppRouter.go(
             context,
-            AppRouter.home,
-            /*params: {
+            AppRouter.transactionSendDetails,
+            params: {
               "tx": transaction,
               "route": AppRouter.home,
-            },*/
+            },
           );
         }
         // Other
         else {
           AppRouter.go(
             context,
-            //AppRouter.transactionSendDetails,
-            AppRouter.home,
-            /*params: {
+            AppRouter.transactionSendDetails,
+            params: {
               "tx": transaction,
               "route": AppRouter.home,
-            },*/
+            },
           );
         }
       },

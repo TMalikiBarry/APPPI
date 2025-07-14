@@ -9,6 +9,7 @@ import 'package:pi_mobile_app/modules/transactions/domain/models/mappers/movemen
 import 'package:shared_preferences/shared_preferences.dart';
 
 // 1) On importe le modèle Transaction en n'important QUE les symboles dont on a besoin
+import '../domain/models/new/movement_details_dto.dart';
 import '../domain/models/transaction.dart'
     show Transaction, TransactionSens;
 
@@ -170,12 +171,50 @@ class TransactionOutputRemote {
 
   /// Recuperer une transaction
   Future<Transaction> get(String reference) async {
+    var pref = await SharedPreferences.getInstance();
+    String? issuerAccount = pref.getString("accountNumber");
+
+    if(issuerAccount == null || issuerAccount.isEmpty) {
+      issuerAccount = pref.getString("phoneNumber");
+    }
+
+    // ConnectedUser.current?.username;
+
+    final qs = {
+      'startDate': DateTime.now().toIso8601String().split('T').first,
+      'endDate'  : DateTime.now().add(const Duration(days: 1)).toIso8601String().split('T').first,
+      'size'     : "1",
+      'page'     : "0",
+      'issuerAccount' : issuerAccount,
+      'scope' : 'PI',
+      'status': 'SUCCESSFUL',
+    };
+    logger.i('← details() data=${qs}');
+
+    // 1) Appel relatif
     final ApiResponse response = await Api.get(
-      '/transferts/$reference/details',
+      '/movement/history',
+      queryParameters: qs,
+      // headers: headers,
     );
 
+    // 2) Log pour debug
+    logger.i('← details() status=${response.statusCode}');
+    logger.i('← details() data=${response.data}');
 
-    return Transaction.fromJson(response.data);
+    logger.i("#### this is the value of accountNumber $issuerAccount");
+    logger.i("#### this is the value of phoneNumber ${pref.getString("phoneNumber")}");
+    logger.i("#### this is the value of phone_number ${pref.getString("phone_number")}");
+
+    // 4) Désérialisation DTO
+
+    final dataList = response.data["response"]["data"];
+    if (dataList is List && dataList.isNotEmpty) {
+      return MovementDetailsDTO.fromJson(dataList[0]).toTransaction();
+    } else {
+      // Handle empty response appropriately
+      throw Exception("No transaction data available in response.");
+    }
   }
 
   /// Initier une transaction
@@ -194,7 +233,7 @@ class TransactionOutputRemote {
       'aliasFrom': aliasFrom,
       'userLogin': userLogin,
     });
-    if (command.method == TransactionSendMethod.alias){
+    if (command.method == TransactionSendMethod.alias || command.method == TransactionSendMethod.qrcode){
       final ApiResponse response = await Api.get('/alias/sync/search/${command.alias!.value}');
       return Transaction.fromJsonTransactionVerificationSearchAlias(response.data["response"]);
     } else if (command.method == TransactionSendMethod.iban){
@@ -256,7 +295,10 @@ class TransactionOutputRemote {
       'aliasFrom': aliasFrom,
       'userLogin': userLogin,
     });
-    if (command.confirmationMethode.toString() == TransactionSendMethod.alias.toString()){
+    if (
+      command.confirmationMethode.toString() == TransactionSendMethod.alias.toString() ||
+      command.confirmationMethode.toString() == TransactionSendMethod.qrcode.toString()
+    ){
       logger.i(command.transactionVerificationResultAlias!.alias);
       request['alias'] = command.transactionVerificationResultAlias!.alias;
     } else if (command.confirmationMethode.toString() == TransactionSendMethod.iban.toString()){

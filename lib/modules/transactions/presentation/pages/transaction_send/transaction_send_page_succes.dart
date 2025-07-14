@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -35,20 +36,24 @@ class TransactionSendPageSuccess extends StatelessWidget {
         if (transaction.isRTP() &&
             transaction.statut == TransactionStatut.initie) {
           if (!transaction.isSplit()) {
-            AppRouter.pushReplacement(
+            //AppRouter.pushReplacement(
+            //  context,
+            //  "/transaction/receive_now/${transaction.endToEndId}",
+            //);
+            AppRouter.go(
               context,
               "/transaction/receive_now/${transaction.endToEndId}",
             );
           } else {
-            AppRouter.pushReplacement(context, AppRouter.home);
+            //AppRouter.pushReplacement(context, AppRouter.home);
+            AppRouter.go(context, AppRouter.home);
           }
         }
         // Transaction now
         else if (!transaction.isRTP() && transaction.dateDebut == null) {
-          AppRouter.pushReplacement(
+          AppRouter.go(
             context,
-            //AppRouter.transactionSendDetails,
-            AppRouter.home,
+            AppRouter.transactionSendDetails,
             params: {
               "tx": transaction,
               "route": AppRouter.home,
@@ -57,9 +62,9 @@ class TransactionSendPageSuccess extends StatelessWidget {
         }
         // Transaction scheduled
         else if (!transaction.isRTP() && transaction.dateDebut != null) {
-          AppRouter.pushReplacement(
+          AppRouter.go(
             context,
-            AppRouter.subscriptionDetails,
+            AppRouter.transactionSendDetails,
             params: {
               "tx": transaction,
               "route": AppRouter.home,
@@ -70,8 +75,7 @@ class TransactionSendPageSuccess extends StatelessWidget {
         else {
           AppRouter.go(
             context,
-            //AppRouter.transactionSendDetails,
-            AppRouter.home,
+            AppRouter.transactionSendDetails,
             params: {
               "tx": transaction,
               "route": AppRouter.home,

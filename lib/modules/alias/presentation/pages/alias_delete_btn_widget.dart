@@ -38,10 +38,14 @@ class AliasDeleteBtnWidget extends StatelessWidget {
         else if (state is AliasNotExistState) {
           // AliasDeleteSuccessState
           CustomLoadingDialog.hide(context);
-          AppRouter.pushReplacement(
+          AppRouter.go(
             context,
             AppRouter.home,
           );
+          //AppRouter.pushReplacement(
+          //  context,
+          //  AppRouter.home,
+          //);
         }
         // Erreur de suppression
         else if (state is AliasDeleteErrorState) {

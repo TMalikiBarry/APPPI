@@ -48,7 +48,7 @@ class _ContactCreatePageState extends State<ContactCreatePage> {
           if (state is ContactCreateSuccessState) {
             CustomLoadingDialog.hide(context);
             var redirect = widget.afterCreate(contact);
-            AppRouter.pushReplacement(context, redirect["route"]);
+            AppRouter.go(context, redirect["route"]);
           }
           // Show error
           else {}

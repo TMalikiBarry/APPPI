@@ -309,7 +309,7 @@ class TransactionOutputRemote {
     }
     // Send transfer
     final ApiResponse response = await Api.post(url, data: request);
-    Transaction transaction = Transaction.fromJsonTransfer(response.data);
+    Transaction transaction = Transaction.fromJsonTransfer(response.data['response']);
 
     // GET REQUEST
     try {
@@ -329,6 +329,7 @@ class TransactionOutputRemote {
       else {
         //return streamResponse(transaction);
         // Return transaction directly without contacting SSE endpoint
+        logger.i(transaction.toJson());
         final controller = StreamController<Transaction>();
         transaction.dateOperation = DateTime.now();
         transaction.statut = TransactionStatut.irrevocable; // or whatever default status you want

@@ -429,7 +429,7 @@ class Transaction {
       // Champs directs
       acquirerPhoneNumber: json['acquirerPhoneNumber'] as String?,
       acquirerAccountLabel: json['acquirerAccountLabel'] ?? json['clientName'],
-      compte: json['compte'] as String? ?? '',
+      compte: json['clientPhoneNumber'] as String? ?? '',
       clientPhoneNumber: json['clientPhoneNumber'],
       alias: json['alias'] as String?,
       montant: json['amount'] != null ? double.parse(json['amount']) : 0.0,
@@ -441,7 +441,7 @@ class Transaction {
       serviceCode: json['serviceCode'] as String? ?? 'TRANSFER_PI',
 
       // Informations client
-      clientNom: json['clientName'] as String? ?? '',
+      clientNom: json['acquirerAccountLabel'] ?? json['clientName'],
       clientPays: json['clientResidenceCountry'] as String? ?? 'SN',
 
       // Identifiants techniques

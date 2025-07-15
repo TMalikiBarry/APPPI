@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/theme.dart';
 import '../../../../../l10n/app_localizations.dart';
-import 'introduction_item.dart';
-import 'introduction_page.dart';
+import 'Introduction_page_image.dart';
+import 'introduction_item_img.dart';
 
 class IntroductionPage extends StatefulWidget {
   const IntroductionPage({super.key});
@@ -29,7 +29,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
     const String lang = "fr";
     print("&&&&&& LOGGERR LANG $lang");
     // Liste d'éléments d'introduction
-    final List<IntroductionItem> itemList = [
+    /*final List<IntroductionItem> itemList = [
       IntroductionItem(
         'assets/videos/onboardingnew_${lang}_1.mp4',
         // 'assets/videos/onboarding_${lang}_2.mp4',
@@ -61,13 +61,47 @@ class _IntroductionPageState extends State<IntroductionPage> {
         localizations.introductionItem5,
         4,
       ),
-      /*IntroductionItem(
+      *//*IntroductionItem(
         'assets/videos/onboardingnew_${lang}_6.mp4',
         legende,
         localizations.introductionItem6,
         5,
-      ),*/
+      ),*//*
+    ];*/
+
+    final List<IntroductionItem> itemList = [
+      IntroductionItem(
+        'assets/images/Figma_Splash_Item_1.png',
+        legende,
+        localizations.introductionItem1,
+        0,
+      ),
+      IntroductionItem(
+        'assets/images/Figma_Splash_Item_2.png',
+        legende,
+        localizations.introductionItem2,
+        1,
+      ),
+      IntroductionItem(
+        'assets/images/Figma_Splash_Item_3.png',
+        legende,
+        localizations.introductionItem3,
+        2,
+      ),
+      IntroductionItem(
+        'assets/images/Figma_Splash_Item_4.png',
+        legende,
+        localizations.introductionItem4,
+        3,
+      ),
+      IntroductionItem(
+        'assets/images/Figma_Splash_Item_5.png',
+        legende,
+        localizations.introductionItem5,
+        4,
+      ),
     ];
+
     final nbItems = itemList.length;
     // Marge horizontale
     const double paddingX = 20;

@@ -1,3 +1,4 @@
+import 'package:common_dependencies/models/user/account/account.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
@@ -29,10 +30,15 @@ class CompteOutputRemote {
 
   Future<CompteDetails> getCompte(String compteId) async {
     try {
-      final Response response =
+      /*final Response response =
           await Api.client.get('/comptes/$compteId/details');
-      logger.i(response.data);
-      return CompteDetails.fromJson(response.data);
+      return CompteDetails.fromJson(response.data);*/
+      final resp = await Api.client.get('/customer/account');
+      logger.i("###### INFOS CONNECTED USER ${resp.data}");
+
+      final wrapped = ResponseModel.fromJson(resp.data as Map<String, dynamic>);
+      return wrapped.response.toCompteDetails();
+
     } //
     on ApiException catch (e) {
       logger.i(e);

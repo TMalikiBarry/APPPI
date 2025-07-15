@@ -19,13 +19,13 @@ class NotificationOutputRemote {
   Future<List<NotificationModel>> fetchNotifications() async {
     // 1. Récupération du phoneNumber en local
     final pref = await SharedPreferences.getInstance();
-    final phoneNumber = pref.getString('phoneNumber') ?? '';
-    if (phoneNumber.isEmpty) {
+    final phone_number = pref.getString('phone_number') ?? '';
+    if (phone_number.isEmpty) {
       throw Exception('Aucun phoneNumber en SharedPreferences');
     }
 
     // 2. Appel API sans queryParameters
-    final resp = await Api.get('/notification/$phoneNumber');
+    final resp = await Api.get('/notification/$phone_number');
     logger.i('← notifications() status=${resp.statusCode}');
 
     // 3. Extraction du tableau JSON
@@ -66,8 +66,15 @@ class NotificationOutputRemote {
       if (types.isNotEmpty) 'type[in]': types.join(','),
     };
 
+    final pref = await SharedPreferences.getInstance();
+    final phone_number = pref.getString('phone_number') ?? '';
+
+    if (phone_number.isEmpty) {
+      throw Exception('Aucun phoneNumber en SharedPreferences');
+    }
+
     final ApiResponse response = await Api.get(
-      '/notifications/$compte',
+      '/notification/$phone_number',
       queryParameters: queryParameters,
     );
     var liste = NotificationListe.fromJson(response.data);

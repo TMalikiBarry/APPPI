@@ -19,7 +19,7 @@ import '../modules/categorie/presentation/pages/categorie_edit_page.dart';
 import '../modules/categorie/presentation/pages/categorie_select_page.dart';
 import '../modules/contacts/domain/contact_pi.dart';
 import '../modules/contacts/presentation/pages/create/contact_create_page.dart';
-import '../modules/home/presentation/pages/home_page.dart';
+import '../modules/home/presentation/pages/home_page_2.dart';
 import '../modules/introduction/adapters/presentation/pages/introduction.dart';
 import '../modules/notification/presentation/bloc/notification_bloc.dart';
 import '../modules/notification/presentation/pages/notification_page.dart';

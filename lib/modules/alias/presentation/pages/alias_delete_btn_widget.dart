@@ -20,6 +20,7 @@ class AliasDeleteBtnWidget extends StatelessWidget {
     AppLocalizations traductions = AppLocalizations.of(context)!;
     //
     final aliasBloc = context.read<AliasBloc>();
+    // Pour récuperer l'alias
     //
     Alias alias = (aliasBloc.state as AliasExistState).alias;
     return BlocListener<AliasBloc, AliasState>(
@@ -31,7 +32,8 @@ class AliasDeleteBtnWidget extends StatelessWidget {
       listener: (context, state) {
         // En cours de suppression
         if (state is AliasDeletingState) {
-          AppRouter.pop(context);
+          // AppRouter.pop(context);
+          Navigator.of(context).pop();
           CustomLoadingDialog.show(context);
         }
         // Supprimé
@@ -106,7 +108,7 @@ class AliasDeleteBtnWidget extends StatelessWidget {
           },
           cancelBtnText:
               traductions.compteDetailsPagePopupDeleteAliasBtnAnnuler,
-          cancelBtnAction: () => AppRouter.pop(context),
+          cancelBtnAction: () => Navigator.of(context).pop(),
         );
       },
     );

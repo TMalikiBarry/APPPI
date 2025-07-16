@@ -20,7 +20,7 @@ class BottomNavBarWidget extends StatelessWidget {
     );
 
     return Container(
-      padding: const EdgeInsets.only(top: 25, bottom: 15),
+      padding: const EdgeInsets.only(top: 25),
       color: Colors.transparent,
       child: Stack(
         children: [
@@ -46,7 +46,7 @@ class BottomNavBarWidget extends StatelessWidget {
           ),
           // Main content
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: const EdgeInsets.fromLTRB(8, 4, 8, 16),
             color: Theme.of(context).colorScheme.surface,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

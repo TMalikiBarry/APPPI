@@ -39,7 +39,7 @@ class AliasOutputRemote {
   }
 
   Future<void> supprimer(String cle) async {
-    await Api.delete('/alias/$cle');
+    await Api.delete('/alias/delete/$cle');
   }
 
   Future<Alias> confirmer(AliasCreateCommand alias, String otp) async {

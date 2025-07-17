@@ -30,7 +30,7 @@ class ProfilePageAvatar extends StatelessWidget {
       borderRadius: BorderRadius.circular(avatarDimension / 2),
     );
     Widget? child;
-    if (user.avatar != null) {
+    if (user.avatar != null && user.avatar!.isNotEmpty) {
       boxDecoration = ShapeDecoration(
         color: Colors.transparent,
         shape: border,

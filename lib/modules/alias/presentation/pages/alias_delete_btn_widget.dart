@@ -33,8 +33,8 @@ class AliasDeleteBtnWidget extends StatelessWidget {
         // En cours de suppression
         if (state is AliasDeletingState) {
           // AppRouter.pop(context);
-          Navigator.of(context).pop();
           CustomLoadingDialog.show(context);
+          // Navigator.of(context).pop();
         }
         // Supprimé
         else if (state is AliasNotExistState) {
@@ -89,7 +89,37 @@ class AliasDeleteBtnWidget extends StatelessWidget {
   }
 
   /// Confirmation demandée avant de supprimer alias
+
   void _askConfirmationBeforeDelete(
+      BuildContext context,
+      AliasBloc aliasBloc,
+      Alias alias,
+      AppLocalizations traductions,
+      ) {
+    bool alreadyTapped = false;
+    showDialog(
+      context: context,
+      builder: (_) => CustomAlertDialog(
+        title: traductions.compteDetailsPagePopupDeleteAliasTitle,
+        description: traductions.compteDetailsPagePopupDeleteAliasSubTitle,
+        confirmBtnText: traductions.compteDetailsPagePopupDeleteAliasBtnConfirmer,
+        confirmBtnAction: () {
+          if (alreadyTapped) return;
+
+          alreadyTapped = true;
+          // 1) on ferme *immédiatement* le dialog de confirmation
+          Navigator.of(context).pop();
+
+          // 2) puis on envoie l’évènement au bloc
+          aliasBloc.add(AliasDeleteEvent(alias.cle));
+        },
+        cancelBtnText: traductions.compteDetailsPagePopupDeleteAliasBtnAnnuler,
+        cancelBtnAction: () => Navigator.of(context).pop(),
+      ),
+    );
+  }
+
+/*  void _askConfirmationBeforeDelete(
     context,
     AliasBloc aliasBloc,
     Alias alias,
@@ -112,5 +142,5 @@ class AliasDeleteBtnWidget extends StatelessWidget {
         );
       },
     );
-  }
+  }*/
 }

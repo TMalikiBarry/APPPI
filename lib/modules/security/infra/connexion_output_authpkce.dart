@@ -54,7 +54,6 @@ class ConnexionOutputAuthpkce implements ConnexionOutputPort {
   /// Constructor
   /// [secureStorage] est utilisé pour enregistrer les tokens en local
   ConnexionOutputAuthpkce(this.secureStorage) {
-    logger.w("VOICI REDIRECT URI $redirectUri", error: redirectUri);
     grant = _createGrant();
     authUrl = grant.getAuthorizationUrl(redirectUri, scopes: scopes);
   }

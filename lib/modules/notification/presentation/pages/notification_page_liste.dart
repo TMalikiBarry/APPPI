@@ -159,7 +159,7 @@ List<NotificationGroup> groupNotifications(
 
   // Regrouper les notification par jour
   for (var notification in notifications) {
-    String jour = notification.dateAction.toIso8601String().split('T')[0];
+    String jour = notification.dateAction!.toIso8601String().split('T')[0];
     groupedNotifications[jour] = groupedNotifications[jour] ?? [];
     groupedNotifications[jour]!.add(notification);
   }

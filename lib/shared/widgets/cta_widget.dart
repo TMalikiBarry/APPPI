@@ -35,7 +35,7 @@ class CtaWidget extends StatelessWidget {
       },
       child: Opacity(
         // Opacité réduite si disabled
-        opacity: disabled ? 0.4 : 1.0,
+        opacity: disabled ? 0.28 : 1.0,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

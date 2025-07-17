@@ -30,7 +30,7 @@ class NotificationOutputLocal {
     );
 
     // Trier du plus récent au plus ancien
-    notifications.sort((a, b) => b.dateAction.compareTo(a.dateAction));
+    notifications.sort((a, b) => b.dateAction!.compareTo(a.dateAction!));
 
     // Filter by type
     if (types.isNotEmpty) {
@@ -41,12 +41,12 @@ class NotificationOutputLocal {
     // Filter by date
     if (dateDebut != null) {
       notifications = notifications
-          .where((tx) => tx.dateAction.compareTo(dateDebut) >= 0)
+          .where((tx) => tx.dateAction!.compareTo(dateDebut) >= 0)
           .toList();
     }
     if (dateFin != null) {
       notifications = notifications
-          .where((tx) => tx.dateAction.compareTo(dateFin) <= 0)
+          .where((tx) => tx.dateAction!.compareTo(dateFin) <= 0)
           .toList();
     }
 
@@ -81,7 +81,7 @@ class NotificationOutputLocal {
   Future<void> save(Notification notification) async {
     await AppStorage.save(
       collectionId,
-      notification.id,
+      notification.id!,
       notification.toJson(),
     );
   }
@@ -90,7 +90,7 @@ class NotificationOutputLocal {
   Future<void> patch(Notification notification) async {
     await AppStorage.patch(
       collectionId,
-      notification.id,
+      notification.id!,
       notification.toJson(),
     );
   }

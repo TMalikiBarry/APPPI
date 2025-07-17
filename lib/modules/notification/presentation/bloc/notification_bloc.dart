@@ -94,7 +94,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     Emitter<NotificationState> emit,
   ) async {
     try {
-      await pNotificationInputPort.read(event.notification.id);
+      await pNotificationInputPort.read(event.notification.id!);
     } catch (e) {
       logger.e("Error on notification read", error: e);
     }
@@ -146,7 +146,8 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       types: command.filters.types,
       keyword: command.keyWord,
     );
-    command.total = liste.meta.total;
+    // command.total = liste.meta.total;
+    command.total = liste.meta != null ? liste.meta!.total : 200;
     command.index = 0;
 
     final unread = await count(command.compte!);
@@ -180,7 +181,8 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
           keyword: command.keyWord,
           page: event.index,
         );
-        command.total = liste.meta.total;
+        // command.total = liste.meta.total;
+        command.total = liste.meta != null ? liste.meta!.total : 200;
         command.index = event.index;
         List<Notification> newNotifications = liste.data;
 

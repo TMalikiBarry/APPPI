@@ -72,6 +72,12 @@ class Images {
   static const String gifError = 'assets/gif/error.gif';
   static const String gifLogoLoading = 'assets/gif/logo.gif';
 
+  /// Loading - Validation - Customer
+  static const String alert = 'assets/images/alert.png';
+  static const String error = 'assets/images/error.png';
+  static const String info = 'assets/images/alert.png';
+  static const String success = 'assets/images/check_success.png';
+
   // Home page
   static const String iconAnalytique = 'assets/icons/analytique.png';
   static const String arrowUp = 'assets/icons/arrow_up.png';

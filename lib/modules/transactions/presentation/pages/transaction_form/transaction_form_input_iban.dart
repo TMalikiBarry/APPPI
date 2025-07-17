@@ -58,7 +58,7 @@ class _TransactionFormInputIbanState
       suffixIcon: IconButton(
         icon: ImageIcon(
           const AssetImage(Images.iconTransactionPasteAlias,package: 'common_dependencies'),
-          color: Theme.of(context).colorScheme.onPrimary,
+          color: Theme.of(context).primaryColor,
           size: 24,
         ),
         onPressed: () async {

@@ -74,7 +74,7 @@ class _SoldeWidgetState extends State<SoldeWidget> {
                         if (state is CompteSoldeStateInitial) //
                           const Padding(
                             padding: EdgeInsets.only(right: 16),
-                            child: SkeletonWidget(height: 25, width: 150),
+                            child: SkeletonWidget(height: 25, width: 150, isList = false),
                           ),
 
                         if (state is CompteSoldeDisplayState) //

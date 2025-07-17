@@ -1,6 +1,8 @@
+import 'package:common_dependencies/utils/colors.dart';
 import 'package:flutter/material.dart';
 import '../../core/assets.dart';
 import '../../core/router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 /// Page Loading de l'app
 class LoadingPage extends StatelessWidget {
@@ -15,12 +17,25 @@ class LoadingPage extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       color: bgColor ?? Colors.transparent,
-      child: Center(
+      /*child: Center(
         child: Image.asset(
           Images.gifLogoLoading,
           width: 100,
           height: 100,
           package: 'common_dependencies'
+        ),
+      ),*/
+      child: Center(
+        child: Container(
+          alignment: Alignment.center,
+          width: 100,
+          height: 100,
+          //margin: EdgeInsets.only(top: 125.0 * ffem),
+          child: LoadingAnimationWidget.flickr(
+            leftDotColor: primaryColor,
+            rightDotColor: secondaryColor,
+            size: 40,
+          ),
         ),
       ),
     );

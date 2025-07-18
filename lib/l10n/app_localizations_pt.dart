@@ -531,19 +531,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get homeTransactions => 'Transactions';
 
   @override
-  String get homeTransactionsRecent => 'Recent Transactions';
+  String get homeTransactionsRecent => 'Transações recentes';
 
   @override
-  String get transactionsNoRecent => 'No recent transactions';
+  String get transactionsNoRecent => 'Nenhuma transação recente';
 
   @override
-  String get transactionsNoRecentSubtitle => 'Your recent transactions will appear here';
+  String get transactionsNoRecentSubtitle => 'Suas transações recentes aparecerão aqui';
 
   @override
-  String get transactionsErrorLoading => 'Error loading transactions';
+  String get transactionsErrorLoading => 'Erro ao carregar as transações';
 
   @override
-  String get retry => 'Try Again';
+  String get retry => 'Tentar novamente';
 
   @override
   String get homeTransactionsRecentsNombreTitle => 'Últimas transações';
@@ -1174,10 +1174,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionDetailsRecuInfoClientAlias => 'Alias';
 
   @override
-  String get transactionDetailsRecuInfoPayeurID => 'Adresser ID';
+  String get transactionDetailsRecuInfoPayeurID => 'ID do remetente';
 
   @override
-  String get transactionDetailsRecuInfoPayeID => 'Grantee ID';
+  String get transactionDetailsRecuInfoPayeID => 'ID do beneficiário';
 
   @override
   String get transactionDetailsRecuInfoClientCompte => 'Número de conta';
@@ -1248,13 +1248,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionSearchTitle => 'Transações';
 
   @override
-  String get transactionSearchEmptySubtitle => 'Aucune transaction ne correspond à votre recherche';
+  String get transactionSearchEmptySubtitle => 'Nenhuma transação corresponde à sua pesquisa';
 
   @override
-  String get transactionSearchEmptyTitle => 'No result';
+  String get transactionSearchEmptyTitle => 'Nenhum resultado';
 
   @override
-  String get loadMore => 'Load More';
+  String get loadMore => 'Carregar mais';
 
   @override
   String get transactionSearchInputSearchHint => 'Pesquisar';
@@ -1610,4 +1610,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String notificationPageRtpRecueSubtitle(String payeur) {
     return 'Solicitado por $payeur';
   }
+
+  @override
+  String get ignore => 'Ignorar';
 }

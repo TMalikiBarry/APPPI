@@ -3162,6 +3162,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Requested by {payeur}'**
   String notificationPageRtpRecueSubtitle(String payeur);
+
+  /// No description provided for @ignore.
+  ///
+  /// In en, this message translates to:
+  /// **'Ignore'**
+  String get ignore;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

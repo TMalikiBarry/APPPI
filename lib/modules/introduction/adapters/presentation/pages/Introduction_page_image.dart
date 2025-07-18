@@ -5,10 +5,14 @@ import 'package:flutter/material.dart';
 import '../../../../../core/router.dart';
 import '../../../../../core/theme.dart';
 import '../../../../../l10n/app_localizations.dart';
+import '../../../../config/adapters/ui/bloc/config_bloc.dart';
+import '../../../../config/adapters/ui/bloc/config_event.dart';
+import '../../../../config/domain/models/config_keys.dart';
 import 'introduction_bar_img.dart';
 import 'introduction_footer.dart';
 import 'introduction_image.dart';
 import 'introduction_item_img.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Un item introduction
 class IntroductionPageItem extends StatefulWidget {
@@ -81,6 +85,7 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem>
             child: TextButton(
               onPressed: () {
                 _ctrl.stop();
+                context.read<ConfigBloc>().add(const ConfigChangeEvent(ConfigKey.introductionPassed, "1"));
                 AppRouter.pushReplacement(context, AppRouter.home);
               },
               style: TextButton.styleFrom(
@@ -89,7 +94,7 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem>
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 13),
               ),
-              child: const Text("Ignorer"),
+              child: Text(traductions.ignore),
             ),
           ),
 

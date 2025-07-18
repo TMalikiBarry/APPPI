@@ -101,7 +101,7 @@ class _SoldeWidgetOLDState extends State<SoldeWidgetOLD> {
                   ),
                 );
               } else {
-                montantWidget = const SkeletonWidget(height: 28, width: 100);
+                montantWidget = const SkeletonWidget(height: 28, width: 100, isList: false);
               }
 
               return Container(

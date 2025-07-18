@@ -1,6 +1,8 @@
+import 'package:common_dependencies/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/theme.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class SkeletonWidget extends StatefulWidget {
   ///
@@ -9,6 +11,7 @@ class SkeletonWidget extends StatefulWidget {
     this.height = 15,
     this.width = 200,
     this.radius,
+    this.isList = true,
   });
 
   ///
@@ -23,6 +26,8 @@ class SkeletonWidget extends StatefulWidget {
 
   /// si c'est un cercle
   final double? radius;
+
+  final bool isList;
 }
 
 class SkeletonWidgetState extends State<SkeletonWidget> //
@@ -49,28 +54,38 @@ class SkeletonWidgetState extends State<SkeletonWidget> //
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: controller,
-      builder: (context, child) {
-        // cercle
-        if (widget.radius != null) {
-          return CircleAvatar(backgroundColor: colorAnimation.value);
-        }
-        // rectangle
-        else {
-          return Container(
-            width: widget.width,
-            height: widget.height,
-            decoration: ShapeDecoration(
-              color: colorAnimation.value,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          );
-        }
-      },
-    );
+    // cercle
+    if (widget.radius != null) {
+      return CircleAvatar(backgroundColor: colorAnimation.value);
+    }
+    if (widget.isList) {
+      return Container(
+        width: widget.width,
+        height: widget.height,
+        decoration: ShapeDecoration(
+          color: colorAnimation.value,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      );
+    } else {
+
+      // rectangle avec effet d'animation à l'intérieur
+      return Center(
+        child: Container(
+          alignment: Alignment.center,
+          width: widget.width,
+          height: widget.height,
+          //margin: EdgeInsets.only(top: 125.0 * ffem),
+          child: LoadingAnimationWidget.flickr(
+            leftDotColor: whiteColor,
+            rightDotColor: secondaryColor,
+            size: 40,
+          ),
+        ),
+      );
+    }
   }
 
   @override

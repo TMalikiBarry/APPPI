@@ -112,7 +112,7 @@ class _SoldeWidgetCardState extends State<SoldeWidgetCard> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 if (state is CompteSoldeStateInitial)
-                                  const SkeletonWidget(height: 25, width: 150),
+                                  const SkeletonWidget(height: 25, width: 150, isList: false),
                                 if (state is CompteSoldeDisplayState)
                                   AmountWidget(
                                     montant: state.solde,

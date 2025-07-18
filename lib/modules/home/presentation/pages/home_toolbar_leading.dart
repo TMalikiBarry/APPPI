@@ -66,11 +66,10 @@ class HomeToolbarLeading extends StatelessWidget {
             Container(
               height: 24,
               width: 71.98,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                      theme.brightness == Brightness.light  ?
-                      Images.logoSpiDark : Images.logoSpiLight, package: 'common_dependencies'),
+                      Images.logoSpiLight, package: 'common_dependencies'),
                   fit: BoxFit.fill,
                 ),
               ),

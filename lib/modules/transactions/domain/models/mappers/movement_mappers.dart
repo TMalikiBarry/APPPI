@@ -19,7 +19,7 @@ extension MovementDetailsMapper on MovementDetailsDTO {
     return Transaction(
       compte: compte,
       acquirerPhoneNumber: acquirerPhoneNumber ?? ' --- ',
-      acquirerAccountLabel: acquirerAccountLabel ?? 'FirstName LastName',
+      acquirerAccountLabel: acquirerAccountLabel ?? '---',
       alias: null,
       montant: amount,
       montantFrais: globalFees,
@@ -27,7 +27,7 @@ extension MovementDetailsMapper on MovementDetailsDTO {
       motif: message ?? '',
       canal: serviceTypeCode,
       // on stocke serviceTypeCode dans canal
-      clientNom: issuerAccountLabel ?? 'FirstName LastName',
+      clientNom: issuerAccountLabel ?? '---',
       clientPays: countryISOCode ?? '',
       clientPSP: null,
       clientPSPNom: null,

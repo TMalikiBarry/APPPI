@@ -154,14 +154,6 @@ class TransactionOutputRemote {
       if (keyword != null) 'keyword': keyword,
     };
 
-    final now    = DateTime.now();
-    final start  = dateOperationDebut ?? now.subtract(const Duration(days: 200));
-    final finish = dateOperationFin   ?? now.add(const Duration(days: 1));
-    /*final ApiResponse response = await Api.get(
-      '/transferts',
-      queryParameters: queryParameters,
-    );*/
-
     int xlimit = (limit== null || limit <1 ) ? 1: limit;
 
     int xpage = page ?? 0;

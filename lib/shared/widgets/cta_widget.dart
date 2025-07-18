@@ -29,21 +29,13 @@ class CtaWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        if (disabled) {
-          // Affiche une alerte ou SnackBar quand le bouton est désactivé
-          ScaffoldMessenger.of(context).showSnackBar(
-             SnackBar(content: Text(
-                'Bientôt disponible',
-                style: Theme.of(context).textTheme.titleSmall!.copyWith( color: Themer.brownColor),
-            )),
-          );
-        } else {
+        if (!disabled) {
           action?.call();
         }
       },
       child: Opacity(
         // Opacité réduite si disabled
-        opacity: disabled ? 0.4 : 1.0,
+        opacity: disabled ? 0.28 : 1.0,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

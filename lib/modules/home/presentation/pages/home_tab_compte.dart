@@ -75,6 +75,7 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                           CtaWidget(
                             image: Images.iconMoneyReceiveHeaderHP,
                             label: traductions.homeActionRequest,
+                            disabled: true,
                             action: () => AppRouter.push(
                               context,
                               AppRouter.transactionReceive,
@@ -86,6 +87,7 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                             // icon: const Icon(Icons.more_horiz, size: 30),
                             image: Images.iconMoreActionHeaderHP,
                             label: traductions.homeActionMore,
+                            disabled: true,
                             action: () => {
                               showModalBottomSheet<void>(
                                 context: context,

@@ -83,7 +83,10 @@ class NotificationPageListeItem extends StatelessWidget {
     AppLocalizations traductions,
     my_notif.Notification notification,
   ) {
-    String title = notification.type.name;
+    String title = ' --- ';
+    if(notification.type != null) {
+      title = notification.type!.name;
+    }
     if (notification.type == NotificationType.revendicationInitiee) {
       title = traductions.notificationPageClaimTitle;
     } else if (notification.type == NotificationType.annulationDemandee) {
@@ -150,7 +153,7 @@ class NotificationPageListeItem extends StatelessWidget {
         );
         break;
       default:
-        subtitle = notification.type.name;
+        subtitle = notification.type !=null ? notification.type!.name : ' --- ';
     }
     return Text(
       subtitle,

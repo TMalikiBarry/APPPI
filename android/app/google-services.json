@@ -1,94 +1,26 @@
 {
   "project_info": {
-    "project_number": "696819262025",
-    "project_id": "my-touchpoint-5d95f",
-    "storage_bucket": "my-touchpoint-5d95f.firebasestorage.app"
+    "project_number": "512860611530",
+    "project_id": "dev-customer-app-api",
+    "storage_bucket": "dev-customer-app-api.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:696819262025:android:704b6a1c45e7db96ae9598",
+        "mobilesdk_app_id": "1:512860611530:android:4793178bc167f5ecf12533",
         "android_client_info": {
           "package_name": "com.intouch.customer"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "696819262025-aibf8c7i2oj015d9b1vni23hdsfap3n9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBNAo3VW3wK-6v_8VfS8-TRBoOuk47zvQI"
+          "current_key": "AIzaSyAP5unJKR3WtF31u4EOJSYqt7A7JMyV6oM"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "696819262025-aibf8c7i2oj015d9b1vni23hdsfap3n9.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:696819262025:android:931dd3c9f981f2c7ae9598",
-        "android_client_info": {
-          "package_name": "com.intouch.mytouchpoint"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "696819262025-aibf8c7i2oj015d9b1vni23hdsfap3n9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBNAo3VW3wK-6v_8VfS8-TRBoOuk47zvQI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "696819262025-aibf8c7i2oj015d9b1vni23hdsfap3n9.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:696819262025:android:b84b34be35d662e5ae9598",
-        "android_client_info": {
-          "package_name": "com.intouch.touchpoint_super_app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "696819262025-aibf8c7i2oj015d9b1vni23hdsfap3n9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBNAo3VW3wK-6v_8VfS8-TRBoOuk47zvQI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "696819262025-aibf8c7i2oj015d9b1vni23hdsfap3n9.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

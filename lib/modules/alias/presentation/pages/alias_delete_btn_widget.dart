@@ -20,6 +20,7 @@ class AliasDeleteBtnWidget extends StatelessWidget {
     AppLocalizations traductions = AppLocalizations.of(context)!;
     //
     final aliasBloc = context.read<AliasBloc>();
+    // Pour récuperer l'alias
     //
     Alias alias = (aliasBloc.state as AliasExistState).alias;
     return BlocListener<AliasBloc, AliasState>(
@@ -31,8 +32,9 @@ class AliasDeleteBtnWidget extends StatelessWidget {
       listener: (context, state) {
         // En cours de suppression
         if (state is AliasDeletingState) {
-          AppRouter.pop(context);
+          // AppRouter.pop(context);
           CustomLoadingDialog.show(context);
+          // Navigator.of(context).pop();
         }
         // Supprimé
         else if (state is AliasNotExistState) {
@@ -87,7 +89,37 @@ class AliasDeleteBtnWidget extends StatelessWidget {
   }
 
   /// Confirmation demandée avant de supprimer alias
+
   void _askConfirmationBeforeDelete(
+      BuildContext context,
+      AliasBloc aliasBloc,
+      Alias alias,
+      AppLocalizations traductions,
+      ) {
+    bool alreadyTapped = false;
+    showDialog(
+      context: context,
+      builder: (_) => CustomAlertDialog(
+        title: traductions.compteDetailsPagePopupDeleteAliasTitle,
+        description: traductions.compteDetailsPagePopupDeleteAliasSubTitle,
+        confirmBtnText: traductions.compteDetailsPagePopupDeleteAliasBtnConfirmer,
+        confirmBtnAction: () {
+          if (alreadyTapped) return;
+
+          alreadyTapped = true;
+          // 1) on ferme *immédiatement* le dialog de confirmation
+          Navigator.of(context).pop();
+
+          // 2) puis on envoie l’évènement au bloc
+          aliasBloc.add(AliasDeleteEvent(alias.cle));
+        },
+        cancelBtnText: traductions.compteDetailsPagePopupDeleteAliasBtnAnnuler,
+        cancelBtnAction: () => Navigator.of(context).pop(),
+      ),
+    );
+  }
+
+/*  void _askConfirmationBeforeDelete(
     context,
     AliasBloc aliasBloc,
     Alias alias,
@@ -106,9 +138,9 @@ class AliasDeleteBtnWidget extends StatelessWidget {
           },
           cancelBtnText:
               traductions.compteDetailsPagePopupDeleteAliasBtnAnnuler,
-          cancelBtnAction: () => AppRouter.pop(context),
+          cancelBtnAction: () => Navigator.of(context).pop(),
         );
       },
     );
-  }
+  }*/
 }

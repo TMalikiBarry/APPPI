@@ -77,7 +77,7 @@ class CompteDetailsWidget extends StatelessWidget {
                     CustomTextInput(
                       labelText: traductions.compteDetailsPageListeAliasTitle,
                       controller: TextEditingController(
-                        text: state.compteDetails.alias.cle,
+                        text: alias.cle,
                       ),
                       readOnly: true,
                     ),

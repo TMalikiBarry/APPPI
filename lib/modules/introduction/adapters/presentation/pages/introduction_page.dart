@@ -97,7 +97,7 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem> {
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 13),
                       ),
-                      child: const Text("Ignorer"),
+                      child: Text(traductions.ignore),
                     ),
                   ),
                 ),

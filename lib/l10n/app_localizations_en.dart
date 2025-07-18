@@ -1610,4 +1610,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String notificationPageRtpRecueSubtitle(String payeur) {
     return 'Requested by $payeur';
   }
+
+  @override
+  String get ignore => 'Ignore';
 }

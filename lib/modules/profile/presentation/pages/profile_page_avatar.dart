@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/theme.dart';
@@ -71,14 +72,33 @@ class ProfilePageAvatar extends StatelessWidget {
               const SizedBox(
                 height: 12,
               ),
-              Text(
-                aliasState.alias.cle,
-                style: Theme.of(context)
-                    .textTheme
-                    .displayLarge!
-                    . //
-                    copyWith(color: Themer.neural03Color),
-                overflow: TextOverflow.ellipsis,
+              TextButton(
+                child: Text(
+                  aliasState.alias.cle,
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayLarge!
+                      . //
+                      copyWith(color: Themer.neural03Color),
+                  overflow: TextOverflow.ellipsis,
+                ),
+
+                onPressed: () {
+                  // On copie dans le presse-papier
+                  Clipboard.setData(
+                    ClipboardData(text: aliasState.alias.cle),
+                  );
+
+                  // On affiche un retour utilisateur
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Themer.primaryColor,
+                      content: Text('Alias copié !'),
+                      duration: Duration(seconds: 1),
+                    ),
+                  );
+                },
               ),
             ],
           ),

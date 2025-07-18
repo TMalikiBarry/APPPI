@@ -64,7 +64,7 @@ class NotificationOutputRemote {
     final finish = dateFin   ?? now.add(const Duration(days: 1));
     final Map<String, dynamic> queryParameters = {
       if (page != null) 'page': xpage,
-      if (limit != null) 'limit': xlimit,
+      'size': xlimit,
       if (sortBy != null) 'sortBy': sortBy,
       if (fields != null) 'fields': fields,
       if (dateDebut != null) 'dateDebut': start.toIso8601String(),
@@ -84,7 +84,7 @@ class NotificationOutputRemote {
       '/notification/$phone_number',
       queryParameters: queryParameters,
     );
-    var liste = NotificationListe.fromJsonNotPaginated(response.data);
+    var liste = NotificationListe.fromJson(response.data);
     // Sort by the most recents
     liste.data.sort((a, b) => b.dateAction!.compareTo(a.dateAction!));
 

@@ -146,6 +146,15 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       types: command.filters.types,
       keyword: command.keyWord,
     );
+
+    if(liste.isEmpty) {
+      emit(NotificationEmptyState(
+        NotificationListe(data: [], meta: ListeMeta(total: 0, limit: 0) ),
+          0,
+          command)
+      );
+      return;
+    }
     // command.total = liste.meta.total;
     command.total = liste.meta != null ? liste.meta!.total : 200;
     command.index = 0;
@@ -197,9 +206,24 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
             state.count,
             command,
           ));
+        } else if(liste.isEmpty) {
+          emit(NotificationEmptyState(
+              NotificationListe(data: [], meta: ListeMeta(total: 0, limit: 0) ),
+              0,
+              command)
+          );
+          return;
+
         }
-      } catch (e) {
-        logger.e("Error on pagination", error: e);
+      } catch (e, st) {
+        logger.e("Error loading notifications", error: e, stackTrace: st);
+        emit(NotificationErrorState(
+          "Problème lors de la récupération des notifications",
+          st as String,
+          state.notifications,
+          state.count,
+          state.command,
+        ));
       }
     }
   }

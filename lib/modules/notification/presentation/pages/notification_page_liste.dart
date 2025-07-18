@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../core/theme.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../../shared/widgets/notification_dialog.dart';
 import '../../domain/models/notification.dart' as notif;
 import '../../domain/models/notification_liste.dart';
 import '../bloc/notification_bloc.dart';
@@ -74,7 +76,22 @@ class _NotificationPageListeState extends State<NotificationPageListe> {
               if (state is NotificationLoadingState) {
                 return const NotificationPageListeLoading();
               } //
-              else {
+              else if (state is NotificationEmptyState) {
+                return const NotificationPageListeEmpty();
+              } else if ( state is NotificationErrorState) {
+                return NotificationDialog(
+                  type: NotificationType.error,
+                  message: "Erreur chargement des notifications", // ou state.error
+                  description: state.error,
+                  btnText: AppLocalizations.of(context)!.retry,
+                  btnColor: Theme.of(context).colorScheme.error,
+                  btnAction: () {
+                    Navigator.of(context).pop();  // ferme le dialog
+                    context.read<NotificationBloc>()
+                        .add(NotificationSearchPaginateEvent(index)); // retry
+                  },
+                );
+              } else {
                 return const NotificationPageListeEmpty();
               }
             }
@@ -85,7 +102,60 @@ class _NotificationPageListeState extends State<NotificationPageListe> {
   }
 
   // Regrouper les notifications par jour
-  Widget _buildNotificationGroupSection(
+
+  Widget _buildNotificationGroupSection(BuildContext context,
+      NotificationGroup notificationGroup,){
+    String locale = Localizations.localeOf(context).toString();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // En‑tête de date
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Text(
+            DateFormat('d MMMM', locale).format(
+              DateTime.parse(notificationGroup.jour),
+            ),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+          ),
+        ),
+
+        // Liste du jour
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: notificationGroup.notifications.length,
+            separatorBuilder: (_, __) => const Divider(height: 1),
+            itemBuilder: (ctx, idx) {
+              return NotificationPageListeItem(
+                notification: notificationGroup.notifications[idx],
+              );
+            },
+          ),
+        ),
+
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
+  /*Widget _buildNotificationGroupSection(
     BuildContext context,
     NotificationGroup notificationGroup,
   ) {
@@ -133,7 +203,7 @@ class _NotificationPageListeState extends State<NotificationPageListe> {
         const SizedBox(height: 16),
       ],
     );
-  }
+  }*/
 }
 
 // Ce model represente une sous groupe de notification
@@ -153,7 +223,24 @@ class NotificationGroup {
 // en liste en liste de sous groupe de notification
 // Les notifications sont donc regroupées  poar jour
 // avec le bilan (somme de credits - somme des débits)
-List<NotificationGroup> groupNotifications(
+
+String _dayKey(notif.Notification n) {
+  final dt = n.dateAction ?? n.timestamp; // timestamp n’est jamais null
+  return DateFormat('yyyy-MM-dd').format(dt!);
+}
+
+List<NotificationGroup> groupNotifications(List<notif.Notification> notifications) {
+  final Map<String, List<notif.Notification>> grouped = {};
+  for (var n in notifications) {
+    final key = _dayKey(n);
+    grouped.putIfAbsent(key, () => []).add(n);
+  }
+  return grouped.entries
+      .map((e) => NotificationGroup(jour: e.key, notifications: e.value))
+      .toList();
+}
+
+/*List<NotificationGroup> groupNotifications(
     List<notif.Notification> notifications) {
   Map<String, List<notif.Notification>> groupedNotifications = {};
 
@@ -172,4 +259,4 @@ List<NotificationGroup> groupNotifications(
     ));
   }
   return result;
-}
+}*/

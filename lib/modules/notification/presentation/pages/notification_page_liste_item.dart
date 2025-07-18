@@ -27,7 +27,7 @@ class NotificationPageListeItem extends StatelessWidget {
     context.read<NotificationBloc>();
     AppLocalizations traductions = AppLocalizations.of(context)!;
     return ListTile(
-        contentPadding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+        contentPadding: const EdgeInsets.symmetric(vertical: 10),
         leading: _buildIcon(context, notification),
         title: _buildTitle(context, traductions, notification),
         subtitle: _buildSubtitle(context, traductions, notification),
@@ -84,9 +84,12 @@ class NotificationPageListeItem extends StatelessWidget {
     my_notif.Notification notification,
   ) {
     String title = ' --- ';
-    if(notification.type != null) {
+    if (notification.title != null && notification.title!.isNotEmpty) {
+      title =  notification.title!;
+    } else if(notification.type != null) {
       title = notification.type!.name;
     }
+
     if (notification.type == NotificationType.revendicationInitiee) {
       title = traductions.notificationPageClaimTitle;
     } else if (notification.type == NotificationType.annulationDemandee) {
@@ -94,6 +97,13 @@ class NotificationPageListeItem extends StatelessWidget {
     } else if (notification.type == NotificationType.rtpInitiee ||
         notification.type == NotificationType.rtpRecue) {
       title = traductions.transactionsSendTitleRequest2Pay;
+    }
+
+    double? montant;
+    if (notification.details?['montant'] != null) {
+      montant = double.parse(notification.details!['montant'].toString());
+    } else {
+      montant = extractAmountFromBody(notification.body);
     }
 
     return Row(
@@ -109,7 +119,16 @@ class NotificationPageListeItem extends StatelessWidget {
           ),
         ),
         // Montant
-        if (notification.details != null &&
+        if (montant != null) ...[
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: AmountWidget(
+              montant: montant,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+          ),
+        ],
+        /*if (notification.details != null &&
             notification.details!["montant"] != null) ...[
           Padding(
             padding: const EdgeInsets.only(left: 10),
@@ -119,7 +138,7 @@ class NotificationPageListeItem extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
-        ],
+        ],*/
       ],
     );
   }
@@ -131,6 +150,7 @@ class NotificationPageListeItem extends StatelessWidget {
     my_notif.Notification notification,
   ) {
     String subtitle;
+
     switch (notification.type) {
       case NotificationType.revendicationInitiee:
         subtitle = traductions.notificationPageClaimSubtitle(
@@ -153,7 +173,8 @@ class NotificationPageListeItem extends StatelessWidget {
         );
         break;
       default:
-        subtitle = notification.type !=null ? notification.type!.name : ' --- ';
+        subtitle = notification.body?.isNotEmpty == true ? notification.body! :
+                             ( notification.type !=null ? notification.type!.name : ' --- ');
     }
     return Text(
       subtitle,
@@ -192,4 +213,14 @@ class NotificationPageListeItem extends StatelessWidget {
     }
     AppRouter.push(context, route, params: notification);
   }
+}
+
+double? extractAmountFromBody(String? body) {
+  if (body == null) return null;
+  final regex = RegExp(r"(\d+(?:[.,]\d+)?)\s*(?:FCFA|F)\b");
+  final match = regex.firstMatch(body);
+  if (match != null) {
+    return double.tryParse(match.group(1)!.replaceAll(',', '.'));
+  }
+  return null;
 }

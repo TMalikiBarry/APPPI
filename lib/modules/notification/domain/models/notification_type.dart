@@ -3,7 +3,8 @@ enum NotificationType {
   annulationDemandee("ANNULATION_DEMANDEE"),
   annulationRejetee("ANNULATION_REJETEE"),
   rtpInitiee("RTP_INITIEE"),
-  rtpRecue("RTP_RECUE");
+  rtpRecue("RTP_RECUE"),
+  notifTransaction("TRANSACTION");
 
   final String value;
   const NotificationType(this.value);

@@ -20,12 +20,33 @@ class NotificationInitialState extends NotificationState {
   );
 }
 
+class NotificationEmptyState extends NotificationState {
+  const NotificationEmptyState(
+      super.notifications,
+      super.count,
+      super.command,
+      );
+}
+
 final class NotificationLoadingState extends NotificationState {
   const NotificationLoadingState(
     super.notifications,
     super.count,
     super.command,
   );
+}
+
+final class NotificationErrorState extends NotificationState {
+  final String error;
+  final String stackTrace;
+
+  const NotificationErrorState(
+        this.error,
+        this.stackTrace,
+        super.notifications,
+        super.count,
+        super.command,
+      );
 }
 
 final class NotificationToDisplayState extends NotificationState {

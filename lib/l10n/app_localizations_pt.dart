@@ -251,6 +251,48 @@ class AppLocalizationsPt extends AppLocalizations {
   String get identificationErrorPinInvalid => 'O código PIN é inválido';
 
   @override
+  String get biometric_auth => 'Autenticação biométrica';
+
+  @override
+  String get biometric_auth_required => 'Use sua impressão digital ou reconhecimento facial';
+
+  @override
+  String get biometric_use_pwd => 'Use um código secreto';
+
+  @override
+  String get biometric_use_fingerprint => 'Verificar identidade';
+
+  @override
+  String get biometric_echec_biometric => 'Falha biométrica. Tente novamente';
+
+  @override
+  String get biometric_error => 'Erro biométrico';
+
+  @override
+  String get biometric_success_authentification => 'Autenticação bem-sucedida';
+
+  @override
+  String get biometric_success_setting => 'Configurações';
+
+  @override
+  String get biometric_activation_setting => 'Ative a biometria em suas configurações';
+
+  @override
+  String get biometric_tmp_later => 'Biometria temporariamente desativada. Tente novamente mais tarde';
+
+  @override
+  String get upgrade_profile_tier1 => 'Nível Um';
+
+  @override
+  String get upgrade_profile_tier2 => 'Nível Dois';
+
+  @override
+  String get upgrade_profile_step1 => 'Etapa 1';
+
+  @override
+  String get upgrade_profile_step2 => 'Etapa 2';
+
+  @override
   String get permissionNotificationTitle => 'Não perca nada';
 
   @override

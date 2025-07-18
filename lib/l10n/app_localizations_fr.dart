@@ -251,6 +251,48 @@ class AppLocalizationsFr extends AppLocalizations {
   String get identificationErrorPinInvalid => 'Le code PIN est invalide';
 
   @override
+  String get biometric_auth => 'Biometric authentication';
+
+  @override
+  String get biometric_auth_required => 'Use your fingerprint or facial recognition';
+
+  @override
+  String get biometric_use_pwd => 'Use a secret code';
+
+  @override
+  String get biometric_use_fingerprint => 'Verify identity';
+
+  @override
+  String get biometric_echec_biometric => 'Biometric failure. Try again';
+
+  @override
+  String get biometric_error => 'Biometric error';
+
+  @override
+  String get biometric_success_authentification => 'Successful authentication';
+
+  @override
+  String get biometric_success_setting => 'Settings';
+
+  @override
+  String get biometric_activation_setting => 'Activate biometrics in your settings';
+
+  @override
+  String get biometric_tmp_later => 'Biometrics temporarily disabled. Try again later';
+
+  @override
+  String get upgrade_profile_tier1 => 'Niveau 1';
+
+  @override
+  String get upgrade_profile_tier2 => 'Niveau 2';
+
+  @override
+  String get upgrade_profile_step1 => 'Étape 1';
+
+  @override
+  String get upgrade_profile_step2 => 'Étape 2';
+
+  @override
   String get permissionNotificationTitle => 'Ne ratez rien';
 
   @override

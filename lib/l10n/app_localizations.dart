@@ -565,6 +565,90 @@ abstract class AppLocalizations {
   /// **'Invalid PIN Code'**
   String get identificationErrorPinInvalid;
 
+  /// No description provided for @biometric_auth.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric authentication'**
+  String get biometric_auth;
+
+  /// No description provided for @biometric_auth_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Use your fingerprint or facial recognition'**
+  String get biometric_auth_required;
+
+  /// No description provided for @biometric_use_pwd.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a secret code'**
+  String get biometric_use_pwd;
+
+  /// No description provided for @biometric_use_fingerprint.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify identity'**
+  String get biometric_use_fingerprint;
+
+  /// No description provided for @biometric_echec_biometric.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric failure. Try again'**
+  String get biometric_echec_biometric;
+
+  /// No description provided for @biometric_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric error'**
+  String get biometric_error;
+
+  /// No description provided for @biometric_success_authentification.
+  ///
+  /// In en, this message translates to:
+  /// **'Successful authentication'**
+  String get biometric_success_authentification;
+
+  /// No description provided for @biometric_success_setting.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get biometric_success_setting;
+
+  /// No description provided for @biometric_activation_setting.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate biometrics in your settings'**
+  String get biometric_activation_setting;
+
+  /// No description provided for @biometric_tmp_later.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometrics temporarily disabled. Try again later'**
+  String get biometric_tmp_later;
+
+  /// No description provided for @upgrade_profile_tier1.
+  ///
+  /// In en, this message translates to:
+  /// **'Tier One'**
+  String get upgrade_profile_tier1;
+
+  /// No description provided for @upgrade_profile_tier2.
+  ///
+  /// In en, this message translates to:
+  /// **'Tier Two'**
+  String get upgrade_profile_tier2;
+
+  /// No description provided for @upgrade_profile_step1.
+  ///
+  /// In en, this message translates to:
+  /// **'Step 1'**
+  String get upgrade_profile_step1;
+
+  /// No description provided for @upgrade_profile_step2.
+  ///
+  /// In en, this message translates to:
+  /// **'Step 2'**
+  String get upgrade_profile_step2;
+
   /// No description provided for @permissionNotificationTitle.
   ///
   /// In en, this message translates to:

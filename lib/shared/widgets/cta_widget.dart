@@ -31,6 +31,16 @@ class CtaWidget extends StatelessWidget {
       onTap: () {
         if (!disabled) {
           action?.call();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Bientôt disponible',
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith( color: Themer.brownColor),
+              ),
+              backgroundColor: Themer.primaryColor,
+            ),
+          );
         }
       },
       child: Opacity(
@@ -62,7 +72,7 @@ class CtaWidget extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!
-                  .copyWith(color: const Color(0xFF282C5D), fontSize: 14.5),
+                  .copyWith(color: Themer.primaryColor, fontSize: 14.5),
             ),
           ],
         ),

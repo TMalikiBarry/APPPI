@@ -61,9 +61,12 @@ class _HomePageState extends State<HomePage> {
               onTap: (index) {
                 if (disabledTabs.contains(index)) {
                   // Empêche la navigation et affiche un message
-                  /*ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Onglet bientôt disponible')),
-                  );*/
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Onglet bientôt disponible'),
+                        backgroundColor: Themer.primaryColor,
+                    ),
+                  );
                   // Remet le TabController sur l’onglet courant
                   tabController.animateTo(tabController.previousIndex);
                 }

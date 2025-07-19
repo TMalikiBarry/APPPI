@@ -114,7 +114,9 @@ class NotificationPageListeItem extends StatelessWidget {
         Expanded(
           child: Text(
             title,
-            style: Theme.of(context).textTheme.headlineSmall,
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+              fontSize: 15.5
+            ),
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -124,7 +126,9 @@ class NotificationPageListeItem extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10),
             child: AmountWidget(
               montant: montant,
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  fontSize: 15.5
+              ),
             ),
           ),
         ],

@@ -50,7 +50,9 @@ class NotificationPage extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10, bottom: 15),
             child: Text(
               traductions.notificationPageTitle,
-              style: Theme.of(context).textTheme.titleSmall,
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                fontSize: 26
+              ),
             ),
           ),
           // // barre de filtre: dates

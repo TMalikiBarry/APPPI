@@ -118,22 +118,23 @@ class _NotificationPageListeState extends State<NotificationPageListe> {
             ),
             style: Theme.of(context)
                 .textTheme
-                .titleMedium!
-                .copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                .displayLarge!
+                .copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant)
           ),
         ),
 
         // Liste du jour
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
+            // color: Theme.of(context).colorScheme.surface,
+            color: Themer.whiteColor,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withOpacity(0.15),
                 blurRadius: 8,
-                offset: const Offset(0, 2),
+                offset: const Offset(1, 2),
               ),
             ],
           ),
@@ -141,10 +142,13 @@ class _NotificationPageListeState extends State<NotificationPageListe> {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: notificationGroup.notifications.length,
-            separatorBuilder: (_, __) => const Divider(height: 1),
+            separatorBuilder: (_, __) => const SizedBox(height: 5),
             itemBuilder: (ctx, idx) {
-              return NotificationPageListeItem(
-                notification: notificationGroup.notifications[idx],
+              return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: NotificationPageListeItem(
+                    notification: notificationGroup.notifications[idx],
+                  ),
               );
             },
           ),

@@ -847,5 +847,6 @@
       }
     }
   },
-  "ignore" : "Ignore"
+  "ignore" : "Ignore",
+  "externalCustomer" : "External customer"
 }

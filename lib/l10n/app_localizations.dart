@@ -3252,6 +3252,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ignore'**
   String get ignore;
+
+  /// No description provided for @externalCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'External customer'**
+  String get externalCustomer;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

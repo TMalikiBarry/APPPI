@@ -846,5 +846,6 @@
       }
     }
   },
-  "ignore" : "Ignorer"
+  "ignore" : "Ignorer",
+  "externalCustomer" : "Client externe"
 }

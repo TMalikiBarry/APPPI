@@ -88,9 +88,13 @@ class TransactionSendPageRecentsItem extends StatelessWidget {
     //
     AppLocalizations traductions = AppLocalizations.of(context)!;
 
-    final userName = transaction.sens == TransactionSens.debit
+    var userName = transaction.sens == TransactionSens.debit
         ? transaction.acquirerAccountLabel!
         : transaction.clientNom;
+
+    if(userName.contains('---')){
+      userName = traductions.externalCustomer;
+    }
 
     return ListTile(
       contentPadding: EdgeInsets.zero,

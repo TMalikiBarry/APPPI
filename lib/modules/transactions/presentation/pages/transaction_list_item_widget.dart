@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pi_mobile_app/l10n/app_localizations.dart';
 
 import '../../../../core/router.dart';
 import '../../../../core/theme.dart';
@@ -43,10 +44,15 @@ class TransactionListItemWidget extends StatelessWidget {
   }
 
   Widget _listTile(BuildContext context) {
+    AppLocalizations traductions = AppLocalizations.of(context)!;
 
-    final userName = transaction.sens == TransactionSens.debit
+    var userName = transaction.sens == TransactionSens.debit
         ? transaction.acquirerAccountLabel!
         : transaction.clientNom;
+
+    if(userName.contains('---')){
+      userName = traductions.externalCustomer;
+    }
 
     return ListTile(
       contentPadding: EdgeInsets.zero,

@@ -1655,4 +1655,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ignore => 'Ignore';
+
+  @override
+  String get externalCustomer => 'External customer';
 }

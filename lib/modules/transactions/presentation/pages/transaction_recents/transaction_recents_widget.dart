@@ -5,6 +5,7 @@ import '../../../../../core/di.dart';
 import '../../../../../core/router.dart';
 import '../../../../../core/theme.dart';
 import '../../../../../l10n/app_localizations.dart';
+import '../../../../../shared/widgets/notification_dialog.dart';
 import '../../../../alias/presentation/bloc/alias_bloc.dart';
 import '../../../../alias/presentation/bloc/alias_state.dart';
 import '../../../../config/adapters/ui/bloc/config_bloc.dart';
@@ -159,7 +160,19 @@ class _TransactionRecentsWidgetState extends State<TransactionRecentsWidget> {
   }
 
   Widget _buildErrorState(TransactionRecentsErrorState state, AppLocalizations trad) {
-    return Container(
+    return NotificationDialog(
+      type: NotificationType.error,
+      message: trad.transactionsErrorLoading, // ou state.error
+      // description: trad.transactionsErrorLoadingSubtitle, // optionnel
+      description: "Problème lors de la récupération des transactions récentes",
+      btnText: trad.retry,
+      btnColor: Theme.of(context).colorScheme.error,
+      btnAction: () {
+        Navigator.of(context).pop();  // ferme le dialog
+        transactionsBloc.add(TransactionRecentsListEvent(compte)); // retry
+      },
+    );
+    /*return Container(
       padding: const EdgeInsets.symmetric(vertical: 24),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.errorContainer,
@@ -189,7 +202,7 @@ class _TransactionRecentsWidgetState extends State<TransactionRecentsWidget> {
           ),
         ],
       ),
-    );
+    );*/
   }
 
 }

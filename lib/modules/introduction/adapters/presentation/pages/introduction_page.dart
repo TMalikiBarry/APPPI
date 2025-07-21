@@ -87,6 +87,14 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem> {
                     padding: const EdgeInsets.only(right: 0),
                     child: TextButton(
                       onPressed: () {
+                        // 1) on enregistre qu'on a passé l'intro
+                        /*context.read<ConfigBloc>().add(
+                          const ConfigChangeEvent(
+                            ConfigKey.introductionPassed,
+                            "1",
+                          ),
+                        );*/
+                        // 2) puis on navigue vers HOME
                         AppRouter.pushReplacement(context, AppRouter.home);
                       },
                       style: TextButton.styleFrom(

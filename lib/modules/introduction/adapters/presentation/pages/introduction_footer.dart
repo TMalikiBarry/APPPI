@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/router.dart';
-import '../../../../../core/theme.dart';
 import '../../../../../l10n/app_localizations.dart';
 import '../../../../config/adapters/ui/bloc/config_bloc.dart';
 import '../../../../config/adapters/ui/bloc/config_event.dart';
@@ -31,9 +30,9 @@ class IntroductionFooter extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           if (isLast) {
-            context
+            /*context
                 .read<ConfigBloc>()
-                .add(const ConfigChangeEvent(ConfigKey.introductionPassed, "1"));
+                .add(const ConfigChangeEvent(ConfigKey.introductionPassed, "1"));*/
             // 🎯 Sur la dernière page, on redirige HOME
             AppRouter.pushReplacement(
               context,

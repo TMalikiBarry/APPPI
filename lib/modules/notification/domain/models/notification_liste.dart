@@ -12,10 +12,10 @@ class NotificationListe {
 
   factory NotificationListe.fromJson(Map<dynamic, dynamic> json) {
     return NotificationListe(
-      data: (json['data'] as List<dynamic>)
+      data: (json['response']['content'] as List<dynamic>)
           .map((e) => Notification.fromJson(e as Map<String, dynamic>))
           .toList(),
-      meta: ListeMeta.fromJson(json['meta'] as Map<String, dynamic>),
+      meta: ListeMeta.fromJsonNotification(json['response'] as Map<String, dynamic>),
     );
   }
 
@@ -33,4 +33,13 @@ class NotificationListe {
 
   bool get isEmpty => data.isEmpty;
   bool get isNotEmpty => data.isNotEmpty;
+
+  /*factory NotificationListe.fromJson(Map<dynamic, dynamic> json) {
+    return NotificationListe(
+      data: (json['data'] as List<dynamic>)
+          .map((e) => Notification.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      meta: ListeMeta.fromJson(json['meta'] as Map<String, dynamic>),
+    );
+  }*/
 }

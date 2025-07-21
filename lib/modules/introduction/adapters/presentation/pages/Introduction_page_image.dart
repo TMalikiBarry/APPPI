@@ -1,10 +1,14 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pi_mobile_app/modules/config/adapters/ui/bloc/config_event.dart';
+import 'package:pi_mobile_app/modules/config/domain/models/config_keys.dart';
 
 import '../../../../../core/router.dart';
 import '../../../../../core/theme.dart';
 import '../../../../../l10n/app_localizations.dart';
+import '../../../../config/adapters/ui/bloc/config_bloc.dart';
 import '../../../../config/adapters/ui/bloc/config_bloc.dart';
 import '../../../../config/adapters/ui/bloc/config_event.dart';
 import '../../../../config/domain/models/config_keys.dart';
@@ -85,7 +89,14 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem>
             child: TextButton(
               onPressed: () {
                 _ctrl.stop();
-                context.read<ConfigBloc>().add(const ConfigChangeEvent(ConfigKey.introductionPassed, "1"));
+                // 1) on enregistre qu'on a passé l'intro
+                context.read<ConfigBloc>().add(
+                          const ConfigChangeEvent(
+                            ConfigKey.introductionPassed,
+                            "1",
+                          ),
+                        );
+                // 2) puis on navigue vers HOME
                 AppRouter.pushReplacement(context, AppRouter.home);
               },
               style: TextButton.styleFrom(

@@ -30,9 +30,9 @@ class IntroductionFooter extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           if (isLast) {
-            /*context
+            context
                 .read<ConfigBloc>()
-                .add(const ConfigChangeEvent(ConfigKey.introductionPassed, "1"));*/
+                .add(const ConfigChangeEvent(ConfigKey.introductionPassed, "1"));
             // 🎯 Sur la dernière page, on redirige HOME
             AppRouter.pushReplacement(
               context,

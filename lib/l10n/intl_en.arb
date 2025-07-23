@@ -848,5 +848,7 @@
     }
   },
   "ignore" : "Ignore",
-  "externalCustomer" : "External customer"
+  "externalCustomer" : "External customer",
+  "coming_soon": "Coming soon ...",
+  "alias_copied": "Alias copied !"
 }

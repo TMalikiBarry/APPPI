@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:pi_mobile_app/l10n/app_localizations.dart';
 import '../../core/theme.dart';
 
 class CtaWidget extends StatelessWidget {
@@ -20,6 +20,7 @@ class CtaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final traductions = AppLocalizations.of(context)!;
     const Color bg = Themer.primaryLighter;
     final shadow = BoxShadow(
       color: Colors.black.withOpacity(0.1),
@@ -34,10 +35,7 @@ class CtaWidget extends StatelessWidget {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                'Bientôt disponible',
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith( color: Themer.brownColor),
-              ),
+              content: Text(traductions.coming_soon, style: TextStyle(color: Themer.whiteColor),),
               backgroundColor: Themer.primaryColor,
             ),
           );

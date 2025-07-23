@@ -847,5 +847,7 @@
     }
   },
   "ignore" : "Ignorer",
-  "externalCustomer" : "Client externe"
+  "externalCustomer" : "Client externe",
+  "coming_soon": "Disponible bientôt ...",
+  "alias_copied": "Alias copié !"
 }

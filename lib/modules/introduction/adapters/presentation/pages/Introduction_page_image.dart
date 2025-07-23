@@ -100,7 +100,7 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem>
                 AppRouter.pushReplacement(context, AppRouter.home);
               },
               style: TextButton.styleFrom(
-                backgroundColor: Themer.graySplash,
+                backgroundColor: Themer.primaryColor.withOpacity(0.1),
                 foregroundColor: Themer.primaryColor,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 13),

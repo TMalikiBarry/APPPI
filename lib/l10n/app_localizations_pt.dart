@@ -1658,4 +1658,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get externalCustomer => 'Cliente externo';
+
+  @override
+  String get coming_soon => 'Disponível em breve ...';
+
+  @override
+  String get alias_copied => 'Alias copiado !';
 }

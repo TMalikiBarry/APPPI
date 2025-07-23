@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pi_mobile_app/l10n/app_localizations.dart';
 
 import '../../../../core/theme.dart';
 import '../../../alias/presentation/bloc/alias_bloc.dart';
@@ -17,6 +18,9 @@ class ProfilePageAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //
+    AppLocalizations traductions = AppLocalizations.of(context)!;
+
     // Pour récuperer les informations de l'utilisateur
     final loginBloc = context.read<LoginBloc>();
     final ConnectedUser user = loginBloc.getConnectedUser()!;
@@ -73,32 +77,34 @@ class ProfilePageAvatar extends StatelessWidget {
                 height: 12,
               ),
               TextButton(
-                child: Text(
-                  aliasState.alias.cle,
-                  style: Theme.of(context)
-                      .textTheme
-                      .displayLarge!
-                      . //
-                      copyWith(color: Themer.neural03Color),
-                  overflow: TextOverflow.ellipsis,
-                ),
-
                 onPressed: () {
-                  // On copie dans le presse-papier
                   Clipboard.setData(
                     ClipboardData(text: aliasState.alias.cle),
                   );
 
-                  // On affiche un retour utilisateur
-
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                    SnackBar(
                       backgroundColor: Themer.primaryColor,
-                      content: Text('Alias copié !'),
+                      content: Text(traductions.alias_copied),
                       duration: Duration(seconds: 1),
                     ),
                   );
                 },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.transparent, // <-- couleur de fond souhaitée
+                    borderRadius: BorderRadius.circular(6), // facultatif
+                  ),
+                  child: Text(
+                    aliasState.alias.cle,
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayLarge!
+                        .copyWith(color: Themer.neural03Color),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ),
             ],
           ),

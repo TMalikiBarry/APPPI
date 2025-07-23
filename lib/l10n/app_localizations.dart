@@ -3258,6 +3258,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'External customer'**
   String get externalCustomer;
+
+  /// No description provided for @coming_soon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon ...'**
+  String get coming_soon;
+
+  /// No description provided for @alias_copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Alias copied !'**
+  String get alias_copied;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

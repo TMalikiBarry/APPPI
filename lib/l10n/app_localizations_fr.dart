@@ -1658,4 +1658,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get externalCustomer => 'Client externe';
+
+  @override
+  String get coming_soon => 'Disponible bientôt ...';
+
+  @override
+  String get alias_copied => 'Alias copié !';
 }

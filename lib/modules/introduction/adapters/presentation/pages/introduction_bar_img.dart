@@ -1,4 +1,5 @@
 import 'package:common_dependencies/utils/colors.dart' as Colors;
+import 'package:common_dependencies/utils/colors.dart' as Themer;
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -24,7 +25,7 @@ class IntroductionBar extends StatelessWidget {
       children: List.generate(pageSize, (i) {
         if (i < currentIndex) {
           // déjà passé
-          return Container(width: segmentWidth, height: 4, color: Colors.grey);
+          return Container(width: segmentWidth, height: 4, color: Themer.primaryColor);
         } else if (i == currentIndex) {
           // segment en cours (animé)
           return AnimatedBuilder(
@@ -32,7 +33,7 @@ class IntroductionBar extends StatelessWidget {
             builder: (_, __) {
               return Stack(children: [
                 Container(width: segmentWidth, height: 4, color: Colors.white.withAlpha(24)),
-                Container(width: segmentWidth * progress.value, height: 4, color: Colors.grey),
+                Container(width: segmentWidth * progress.value, height: 4, color: Themer.secondaryColor),
               ]);
             },
           );

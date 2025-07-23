@@ -34,7 +34,7 @@ class IntroductionImage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20),
-        Text(item.legende, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Themer.primaryLight)),
+        Text(item.legende, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Themer.primaryColor.withOpacity(0.6))),
         const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),

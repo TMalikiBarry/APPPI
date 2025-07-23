@@ -121,12 +121,12 @@ class ProfileParametrePage extends StatelessWidget {
       ),
 
       // Thème
-      ProfileItem(
+      /*ProfileItem(
         Images.iconsTheme,
         traductions.appSettingPageMenuThemeTitle,
         AppRouter.profileParametreTheme,
         subtitle: theme.label(traductions),
-      ),
+      ),*/
 
       // Notifications dans l'application
       ProfileItem(

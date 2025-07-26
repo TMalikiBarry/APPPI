@@ -883,6 +883,12 @@ abstract class AppLocalizations {
   /// **'Otp invalid'**
   String get aliaMBNOInvalidOtpMessage;
 
+  /// No description provided for @aliasInvalidOtpResend.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend'**
+  String get aliasInvalidOtpResend;
+
   /// No description provided for @aliaErrorPageTitle.
   ///
   /// In en, this message translates to:

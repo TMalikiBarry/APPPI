@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:common_dependencies/utils/colors.dart' as Themer;
 import 'package:flutter/material.dart';
 
 import '../../../../l10n/app_localizations.dart';
@@ -66,7 +67,7 @@ class AliasMBNOCountdownTimerState extends State<AliasMBNOCountdownTimer> {
               widget.onResendOtp();
             }
           : null,
-      child: Row(
+      /*child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(minutes == 0 && seconds == 0
@@ -75,7 +76,72 @@ class AliasMBNOCountdownTimerState extends State<AliasMBNOCountdownTimer> {
           if (minutes == 0 && seconds == 0)
             const Icon(Icons.refresh_outlined, size: 20),
         ],
-      ),
+      ),*/
+      child: (minutes == 0 && seconds == 0)
+        ?  PopupMenuButton<String>(
+          tooltip: AppLocalizations.of(context)!.aliasInvalidOtpResend,
+          onSelected: (value) {
+            startTimer();
+            // renvoyer code OTP
+            widget.onResendOtp();
+          },
+          itemBuilder: (context) => [
+            PopupMenuItem(
+              value: 'WHATSAPP',
+              child: Row(
+                children: [
+                  Image.asset(
+                    package: 'common_dependencies',
+                    'assets/images/whatsapp_icon.png',
+                    width: 20,
+                    height: 20,
+                  ),
+                  const SizedBox(width: 8),
+                  const Text('WhatsApp'),
+                ],
+              ),
+            ),
+            PopupMenuItem(
+              value: 'SMS',
+              child: Row(
+                children: [
+                  Image.asset(
+                    package: 'common_dependencies',
+                    'assets/images/sms.png',
+                    width: 20,
+                    height: 20,
+                  ),
+                  const SizedBox(width: 8),
+                  const Text('SMS'),
+                ],
+              ),
+            ),
+          ],
+          child: Row(
+            children: [
+              Text(
+                AppLocalizations.of(context)!.aliasInvalidOtpResend,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Themer.primaryColor,
+                  decoration: TextDecoration.underline,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Icon(Icons.arrow_drop_down, color: Theme.of(context).colorScheme.secondary),
+            ],
+          ),
+        ) : Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.timer_sharp),
+            const SizedBox(width: 5),
+            Text('${localisation.aliaMBNOResendMessage(timing)} '),
+            if (minutes == 0 && seconds == 0)
+              const Icon(Icons.refresh_outlined, size: 20),
+          ],
+        )
+        ,
     );
   }
 }

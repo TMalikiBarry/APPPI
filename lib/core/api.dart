@@ -1,3 +1,4 @@
+import 'package:common_dependencies/interceptors/HttpInterceptors.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
@@ -304,47 +305,24 @@ class TokenInterceptor extends Interceptor {
   @override
   void onError(DioException error, ErrorInterceptorHandler handler) async {
     logger.e("Error HTTP - dans Token interceptor", error: error);
-    // Si c'est un problème d'autorisations
-    final pref = await SharedPreferences.getInstance();
+
     if (error.response?.statusCode == 401) {
-      // Si une réponse 401 est reçue, actualisez le jeton d'accès
-      // String? newAccessToken = await ConnexionOutputAuthpkce.refreshToken();
-      final refreshToken = pref.getString('refreshToken');
+      var pref = await SharedPreferences.getInstance();
+      int? expirationDateStr = pref.getInt("tokenExpiration");
+      int? refreshExpirationDateStr = pref.getInt("refreshTokenExpiration");
+      print("expirationDateStr: $expirationDateStr");
+      print("refreshExpirationDateStr: $refreshExpirationDateStr");
+      var now = DateTime.now().millisecondsSinceEpoch ~/ 1000; // Valeur actuelle en secondes
+      print("now: $now");
 
-      if (refreshToken == null) {
-        _triggerRefreshServiceEvent();
-        throw Exception("No refresh token available");
+      if (now >= expirationDateStr! && now < refreshExpirationDateStr!) {
+        print("Token expired but refresh token is still valid, refreshing token...");
+        await HttpInterceptors().refreshToken();
       }
-
-      // Récupérer les dates d'expiration
-      final expirationDateStr = pref.getInt('tokenExpiration');
-      final refreshExpirationDateStr = pref.getInt('refreshTokenExpiration');
-      final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-
-      // Vérifier la validité du refresh token
-      if (refreshExpirationDateStr == null || now >= refreshExpirationDateStr) {
+      else {
+        print("Both token and refresh token expired, redirecting to login...");
         _triggerRefreshServiceEvent();
-        throw Exception("Refresh token expired");
       }
-
-             // Mettre à jour l'en-tête de la requête avec le nouveau jeton d'accès
-        error.requestOptions.headers['Authorization'] =
-            'Bearer $refreshToken';
-        // Relancer la requête originale avec les mêmes options
-        return handler.resolve(await client.request(
-          error.requestOptions.path, // Garder le même endpoint
-          options: Options(
-            method: error.requestOptions
-                .method, // Garder la même méthode / (GET, POST, PUT, etc.)
-            headers:
-                error.requestOptions.headers, // Utiliser les nouveaux / headers
-          ),
-          data: error.requestOptions
-              .data, // Garde le corps de la requête (utile pour POST/PUT)
-          queryParameters: error
-              .requestOptions.queryParameters, // Garde les / paramètres GET
-        ));
-
     }
     return handler.next(error);
   }

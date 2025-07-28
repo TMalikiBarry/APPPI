@@ -20,7 +20,7 @@ class ConnexionOutputAuthpkce implements ConnexionOutputPort {
   //
   static final dio = Dio();
   // L'identifiant du client Keycloak
-  static const clientId = 'mytouchpoint-api';
+  static const clientId = 'customer-api';
   // Liste des scopes autorisés
   static const scopes = [
     'openid',

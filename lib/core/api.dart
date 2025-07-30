@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:common_dependencies/interceptors/HttpInterceptors.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -281,7 +283,8 @@ class TokenInterceptor extends Interceptor {
   final Dio client;
 
   TokenInterceptor(this.client);
-
+  bool _isRefreshing = false;
+  final List<void Function(String)> _queuedRequests = [];
   /// Ajouter le token avant chaque requête
   @override
   void onRequest(
@@ -306,7 +309,8 @@ class TokenInterceptor extends Interceptor {
   void onError(DioException error, ErrorInterceptorHandler handler) async {
     logger.e("Error HTTP - dans Token interceptor", error: error);
 
-    if (error.response?.statusCode == 401) {
+    if (error.response?.statusCode == 401 && !_isRefreshing) {
+
       var pref = await SharedPreferences.getInstance();
       int? expirationDateStr = pref.getInt("tokenExpiration");
       int? refreshExpirationDateStr = pref.getInt("refreshTokenExpiration");
@@ -314,16 +318,50 @@ class TokenInterceptor extends Interceptor {
       print("refreshExpirationDateStr: $refreshExpirationDateStr");
       var now = DateTime.now().millisecondsSinceEpoch ~/ 1000; // Valeur actuelle en secondes
       print("now: $now");
-
       if (now >= expirationDateStr! && now < refreshExpirationDateStr!) {
-        print("Token expired but refresh token is still valid, refreshing token...");
-        await HttpInterceptors().refreshToken();
+        _isRefreshing = true;
+        try {
+          print("Token expired but refresh token is still valid, refreshing token...");
+          await HttpInterceptors().refreshToken();
+          String? newToken = pref.getString("accessToken");
+          print("token after refresh $newToken");
+          // Appliquer le token aux requêtes en attente
+          for (final callback in _queuedRequests) {
+            callback(newToken!);
+          }
+          _queuedRequests.clear();
+          // Rejouer la requête initiale avec le nouveau token
+          final retryOptions = error.requestOptions;
+          retryOptions.headers['Authorization'] = 'Bearer $newToken';
+          final response = await client.fetch(retryOptions);
+          return handler.resolve(response);
+        } catch (e) {
+          return handler.reject(error); // Si le refresh échoue
+        } finally {
+          _isRefreshing = false;
+        }
       }
       else {
         print("Both token and refresh token expired, redirecting to login...");
         _triggerRefreshServiceEvent();
       }
     }
+
+    if(_isRefreshing && error.response?.statusCode == 401) {
+      final completer = Completer<Response>();
+      _queuedRequests.add((String token) async {
+        final retryOptions = error.requestOptions;
+        retryOptions.headers['Authorization'] = 'Bearer $token';
+        try {
+          final response = await client.fetch(retryOptions);
+          completer.complete(response);
+        } catch (e) {
+          completer.completeError(e);
+        }
+      });
+      return handler.resolve(await completer.future);
+    }
+
     return handler.next(error);
   }
 

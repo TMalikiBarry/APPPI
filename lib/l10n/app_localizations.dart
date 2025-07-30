@@ -3270,6 +3270,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Alias copied !'**
   String get alias_copied;
+
+  /// No description provided for @bottom_bar_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get bottom_bar_home;
+
+  /// No description provided for @bottom_bar_transaction.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get bottom_bar_transaction;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

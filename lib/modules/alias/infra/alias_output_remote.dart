@@ -19,8 +19,7 @@ class AliasOutputRemote {
     try {
       final ApiResponse response = await Api.get('/alias/sync/search/$compte');
       return response.data != null ? Alias.fromJson(response.data["response"]) : null;
-    } //
-    catch (e) {
+    } on ApiException catch (e) {
       // Si l'api retourne 404 c'est qu'il y'a pas d'alias
       if (e is ApiException && e.error == ApiError.notFound) {
         return null;

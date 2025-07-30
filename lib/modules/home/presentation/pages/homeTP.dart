@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pi_mobile_app/l10n/app_localizations.dart';
 
 class HomeScreenSPI extends StatelessWidget {
   const HomeScreenSPI({super.key});
@@ -134,8 +135,8 @@ class HomeScreenSPI extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: const Color(0xFF2F296A),
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Accueil'),
-          BottomNavigationBarItem(icon: Icon(Icons.swap_vert), label: 'Transactions'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: AppLocalizations.of(context)!.bottom_bar_home),
+          BottomNavigationBarItem(icon: Icon(Icons.swap_vert), label: AppLocalizations.of(context)!.bottom_bar_transaction),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'TouchPoint'),
         ],
         currentIndex: 0,

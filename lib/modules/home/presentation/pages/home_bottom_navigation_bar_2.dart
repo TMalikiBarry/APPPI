@@ -54,7 +54,7 @@ class BottomNavBarWidget extends StatelessWidget {
                 _buildTabItem(
                   context,
                   label: "Accueil",
-                  icon: const Icon(Icons.home_outlined, color: Themer.secondaryColor, weight: 32,),
+                  icon: const Icon(Icons.home_outlined, color: Themer.secondaryColor, weight: 29,),
                   onTap: () => AppRouter.go(context, AppRouter.home),
                 ),
                 _buildTabItem(
@@ -66,7 +66,7 @@ class BottomNavBarWidget extends StatelessWidget {
                       package: 'common_dependencies',
                     ),
                     color: Theme.of(context).colorScheme.onSurface,
-                    size: 32,
+                    size: 29,
                   ),
                   onTap: () =>
                       AppRouter.push(context, AppRouter.transactionSend),
@@ -77,8 +77,8 @@ class BottomNavBarWidget extends StatelessWidget {
                   icon: Image.asset(
                     "assets/images/touch-logo.png",
                     package: 'common_dependencies',
-                    width: 32,
-                    height: 32,
+                    width: 29,
+                    height: 29,
                     fit: BoxFit.contain,
                   ),
                   onTap: () => AppRouter.go(context, AppRouter.homePage),
@@ -102,6 +102,9 @@ class BottomNavBarWidget extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             label,
+            style: TextStyle(
+              fontSize: 12,
+            ),
           ),
         ],
       ),

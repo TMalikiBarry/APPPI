@@ -285,6 +285,7 @@ class TransactionOutputRemote {
     var url = '/transfer/eme/external';
     Map<String, dynamic> request = command.toJson();
     request.addAll({
+      'clientId': aliasFrom,
       'aliasFrom': aliasFrom,
       'userLogin': userLogin,
     });

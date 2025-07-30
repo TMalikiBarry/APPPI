@@ -1,4 +1,5 @@
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/core/api.dart';
 
 import '../../../core/storage.dart';
 import '../domain/models/alias.dart';
@@ -17,8 +18,15 @@ class AliasOutputLocal {
   }
 
   Future<Alias?> recuperer(String cle) async {
-    return await AppStorage.get(
-        collectionId, cle, (json) => Alias.fromJson(json));
+    try {
+      return await AppStorage.get(
+          collectionId, cle, (json) => Alias.fromJson(json));
+    } catch(e){
+      throw ApiException(
+        error: ApiError.badRequest,
+        statusCode: 401,
+      );
+    }
   }
 
   Future<void> supprimer(String cle) async {

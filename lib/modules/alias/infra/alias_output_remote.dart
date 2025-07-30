@@ -22,7 +22,7 @@ class AliasOutputRemote {
     } on ApiException catch (e) {
       // Si l'api retourne 404 c'est qu'il y'a pas d'alias
       if (e is ApiException && e.error == ApiError.notFound) {
-        return null;
+        rethrow;
       } // Sinon  c'est une erreur imprévisible qu'il faut notifier
       else {
         rethrow;

@@ -37,11 +37,18 @@ class AliasOutputRepository implements AliasOutputPort {
       return alias;
     } catch (e) {
       logger.e("Erreur serveur", error: e);
-      Alias? alias = await repoLocal.recuperer(compte);
-      throw AliasRetrieveException(
-        alias: alias,
-        error: e is ApiException ? e.error : e,
-      );
+      try {
+        Alias? alias = await repoLocal.recuperer(compte);
+        throw AliasRetrieveException(
+          alias: alias,
+          error: e is ApiException ? e.error : e,
+        );
+      } on ApiException catch (e) {
+        throw AliasRetrieveException(
+          alias: null,
+          error: e is ApiException ? e.error : e,
+        );
+      }
     }
   }
 

@@ -29,9 +29,9 @@ class AliasService implements AliasInputPort {
   }
 
   @override
-  Future<Alias> confirmer(AliasMbnoOtpCommand otp, AliasCreateCommand alias) {
+  Future<Alias> confirmer(AliasMbnoOtpCommand otp, AliasCreateCommand alias, String? channel) {
     String otpCode = otp.value.join();
-    return aliasOutputPort.confirmer(alias, otpCode);
+    return aliasOutputPort.confirmer(alias, otpCode, channel);
   }
 
   @override

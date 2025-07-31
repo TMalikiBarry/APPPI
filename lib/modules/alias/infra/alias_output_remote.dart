@@ -41,10 +41,13 @@ class AliasOutputRemote {
     await Api.delete('/alias/delete/$cle');
   }
 
-  Future<Alias> confirmer(AliasCreateCommand alias, String otp) async {
+  Future<Alias> confirmer(AliasCreateCommand alias, String otp, String? channel) async {
     try {
       Map<String, dynamic> request = alias.toJson();
       request.addAll({"otpCode": otp});
+      if (channel != null){
+        request.addAll({"channel": channel});
+      }
       final ApiResponse response = await Api.post(
         '/alias/create',
         data: request,

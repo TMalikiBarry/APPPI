@@ -173,10 +173,11 @@ class AliasBloc extends Bloc<AliasEvent, AliasState> {
   ) async {
     // Valeur du code PIN
     AliasMbnoOtpCommand otpCode = event.otpCode;
+    String? channel = event.channel;
     if (otpCode.isValid()) {
       emit(AliasCreatingState(event.values));
       try {
-        Alias alias = await aliasInputPort.confirmer(otpCode, event.values);
+        Alias alias = await aliasInputPort.confirmer(otpCode, event.values, channel);
         emit(AliasExistState(alias));
       }
       // Alias déja pris réclamer?

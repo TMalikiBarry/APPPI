@@ -56,6 +56,7 @@ class CheckPhoneNumberVerificationEvent extends AliasEvent {
     this.digit,
     this.position,
     this.otpCode,
+    this.channel,
   );
   // Alias
   final AliasCreateCommand values;
@@ -65,6 +66,8 @@ class CheckPhoneNumberVerificationEvent extends AliasEvent {
   final int position;
   // Code  otp
   final AliasMbnoOtpCommand otpCode;
+  // Canal
+  final String? channel;
 }
 
 //

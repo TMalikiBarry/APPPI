@@ -451,7 +451,7 @@ class AliasPageClaim extends StatelessWidget {
                       ),
                     )
                   : null,
-              onOtpComplete: (otpCode) {
+              onOtpComplete: (otpCode, channel) {
                 aliasBloc.add(
                   AliasClaimRespondEvent(
                     id,

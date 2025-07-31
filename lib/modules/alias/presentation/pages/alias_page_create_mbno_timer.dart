@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:pi_mobile_app/core/theme.dart';
 
 import '../../../../l10n/app_localizations.dart';
 
@@ -106,10 +107,11 @@ class AliasMBNOCountdownTimerState extends State<AliasMBNOCountdownTimer> {
               children: [
                 Text(
                   localisation.aliaMBNOResendMessageBtn,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     decoration: TextDecoration.underline,
                     fontWeight: FontWeight.w500,
+                    color: Themer.primary
                   ),
                 ),
                 const Icon(Icons.arrow_drop_down),

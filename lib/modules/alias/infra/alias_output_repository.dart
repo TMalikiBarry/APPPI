@@ -64,8 +64,8 @@ class AliasOutputRepository implements AliasOutputPort {
   }
 
   @override
-  Future<Alias> confirmer(AliasCreateCommand alias, String otp) async {
-    Alias response = await repoRemote.confirmer(alias, otp);
+  Future<Alias> confirmer(AliasCreateCommand alias, String otp, String? channel) async {
+    Alias response = await repoRemote.confirmer(alias, otp, channel);
     repoLocal.enregistrer(response);
     return response;
   }

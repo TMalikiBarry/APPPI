@@ -1,6 +1,7 @@
 import 'package:common_dependencies/utils/numeric_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pi_mobile_app/core/theme.dart';
 import 'package:pinput/pinput.dart';
 import 'package:common_dependencies/utils/utils.dart';
 
@@ -11,8 +12,9 @@ class AliasPageOtp extends StatefulWidget {
   final String subtitle;
   final String? errorMessage;
   final Widget? countdownTimer;
-  final Function(List<int> otpCode) onOtpComplete;
+  final Function(List<int> otpCode, String? channel) onOtpComplete;
   final bool autoFocus;
+  final String? channel;
 
   const AliasPageOtp({
     super.key,
@@ -23,6 +25,7 @@ class AliasPageOtp extends StatefulWidget {
     this.countdownTimer,
     required this.onOtpComplete,
     this.autoFocus = true,
+    this.channel
   });
 
   @override
@@ -41,6 +44,8 @@ class _AliasPageOtpState extends State<AliasPageOtp> {
     fieldFocusList = List.generate(widget.pinLength, (index) => FocusNode());
     fieldControllerList =
         List.generate(widget.pinLength, (index) => TextEditingController());
+
+      logger.i("channel : _AliasPageOtpState ${widget.channel}");
   }
 
   @override
@@ -128,6 +133,7 @@ class _AliasPageOtpState extends State<AliasPageOtp> {
           child: Pinput(
             androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
             controller: codeOtpController,
+            keyboardType: TextInputType.none,
             defaultPinTheme: defaultPinTheme,
             focusedPinTheme: focusedPinTheme,
             submittedPinTheme: submittedPinTheme,
@@ -136,7 +142,7 @@ class _AliasPageOtpState extends State<AliasPageOtp> {
             showCursor: true,
             onCompleted: (pin) {
               if (pin.length == 4) {
-                widget.onOtpComplete([int.parse(pin[0]),int.parse(pin[1]),int.parse(pin[2]),int.parse(pin[3])]);
+                widget.onOtpComplete([int.parse(pin[0]),int.parse(pin[1]),int.parse(pin[2]),int.parse(pin[3])], widget.channel);
               }
             },
           ),
@@ -236,7 +242,7 @@ class _AliasPageOtpState extends State<AliasPageOtp> {
     }
 
     if (pin.length == widget.pinLength) {
-      widget.onOtpComplete(pin);
+      widget.onOtpComplete(pin, widget.channel);
     }
   }
 
@@ -248,7 +254,7 @@ class _AliasPageOtpState extends State<AliasPageOtp> {
           text,
           style: TextStyle(
             fontSize: 22,
-            color: Theme.of(context).secondaryHeaderColor,
+            color: Themer.primaryColor,
           ),
         ),
       ),

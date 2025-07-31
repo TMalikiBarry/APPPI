@@ -22,7 +22,7 @@ abstract class AliasInputPort {
   //
   /// Confirmer la création de l'alias type MBNO en envoyant le code OTP reçu
   ///
-  Future<Alias> confirmer(AliasMbnoOtpCommand otp, AliasCreateCommand alias);
+  Future<Alias> confirmer(AliasMbnoOtpCommand otp, AliasCreateCommand alias, String? channel);
 
   /// Suppression d'un alias
   Future<void> supprimer(String cle);

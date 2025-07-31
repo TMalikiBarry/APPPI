@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:common_dependencies/utils/colors.dart' as Themer;
 import 'package:flutter/material.dart';
 import 'package:pi_mobile_app/core/theme.dart';
 

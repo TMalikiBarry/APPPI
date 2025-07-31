@@ -70,7 +70,7 @@ class MockAliasOutputPort implements AliasOutputPort {
   }
 
   @override
-  Future<void> envoyerOtp(String phone) async {
+  Future<void> envoyerOtp(String phone, String? channel) async {
     //
   }
 }
@@ -129,7 +129,7 @@ class MockAliasErrorOutputPort implements AliasOutputPort {
   }
 
   @override
-  Future<void> envoyerOtp(String phone) async {
+  Future<void> envoyerOtp(String phone, String? channel) async {
     //
   }
 }

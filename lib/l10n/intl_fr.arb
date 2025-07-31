@@ -850,5 +850,7 @@
   "ignore" : "Ignorer",
   "externalCustomer" : "Client externe",
   "coming_soon": "Disponible bientôt ...",
-  "alias_copied": "Alias copié !"
+  "alias_copied": "Alias copié !",
+  "bottom_bar_home": "Accueil",
+  "bottom_bar_transaction": "Transactions"
 }

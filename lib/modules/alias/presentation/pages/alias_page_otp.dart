@@ -1,5 +1,9 @@
+import 'package:common_dependencies/utils/numeric_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pi_mobile_app/core/theme.dart';
+import 'package:pinput/pinput.dart';
+import 'package:common_dependencies/utils/utils.dart';
 
 class AliasPageOtp extends StatefulWidget {
   //
@@ -8,8 +12,9 @@ class AliasPageOtp extends StatefulWidget {
   final String subtitle;
   final String? errorMessage;
   final Widget? countdownTimer;
-  final Function(List<int> otpCode) onOtpComplete;
+  final Function(List<int> otpCode, String? channel) onOtpComplete;
   final bool autoFocus;
+  final String? channel;
 
   const AliasPageOtp({
     super.key,
@@ -20,6 +25,7 @@ class AliasPageOtp extends StatefulWidget {
     this.countdownTimer,
     required this.onOtpComplete,
     this.autoFocus = true,
+    this.channel
   });
 
   @override
@@ -29,6 +35,7 @@ class AliasPageOtp extends StatefulWidget {
 class _AliasPageOtpState extends State<AliasPageOtp> {
   late List<FocusNode> fieldFocusList;
   late List<TextEditingController> fieldControllerList;
+  var codeOtpController = TextEditingController();
   double fieldWidth = 0;
 
   @override
@@ -37,6 +44,8 @@ class _AliasPageOtpState extends State<AliasPageOtp> {
     fieldFocusList = List.generate(widget.pinLength, (index) => FocusNode());
     fieldControllerList =
         List.generate(widget.pinLength, (index) => TextEditingController());
+
+      logger.i("channel : _AliasPageOtpState ${widget.channel}");
   }
 
   @override
@@ -62,54 +71,94 @@ class _AliasPageOtpState extends State<AliasPageOtp> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Titre de la page
-        Text(
-          widget.title,
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        //
-        const SizedBox(height: 5.0),
-
-        // Sous titre de la page
-        Text(
-          widget.subtitle,
-          style: Theme.of(context).textTheme.displaySmall,
-        ),
-
-        //
-        const SizedBox(height: 32),
-
-        // Code Pin input
-        Form(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
-            children: List.generate(widget.pinLength, (index) {
-              return TextFormField(
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                style: Theme.of(context).textTheme.headlineMedium,
-                textAlign: TextAlign.center,
-                autofocus: widget.autoFocus && index == 0,
-                focusNode: fieldFocusList[index],
-                controller: fieldControllerList[index],
-                decoration: InputDecoration(
-                  labelText: "",
-                  constraints: BoxConstraints(
-                    minWidth: fieldWidth,
-                    maxWidth: fieldWidth,
-                    minHeight: 56,
-                    maxHeight: 56,
-                  ),
-                  labelStyle: Theme.of(context).inputDecorationTheme.labelStyle,
-                  hintStyle: Theme.of(context).inputDecorationTheme.hintStyle,
-                ),
-                onChanged: (text) {
-                  handleOtpInputChange(text, index);
-                },
-              );
-            }),
+        Align(
+          alignment: Alignment.center,
+          child: Text(
+            widget.title,
+            style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
+
+
+        //
+        const SizedBox(height: 15),
+
+        Stack(children: [
+          Container(
+            margin: EdgeInsets.fromLTRB(40.5, 30, 40.5, 10),
+            padding: EdgeInsets.fromLTRB(21.5, 20 , 21.5 , 0 ),
+            width: double.infinity,
+            height: 100 ,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius:
+              BorderRadius.circular(100 ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(0 , 30 , 0 , 22.54 ),
+            alignment: Alignment.topCenter,
+            child: SizedBox(
+              width: 100 ,
+              height: 100.50 ,
+              child: Image.asset(
+                package: 'common_dependencies',
+                'assets/images/code_otp.png',
+                width: 60 ,
+                height: 120 ,
+              ),
+            ),
+          ),
+        ]),
+
+        //
+        const SizedBox(height: 10.0),
+
+        // Sous titre de la page
+        Align(
+          alignment: Alignment.center,
+          child: Text(
+            widget.subtitle,
+            style: Theme.of(context).textTheme.displaySmall,
+          ),
+        ),
+
+        //
+        const SizedBox(height: 10.0),
+
+        // Code Pin input
+        SizedBox(
+          width: 327,
+          height: 100,
+          child: Pinput(
+            androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
+            controller: codeOtpController,
+            keyboardType: TextInputType.none,
+            defaultPinTheme: defaultPinTheme,
+            focusedPinTheme: focusedPinTheme,
+            submittedPinTheme: submittedPinTheme,
+            length: 4,
+            pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+            showCursor: true,
+            onCompleted: (pin) {
+              if (pin.length == 4) {
+                widget.onOtpComplete([int.parse(pin[0]),int.parse(pin[1]),int.parse(pin[2]),int.parse(pin[3])], widget.channel);
+              }
+            },
+          ),
+        ),
+
+        // Séparateur
+        const SizedBox(height: 20),
+
+        // Compte à rebours
+        if (widget.countdownTimer != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [widget.countdownTimer!],
+          ),
+
         // Séparateur
         const SizedBox(height: 24),
 
@@ -118,7 +167,7 @@ class _AliasPageOtpState extends State<AliasPageOtp> {
           Padding(
             padding: const EdgeInsets.only(left: 8.0, top: 2.0, bottom: 5.0),
             child: Align(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Text(
                 '\u26a0 ${widget.errorMessage}',
                 style: Theme.of(context).inputDecorationTheme.errorStyle,
@@ -126,13 +175,44 @@ class _AliasPageOtpState extends State<AliasPageOtp> {
             ),
           ),
 
-        // Compte à rebours
-        if (widget.countdownTimer != null)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+        // Clavier numérique personnalisé
+        Container(
+          height: MediaQuery.of(context).size.height * 0.35,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [widget.countdownTimer!],
+            children: [
+              Row(
+                children: [
+                  _buildButton('1'),
+                  _buildButton('2'),
+                  _buildButton('3'),
+                ],
+              ),
+              Row(
+                children: [
+                  _buildButton('4'),
+                  _buildButton('5'),
+                  _buildButton('6'),
+                ],
+              ),
+              Row(
+                children: [
+                  _buildButton('7'),
+                  _buildButton('8'),
+                  _buildButton('9'),
+                ],
+              ),
+              Row(
+                children: [
+                  _buildButton(''),
+                  _buildButton('0'),
+                  _buildButton('⌫', onPressed: _backspace),
+                ],
+              ),
+            ],
           ),
+        )
       ],
     );
   }
@@ -162,7 +242,34 @@ class _AliasPageOtpState extends State<AliasPageOtp> {
     }
 
     if (pin.length == widget.pinLength) {
-      widget.onOtpComplete(pin);
+      widget.onOtpComplete(pin, widget.channel);
+    }
+  }
+
+  Widget _buildButton(String text, {VoidCallback? onPressed}) {
+    return Expanded(
+      child: TextButton(
+        onPressed: onPressed ?? () => _input(text),
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: 22,
+            color: Themer.primaryColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _input(String text) {
+    final value = codeOtpController.text + text;
+    codeOtpController.text = value;
+  }
+
+  void _backspace() {
+    final value = codeOtpController.text;
+    if (value.isNotEmpty) {
+      codeOtpController.text = value.substring(0, value.length - 1);
     }
   }
 }

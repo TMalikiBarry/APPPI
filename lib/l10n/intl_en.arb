@@ -851,5 +851,7 @@
   "ignore" : "Ignore",
   "externalCustomer" : "External customer",
   "coming_soon": "Coming soon ...",
-  "alias_copied": "Alias copied !"
+  "alias_copied": "Alias copied !",
+  "bottom_bar_home": "Home",
+  "bottom_bar_transaction": "Transactions"
 }

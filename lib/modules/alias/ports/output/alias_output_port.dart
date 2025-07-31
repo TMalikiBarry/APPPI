@@ -11,7 +11,7 @@ abstract class AliasOutputPort {
   ///
   /// Envoyer l'otp à l'utilisateur
   ///
-  Future<void> envoyerOtp(String phone);
+  Future<void> envoyerOtp(String phone, String? channel);
 
   ///
   /// Créer l'alias de l'utilisateur
@@ -21,7 +21,7 @@ abstract class AliasOutputPort {
   ///
   /// Confirmer la création de l'alias de l'utilisateur
   ///
-  Future<Alias> confirmer(AliasCreateCommand alias, String otp);
+  Future<Alias> confirmer(AliasCreateCommand alias, String otp, String? channel);
 
   /// Suppression d'un alias
   Future<void> supprimer(String cle);

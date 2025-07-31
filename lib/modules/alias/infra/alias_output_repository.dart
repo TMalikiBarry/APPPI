@@ -21,8 +21,8 @@ class AliasOutputRepository implements AliasOutputPort {
   final AliasOutputRemote repoRemote = AliasOutputRemote();
 
   @override
-  Future<void> envoyerOtp(String phone) async {
-    await repoRemote.envoyerOtp(phone);
+  Future<void> envoyerOtp(String phone, String? channel) async {
+    await repoRemote.envoyerOtp(phone, channel);
   }
 
   @override
@@ -37,11 +37,18 @@ class AliasOutputRepository implements AliasOutputPort {
       return alias;
     } catch (e) {
       logger.e("Erreur serveur", error: e);
-      Alias? alias = await repoLocal.recuperer(compte);
-      throw AliasRetrieveException(
-        alias: alias,
-        error: e is ApiException ? e.error : e,
-      );
+      try {
+        Alias? alias = await repoLocal.recuperer(compte);
+        throw AliasRetrieveException(
+          alias: alias,
+          error: e is ApiException ? e.error : e,
+        );
+      } on ApiException catch (e) {
+        throw AliasRetrieveException(
+          alias: null,
+          error: e is ApiException ? e.error : e,
+        );
+      }
     }
   }
 
@@ -57,8 +64,8 @@ class AliasOutputRepository implements AliasOutputPort {
   }
 
   @override
-  Future<Alias> confirmer(AliasCreateCommand alias, String otp) async {
-    Alias response = await repoRemote.confirmer(alias, otp);
+  Future<Alias> confirmer(AliasCreateCommand alias, String otp, String? channel) async {
+    Alias response = await repoRemote.confirmer(alias, otp, channel);
     repoLocal.enregistrer(response);
     return response;
   }

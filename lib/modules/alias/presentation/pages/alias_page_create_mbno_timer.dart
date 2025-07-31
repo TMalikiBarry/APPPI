@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:common_dependencies/utils/colors.dart' as Themer;
 import 'package:flutter/material.dart';
+import 'package:pi_mobile_app/core/theme.dart';
 
 import '../../../../l10n/app_localizations.dart';
 
@@ -9,7 +10,7 @@ class AliasMBNOCountdownTimer extends StatefulWidget {
   //
   const AliasMBNOCountdownTimer({super.key, required this.onResendOtp});
 
-  final Function() onResendOtp;
+  final void Function(String? channel) onResendOtp;
 
   @override
   AliasMBNOCountdownTimerState createState() => AliasMBNOCountdownTimerState();
@@ -59,89 +60,83 @@ class AliasMBNOCountdownTimerState extends State<AliasMBNOCountdownTimer> {
     String timing = '${minutes.toString().padLeft(2, '0')}'
         ':${seconds.toString().padLeft(2, '0')}';
 
-    return TextButton(
-      onPressed: minutes == 0 && seconds == 0
-          ? () {
-              startTimer();
-              // renvoyer code OTP
-              widget.onResendOtp();
-            }
-          : null,
-      /*child: Row(
-        mainAxisSize: MainAxisSize.min,
+    return (minutes == 0 && seconds == 0) ?
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(minutes == 0 && seconds == 0
-              ? '${localisation.aliaMBNOResendMessageBtn} '
-              : '${localisation.aliaMBNOResendMessage(timing)} '),
-          if (minutes == 0 && seconds == 0)
-            const Icon(Icons.refresh_outlined, size: 20),
-        ],
-      ),*/
-      child: (minutes == 0 && seconds == 0)
-        ?  PopupMenuButton<String>(
-          tooltip: AppLocalizations.of(context)!.aliasInvalidOtpResend,
-          onSelected: (value) {
-            startTimer();
-            // renvoyer code OTP
-            widget.onResendOtp();
-          },
-          itemBuilder: (context) => [
-            PopupMenuItem(
-              value: 'WHATSAPP',
-              child: Row(
-                children: [
-                  Image.asset(
-                    package: 'common_dependencies',
-                    'assets/images/whatsapp_icon.png',
-                    width: 20,
-                    height: 20,
-                  ),
-                  const SizedBox(width: 8),
-                  const Text('WhatsApp'),
-                ],
-              ),
-            ),
-            PopupMenuItem(
-              value: 'SMS',
-              child: Row(
-                children: [
-                  Image.asset(
-                    package: 'common_dependencies',
-                    'assets/images/sms.png',
-                    width: 20,
-                    height: 20,
-                  ),
-                  const SizedBox(width: 8),
-                  const Text('SMS'),
-                ],
-              ),
-            ),
-          ],
-          child: Row(
-            children: [
-              Text(
-                AppLocalizations.of(context)!.aliasInvalidOtpResend,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Themer.primaryColor,
-                  decoration: TextDecoration.underline,
-                  fontWeight: FontWeight.w500,
+          const SizedBox(width: 5),
+          PopupMenuButton<String>(
+            //tooltip: AppLocalizations.of(context).resend,
+            tooltip: localisation.aliaMBNOResendMessageBtn,
+            onSelected: (value) async {
+              // renvoyer code OTP
+              widget.onResendOtp(value);
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'WHATSAPP',
+                child: Row(
+                  children: [
+                    Image.asset(
+                      package: 'common_dependencies',
+                      'assets/images/whatsapp_icon.png',
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    const Text('WhatsApp'),
+                  ],
                 ),
               ),
-              Icon(Icons.arrow_drop_down, color: Theme.of(context).colorScheme.secondary),
+              PopupMenuItem(
+                value: 'SMS',
+                child: Row(
+                  children: [
+                    Image.asset(
+                      package: 'common_dependencies',
+                      'assets/images/sms.png',
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    const Text('SMS'),
+                  ],
+                ),
+              ),
             ],
+            child: Row(
+              children: [
+                Text(
+                  localisation.aliaMBNOResendMessageBtn,
+                  style: TextStyle(
+                    fontSize: 14,
+                    decoration: TextDecoration.underline,
+                    fontWeight: FontWeight.w500,
+                    color: Themer.primary
+                  ),
+                ),
+                const Icon(Icons.arrow_drop_down),
+              ],
+            ),
           ),
-        ) : Row(
-          mainAxisSize: MainAxisSize.min,
+        ],
+      )
+      : Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(Icons.timer_sharp),
             const SizedBox(width: 5),
-            Text('${localisation.aliaMBNOResendMessage(timing)} '),
-            if (minutes == 0 && seconds == 0)
-              const Icon(Icons.refresh_outlined, size: 20),
+            Text(
+              "$timing sec",
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 15,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.30,
+              ),
+            ),
           ],
-        )
-        ,
-    );
+        );
   }
 }

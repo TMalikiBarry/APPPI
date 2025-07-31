@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:common_dependencies/interceptors/HttpInterceptors.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
@@ -280,7 +283,8 @@ class TokenInterceptor extends Interceptor {
   final Dio client;
 
   TokenInterceptor(this.client);
-
+  bool _isRefreshing = false;
+  final List<void Function(String)> _queuedRequests = [];
   /// Ajouter le token avant chaque requête
   @override
   void onRequest(
@@ -304,48 +308,60 @@ class TokenInterceptor extends Interceptor {
   @override
   void onError(DioException error, ErrorInterceptorHandler handler) async {
     logger.e("Error HTTP - dans Token interceptor", error: error);
-    // Si c'est un problème d'autorisations
-    final pref = await SharedPreferences.getInstance();
-    if (error.response?.statusCode == 401) {
-      // Si une réponse 401 est reçue, actualisez le jeton d'accès
-      // String? newAccessToken = await ConnexionOutputAuthpkce.refreshToken();
-      final refreshToken = pref.getString('refreshToken');
 
-      if (refreshToken == null) {
-        _triggerRefreshServiceEvent();
-        throw Exception("No refresh token available");
+    if (error.response?.statusCode == 401 && !_isRefreshing) {
+
+      var pref = await SharedPreferences.getInstance();
+      int? expirationDateStr = pref.getInt("tokenExpiration");
+      int? refreshExpirationDateStr = pref.getInt("refreshTokenExpiration");
+      print("expirationDateStr: $expirationDateStr");
+      print("refreshExpirationDateStr: $refreshExpirationDateStr");
+      var now = DateTime.now().millisecondsSinceEpoch ~/ 1000; // Valeur actuelle en secondes
+      print("now: $now");
+      if (now >= expirationDateStr! && now < refreshExpirationDateStr!) {
+        _isRefreshing = true;
+        try {
+          print("Token expired but refresh token is still valid, refreshing token...");
+          await HttpInterceptors().refreshToken();
+          String? newToken = pref.getString("accessToken");
+          print("token after refresh $newToken");
+          // Appliquer le token aux requêtes en attente
+          for (final callback in _queuedRequests) {
+            callback(newToken!);
+          }
+          _queuedRequests.clear();
+          // Rejouer la requête initiale avec le nouveau token
+          final retryOptions = error.requestOptions;
+          retryOptions.headers['Authorization'] = 'Bearer $newToken';
+          final response = await client.fetch(retryOptions);
+          return handler.resolve(response);
+        } catch (e) {
+          return handler.reject(error); // Si le refresh échoue
+        } finally {
+          _isRefreshing = false;
+        }
       }
-
-      // Récupérer les dates d'expiration
-      final expirationDateStr = pref.getInt('tokenExpiration');
-      final refreshExpirationDateStr = pref.getInt('refreshTokenExpiration');
-      final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-
-      // Vérifier la validité du refresh token
-      if (refreshExpirationDateStr == null || now >= refreshExpirationDateStr) {
+      else {
+        print("Both token and refresh token expired, redirecting to login...");
         _triggerRefreshServiceEvent();
-        throw Exception("Refresh token expired");
       }
-
-             // Mettre à jour l'en-tête de la requête avec le nouveau jeton d'accès
-        error.requestOptions.headers['Authorization'] =
-            'Bearer $refreshToken';
-        // Relancer la requête originale avec les mêmes options
-        return handler.resolve(await client.request(
-          error.requestOptions.path, // Garder le même endpoint
-          options: Options(
-            method: error.requestOptions
-                .method, // Garder la même méthode / (GET, POST, PUT, etc.)
-            headers:
-                error.requestOptions.headers, // Utiliser les nouveaux / headers
-          ),
-          data: error.requestOptions
-              .data, // Garde le corps de la requête (utile pour POST/PUT)
-          queryParameters: error
-              .requestOptions.queryParameters, // Garde les / paramètres GET
-        ));
-
     }
+
+    if(_isRefreshing && error.response?.statusCode == 401) {
+      final completer = Completer<Response>();
+      _queuedRequests.add((String token) async {
+        final retryOptions = error.requestOptions;
+        retryOptions.headers['Authorization'] = 'Bearer $token';
+        try {
+          final response = await client.fetch(retryOptions);
+          completer.complete(response);
+        } catch (e) {
+          completer.completeError(e);
+        }
+      });
+      return handler.resolve(await completer.future);
+    }
+
     return handler.next(error);
   }
 

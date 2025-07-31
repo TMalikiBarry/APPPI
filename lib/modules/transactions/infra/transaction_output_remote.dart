@@ -223,6 +223,7 @@ class TransactionOutputRemote {
     Map<String, dynamic> request = command.toJson();
     request.addAll({
       'aliasFrom': aliasFrom,
+      'clientId': aliasFrom,
       'userLogin': userLogin,
     });
     if (command.method == TransactionSendMethod.alias || command.method == TransactionSendMethod.qrcode){
@@ -284,6 +285,7 @@ class TransactionOutputRemote {
     var url = '/transfer/eme/external';
     Map<String, dynamic> request = command.toJson();
     request.addAll({
+      'clientId': aliasFrom,
       'aliasFrom': aliasFrom,
       'userLogin': userLogin,
     });

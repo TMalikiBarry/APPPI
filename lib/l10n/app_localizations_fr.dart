@@ -1667,4 +1667,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get alias_copied => 'Alias copié !';
+
+  @override
+  String get bottom_bar_home => 'Accueil';
+
+  @override
+  String get bottom_bar_transaction => 'Transactions';
 }

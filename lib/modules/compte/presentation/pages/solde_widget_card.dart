@@ -102,14 +102,14 @@ class _SoldeWidgetCardState extends State<SoldeWidgetCard> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(padding: const EdgeInsets.only(left: 16),
+                            Padding(padding: const EdgeInsets.only(left: 14),
                             child: Text(
                               traductions.homeSolde,
                               style: const TextStyle(color: Colors.white70),
                             ),),
                             //const SizedBox(height: 8),
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 if (state is CompteSoldeStateInitial)
                                   const SkeletonWidget(height: 25, width: 150, isList: false),
@@ -118,7 +118,7 @@ class _SoldeWidgetCardState extends State<SoldeWidgetCard> {
                                     montant: state.solde,
                                     style: const TextStyle(
                                       color: Colors.white,
-                                      fontSize: 30,
+                                      fontSize: 25,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),

@@ -46,14 +46,18 @@ class NotificationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).copyWith().size;
     String? image;
     if (type == NotificationType.success) {
       image = Images.success;
-      print("On est laaaaaa");
     } else if (type == NotificationType.error) {
       image = Images.error;
     } else if (type == NotificationType.info) {
       image = Images.info;
+    }
+    var height = size.height * 0.4;
+    if (description != null){
+      height = size.height * 0.6;
     }
     return Container(
       width: double.infinity,
@@ -64,7 +68,7 @@ class NotificationDialog extends StatelessWidget {
         ),
       ),
       padding: const EdgeInsets.all(16),
-      height: MediaQuery.of(context).copyWith().size.height * 0.40,
+      height: height,
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -414,6 +414,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get aliaMBNOInvalidOtpMessage => 'Código OTP inválido';
 
   @override
+  String get aliasInvalidOtpResend => 'Reenviar';
+
+  @override
   String get aliaErrorPageTitle => '😔 Oooops';
 
   @override

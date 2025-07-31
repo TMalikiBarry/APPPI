@@ -190,6 +190,7 @@
   },
   "aliaMBNOResendMessageBtn": "Renvoyer le code",
   "aliaMBNOInvalidOtpMessage": "Code otp invalide",
+  "aliasInvalidOtpResend": "Renvoyer",
   "@_ALIAS_ERROR": {},
   "aliaErrorPageTitle": "😔 Oooops",
   "aliaErrorPageSubTitle": "Cet alias est pris",

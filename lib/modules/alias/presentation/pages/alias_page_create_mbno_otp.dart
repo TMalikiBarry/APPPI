@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,7 +11,8 @@ import '../bloc/alias_state.dart';
 import 'alias_page_create_mbno_timer.dart';
 import 'alias_page_otp.dart';
 
-class AliasPageCreateMBNOOtp extends StatelessWidget {
+String? selectedChannel;
+class AliasPageCreateMBNOOtp extends StatefulWidget {
   //
   const AliasPageCreateMBNOOtp({
     super.key,
@@ -18,6 +20,11 @@ class AliasPageCreateMBNOOtp extends StatelessWidget {
   });
   final AliasMBNOVerificationState aliasState;
 
+  @override
+  State<AliasPageCreateMBNOOtp> createState() => _AliasPageCreateMBNOOtpState();
+}
+
+class _AliasPageCreateMBNOOtpState extends State<AliasPageCreateMBNOOtp> {
   // Nombre de chiffres du code PIN
   final int pinLength = AliasMbnoOtpCommand.otpSize;
 
@@ -25,7 +32,7 @@ class AliasPageCreateMBNOOtp extends StatelessWidget {
   Widget build(BuildContext context) {
     //
     AppLocalizations localisation = AppLocalizations.of(context)!;
-    String phoneNumber = aliasState.values.phoneNumber!.value()!;
+    String phoneNumber = widget.aliasState.values.phoneNumber!.value()!;
 
     return MyPageContainer(
       child: Column(
@@ -39,24 +46,30 @@ class AliasPageCreateMBNOOtp extends StatelessWidget {
                 title: localisation.verifyPhoneNumberPageTitle,
                 subtitle:
                     localisation.verifyPhoneNumberPageSubTitle(phoneNumber),
-                errorMessage: aliasState.error != null
+                errorMessage: widget.aliasState.error != null
                     ? localisation.aliaMBNOInvalidOtpMessage
                     : null,
                 countdownTimer: AliasMBNOCountdownTimer(
-                  onResendOtp: () => context
-                      .read<AliasBloc>()
-                      .add(AskPhoneNumberVerificationEvent(aliasState.values)),
+                  onResendOtp: (channel) {
+                    setState(() {
+                      selectedChannel = channel;
+                    });
+                    context.read<AliasBloc>()
+                    .add(AskPhoneNumberVerificationEvent(widget.aliasState.values, selectedChannel));
+                  }
                 ),
-                onOtpComplete: (otpCode) {
+                onOtpComplete: (otpCode, channel) {
                   context
-                      .read<AliasBloc>()
-                      .add(CheckPhoneNumberVerificationEvent(
-                        aliasState.values,
-                        otpCode.last,
-                        pinLength - 1,
-                        AliasMbnoOtpCommand(otpCode),
-                      ));
+                    .read<AliasBloc>()
+                    .add(CheckPhoneNumberVerificationEvent(
+                      widget.aliasState.values,
+                      otpCode.last,
+                      pinLength - 1,
+                      AliasMbnoOtpCommand(otpCode),
+                      selectedChannel
+                  ));
                 },
+                channel: selectedChannel,
               ),
             ),
           ),

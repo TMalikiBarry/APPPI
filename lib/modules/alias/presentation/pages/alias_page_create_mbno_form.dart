@@ -160,7 +160,7 @@ class AliasPageCreateMBNOForm extends StatelessWidget {
                 if (aliasValue.isValid()) {
                   context
                       .read<AliasBloc>()
-                      .add(AskPhoneNumberVerificationEvent(aliasValue));
+                      .add(AskPhoneNumberVerificationEvent(aliasValue, null));
                 }
               },
               child: Text(localisation.loginFormBtnConnexion),

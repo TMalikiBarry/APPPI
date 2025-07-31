@@ -158,7 +158,7 @@ class AliasBloc extends Bloc<AliasEvent, AliasState> {
     //
     try {
       emit(AliasCreatingState(event.values));
-      await aliasInputPort.envoyerOtp("${event.values.phoneNumber!.indicatif}${event.values.phoneNumber!.phone}");
+      await aliasInputPort.envoyerOtp("${event.values.phoneNumber!.indicatif}${event.values.phoneNumber!.phone}", event.channel ?? null);
       emit(AliasMBNOVerificationState(event.values, [], null));
     } on ApiException catch (e) {
         // Erreur non gérée

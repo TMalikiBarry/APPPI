@@ -21,8 +21,8 @@ class AliasOutputRepository implements AliasOutputPort {
   final AliasOutputRemote repoRemote = AliasOutputRemote();
 
   @override
-  Future<void> envoyerOtp(String phone) async {
-    await repoRemote.envoyerOtp(phone);
+  Future<void> envoyerOtp(String phone, String? channel) async {
+    await repoRemote.envoyerOtp(phone, channel);
   }
 
   @override

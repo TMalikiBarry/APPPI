@@ -14,8 +14,8 @@ class AliasService implements AliasInputPort {
   const AliasService(this.aliasOutputPort);
 
   @override
-  Future<void> envoyerOtp(String phone) {
-    return aliasOutputPort.envoyerOtp(phone);
+  Future<void> envoyerOtp(String phone, String? channel) {
+    return aliasOutputPort.envoyerOtp(phone, channel);
   }
 
   @override

@@ -11,8 +11,8 @@ class AliasOutputRemote {
   //
   static final logger = Logger();
 
-  Future<void> envoyerOtp(String phone) async {
-    await Api.post('/customer/send-otp', data: {"phone": phone});
+  Future<void> envoyerOtp(String phone, String? channel) async {
+    await Api.post('/customer/send-otp', data: {"phone": phone, "channel": channel});
   }
 
   Future<Alias?> recuperer(String compte) async {

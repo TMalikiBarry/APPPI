@@ -8,7 +8,7 @@ class AliasMBNOCountdownTimer extends StatefulWidget {
   //
   const AliasMBNOCountdownTimer({super.key, required this.onResendOtp});
 
-  final Function() onResendOtp;
+  final void Function(String? channel) onResendOtp;
 
   @override
   AliasMBNOCountdownTimerState createState() => AliasMBNOCountdownTimerState();
@@ -58,108 +58,82 @@ class AliasMBNOCountdownTimerState extends State<AliasMBNOCountdownTimer> {
     String timing = '${minutes.toString().padLeft(2, '0')}'
         ':${seconds.toString().padLeft(2, '0')}';
 
-    return TextButton(
-      onPressed: minutes == 0 && seconds == 0
-          ? () {
-              startTimer();
+    return (minutes == 0 && seconds == 0) ?
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(width: 5),
+          PopupMenuButton<String>(
+            //tooltip: AppLocalizations.of(context).resend,
+            tooltip: localisation.aliaMBNOResendMessageBtn,
+            onSelected: (value) async {
               // renvoyer code OTP
-              widget.onResendOtp();
-            }
-          : null,
-      child: (minutes == 0 && seconds == 0) ?
-        TextButton(
-          onPressed: () {
-
-            // renvoyer code OTP
-            widget.onResendOtp();
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(width: 5),
-              PopupMenuButton<String>(
-                //tooltip: AppLocalizations.of(context).resend,
-                tooltip: localisation.aliaMBNOResendMessageBtn,
-                onSelected: (value) async {
-                  // renvoyer code OTP
-                  widget.onResendOtp();
-                },
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: 'WHATSAPP',
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          package: 'common_dependencies',
-                          'assets/images/whatsapp_icon.png',
-                          width: 20,
-                          height: 20,
-                        ),
-                        const SizedBox(width: 8),
-                        const Text('WhatsApp'),
-                      ],
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'SMS',
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          package: 'common_dependencies',
-                          'assets/images/sms.png',
-                          width: 20,
-                          height: 20,
-                        ),
-                        const SizedBox(width: 8),
-                        const Text('SMS'),
-                      ],
-                    ),
-                  ),
-                ],
+              widget.onResendOtp(value);
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'WHATSAPP',
                 child: Row(
                   children: [
-                    Text(
-                      localisation.aliaMBNOResendMessageBtn,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.w500,
-                      ),
+                    Image.asset(
+                      package: 'common_dependencies',
+                      'assets/images/whatsapp_icon.png',
+                      width: 20,
+                      height: 20,
                     ),
-                    const Icon(Icons.arrow_drop_down),
+                    const SizedBox(width: 8),
+                    const Text('WhatsApp'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'SMS',
+                child: Row(
+                  children: [
+                    Image.asset(
+                      package: 'common_dependencies',
+                      'assets/images/sms.png',
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    const Text('SMS'),
                   ],
                 ),
               ),
             ],
-          ),
-        )
-        : Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.timer_sharp),
-              const SizedBox(width: 5),
-              Text(
-                "$timing sec",
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontFamily: 'Lato',
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: -0.30,
+            child: Row(
+              children: [
+                Text(
+                  localisation.aliaMBNOResendMessageBtn,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    decoration: TextDecoration.underline,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-            ],
-          )
-        /*: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(minutes == 0 && seconds == 0
-              ? '${localisation.aliaMBNOResendMessageBtn} '
-              : '${localisation.aliaMBNOResendMessage(timing)} '),
-          if (minutes == 0 && seconds == 0)
-            const Icon(Icons.refresh_outlined, size: 20),
+                const Icon(Icons.arrow_drop_down),
+              ],
+            ),
+          ),
         ],
-      ),*/
-    );
+      )
+      : Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.timer_sharp),
+            const SizedBox(width: 5),
+            Text(
+              "$timing sec",
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 15,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.30,
+              ),
+            ),
+          ],
+        );
   }
 }

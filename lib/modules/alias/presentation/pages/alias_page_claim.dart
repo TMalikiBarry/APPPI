@@ -446,7 +446,7 @@ class AliasPageClaim extends StatelessWidget {
                   error != null ? traductions.aliaMBNOInvalidOtpMessage : null,
               countdownTimer: aliasBloc.state is AliasClaimHandlingState
                   ? AliasMBNOCountdownTimer(
-                      onResendOtp: () => aliasBloc.add(
+                      onResendOtp: (channel) => aliasBloc.add(
                         AliasClaimRespondEvent(id, alias, claim, false, null),
                       ),
                     )

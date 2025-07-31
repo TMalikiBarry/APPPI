@@ -12,7 +12,7 @@ abstract class AliasInputPort {
   //
   /// Envoyer l'otp à l'utilisateur
   ///
-  Future<void> envoyerOtp(String phone);
+  Future<void> envoyerOtp(String phone, String? channel);
 
   //
   /// Créer l'alias de l'utilisateur

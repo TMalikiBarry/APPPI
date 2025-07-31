@@ -43,9 +43,9 @@ class AliasPageCreateMBNOOtp extends StatelessWidget {
                     ? localisation.aliaMBNOInvalidOtpMessage
                     : null,
                 countdownTimer: AliasMBNOCountdownTimer(
-                  onResendOtp: () => context
+                  onResendOtp: (channel) => context
                       .read<AliasBloc>()
-                      .add(AskPhoneNumberVerificationEvent(aliasState.values)),
+                      .add(AskPhoneNumberVerificationEvent(aliasState.values, channel)),
                 ),
                 onOtpComplete: (otpCode) {
                   context

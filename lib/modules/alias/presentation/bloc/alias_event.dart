@@ -43,7 +43,9 @@ class CreateAliasMBNOValidationEvent extends AliasEvent {
 class AskPhoneNumberVerificationEvent extends AliasEvent {
   //
   final AliasCreateCommand values;
-  AskPhoneNumberVerificationEvent(this.values);
+  //
+  final String? channel;
+  AskPhoneNumberVerificationEvent(this.values, this.channel);
 }
 
 /// Quand on shouaite verifier un code otp envoyé sur un numéro

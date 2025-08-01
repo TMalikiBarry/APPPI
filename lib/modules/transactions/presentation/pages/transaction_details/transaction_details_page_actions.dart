@@ -42,7 +42,8 @@ class TransactionDetailsPageActions extends StatelessWidget {
             CtaWidget(
               image: Images.iconMoneySendHeaderHP,
               label: traductions.homeActionSend,
-              action: () => _actionSend(context, transaction),
+              //action: () => _actionSend(context, transaction),
+              action: null,
             ),
             // Transfert émis
             if (transaction.sens?.name == TransactionSens.debit.name) ...[
@@ -66,9 +67,10 @@ class TransactionDetailsPageActions extends StatelessWidget {
                 image: Images.iconMoneyReceiveHeaderHP,
                 label: traductions.transactionDetailsRecevoir,
                 disabled: transaction.clientAlias == null,
-                action: transaction.clientAlias != null
-                    ? () => _actionRtp(context, transaction)
-                    : null,
+                //action: transaction.clientAlias != null
+                //    ? () => _actionRtp(context, transaction)
+                //    : null,
+                action: null,
               ),
               // Retour de fonds
               CtaWidget(

@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,6 +55,13 @@ class ProfilePageAvatar extends StatelessWidget {
       // Affiche les initiales
       child = Center(child: Text(user.initiales()));
     }
+
+    var AliasFormated;
+    if (aliasState.alias.cle.contains("+")) {
+      AliasFormated = formatPhoneNumberUser(aliasState.alias.cle);
+    } else {
+      AliasFormated = aliasState.alias.cle;
+    }
     // Retourne l'avatar et le nom
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,7 +105,7 @@ class ProfilePageAvatar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6), // facultatif
                   ),
                   child: Text(
-                    aliasState.alias.cle,
+                    AliasFormated,
                     style: Theme.of(context)
                         .textTheme
                         .displayLarge!

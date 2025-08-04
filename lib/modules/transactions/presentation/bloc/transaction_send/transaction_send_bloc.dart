@@ -20,8 +20,7 @@ import '../../../ports/input/transaction_input_port.dart';
 import 'transaction_send_event.dart';
 import 'transaction_send_state.dart';
 
-class TransactionSendBloc
-    extends Bloc<TransactionSendEvent, TransactionSendState> {
+class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendState> {
   ///
   final logger = Logger();
 
@@ -48,8 +47,7 @@ class TransactionSendBloc
     on<TransactionSendListRecentsEvent>(_onTransactionSendListRecentsEvent);
 
     // Pour cacher ou afficher les options de transferts
-    on<TransactionSendSearchContactsEvent>(
-        _onTransactionSendSearchContactsEvent);
+    on<TransactionSendSearchContactsEvent>(_onTransactionSendSearchContactsEvent);
 
     // Pour afficher le formulaire de transaction
     on<TransactionSendDisplayFormEvent>(_onTransactionSendDisplayFormEvent);
@@ -122,8 +120,7 @@ class TransactionSendBloc
     List<Participant> psps = await participantInputPort.list(form.pspPays);
     if (event.command.pspCode != null) {
       try {
-        Participant psp =
-            psps.where((el) => el.codeMembre == event.command.pspCode).first;
+        Participant psp = psps.where((el) => el.codeMembre == event.command.pspCode).first;
         event.command.pspNom = psp.nomMembre;
       } catch (e) {
         // TODO handle psp not in list
@@ -140,11 +137,8 @@ class TransactionSendBloc
     TransactionSendCommand form = event.command;
     form.isValid();
     // Si IBAN, determine participant
-    if (form.iban != null &&
-        form.iban!.isValid() &&
-        state.participants != null) {
-      Iterable<Participant> matches = state.participants!.where(
-          (element) => element.codeBanque == form.iban!.value!.substring(4, 9));
+    if (form.iban != null && form.iban!.isValid() && state.participants != null) {
+      Iterable<Participant> matches = state.participants!.where((element) => element.codeBanque == form.iban!.value!.substring(4, 9));
       //
       if (matches.length == 1) {
         Participant psp = matches.first;
@@ -154,12 +148,8 @@ class TransactionSendBloc
       }
     }
     // Si Other e
-    if (form.othr != null &&
-        form.othr!.isValid() &&
-        form.pspCode != null &&
-        state.participants != null) {
-      Iterable<Participant> matches = state.participants!
-          .where((element) => element.codeMembre == form.pspCode);
+    if (form.othr != null && form.othr!.isValid() && form.pspCode != null && state.participants != null) {
+      Iterable<Participant> matches = state.participants!.where((element) => element.codeMembre == form.pspCode);
       //
       if (matches.length == 1) {
         Participant psp = matches.first;
@@ -193,7 +183,7 @@ class TransactionSendBloc
         Transaction transaction = await transactionsInputPort.initiate(
           event.command,
         );
-        if (event.command.action == TransactionSendCommand.actionReceiveNow) {
+        /* if (event.command.action == TransactionSendCommand.actionReceiveNow) {
           // La demande est envoyée
           emit(TransactionSendFormSuccessState(
             event.command,
@@ -201,13 +191,13 @@ class TransactionSendBloc
             participants: state.participants,
           ));
         } // Transferts
-        else {
-          // Afficher la page de demande de vérification
-          emit(TransactionSendFormVerificationAskingState(
-            form,
-            transaction,
-          ));
-        }
+        else {*/
+        // Afficher la page de demande de vérification
+        emit(TransactionSendFormVerificationAskingState(
+          form,
+          transaction,
+        ));
+        //}
       } on ApiException catch (e) {
         // Erreur de vérification : alias invalide ou autre
         if (e.error == ApiError.notFound) {
@@ -275,19 +265,17 @@ class TransactionSendBloc
     // Send Now
     else {*/
     try {
-      Stream<Transaction> stream = await transactionsInputPort.confirm(
-          TransactionConfirmCommand(
-          endToendId: transaction.endToEndId,
-          confirmationDate: DateTime.now().toIso8601String(),
-          confirmationMethode: event.method,
-          latitude: event.command.latitude,
-          longitude: event.command.longitude,
-          amount: event.command.amount,
-          transactionVerificationResultAlias: event.transaction.transactionVerificationResultAlias,
-          transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
-          transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
-        )
-      );
+      Stream<Transaction> stream = await transactionsInputPort.confirm(TransactionConfirmCommand(
+        endToendId: transaction.endToEndId,
+        confirmationDate: DateTime.now().toIso8601String(),
+        confirmationMethode: event.method,
+        latitude: event.command.latitude,
+        longitude: event.command.longitude,
+        amount: event.command.amount,
+        transactionVerificationResultAlias: event.transaction.transactionVerificationResultAlias,
+        transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
+        transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
+      ));
 
       stream.listen(
         (trans) {
@@ -463,28 +451,23 @@ class TransactionSendBloc
 
     // Vérifier l'autorisation actuelle d'abord
     permission = await Geolocator.checkPermission();
-    logger.i(
-        "_checkAndRequestLocationPermission : Permission actuelle: $permission");
+    logger.i("_checkAndRequestLocationPermission : Permission actuelle: $permission");
 
     if (permission == LocationPermission.denied) {
       // Demander l'autorisation - ceci affichera le pop-up système
       // Même si le GPS est désactivé, le pop-up peut permettre d'activer le GPS
-      logger.i(
-          "_checkAndRequestLocationPermission : Demande d'autorisation en cours...");
+      logger.i("_checkAndRequestLocationPermission : Demande d'autorisation en cours...");
       permission = await Geolocator.requestPermission();
-      logger.i(
-          "_checkAndRequestLocationPermission : Réponse de l'utilisateur: $permission");
+      logger.i("_checkAndRequestLocationPermission : Réponse de l'utilisateur: $permission");
 
       if (permission == LocationPermission.denied) {
-        logger.i(
-            "_checkAndRequestLocationPermission : Autorisation refusée par l'utilisateur");
+        logger.i("_checkAndRequestLocationPermission : Autorisation refusée par l'utilisateur");
         return false;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      logger.i(
-          "_checkAndRequestLocationPermission : Autorisation refusée définitivement");
+      logger.i("_checkAndRequestLocationPermission : Autorisation refusée définitivement");
 
       // Ouvrir les paramètres de l'application pour activation manuelle
       await Geolocator.openAppSettings();
@@ -494,8 +477,7 @@ class TransactionSendBloc
     // Maintenant vérifier si le service de localisation est activé
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      logger.i(
-          "_checkAndRequestLocationPermission : Service de localisation désactivé");
+      logger.i("_checkAndRequestLocationPermission : Service de localisation désactivé");
 
       // Si on a la permission mais le service est désactivé,
       // ouvrir les paramètres système pour activer le GPS
@@ -507,24 +489,19 @@ class TransactionSendBloc
       // Vérifier à nouveau si le service est maintenant activé
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
-        logger.i(
-            "_checkAndRequestLocationPermission : Service de localisation toujours désactivé");
+        logger.i("_checkAndRequestLocationPermission : Service de localisation toujours désactivé");
         return false;
       }
-      logger.i(
-          "_checkAndRequestLocationPermission : Service de localisation activé");
+      logger.i("_checkAndRequestLocationPermission : Service de localisation activé");
     }
 
     // Vérifier si on a au moins une permission partielle
-    if (permission == LocationPermission.whileInUse ||
-        permission == LocationPermission.always) {
-      logger.i(
-          "_checkAndRequestLocationPermission : Autorisation accordée ($permission)");
+    if (permission == LocationPermission.whileInUse || permission == LocationPermission.always) {
+      logger.i("_checkAndRequestLocationPermission : Autorisation accordée ($permission)");
       return true;
     }
 
-    logger.i(
-        "_checkAndRequestLocationPermission : Permission non accordée: $permission");
+    logger.i("_checkAndRequestLocationPermission : Permission non accordée: $permission");
     return false;
   }
 
@@ -542,9 +519,9 @@ class TransactionSendBloc
 
   /// Récupère les participants selon le pays sélectionné
   void _onTransactionSendGetParticipantsByCountryEvent(
-      TransactionSendGetParticipantsByCountryEvent event,
-      Emitter<TransactionSendState> emit,
-      ) async {
+    TransactionSendGetParticipantsByCountryEvent event,
+    Emitter<TransactionSendState> emit,
+  ) async {
     try {
       logger.i("CountryCode ${event.countryCode}");
       logger.i("CountryCode ${event.command.toJson()}");
@@ -569,7 +546,6 @@ class TransactionSendBloc
 
       // Émettre le nouvel état avec la liste des participants mise à jour
       emit(TransactionSendFormInputState(updatedCommand, participants: participants));
-
     } catch (e) {
       logger.e("Erreur lors de la récupération des participants: $e");
       // Émettre un état d'erreur ou maintenir l'état actuel

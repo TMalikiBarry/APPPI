@@ -40,6 +40,7 @@ class QrcodeSwitchBtn extends StatelessWidget {
                             ?. //
                             copyWith(
                               color: item.textColor,
+                              fontSize: 10
                             ),
                       ),
                     ),

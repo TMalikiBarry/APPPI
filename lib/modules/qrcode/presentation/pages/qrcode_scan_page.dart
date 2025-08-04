@@ -164,8 +164,9 @@ class _QrcodeScanPageState extends State<QrcodeScanPage> {
                       controller.torchEnabled
                           ? Images.iconFlashOn
                           : Images.IconFlashOff,
-                      width: 24,
-                      height: 24,
+                      width: 21,
+                      height: 21,
+                      color: Colors.white,
                       package: 'common_dependencies'
                     ),
                   ),
@@ -173,25 +174,29 @@ class _QrcodeScanPageState extends State<QrcodeScanPage> {
                   // Switch btn: Scan - Mon code
                   Expanded(
                     child: QrcodeSwitchBtn(
-                      cardBgColor: const Color(0xFF151413),
+                      cardBgColor: const Color(0xFFE1E4EE),
                       items: [
+                        // Scan
+                        QrcodeBtnItem(
+                          text: traductions.qrcodePageBtnScan,
+                          textColor: Themer.primary,
+                          btnColor: Themer.whiteColor,
+                          // textColor: Theme.of(context).colorScheme.onSurface,
+                          // btnColor: Theme.of(context).colorScheme.surface,
+                          action: () {},
+                        ),
 
                         // Mon code
                         QrcodeBtnItem(
                           text: traductions.qrcodePageBtnMonCode,
-                          textColor: Theme.of(context).colorScheme.surface,
+                          textColor: const Color(0xFF667085),
                           btnColor: Colors.transparent,
+                          // textColor: Theme.of(context).colorScheme.surface,
+                          // btnColor: Colors.transparent,
                           action: () {
                             controller.stop();
                             AppRouter.push(context, AppRouter.qrcodeShow);
                           },
-                        ),
-                        // Scan
-                        QrcodeBtnItem(
-                          text: traductions.qrcodePageBtnScan,
-                          textColor: Theme.of(context).colorScheme.onSurface,
-                          btnColor: Theme.of(context).colorScheme.surface,
-                          action: () {},
                         ),
                       ],
                     ),
@@ -207,8 +212,8 @@ class _QrcodeScanPageState extends State<QrcodeScanPage> {
                     elevation: 0,
                     heroTag: "galery",
                     child:
-                        Image.asset(Images.iconsGalerie, width: 24, height: 24,
-                            package: 'common_dependencies'),
+                        Image.asset(Images.iconsGalerie, width: 21, height: 21,
+                            color: Colors.white, package: 'common_dependencies'),
                   ),
                 ],
               ),

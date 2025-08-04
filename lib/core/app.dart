@@ -38,16 +38,34 @@ import 'observer.dart';
 import 'router.dart';
 import 'theme.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 /// Premier widget Application lancée par le main
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   //
   /// Constructeur de l'app
   App({super.key});
 
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  static const keyIdToken = "ID_TOKEN";
+  static const accesToken = "ACCESS_TOKEN";
+
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+  String? idToken;
+  SharedPreferences? prefs;
+  bool _isLoading = true;
+  ConfigBloc? configBloc;
+  CategorieBloc? categorieBloc;
+
+  // Couleurs pour le loader (à adapter selon votre thème)
+  final Color primaryColor = const Color(0xFF6366F1); // Indigo
+  final Color secondaryColor = const Color(0xFF8B5CF6); // Violet
 
   Future<void> _decodeIdToken(idToken) async {
-
     if (idToken == null || !idToken.contains('.')) {
       throw Exception('Token JWT invalide ou null');
     }
@@ -68,154 +86,189 @@ class App extends StatelessWidget {
       telephone: json["phone_number"],
       email: json["email"],
       alias: json["alias"],
-      avatar: "",
+      avatar: null,
     );
 
     print("ConnectedUser.current1");
     print(ConnectedUser.current);
     print(ConnectedUser.current!.alias);
   }
+
   Future<void> _config() async {
-    // It’s worth noting that calling ensureInitialized()
-    // more than once will throw an exception,
-    // so it’s important to make sure that this method
-    // is only called once per app execution.
-    // https://api.flutter.dev/flutter/widgets/WidgetsFlutterBinding/ensureInitialized.html
-    print("ConnectedUser.currentg1");
+    try {
+      print("ConnectedUser.currentg1");
 
-    _decodeIdToken(idToken);
-    // Temporairement à cause du certificat autosigné
-    // utilisé sur keycloak dans l'env de test
-    HttpOverrides.global = MyHttpOverrides();
+      _decodeIdToken(idToken);
 
-    // Initialisation de firebase: Système de journalisation, de notification
-    //await Firebase.initializeApp(
-    //  options: DefaultFirebaseOptions.currentPlatform,
-    //);
+      // Temporairement à cause du certificat autosigné
+      // utilisé sur keycloak dans l'env de test
+      HttpOverrides.global = MyHttpOverrides();
 
-    // Avant toute chose initialiser le système de journalisation
-    await AppLogger.config();
+      // Initialisation de firebase: Système de journalisation, de notification
+      //await Firebase.initializeApp(
+      //  options: DefaultFirebaseOptions.currentPlatform,
+      //);
 
-    // Créer une instance de stockage sécurisée
-    // Keychain pour IOS et keystore pour android
+      // Avant toute chose initialiser le système de journalisation
+      await AppLogger.config();
 
-    // Créer une instance de SharedPreferences
-    //final prefs = await SharedPreferences.getInstance();
+      // Créer une instance de stockage sécurisée
+      // Keychain pour IOS et keystore pour android
 
-    // Initaliser le client API
-    Api.initClient(secureStorage);
+      // Créer une instance de SharedPreferences
+      //final prefs = await SharedPreferences.getInstance();
 
-    // Initialize the caching service
-    await AppStorage.init(secureStorage);
+      // Initaliser le client API
+      Api.initClient(secureStorage);
 
+      // Initialize the caching service
+      await AppStorage.init(secureStorage);
 
-    // Observer les bloc
-    Bloc.observer = AppObserver(); // Ajoutez un observer personnalisé
+      // Observer les bloc
+      Bloc.observer = AppObserver(); // Ajoutez un observer personnalisé
 
-    // Initialisation du système de gestion des notifications
-    await AppNotifications.init(prefs!);
+      // Initialisation du système de gestion des notifications
+      await AppNotifications.init(prefs!);
 
-    // Run the app
-    //runApp(const App());
+      // Initialiser les blocs
+      configBloc = ConfigBloc(Di.getConfigInputPort());
+      categorieBloc = CategorieBloc(
+        Di.getCategorieInputPort(),
+      )..add(CategorieListEvent());
+
+      // Ajouter un délai minimum pour voir le loader (optionnel)
+      await Future.delayed(const Duration(milliseconds: 1500));
+
+      // Configuration terminée
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Erreur lors de la configuration: $e');
+      // En cas d'erreur, on peut soit afficher une page d'erreur
+      // soit continuer avec _isLoading = false
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
-  static const keyIdToken = "ID_TOKEN";
-  static const accesToken = "ACCESS_TOKEN";
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
-  String? idToken;
-  SharedPreferences? prefs;
+    if (_isLoading) {
+      // Récupération des arguments seulement si on est en train de charger
+      final args = ModalRoute.of(context)!.settings.arguments as BceaoPiAppEvent;
+      print("args.user");
+      print(args.user);
+      idToken = args.user;
+      prefs = args.prefs;
 
+      // Initialise le système d'injection des dépendances
+      Di.init(prefs!, secureStorage);
 
+      // Sauvegarde des tokens
+      secureStorage.write(key: keyIdToken, value: args.user);
+      secureStorage.write(key: accesToken, value: args.user);
+
+      // Lancer la configuration
+      _config();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     WidgetsFlutterBinding.ensureInitialized();
-    final args = ModalRoute.of(context)!.settings.arguments as BceaoPiAppEvent;
-    print("args.user");
-    print(args.user);
-    idToken = args.user;
-    prefs = args.prefs;
-    // Initialise le système d'injection des dépendances
-    Di.init(prefs!, secureStorage);
-    // Alors afficher maintenant l'application
-    // En considérant les données de configuration
-    secureStorage.write(key: keyIdToken, value: args.user);
-    secureStorage.write(key: accesToken, value: args.user);
-    return FutureBuilder(
-        future: _config(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
-            // Tant que _config() n'est pas fini, on affiche un écran de chargement
-            return const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            );
-          }
 
-          ConfigBloc configBloc = ConfigBloc(Di.getConfigInputPort());
-          CategorieBloc categorieBloc = CategorieBloc(
-            Di.getCategorieInputPort(),
-          )..add(CategorieListEvent());
-
-          return MultiBlocProvider(
-            providers: [
-              // Configuration
-              BlocProvider<ConfigBloc>(create: (BuildContext context) => configBloc),
-              // Security - Login
-              BlocProvider<LoginBloc>(
-                create: (BuildContext context) => LoginBloc(
-                  Di.getConnexionInputPort(),
+    // Afficher la page de chargement
+    if (_isLoading) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          backgroundColor: Colors.white, // ou la couleur de fond de votre choix
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                LoadingAnimationWidget.flickr(
+                  leftDotColor: primaryColor,
+                  rightDotColor: secondaryColor,
+                  size: 50,
                 ),
-              ),
-              // Security - Identification
-              BlocProvider<IdentificationBloc>(
-                create: (BuildContext context) => IdentificationBloc(
-                  Di.getIdentificationInputPort(),
+                const SizedBox(height: 24),
+                Text(
+                  'Chargement...',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              // Alias
-              BlocProvider<AliasBloc>(
-                create: (BuildContext context) => AliasBloc(
-                  Di.getAliasInputPort(),
-                ),
-              ),
-              // Categories
-              BlocProvider<CategorieBloc>(
-                create: (BuildContext context) => categorieBloc,
-              ),
-              // Contacts list
-              BlocProvider(
-                create: (BuildContext context) => ContactBloc(),
-              ),
-              // Listener to phone movement to hide / show amount
-              BlocProvider(
-                create: (BuildContext context) => ParametreHideAmountBloc(
-                  configBloc,
-                ),
-              ),
-              // Transactions
-              BlocProvider(
-                create: (BuildContext context) => TransactionSendBloc(
-                  Di.getTransactionInputPort(),
-                  Di.getCompteInputPort(),
-                  Di.getParticipantInputPort(),
-                  Di.getPermissionInputPort(),
-                ),
-              ),
-            ],
-            child: BlocBuilder<ConfigBloc, ConfigState>(
-              bloc: configBloc,
-              buildWhen: (previous, current) =>
-              current is ConfigLoadedState &&
-                  (current.updatedKey == ConfigKey.preferedTheme ||
-                      current.updatedKey == ConfigKey.preferedLanguage),
-              builder: (context, state) =>
-                  _appLayout(configBloc.state as ConfigLoadedState),
+              ],
             ),
-            //_appLayout(configBloc.state as ConfigLoadedState),
-          );
-        });
+          ),
+        ),
+      );
+    }
 
+    // Afficher l'application principale une fois la configuration terminée
+    return MultiBlocProvider(
+      providers: [
+        // Configuration
+        BlocProvider<ConfigBloc>(create: (BuildContext context) => configBloc!),
+        // Security - Login
+        BlocProvider<LoginBloc>(
+          create: (BuildContext context) => LoginBloc(
+            Di.getConnexionInputPort(),
+          ),
+        ),
+        // Security - Identification
+        BlocProvider<IdentificationBloc>(
+          create: (BuildContext context) => IdentificationBloc(
+            Di.getIdentificationInputPort(),
+          ),
+        ),
+        // Alias
+        BlocProvider<AliasBloc>(
+          create: (BuildContext context) => AliasBloc(
+            Di.getAliasInputPort(),
+          ),
+        ),
+        // Categories
+        BlocProvider<CategorieBloc>(
+          create: (BuildContext context) => categorieBloc!,
+        ),
+        // Contacts list
+        BlocProvider(
+          create: (BuildContext context) => ContactBloc(),
+        ),
+        // Listener to phone movement to hide / show amount
+        BlocProvider(
+          create: (BuildContext context) => ParametreHideAmountBloc(
+            configBloc!,
+          ),
+        ),
+        // Transactions
+        BlocProvider(
+          create: (BuildContext context) => TransactionSendBloc(
+            Di.getTransactionInputPort(),
+            Di.getCompteInputPort(),
+            Di.getParticipantInputPort(),
+            Di.getPermissionInputPort(),
+          ),
+        ),
+      ],
+      child: BlocBuilder<ConfigBloc, ConfigState>(
+        bloc: configBloc,
+        buildWhen: (previous, current) =>
+        current is ConfigLoadedState &&
+            (current.updatedKey == ConfigKey.preferedTheme ||
+                current.updatedKey == ConfigKey.preferedLanguage),
+        builder: (context, state) =>
+            _appLayout(configBloc!.state as ConfigLoadedState),
+      ),
+    );
   }
 
   /// Affiche l'application selon le theme de l'utilisateur
@@ -246,8 +299,6 @@ class App extends StatelessWidget {
     String pageInitiale = params[ConfigKey.introductionPassed.code] == null
         ? AppRouter.introduction
         : AppRouter.home;
-    //: AppRouter.identificationInitial;
-    // : AppRouter.login;
 
     // Passer également la configuration pour le routage dans l'Application
     return MaterialApp.router(

@@ -7,7 +7,7 @@ import 'package:pi_mobile_app/modules/alias/ports/output/alias_output_port.dart'
 
 class MockAliasOutputPort implements AliasOutputPort {
   @override
-  Future<Alias> confirmer(AliasCreateCommand alias, String otp) async {
+  Future<Alias> confirmer(AliasCreateCommand alias, String otp, String? channel) async {
     return Alias(
         cle: "+221775177023",
         type: AliasType.mbno,
@@ -77,7 +77,7 @@ class MockAliasOutputPort implements AliasOutputPort {
 
 class MockAliasErrorOutputPort implements AliasOutputPort {
   @override
-  Future<Alias> confirmer(AliasCreateCommand alias, String otp) async {
+  Future<Alias> confirmer(AliasCreateCommand alias, String otp, String? channel) async {
     return Alias(
         cle: "+221775177023",
         type: AliasType.mbno,

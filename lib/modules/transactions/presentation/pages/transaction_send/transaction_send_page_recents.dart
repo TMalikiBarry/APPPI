@@ -222,7 +222,7 @@ class TransactionSendPageRecentsItem extends StatelessWidget {
 
   Icon? _getSensIcon(BuildContext context, Transaction transaction) {
     if (transaction.sens == TransactionSens.debit) {
-      return const Icon(Icons.arrow_back, size: 14, color: Colors.white);
+      return const Icon(Icons.arrow_back_ios, size: 14, color: Colors.white);
     } else if (transaction.sens == TransactionSens.credit) {
       return const Icon(Icons.arrow_forward, size: 14, color: Colors.white);
     } else {

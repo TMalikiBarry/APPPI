@@ -82,15 +82,17 @@ class _SoldeWidgetState extends State<SoldeWidget> {
                             montant: state.solde,
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.onSecondary,
-                              fontSize: 30,
+                              fontSize: 25,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                         //
                         if (displayEye) //state.eye
                           IconButton(
-                            icon: const Icon(Icons.visibility_outlined),
-                            //size: 18,
+                            padding: EdgeInsets.zero,
+                            icon: configState
+                                .configParams
+                                .params[ConfigKey.displayAmount.code] == "0" ? const Icon(Icons.visibility_outlined) : const Icon(Icons.visibility_off),
                             color: const Color(0xff615d52),
                             onPressed: () {
                               // Paramètre d'affichage du montant

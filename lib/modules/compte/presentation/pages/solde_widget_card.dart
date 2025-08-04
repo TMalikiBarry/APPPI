@@ -110,35 +110,46 @@ class _SoldeWidgetCardState extends State<SoldeWidgetCard> {
                             //const SizedBox(height: 8),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 if (state is CompteSoldeStateInitial)
                                   const SkeletonWidget(height: 25, width: 150, isList: false),
                                 if (state is CompteSoldeDisplayState)
-                                  AmountWidget(
-                                    montant: state.solde,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w600,
+                                  Container(
+                                    height: 40,
+                                    child: AmountWidget(
+                                      montant: state.solde,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                   ),
                                 if (displayEye)
-                                  IconButton(
-                                    icon: const Icon(Icons.visibility_outlined),
-                                    color: Colors.white70,
-                                    onPressed: () {
-                                      String? displayAmountParam = configState
+                                  Container(
+                                    height: 40,
+                                    padding: EdgeInsets.zero,
+                                    child: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      icon: configState
                                           .configParams
-                                          .params[ConfigKey.displayAmount.code];
-                                      bool displayAmount =
-                                          displayAmountParam == "1";
-                                      context.read<ConfigBloc>().add(
-                                        ConfigChangeEvent(
-                                          ConfigKey.displayAmount,
-                                          displayAmount ? "0" : "1",
-                                        ),
-                                      );
-                                    },
+                                          .params[ConfigKey.displayAmount.code] != "0" ? const Icon(Icons.visibility_off) : const Icon(Icons.visibility_outlined),
+                                      color: Colors.white70,
+                                      onPressed: () {
+                                        String? displayAmountParam = configState
+                                            .configParams
+                                            .params[ConfigKey.displayAmount.code];
+                                        bool displayAmount =
+                                            displayAmountParam == "1";
+                                        context.read<ConfigBloc>().add(
+                                          ConfigChangeEvent(
+                                            ConfigKey.displayAmount,
+                                            displayAmount ? "0" : "1",
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
                               ],
                             ),

@@ -28,14 +28,14 @@ class HomeScreenSPI extends StatelessWidget {
       body: Column(
         children: [
           // Tabs: Compte / Abonnements / Économies
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
               children: [
                 _TabButton(title: "Compte", isActive: true),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 _TabButton(title: "Abonnements"),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 _TabButton(title: "Economies"),
               ],
             ),
@@ -73,9 +73,9 @@ class HomeScreenSPI extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
+                    children: [
                       _ActionIcon(title: "Envoyer", icon: Icons.send),
                       _ActionIcon(title: "Recevoir", icon: Icons.call_received),
                       _ActionIcon(title: "Plus", icon: Icons.more_horiz),
@@ -89,11 +89,11 @@ class HomeScreenSPI extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Transactions section
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text("Transactions", style: TextStyle(fontWeight: FontWeight.bold)),
                 Text("Tout afficher", style: TextStyle(color: Colors.red)),
               ],
@@ -120,9 +120,9 @@ class HomeScreenSPI extends StatelessWidget {
           Container(
             color: Colors.white,
             padding: const EdgeInsets.all(16),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text("Dépenses du mois", style: TextStyle(color: Colors.grey)),
                 Text("2 300 000 F", style: TextStyle(fontWeight: FontWeight.bold)),
               ],

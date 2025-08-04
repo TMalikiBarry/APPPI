@@ -115,12 +115,12 @@ class QrcodeAliasPageAvatar extends StatelessWidget {
         ),
 
         // Avatar
-        Container(
+        /*Container(
           width: avatarDimension,
           height: avatarDimension,
           decoration: boxDecoration,
           child: child,
-        ),
+        ),*/
       ],
     );
   }

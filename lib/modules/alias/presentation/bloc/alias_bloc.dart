@@ -67,6 +67,7 @@ class AliasBloc extends Bloc<AliasEvent, AliasState> {
     Emitter<AliasState> emit,
   ) async {
     try {
+
       Alias? alias = await aliasInputPort.recuperer(event.compte);
       emit(alias != null ? AliasExistState(alias) : AliasNotExistState());
     } on AliasRetrieveException catch (e) {

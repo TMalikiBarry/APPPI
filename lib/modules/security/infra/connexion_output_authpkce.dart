@@ -172,7 +172,7 @@ class ConnexionOutputAuthpkce implements ConnexionOutputPort {
           : "DK",
       telephone: json["phone_number"],
       email: json["email"],
-      avatar: "",
+      avatar: null,
     );
     logger.i("USER INFO : $userInfos");
     return userInfos;

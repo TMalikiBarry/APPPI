@@ -81,6 +81,7 @@ class TransactionFormBtnConfirm extends StatelessWidget {
             Expanded(
               child: FilledButton.tonal(
                 onPressed: () {
+                  Navigator.pop(context);
                   // reject
                   context
                       .read<TransactionSendBloc>()

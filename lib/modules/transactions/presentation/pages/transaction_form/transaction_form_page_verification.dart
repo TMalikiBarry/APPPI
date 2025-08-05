@@ -193,30 +193,32 @@ class TransactionVerificationPage extends StatelessWidget {
                     const SizedBox(height: 16),
 
                     // Pays  de l'institution
-                    CustomTextInput(
-                      labelText: traductions.transactionFormOthrPaysLabel,
-                      controller: TextEditingController(
-                        text: UEMOACountry.get(transaction.clientPays)!.name,
-                      ),
-                      readOnly: true,
-                    ),
+                    if (transaction.clientPays.isNotEmpty)
+                        CustomTextInput(
+                          labelText: traductions.transactionFormOthrPaysLabel,
+                          controller: TextEditingController(
+                            text: UEMOACountry.get(transaction.clientPays)!.name,
+                          ),
+                          readOnly: true,
+                        ),
 
-                    // Séparateur
-                    const SizedBox(height: 16),
+                        // Séparateur
+                        const SizedBox(height: 16),
 
                     // Nom du client
-                    CustomTextInput(
-                      labelText:
-                          traductions.transactionFormVerificationClientName,
-                      controller: TextEditingController(
-                        text: transaction.sens == TransactionSens.debit ?
-                        transaction.clientNom : transaction.acquirerAccountLabel!,
-                      ),
-                      readOnly: true,
-                    ),
+                    if (transaction.clientNom.isNotEmpty)
+                        CustomTextInput(
+                          labelText:
+                              traductions.transactionFormVerificationClientName,
+                          controller: TextEditingController(
+                            text: transaction.sens == TransactionSens.debit ?
+                            transaction.clientNom : transaction.acquirerAccountLabel!,
+                          ),
+                          readOnly: true,
+                        ),
 
-                    // Séparateur
-                    const SizedBox(height: 16),
+                        // Séparateur
+                        const SizedBox(height: 16),
 
                     // Montant
                     CustomTextInput(

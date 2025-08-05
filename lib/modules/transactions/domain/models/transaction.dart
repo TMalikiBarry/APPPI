@@ -497,10 +497,10 @@ class Transaction {
       // Champs directs
         compte: json['otherClient'] as String? ?? '',
         montant: json['amount'] != null ? double.parse(json['amount']) : 0.0,
-        clientNom: json['nomClient'],
-        clientPays: json['paysResidence'],
-        endToEndId: json['endToEndId'],
-        acquirerAccountLabel: json['nomClient'],
+        clientNom: json['nomClient'] as String? ?? '',
+        clientPays: json['paysResidence'] as String? ?? '',
+        endToEndId: json['endToEndId']  as String? ?? '',
+        acquirerAccountLabel: json['nomClient'] as String?,
         transactionVerificationResultOthr: TransactionVerificationResultOthr.fromJson(json));
   }
 

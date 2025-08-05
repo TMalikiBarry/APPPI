@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pi_mobile_app/l10n/app_localizations.dart';
 import 'package:pi_mobile_app/modules/config/adapters/ui/bloc/config_bloc.dart';
 import 'package:pi_mobile_app/modules/config/domain/models/config_keys.dart';
+import 'package:pi_mobile_app/modules/transactions/presentation/pages/transaction_send/transaction_send_page.dart';
+import 'package:base_app/presenter/home.dart';
 
 import '../../../../core/assets.dart';
 import '../../../../core/theme.dart';
@@ -18,7 +20,7 @@ import '../../../security/presentation/bloc/login/login_bloc.dart';
 import '../../../security/presentation/bloc/login/login_state.dart';
 import '../../../subscription/presentation/pages/subscription_list/subscription_list_widget.dart';
 import 'home_bottom_navigation_bar.dart';
-import 'home_bottom_navigation_bar_2.dart';
+import 'home_bottom_widget.dart';
 import 'home_tab_compte.dart';
 import 'home_toolbar_leading.dart';
 
@@ -32,6 +34,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int selectedIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -162,7 +166,12 @@ class _HomePageState extends State<HomePage> {
             extendBody: true,
             // Barre de navigation
             //bottomNavigationBar: const HomeBottomNavigationBar(),
-            bottomNavigationBar: const BottomNavBarWidget(),
+            bottomNavigationBar: BottomNavbar(
+              currentIndex: selectedIndex,
+              onTap: (index) {
+                setState(() => selectedIndex = index);
+              },
+            ),
           ),
         );
       },

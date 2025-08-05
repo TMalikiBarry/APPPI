@@ -15,9 +15,11 @@ class AliasPageError extends StatelessWidget {
     super.key,
     required this.error,
     required this.compte,
+    this.isFullScreen = false
   });
   final AliasError error;
   final String compte;
+  final bool isFullScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class AliasPageError extends StatelessWidget {
       subtitle: _getSubtitle(localisation),
       description: _getDescription(localisation),
       btns: _getBtns(localisation, context),
+      isFullScreen: isFullScreen,
     );
   }
 

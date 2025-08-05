@@ -28,27 +28,49 @@ class AliasOutputRepository implements AliasOutputPort {
   @override
   Future<Alias?> recuperer(String compte) async {
     try {
-      Alias? alias = await repoRemote.recuperer(compte);
-      print("alias");
-      print(alias);
+      // Tentative de récupération depuis le serveur distant
+      final alias = await repoRemote.recuperer(compte);
+      logger.d("Alias récupéré du serveur : $alias");
+      logger.i(alias!.compte);
+
       if (alias != null) {
-        repoLocal.enregistrer(alias);
+        // Sauvegarde en local si trouvé
+        await repoLocal.enregistrer(alias);
       }
+
       return alias;
-    } catch (e) {
-      logger.e("Erreur serveur", error: e);
+    } on AliasRetrieveException catch (e) {
+      if (e.error == ApiError.notFound) {
+        throw AliasRetrieveException(error: ApiError.notFound);
+      }
+      logger.w("Erreur AliasRetrieveException depuis le serveur", error: e);
+
       try {
-        Alias? alias = await repoLocal.recuperer(compte);
+        // Tentative de récupération depuis le local en fallback
+        final aliasLocal = await repoLocal.recuperer(compte);
+
+        // On relance une exception mais avec l'alias local (si trouvé)
         throw AliasRetrieveException(
-          alias: alias,
-          error: e is ApiException ? e.error : e,
+          alias: aliasLocal,
+          error: e.error,
+          cause: e,
         );
-      } on ApiException catch (e) {
+      } catch (localError) {
+        logger.e("Erreur récupération depuis le local", error: localError);
         throw AliasRetrieveException(
           alias: null,
-          error: e is ApiException ? e.error : e,
+          error: ApiError.unknowError,
+          cause: localError,
         );
       }
+    } catch (e) {
+      // Cas général
+      logger.e("Erreur inattendue lors de la récupération d'un alias", error: e);
+      throw AliasRetrieveException(
+        alias: null,
+        error: ApiError.unknowError,
+        cause: e,
+      );
     }
   }
 

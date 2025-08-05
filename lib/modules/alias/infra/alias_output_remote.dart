@@ -1,4 +1,5 @@
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/modules/alias/domain/exceptions/alias_retrieve_exception.dart';
 
 import '../../../core/api.dart';
 import '../domain/exceptions/invalid_otp_exception.dart';
@@ -20,15 +21,21 @@ class AliasOutputRemote {
       final ApiResponse response = await Api.get('/alias/sync/search/$compte');
       return response.data != null ? Alias.fromJson(response.data["response"]) : null;
     } on ApiException catch (e) {
-      // Si l'api retourne 404 c'est qu'il y'a pas d'alias
-      if (e is ApiException && e.error == ApiError.notFound) {
-        rethrow;
-      } // Sinon  c'est une erreur imprévisible qu'il faut notifier
-      else {
-        rethrow;
+      //throw AliasRetrieveException(error: e.error, cause: e);
+      // Si c'est un notFound (404), on retourne null
+      logger.i("Exception : ApiException ${e.error}");
+      if (e.error == ApiError.notFound) {
+        logger.i("🔁 Throwing AliasRetrieveException with notFound");
+        throw AliasRetrieveException(error: ApiError.notFound);
+      } else {
+        logger.i("🔁 Throwing AliasRetrieveException with ${e.error}");
+        throw AliasRetrieveException(error: e.error, cause: e);
       }
+    } catch (e) {
+      throw AliasRetrieveException(error: ApiError.unknowError, cause: e);
     }
   }
+
 
   Future<Alias> creer(AliasCreateCommand alias) async {
     Map<String, dynamic> request = alias.toJson();

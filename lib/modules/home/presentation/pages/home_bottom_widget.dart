@@ -34,7 +34,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
         AppRouter.go(context, AppRouter.home); // ou Navigator.push(...)
         break;
       case 1:
-        AppRouter.push(context, AppRouter.transactionSend);
+        AppRouter.go(context, AppRouter.transactionSearch);
         break;
       case 2:
         AppRouter.go(context, AppRouter.homePage);

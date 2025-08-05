@@ -16,7 +16,7 @@ class TransactionRecentsBloc
 
   final intdefaultSize = 3;
 
-  final int defaultSize = 5;
+  final int defaultSize = 3;
 
   // Bloc de gestion de la config
   final ConfigBloc configBloc;

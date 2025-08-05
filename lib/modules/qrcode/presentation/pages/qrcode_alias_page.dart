@@ -128,12 +128,6 @@ class QrCodeAliasPage extends StatelessWidget {
                   cardBgColor: const Color(0xFFE1E4EE),
                   items: [
                     QrcodeBtnItem(
-                      text: traductions.qrcodePageBtnMonCode,
-                      textColor: Themer.primary,
-                      btnColor: Themer.whiteColor,
-                      action: () {},
-                    ),
-                    QrcodeBtnItem(
                       text: traductions.qrcodePageBtnScan,
                       textColor: const Color(0xFF667085),
                       btnColor: Colors.transparent,
@@ -144,6 +138,13 @@ class QrCodeAliasPage extends StatelessWidget {
                         );
                       },
                     ),
+                    QrcodeBtnItem(
+                      text: traductions.qrcodePageBtnMonCode,
+                      textColor: Themer.primary,
+                      btnColor: Themer.whiteColor,
+                      action: () {},
+                    ),
+
                   ],
                 ),
               ),

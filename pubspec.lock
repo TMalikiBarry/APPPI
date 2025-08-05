@@ -502,14 +502,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  facebook_app_events:
-    dependency: transitive
-    description:
-      name: facebook_app_events
-      sha256: b448a9bb74016c7a42a9b954da4a5fb2ca59a26fa0893b69f0653af9634ca503
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.19.7"
   fake_async:
     dependency: transitive
     description:
@@ -1536,6 +1528,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  phone_numbers_parser:
+    dependency: transitive
+    description:
+      name: phone_numbers_parser
+      sha256: "8aaa49708c9314d450d80767753c6512402e848138e5a91bf59ed3e0d3ac5d9b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.0.3"
+  pin_input_text_field:
+    dependency: transitive
+    description:
+      name: pin_input_text_field
+      sha256: f45683032283d30b670ec343781660655e3e1953438b281a0bc6e2d358486236
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.5.2"
   pinput:
     dependency: transitive
     description:
@@ -1757,6 +1765,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  sms_autofill:
+    dependency: transitive
+    description:
+      name: sms_autofill
+      sha256: c65836abe9c1f62ce411bb78d5546a09ece4297558070b1bd871db1db283aaf9
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
   source_gen:
     dependency: transitive
     description:

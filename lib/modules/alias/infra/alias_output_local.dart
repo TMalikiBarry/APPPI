@@ -14,18 +14,25 @@ class AliasOutputLocal {
   static const String revendicationCollectionId = "alias_revendication";
 
   Future<void> enregistrer(Alias alias) async {
-    await AppStorage.save(collectionId, alias.compte, alias.toJson());
+    try {
+      await AppStorage.save(collectionId, alias.compte, alias.toJson());
+      logger.e("Sauvegarde en local avec success");
+    } catch (e) {
+      logger.e("Erreur lors de l'enregistrement locale de l'alias", error: e);
+      throw Exception("Erreur lors de l'enregistrement locale");
+    }
   }
 
   Future<Alias?> recuperer(String cle) async {
     try {
       return await AppStorage.get(
-          collectionId, cle, (json) => Alias.fromJson(json));
-    } catch(e){
-      throw ApiException(
-        error: ApiError.badRequest,
-        statusCode: 401,
+        collectionId,
+        cle,
+            (json) => Alias.fromJson(json),
       );
+    } catch (e) {
+      logger.e("Erreur lors de la récupération locale de l'alias", error: e);
+      throw Exception("Erreur lors de la récupération locale");
     }
   }
 

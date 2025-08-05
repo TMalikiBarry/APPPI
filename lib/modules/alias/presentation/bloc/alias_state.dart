@@ -11,6 +11,14 @@ class AliasInitialState extends AliasState {
   const AliasInitialState();
 }
 
+/// Etat quand on a pu vérifier l'existance de l'alias
+class AliasVerifExistState extends AliasState {
+  //
+  const AliasVerifExistState(this.alias);
+
+  final Alias alias;
+}
+
 /// Etat quand on a pu recupérer l'alias
 class AliasExistState extends AliasState {
   //
@@ -19,6 +27,11 @@ class AliasExistState extends AliasState {
   final Alias alias;
   // revendication sur cet alias
   final AliasRevendication? claim;
+}
+
+/// Pendant que l'on recupére l'alias'
+final class AliasLoadingState extends AliasState {
+  AliasLoadingState();
 }
 
 /// Etat quand l'alias n'existe pas

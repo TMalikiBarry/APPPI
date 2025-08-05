@@ -1,4 +1,4 @@
-enum ParticipantEtat { active, desactive }
+enum ParticipantEtat { DSBL, ENBL,JOIN }
 
 class Participant {
   Participant({
@@ -22,9 +22,11 @@ class Participant {
     //nomOfficiel = json['nomOfficiel'] as String;
     codeBanque = json['bankCode'] as String?;
     pays = codeMembre.substring(0, 2);
-    statut = json['status'] == ParticipantEtat.active.name
-        ? ParticipantEtat.active
-        : ParticipantEtat.desactive;
+    statut = json['status'] == ParticipantEtat.ENBL.name
+        ? ParticipantEtat.ENBL
+        : json['status'] == ParticipantEtat.DSBL.name ?
+    ParticipantEtat.DSBL :
+    ParticipantEtat.JOIN;
   }
 
   Map<String, dynamic> toJson() {

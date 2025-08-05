@@ -15,6 +15,10 @@ class TransactionVerificationResultOthr {
     this.ibanClient,
     this.numeroIdentification,
     this.systemeIdentification,
+    this.adresseComplete,
+    this.dateNaissance,
+    this.paysNaissance,
+    this.villeNaissance
   });
 
   /// Compte du client
@@ -33,6 +37,10 @@ class TransactionVerificationResultOthr {
   final String? ibanClient;
   final String? numeroIdentification;
   final String? systemeIdentification;
+  final String? adresseComplete;
+  final String? dateNaissance;
+  final String? paysNaissance;
+  final String? villeNaissance;
 
   Map<String, dynamic> toJsonIban() {
     return {
@@ -49,6 +57,10 @@ class TransactionVerificationResultOthr {
       'ibanClient': ibanClient,
       'numeroIdentification': numeroIdentification,
       'systemeIdentification': systemeIdentification,
+      'adresseComplete': adresseComplete,
+      'dateNaissance': dateNaissance,
+      'paysNaissance': paysNaissance,
+      'villeNaissance': villeNaissance,
     };
   }
 
@@ -65,6 +77,10 @@ class TransactionVerificationResultOthr {
       'devise': devise,
       'typeClient': typeClient,
       'otherClient': otherClient,
+      'adresseComplete': adresseComplete,
+      'dateNaissance': dateNaissance,
+      'paysNaissance': paysNaissance,
+      'villeNaissance': villeNaissance,
     };
   }
 
@@ -86,6 +102,10 @@ class TransactionVerificationResultOthr {
       devise: json['devise'] as String?,
       typeClient: json['typeClient'] as String?,
       otherClient: json['otherClient'] as String?,
+      adresseComplete: json['adresseComplete'] as String?,
+      dateNaissance: json['dateNaissance'] as String?,
+      paysNaissance: json['paysNaissance'] as String?,
+      villeNaissance: json['villeNaissance'] as String?,
     );
   }
 }

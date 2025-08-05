@@ -19,6 +19,12 @@ class ParticipantOutputRemote {
       url,
     );
     ParticipantListe liste = ParticipantListe.fromJson(response.data["response"]);
-    return liste.data;
+    List<Participant> actifs = liste.data;
+    if(liste.data.isNotEmpty) {
+      actifs = liste.data
+          .where((u) => u.statut == ParticipantEtat.ENBL)
+          .toList();
+    }
+    return actifs;
   }
 }

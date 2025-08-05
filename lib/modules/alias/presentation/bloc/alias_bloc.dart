@@ -67,15 +67,14 @@ class AliasBloc extends Bloc<AliasEvent, AliasState> {
     Emitter<AliasState> emit,
   ) async {
     try {
+      emit(AliasLoadingState());
       Alias? alias = await aliasInputPort.recuperer(event.compte);
       emit(alias != null ? AliasExistState(alias) : AliasNotExistState());
     } on AliasRetrieveException catch (e) {
-      if (e.error is ApiError) {
-        emit(
-            e.alias != null ? AliasExistState(e.alias!) : AliasNotExistState());
-      } //
-      else {
-        // Erreur non gérée
+      logger.i("Exception : AliasRetrieveException ${e.error}");
+      if (e.error == ApiError.notFound) {
+        emit(AliasNotExistState());
+      } else {
         emit(AliasFetchErrorState(event.compte, AliasError.unknow));
       }
     }

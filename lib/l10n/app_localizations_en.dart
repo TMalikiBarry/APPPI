@@ -201,7 +201,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get changePasswordErrorInvalid => 'Password must contains at least one number, one letter and the @ or _ character';
 
   @override
-  String get changePasswordErrorDifferent => 'Passwords are differents';
+  String get changePasswordErrorDifferent => 'The two secret codes are not identical';
 
   @override
   String get createCodePinFormTitle => 'Create passcode';

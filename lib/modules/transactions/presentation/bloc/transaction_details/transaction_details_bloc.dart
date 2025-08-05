@@ -43,7 +43,8 @@ class TransactionDetailsBloc
     TransactionDetailsFetchEvent event,
     Emitter<TransactionDetailsState> emit,
   ) async {
-    Transaction tx = await transactionInputPort.get(transaction.endToEndId);
+    print("fetch details");
+    Transaction tx = await transactionInputPort.get(transaction.guID ?? transaction.endToEndId);
     // //TODO remove before release
     // if (AppEnv.mode != "demo") {
       emit(TransactionDetailsInitialState(tx));

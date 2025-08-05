@@ -164,9 +164,9 @@ class TransactionListItemWidget extends StatelessWidget {
       Color(0xE6DC1A36),
       Color(0xE657050F),
       Color(0xE60BEA14),
-      Color(0xE69A29E4),
+      Color(0xFF603942),
       Color(0xE6836503),
-      Color(0xFF468691),
+      Color(0xFF5C0A4E),
       Color(0xE6BD7F0C),
       Color(0xE60A8DF6),
       Color(0xE6047E0A),
@@ -188,7 +188,7 @@ class TransactionListItemWidget extends StatelessWidget {
 
   Icon? _getSensIcon(BuildContext context, Transaction transaction) {
     if (transaction.sens == TransactionSens.debit) {
-      return const Icon(Icons.arrow_back_ios, size: 14, color: Colors.white);
+      return const Icon(Icons.arrow_back, size: 14, color: Colors.white);
     } else if (transaction.sens == TransactionSens.credit) {
       return const Icon(Icons.arrow_forward, size: 14, color: Colors.white);
     } else {

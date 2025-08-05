@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,12 +36,15 @@ class AliasPage extends StatelessWidget {
       return (current is AliasExistState &&
               (previous is AliasInitialState ||
                   previous is AliasCreatingState)) ||
+          //(current is AliasVerifExistState &&
+          //  previous is AliasLoadingState) ||
           current is AliasCreationErrorState ||
           current is AliasClaimAskingState ||
           current is AliasClaimAskingSuccessState ||
           current is AliasClaimAskingErrorState;
     }, //
         listener: (context, aliasState) {
+          logger.i("alias_page aliasState listener : $aliasState");
       //
       if (aliasState is AliasExistState) {
         // Show success popup creation alias
@@ -89,9 +93,11 @@ class AliasPage extends StatelessWidget {
     }, //
         buildWhen: (context, state) {
       return state is AliasInitialState ||
+          //state is AliasLoadingState ||
           state is AliasNotExistState ||
           (state is AliasExistState && state.claim == null) ||
           state is AliasCreatingState ||
+          state is AliasLoadingState ||
           state is AliasMBNOCreationState ||
           state is AliasMBNOVerificationState ||
           state is AliasCreationErrorState ||
@@ -100,6 +106,10 @@ class AliasPage extends StatelessWidget {
           state is AliasClaimAskingErrorState;
     }, //
         builder: (context, aliasState) {
+      logger.i("alias_page aliasState buildWhen : $aliasState");
+      if (aliasState is AliasExistState) {
+        AppRouter.go(context, AppRouter.home);
+      }
       return Scaffold(
         // Pour avoir le bouton de retour
         appBar: AppBar(

@@ -125,7 +125,7 @@ class NotificationDialog extends StatelessWidget {
                 Text(
                   description!,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: isFullScreen ? Theme.of(context).textTheme.bodyLarge : Theme.of(context).textTheme.displaySmall,
                 ),
                 const SizedBox(height: 24),
               ],

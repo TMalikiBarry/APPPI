@@ -1,4 +1,4 @@
-enum ParticipantEtat { DSBL, ENBL,JOIN }
+enum ParticipantEtat { DSBL, ENBL,JOIN, active }
 
 class Participant {
   Participant({

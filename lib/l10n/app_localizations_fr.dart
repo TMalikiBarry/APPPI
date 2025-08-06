@@ -201,7 +201,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get changePasswordErrorInvalid => 'Doit contenir au moins un chiffre, une lettre et le caractère  @ ou _';
 
   @override
-  String get changePasswordErrorDifferent => 'Les deux mots de passe sont différents';
+  String get changePasswordErrorDifferent => 'Les deux codes secrets ne sont pas identiques';
 
   @override
   String get createCodePinFormTitle => 'Créez votre code pin';

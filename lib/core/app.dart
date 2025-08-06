@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:pi_mobile_app/core/storage.dart';
+import 'package:pi_mobile_app/shared/widgets/loading_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../firebase_options.dart';
@@ -136,9 +137,6 @@ class _AppState extends State<App> {
         Di.getCategorieInputPort(),
       )..add(CategorieListEvent());
 
-      // Ajouter un délai minimum pour voir le loader (optionnel)
-      await Future.delayed(const Duration(milliseconds: 1500));
-
       // Configuration terminée
       setState(() {
         _isLoading = false;
@@ -183,32 +181,8 @@ class _AppState extends State<App> {
 
     // Afficher la page de chargement
     if (_isLoading) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          backgroundColor: Colors.white, // ou la couleur de fond de votre choix
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                LoadingAnimationWidget.flickr(
-                  leftDotColor: primaryColor,
-                  rightDotColor: secondaryColor,
-                  size: 50,
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  'Chargement...',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+      return LoadingPage(
+        bgColor: Theme.of(context).colorScheme.surface,
       );
     }
 

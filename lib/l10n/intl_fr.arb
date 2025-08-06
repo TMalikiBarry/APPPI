@@ -73,7 +73,7 @@
   "changePasswordErrorEmpty": "Nouveau mot de passe obligatoire",
   "changePasswordErrorInvalid": "Doit contenir au moins un chiffre, une lettre et le caractère  @ ou _",
   "changePasswordFormBtnConnexion": "Valider",
-  "changePasswordErrorDifferent": "Les deux mots de passe sont différents",
+  "changePasswordErrorDifferent": "Les deux codes secrets ne sont pas identiques",
   "@_SECURITY_PIN_CREATE_FORM": {},
   "createCodePinFormTitle": "Créez votre code pin",
   "createCodePinFormSubTitle": "Il contribue à protéger vos informations confidentielles la prochaine fois que vous ouvrez l’app",

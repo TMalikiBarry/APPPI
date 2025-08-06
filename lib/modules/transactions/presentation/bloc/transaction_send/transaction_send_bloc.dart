@@ -200,6 +200,7 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
         //}
       } on ApiException catch (e) {
         // Erreur de vérification : alias invalide ou autre
+        print("catch $e");
         if (e.error == ApiError.notFound) {
           emit(TransactionSendFormErrorState(
             event.command,

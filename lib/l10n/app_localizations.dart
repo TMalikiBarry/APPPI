@@ -484,7 +484,7 @@ abstract class AppLocalizations {
   /// No description provided for @changePasswordErrorDifferent.
   ///
   /// In en, this message translates to:
-  /// **'Passwords are differents'**
+  /// **'The two secret codes are not identical'**
   String get changePasswordErrorDifferent;
 
   /// No description provided for @createCodePinFormTitle.

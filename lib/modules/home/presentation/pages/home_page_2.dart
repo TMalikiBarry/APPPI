@@ -19,6 +19,7 @@ import '../../../security/presentation/bloc/login/login_state.dart';
 import '../../../subscription/presentation/pages/subscription_list/subscription_list_widget.dart';
 import 'home_bottom_navigation_bar.dart';
 import 'home_bottom_navigation_bar_2.dart';
+import 'home_bottom_widget.dart';
 import 'home_tab_compte.dart';
 import 'home_toolbar_leading.dart';
 
@@ -33,6 +34,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   static const disabledTabs = <int>{1, 2};  // indices des onglets à griser
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +131,12 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           extendBody: true,
-          bottomNavigationBar: const BottomNavBarWidget(),
+          bottomNavigationBar: BottomNavbar(
+            currentIndex: selectedIndex,
+            onTap: (index) {
+              setState(() => selectedIndex = index);
+            },
+          ),
         );
       }),
     );

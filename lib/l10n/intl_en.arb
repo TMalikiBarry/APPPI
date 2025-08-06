@@ -73,7 +73,7 @@
   "changePasswordFormBtnConnexion": "Set Password",
   "changePasswordErrorEmpty": "Mandatory new password",
   "changePasswordErrorInvalid": "Password must contains at least one number, one letter and the @ or _ character",
-  "changePasswordErrorDifferent": "Passwords are differents",
+  "changePasswordErrorDifferent": "The two secret codes are not identical",
   "@_SECURITY_PIN_CREATE_FORM": {},
   "createCodePinFormTitle": "Create passcode",
   "createCodePinFormSubTitle": "It helps protect your confidential information the next time you open the app",

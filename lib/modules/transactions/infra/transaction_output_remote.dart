@@ -180,6 +180,7 @@ class TransactionOutputRemote {
       'issuerAccount' : issuerAccount,
       'scope' : 'PI',
       'status': 'SUCCESSFUL',
+      'guID': reference,
     };
     logger.i('← details() data=${qs}');
 

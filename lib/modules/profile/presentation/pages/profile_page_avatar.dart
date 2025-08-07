@@ -58,7 +58,7 @@ class ProfilePageAvatar extends StatelessWidget {
 
     var AliasFormated;
     if (aliasState.alias.cle.contains("+")) {
-      AliasFormated = formatPhoneNumberUser(aliasState.alias.cle);
+      AliasFormated = formatPhoneNumberUser(aliasState.alias.cle, international: true);
     } else {
       AliasFormated = aliasState.alias.cle;
     }

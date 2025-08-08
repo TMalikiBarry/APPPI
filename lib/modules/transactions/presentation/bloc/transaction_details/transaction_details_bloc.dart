@@ -145,6 +145,7 @@ class TransactionDetailsBloc
     Emitter<TransactionDetailsState> emit,
   ) async {
     Transaction tx = event.transaction;
+    emit(TransactionDetailsCancelLoadingState(tx));
     try {
       tx = await transactionInputPort.cancel(tx, event.reason);
       emit(TransactionDetailsCancelState(tx, null));

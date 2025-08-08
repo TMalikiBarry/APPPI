@@ -57,7 +57,7 @@ class NotificationDialog extends StatelessWidget {
     } else if (type == NotificationType.info) {
       image = Images.info;
     }
-    var height = isFullScreen ? size.height : (description != null ? size.height * 0.6 : size.height * 0.4);
+    var height = isFullScreen ? size.height : (description != null ? size.height * 0.5 : size.height * 0.4);
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(

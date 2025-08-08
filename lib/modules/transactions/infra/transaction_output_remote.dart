@@ -388,13 +388,11 @@ class TransactionOutputRemote {
   Future<Stream<Transaction>> returnFunds(
     Transaction transaction,
   ) async {
-    // Send transfer
-    await Api.put('/transferts/${transaction.endToEndId}/retours');
-
+    final ApiResponse response;
     // GET REQUEST
     try {
       // TODO Remove this code before release
-      if (AppEnv.mode == "demo") {
+      /*if (AppEnv.mode == "demo") {
         final controller = StreamController<Transaction>();
         Future.delayed(
           const Duration(seconds: 1),
@@ -441,9 +439,50 @@ class TransactionOutputRemote {
             return transaction;
           },
         );
-      }
+      }*/
+      // Send transfer
+      response = await Api.post(
+        '/movement/init-fund-return',
+        data: {
+          "guID": transaction.endToEndId,
+          "reason": "AM09",
+        },
+      );
+      //
+      transaction = Transaction.fromJsonCancel(response.data, transaction);
     } catch (e) {
       logger.e("Reception reponse retour de fonds erreur", error: e);
+      return Stream.error(e);
+    }
+
+    // GET REQUEST
+    try {
+      if (AppEnv.mode == "demo") {
+        // TODO remove this demo code before release
+        final controller = StreamController<Transaction>();
+        Future.delayed(
+          const Duration(seconds: 1),
+              () {
+            transaction.dateOperation = DateTime.now();
+            transaction.statut = TransactionStatut.irrevocable;
+            controller.add(transaction);
+          },
+        );
+        return controller.stream;
+      } //
+      else {
+        //return streamResponse(transaction);
+        // Return transaction directly without contacting SSE endpoint
+        logger.i(transaction.toJson());
+        final controller = StreamController<Transaction>();
+        transaction.dateOperation = DateTime.now();
+        transaction.statut = TransactionStatut.irrevocable; // or whatever default status you want
+        controller.add(transaction);
+        controller.close();
+        return controller.stream;
+      }
+    } catch (e) {
+      logger.e("Reception reponse erreur", error: e);
       return Stream.error(e);
     }
   }
@@ -453,12 +492,15 @@ class TransactionOutputRemote {
     TransactionCancelReason reason,
   ) async {
     // Send transfer
-    final ApiResponse response = await Api.put(
-      '/transferts/${transaction.endToEndId}/annulations',
-      data: {"raison": reason.code},
+    final ApiResponse response = await Api.post(
+      '/movement/init-fund-return',
+      data: {
+        "guID": transaction.endToEndId,
+        "reason": reason.code,
+      },
     );
     //
-    return Transaction.fromJson(response.data);
+    return Transaction.fromJsonCancel(response.data, transaction);
   }
 
   Future<Transaction> reject(

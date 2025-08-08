@@ -49,9 +49,12 @@ class TransactionDetailsPage extends StatelessWidget {
       child: BlocConsumer<TransactionDetailsBloc, TransactionDetailsState>(
         listenWhen: (previous, current) =>
             current is TransactionDetailsReturnState ||
+            current is TransactionDetailsCancelLoadingState ||
             current is TransactionDetailsCancelState,
         listener: (context, state) {
-          CustomLoadingDialog.hide(context);
+          if (state is! TransactionDetailsCancelLoadingState){
+            CustomLoadingDialog.hide(context);
+          }
           AppRouter.pop(context); //close form
           // Retour de fonds
           if (state is TransactionDetailsReturnState) {
@@ -105,6 +108,9 @@ class TransactionDetailsPage extends StatelessWidget {
           //   transactionLocal.categorie = state.categorie;
           // }
           Transaction transaction = state.transaction;
+          if (state is TransactionDetailsCancelLoadingState) {
+            return const LoadingPage();
+          } else {
           return MyPageContainer(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -272,6 +278,7 @@ class TransactionDetailsPage extends StatelessWidget {
               ],
             ),
           );
+          }
         },
       ),
     );

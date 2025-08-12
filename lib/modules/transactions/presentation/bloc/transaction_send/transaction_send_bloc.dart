@@ -168,18 +168,22 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
     //emit(TransactionSendFormVerificationLoadingState(event.command,
     //    participants: state.participants));
     emit(TransactionSendLoadingState(event.command));
+    logger.i("### DANS TransactionSendLoadingState CONFIRM pressed for");
 
     // Récuperer position GPS
     Position? position = await _getPosition();
     if (position != null) {
+
       // Ajouter la position dans les données du transfert
       event.command.latitude = position.latitude; // 14.7508962
       event.command.longitude = position.longitude; // -17.464383
 
+      logger.w("### DANS TransactionSendLoadingState POsition Pas null");
       // Initier
       TransactionSendCommand form = event.command;
       //form.isValid();
       try {
+        logger.i("### DANS TransactionSendLoadingState INITIER 1");
         Transaction transaction = await transactionsInputPort.initiate(
           event.command,
         );
@@ -193,14 +197,16 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
         } // Transferts
         else {*/
         // Afficher la page de demande de vérification
+        logger.i("### DANS TransactionSendLoadingState "
+            "INITIER 2 tx = ${transaction.transactionVerificationResultAlias?.toJson()}");
         emit(TransactionSendFormVerificationAskingState(
           form,
           transaction,
         ));
         //}
       } on ApiException catch (e) {
+        logger.e("### DANS TransactionSendLoadingState Erreur est ", error: e);
         // Erreur de vérification : alias invalide ou autre
-        print("catch $e");
         if (e.error == ApiError.notFound) {
           emit(TransactionSendFormErrorState(
             event.command,
@@ -218,6 +224,7 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
         }
       }
     } else {
+      logger.w("### DANS TransactionSendLoadingState pas de confirmation et PAS DE POSITION");
       // Il reste sur le formulaire - pas de confirmation
       emit(TransactionSendFormInputState(
         event.command,

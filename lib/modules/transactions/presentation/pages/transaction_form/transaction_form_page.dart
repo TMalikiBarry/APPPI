@@ -1,6 +1,7 @@
 import 'package:common_dependencies/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:pi_mobile_app/modules/home/presentation/pages/home_page.dart';
 
 import '../../../../../core/router.dart';
@@ -26,6 +27,7 @@ class TransactionFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocalizations traductions = AppLocalizations.of(context)!;
+    final logger = Logger();
 
     return BlocConsumer<TransactionSendBloc, TransactionSendState>(
       listenWhen: (previous, current) =>
@@ -56,6 +58,7 @@ class TransactionFormPage extends StatelessWidget {
         }
         // Show verification Page
         if (state is TransactionSendFormVerificationAskingState) {
+
           CustomLoadingDialog.hide(context);
           // Replace with verification page (pushReplacement important)
           AppRouter.pushReplacement(
@@ -136,6 +139,7 @@ class TransactionFormPage extends StatelessWidget {
                           : state.command.isValid()
                               ? () {
                                   print("demande de paiement: $state.command");
+                                  logger.i("#### RTP CONFIRM pressed for command=${state.command.toJson()}");
                                   // initiate
                                   context.read<TransactionSendBloc>().add(TransactionSendInitiateEvent(state.command));
                                 }
@@ -197,7 +201,8 @@ class TransactionFormPage extends StatelessWidget {
     TransactionSendCommand command,
   ) {
     TransactionSendMethod method = command.method;
-    if (method == TransactionSendMethod.alias || method == TransactionSendMethod.qrcode) {
+    if (method == TransactionSendMethod.alias || method == TransactionSendMethod.qrcode
+        || method == TransactionSendMethod.aliasRtb) {
       return TransactionFormPageAlias(formValues: command);
     } //
     else if (method == TransactionSendMethod.iban) {

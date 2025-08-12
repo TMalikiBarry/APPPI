@@ -8,8 +8,8 @@ import '../../../../../core/theme.dart';
 import '../../../../../l10n/app_localizations.dart';
 import '../../../../../shared/models/frequence_command.dart';
 import '../../../../../shared/models/uemoa_countries.dart';
-import '../../../../../shared/widgets/loading_page.dart';
 import '../../../../../shared/widgets/my_page_container.dart';
+import '../../../../../shared/widgets/custom_loading_widget.dart';
 import '../../../../../shared/widgets/notification_dialog.dart';
 import '../../../domain/models/transaction.dart';
 import '../../bloc/transaction_rtp/transaction_rtp_bloc.dart';
@@ -20,6 +20,7 @@ import '../transaction_list_item_widget.dart';
 import '../transaction_send/transaction_send_page_succes.dart';
 import 'transaction_rtp_page_actions.dart';
 import 'transaction_rtp_page_header.dart';
+
 
 class TransactionRtpPage extends StatefulWidget {
   ///

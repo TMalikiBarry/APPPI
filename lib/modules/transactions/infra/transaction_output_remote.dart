@@ -296,7 +296,17 @@ class TransactionOutputRemote {
     ){
       logger.i(command.transactionVerificationResultAlias!.alias);
       request['alias'] = command.transactionVerificationResultAlias!.alias;
-    } else if (command.confirmationMethode.toString() == TransactionSendMethod.iban.toString()){
+    } else if (command.confirmationMethode.toString() == TransactionSendMethod.aliasRtb.toString()) {
+      url = '/payments/init-claim';
+      request.addAll({
+        'requestSenderAlias': aliasFrom,
+        'requestReceiverAlias': command.transactionVerificationResultAlias,
+        'cliendId': pref.getString("phone_number"),
+        'reason': command.motif ?? 'PI_REQUEST_TO_PAY'
+
+      });
+    }
+      else if (command.confirmationMethode.toString() == TransactionSendMethod.iban.toString()){
       logger.i("On est la");
       url = '/transfer/eme/external?transferType=IBAN';
     } else if (command.confirmationMethode.toString() == TransactionSendMethod.othr.toString()) {

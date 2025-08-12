@@ -1,6 +1,7 @@
 enum TransactionSendMethod {
   // alias
   alias("ALIAS"),
+  aliasRtb("ALIAS_RTB"),
   //  bank
   iban("IBAN"),
   // autre

@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pi_mobile_app/modules/notification/presentation/bloc/notification_event.dart';
@@ -106,6 +107,8 @@ class NotificationPageListeItem extends StatelessWidget {
       montant = extractAmountFromBody(notification.body);
     }
 
+    logger.w("MONTANT OBTENU $montant");
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -115,7 +118,7 @@ class NotificationPageListeItem extends StatelessWidget {
           child: Text(
             title,
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-              fontSize: 15.5
+              fontSize: 14
             ),
             overflow: TextOverflow.ellipsis,
           ),
@@ -127,7 +130,7 @@ class NotificationPageListeItem extends StatelessWidget {
             child: AmountWidget(
               montant: montant,
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  fontSize: 15.5
+                  fontSize: 14.5
               ),
             ),
           ),
@@ -153,9 +156,10 @@ class NotificationPageListeItem extends StatelessWidget {
     AppLocalizations traductions,
     my_notif.Notification notification,
   ) {
-    String subtitle;
+    String subtitle = notification.body?.isNotEmpty == true ? notification.body! :
+    ( notification.type !=null ? notification.type!.name : ' --- ');
 
-    switch (notification.type) {
+    /*switch (notification.type) {
       case NotificationType.revendicationInitiee:
         subtitle = traductions.notificationPageClaimSubtitle(
           notification.details!["alias"] as String,
@@ -163,23 +167,30 @@ class NotificationPageListeItem extends StatelessWidget {
         break;
       case NotificationType.annulationDemandee:
         subtitle = traductions.notificationPageAnnulationRequestSubtitle(
-          notification.details!["clientNom"] as String,
+          notification.details!["alias"] as String,
         );
         break;
       case NotificationType.rtpInitiee:
         subtitle = traductions.notificationPageRtpInitieeSubtitle(
-          notification.details!["clientNom"] as String,
+          notification.details!["alias"] as String,
         );
         break;
       case NotificationType.rtpRecue:
         subtitle = traductions.notificationPageRtpRecueSubtitle(
-          notification.details!["clientNom"] as String,
+          notification.details!["alias"] as String,
+          // notification.details!["clientNom"] as String,
         );
         break;
       default:
         subtitle = notification.body?.isNotEmpty == true ? notification.body! :
                              ( notification.type !=null ? notification.type!.name : ' --- ');
+
     }
+
+    if (subtitle == null || subtitle.isEmpty) {
+      subtitle = notification.body!.isNotEmpty ? notification.body! :
+      ( notification.type !=null ? notification.type!.name : ' --- ');
+    }*/
     return Text(
       subtitle,
       style: Theme.of(context)
@@ -221,9 +232,11 @@ class NotificationPageListeItem extends StatelessWidget {
 
 double? extractAmountFromBody(String? body) {
   if (body == null) return null;
+  logger.w("##### VOICI LE BODY $body");
   final regex = RegExp(r"(\d+(?:[.,]\d+)?)\s*(?:FCFA|F)\b");
   final match = regex.firstMatch(body);
   if (match != null) {
+    logger.w("##### VOICI LE MATCHING $match");
     return double.tryParse(match.group(1)!.replaceAll(',', '.'));
   }
   return null;

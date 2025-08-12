@@ -1,6 +1,8 @@
 import 'package:common_dependencies/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/modules/home/presentation/pages/home_page.dart';
 
 import '../../../../../core/router.dart';
 import '../../../../../l10n/app_localizations.dart';
@@ -25,29 +27,26 @@ class TransactionFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocalizations traductions = AppLocalizations.of(context)!;
+    final logger = Logger();
 
     return BlocConsumer<TransactionSendBloc, TransactionSendState>(
       listenWhen: (previous, current) =>
-      // Afficher la page de vérification
-      current is TransactionSendFormVerificationAskingState ||
+          // Afficher la page de vérification
+          current is TransactionSendFormVerificationAskingState ||
           // Afficher le loader
           current is TransactionSendFormVerificationLoadingState ||
           // Afficher le loader
           current is TransactionSendLoadingState ||
           // Retour au formulaire après le loader - FIX: Améliorer la condition
-          (previous is TransactionSendFormVerificationLoadingState &&
-              current is TransactionSendFormInputState) ||
+          (previous is TransactionSendFormVerificationLoadingState && current is TransactionSendFormInputState) ||
           // UNIQUEMENT rediriger à l'accueil si on sort de VerificationAskingState
-          (previous is TransactionSendFormVerificationAskingState &&
-              current is TransactionSendInitialState) ||
+          (previous is TransactionSendFormVerificationAskingState && current is TransactionSendInitialState) ||
           // Succès RTP
-          (current is TransactionSendFormSuccessState &&
-              current.transaction.isRTP()) ||
+          (current is TransactionSendFormSuccessState && current.transaction.isRTP()) ||
           // Erreur
           current is TransactionSendFormErrorState ||
           // FIX: Ajouter cette condition pour gérer le retour depuis l'erreur
-          (previous is TransactionSendFormErrorState &&
-              current is TransactionSendFormInputState),
+          (previous is TransactionSendFormErrorState && current is TransactionSendFormInputState),
       listener: (context, state) async {
         // FIX: Afficher le loader
         if (state is TransactionSendFormVerificationLoadingState) {
@@ -59,6 +58,7 @@ class TransactionFormPage extends StatelessWidget {
         }
         // Show verification Page
         if (state is TransactionSendFormVerificationAskingState) {
+
           CustomLoadingDialog.hide(context);
           // Replace with verification page (pushReplacement important)
           AppRouter.pushReplacement(
@@ -95,7 +95,9 @@ class TransactionFormPage extends StatelessWidget {
           showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
-              return TransactionSendPageSuccess(
+              return
+                  //HomePage();
+                  TransactionSendPageSuccess(
                 transaction: state.transaction,
                 onClose: () => isBottomSheetClosed = true,
               );
@@ -112,10 +114,7 @@ class TransactionFormPage extends StatelessWidget {
           });
         }
       },
-      buildWhen: (previous, current) =>
-      current is TransactionSendFormInputState ||
-          current is TransactionSendFormVerificationLoadingState ||
-          current is TransactionSendLoadingState,
+      buildWhen: (previous, current) => current is TransactionSendFormInputState || current is TransactionSendFormVerificationLoadingState || current is TransactionSendLoadingState,
       builder: (context, state) {
         final bool isLoading = state is TransactionSendLoadingState;
         if (state is TransactionSendFormInputState) {
@@ -135,19 +134,23 @@ class TransactionFormPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: ElevatedButton(
-                      onPressed: isLoading ? null : state.command.isValid()
-                          ? () {
-                        // initiate
-                        context.read<TransactionSendBloc>().add(
-                            TransactionSendInitiateEvent(state.command));
-                      }
-                          : null,
+                      onPressed: isLoading
+                          ? null
+                          : state.command.isValid()
+                              ? () {
+                                  print("demande de paiement: $state.command");
+                                  logger.i("#### RTP CONFIRM pressed for command=${state.command.toJson()}");
+                                  // initiate
+                                  context.read<TransactionSendBloc>().add(TransactionSendInitiateEvent(state.command));
+                                }
+                              : null,
                       child: isLoading
                           ? LoadingAnimationWidget.flickr(
-                        leftDotColor: primaryColor,
-                        rightDotColor: secondaryColor,
-                        size: 25,
-                      ) :  Text(traductions.transactionFormContinueBtn),
+                              leftDotColor: primaryColor,
+                              rightDotColor: secondaryColor,
+                              size: 25,
+                            )
+                          : Text(traductions.transactionFormContinueBtn),
                     ),
                   ),
                 ],
@@ -170,7 +173,10 @@ class TransactionFormPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: ElevatedButton(
-                      onPressed: null, // Désactivé pendant le chargement
+                      onPressed: () {
+                        //print("demande de paiement: $state.command");
+                      }, // Désactivé pendant le chargement
+
                       child: Text(traductions.transactionFormContinueBtn),
                     ),
                   ),
@@ -195,8 +201,8 @@ class TransactionFormPage extends StatelessWidget {
     TransactionSendCommand command,
   ) {
     TransactionSendMethod method = command.method;
-    if (method == TransactionSendMethod.alias ||
-        method == TransactionSendMethod.qrcode) {
+    if (method == TransactionSendMethod.alias || method == TransactionSendMethod.qrcode
+        || method == TransactionSendMethod.aliasRtb) {
       return TransactionFormPageAlias(formValues: command);
     } //
     else if (method == TransactionSendMethod.iban) {

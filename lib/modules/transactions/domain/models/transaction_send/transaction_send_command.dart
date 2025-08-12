@@ -122,7 +122,7 @@ class TransactionSendCommand {
     }
     // Add properties based on the selected method
     switch (method) {
-      case TransactionSendMethod.alias:
+      case TransactionSendMethod.alias || TransactionSendMethod.aliasRtb:
         json['alias'] = alias?.value;
         break;
       case TransactionSendMethod.qrcode:

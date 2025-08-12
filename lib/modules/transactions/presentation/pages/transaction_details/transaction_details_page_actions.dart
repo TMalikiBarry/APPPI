@@ -52,7 +52,6 @@ class TransactionDetailsPageActions extends StatelessWidget {
                 image: Images.transactionCancel,
                 label: traductions.transactionDetailsAnnuler,
                 // disabled: transaction.retourDate != null,
-                disabled: true,
                 action: () => _actionCancel(
                   transaction,
                   context,

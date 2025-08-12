@@ -670,4 +670,34 @@ class Transaction {
         ' differeMontant: $differeMontant'
         ' }';
   }
+
+  static Transaction fromJsonCancel(Map<dynamic, dynamic> json, Transaction transaction) {
+    // Extraction des détails de réponse si présents
+    final responseDetails = json['responseDetails'] as Map<String, dynamic>?;
+
+    return Transaction(
+      compte: json['compte'] as String? ?? transaction.compte,
+      clientPhoneNumber: json['clientPhoneNumber'] ?? transaction.clientPhoneNumber,
+      alias: json['alias'] as String? ?? transaction.alias,
+      montant: json['amount'] != null ? double.parse(json['amount'].toString()) : transaction.montant,
+      clientNom: json['clientName'] ?? transaction.clientNom,
+      clientPays: json['country'] ?? transaction.clientPays,
+      endToEndId: json['endToEndId'] ?? transaction.endToEndId,
+      // Annulation et retour de fond
+      retourDate: json['retourDate'] != null
+          ? DateTime.parse(json['retourDate'] as String)
+          : null,
+      retourStatut: _getStatut(json['retourStatut']),
+      retourStatutRaison: json['retourStatutRaison'] as String?,
+      annulationRaison: json['annulationRaison'] != null
+          ? TransactionCancelReason.values.firstWhere(
+              (element) => element.code == json['annulationRaison'] as String)
+          : null,
+      annulationDate: json['annulationDate'] != null
+          ? DateTime.parse(json['annulationDate'] as String)
+          : null,
+      annulationStatut: _getStatut(json['annulationStatut']),
+      annulationStatutRaison: json['annulationStatutRaison'] as String?,
+    );
+  }
 }

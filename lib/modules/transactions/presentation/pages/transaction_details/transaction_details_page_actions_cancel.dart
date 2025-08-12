@@ -96,7 +96,7 @@ class _TransactionDetailsPageActionsCancelState
                     child: ElevatedButton(
                       onPressed: reason != null
                           ? () {
-                              CustomLoadingDialog.show(context);
+                              // CustomLoadingDialog.show(context);
                               transactionDetailsBloc.add(
                                 TransactionCancelSendEvent(tx, reason!),
                               );

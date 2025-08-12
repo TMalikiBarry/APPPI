@@ -20,6 +20,10 @@ class TransactionDetailsCancelState extends TransactionDetailsState {
   const TransactionDetailsCancelState(super.transaction, this.error);
 }
 
+class TransactionDetailsCancelLoadingState extends TransactionDetailsState {
+  TransactionDetailsCancelLoadingState(super.transaction);
+}
+
 // class TransactionDetailsLoadingState extends TransactionDetailsState {
 //   const TransactionDetailsLoadingState(super.transaction);
 // }

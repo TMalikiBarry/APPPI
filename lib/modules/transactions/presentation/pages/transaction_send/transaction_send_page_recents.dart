@@ -191,19 +191,19 @@ class TransactionSendPageRecentsItem extends StatelessWidget {
       Color(0xE6E57373),
       Color(0xE6BA68C8),
       Color(0xE664B5F6),
-      Color(0xE681C784),
+      Color(0xE699EDB1),
       Color(0xE6FFD54F),
       Color(0xE6A1887F),
       Color(0xE6204093),
       Color(0xE6DC1A36),
-      Color(0xE6F6EA64),
+      Color(0xE657050F),
       Color(0xE60BEA14),
-      Color(0xE69A29E4),
-      Color(0xE6A1887F),
-      Color(0xE604ECB5),
+      Color(0xFF603942),
+      Color(0xE6836503),
+      Color(0xFF5C0A4E),
       Color(0xE6BD7F0C),
       Color(0xE60A8DF6),
-      Color(0xE60FED19),
+      Color(0xE6047E0A),
       Color(0xE6011423),
       Color(0xE65A349F),
     ];
@@ -222,7 +222,7 @@ class TransactionSendPageRecentsItem extends StatelessWidget {
 
   Icon? _getSensIcon(BuildContext context, Transaction transaction) {
     if (transaction.sens == TransactionSens.debit) {
-      return const Icon(Icons.arrow_back_ios, size: 14, color: Colors.white);
+      return const Icon(Icons.arrow_back, size: 14, color: Colors.white);
     } else if (transaction.sens == TransactionSens.credit) {
       return const Icon(Icons.arrow_forward, size: 14, color: Colors.white);
     } else {

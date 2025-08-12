@@ -56,34 +56,44 @@ class NotificationOutputRemote {
     String? fields,
   }) async {
 
-    int xlimit = (limit== null || limit <25 ) ? 25: limit;
+    int xlimit = (limit== null || limit <2 ) ? 2: limit;
 
     int xpage = page ?? 0;
     final now    = DateTime.now();
     final start  = dateDebut ?? now.subtract(const Duration(days: 1000));
     final finish = dateFin   ?? now.add(const Duration(days: 1));
     final Map<String, dynamic> queryParameters = {
-      if (page != null) 'page': xpage,
+      'page': xpage,
       'size': xlimit,
-      if (sortBy != null) 'sortBy': sortBy,
+      /*if (sortBy != null) 'sortBy': sortBy,
       if (fields != null) 'fields': fields,
       if (dateDebut != null) 'dateDebut': start.toIso8601String(),
       if (dateFin != null) 'dateFin': finish.toIso8601String(),
       if (keyword != null) 'keyword': keyword,
-      if (types.isNotEmpty) 'type[in]': types.join(','),
+      if (types.isNotEmpty) 'type[in]': types.join(','),*/
     };
 
     final pref = await SharedPreferences.getInstance();
     final phone_number = pref.getString('phone_number') ?? '';
 
     if (phone_number.isEmpty) {
-      throw Exception('Aucun phoneNumber en SharedPreferences');
+      throw Exception('Aucun phone_number en SharedPreferences');
     }
 
     final ApiResponse response = await Api.get(
       '/notification/$phone_number',
       queryParameters: queryParameters,
     );
+
+    // 2) Log pour debug
+    logger.w('← notifications() queryParameters= ${queryParameters.toString()}');
+    logger.w('← notifications() le response= ${response.toString()}');
+    logger.w('← notifications() status=${response.statusCode}');
+    logger.i('← notifications() data=${response.data}');
+
+    // logger.i("#### this is the value of accountNumber $issuerAccount");
+    logger.i("#### this is the value of phoneNumber ${pref.getString("phoneNumber")}");
+    logger.i("#### this is the value of phone_number ${pref.getString("phone_number")}");
     var liste = NotificationListe.fromJson(response.data);
     // Sort by the most recents
     liste.data.sort((a, b) => b.dateAction!.compareTo(a.dateAction!));

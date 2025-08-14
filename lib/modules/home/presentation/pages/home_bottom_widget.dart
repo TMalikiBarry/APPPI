@@ -8,6 +8,7 @@ import '../../../../core/assets.dart';
 import '../../../../core/theme.dart';
 import '../../../config/adapters/ui/bloc/config_bloc.dart';
 import '../../../config/domain/models/config_keys.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 
 class BottomNavbar extends StatefulWidget {
@@ -69,7 +70,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
           selectedItemColor: primaryColor,
-          unselectedItemColor: Colors.black.withOpacity(.60),
+          unselectedItemColor: Color(0xFF667085),
           selectedFontSize: 12,
           unselectedFontSize: 12,
           selectedLabelStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -82,11 +83,22 @@ class _BottomNavbarState extends State<BottomNavbar> {
           items: [
             BottomNavigationBarItem(
               label: translations.bottom_bar_home,
-              icon: const Icon(Icons.home_outlined, color: primaryColor),
+              icon: Image.asset(
+                'assets/images/home_icon.png',
+                width: 29 ,
+                height: 29 ,
+                package: "common_dependencies",
+              ),
             ),
             BottomNavigationBarItem(
               label: translations.bottom_bar_transaction,
-              icon: const Icon(Icons.history_outlined, color: primaryColor),
+              icon: SvgPicture.asset(
+                'assets/images/ion_list.svg',
+                package: 'common_dependencies',
+                height: 30,
+                width: 30,
+                fit: BoxFit.contain,
+              ),
             ),
             BottomNavigationBarItem(
               label: "TouchPoint",

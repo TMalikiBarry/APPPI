@@ -41,7 +41,7 @@ class AvatarCircleWidget extends StatelessWidget {
     List<String> names = fullName.split(" ");
     String initials = "";
 
-    if (names.isNotEmpty) {
+    if (names.isNotEmpty && names[0].isNotEmpty) {
       // Prend la première lettre de chaque mot dans le nom
       initials += names[0][0].toUpperCase();
 

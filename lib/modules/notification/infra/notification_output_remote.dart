@@ -96,7 +96,24 @@ class NotificationOutputRemote {
     logger.i("#### this is the value of phone_number ${pref.getString("phone_number")}");
     var liste = NotificationListe.fromJson(response.data);
     // Sort by the most recents
-    liste.data.sort((a, b) => b.dateAction!.compareTo(a.dateAction!));
+    liste.data.sort((a, b) {
+      // Cas 1 : comparer sur dateAction si dispo
+      if (a.dateAction != null && b.dateAction != null) {
+        return b.dateAction!.compareTo(a.dateAction!); // tri décroissant
+      }
+      if (a.dateAction != null) return -1; // a avant b
+      if (b.dateAction != null) return 1;  // b avant a
+
+      // Cas 2 : si pas de dateAction, comparer sur timestamp
+      if (a.timestamp != null && b.timestamp != null) {
+        return b.timestamp!.compareTo(a.timestamp!); // tri décroissant
+      }
+      if (a.timestamp != null) return -1; // a avant b
+      if (b.timestamp != null) return 1;  // b avant a
+
+      // Cas 3 : égalité si rien
+      return 0;
+    });
 
     return liste;
   }

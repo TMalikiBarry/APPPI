@@ -35,7 +35,7 @@ class TransactionSendPageOptions extends StatelessWidget {
               Images.iconTransactionSendByAlias,
               traductions.transactionsSendOptionAliasTitle,
               traductions.transactionsSendOptionAliasSubtitle,
-              () => _displayForm(context, TransactionSendMethod.aliasRtb),
+              () => _displayForm(context, TransactionSendMethod.alias),
               iconSize: 20,
             ),
             // Pour un RTP, les options IBAN et OTHR sont désactivées

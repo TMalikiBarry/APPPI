@@ -34,7 +34,7 @@ class NotificationOutputRepository implements NotificationOutputPort {
     String? sortBy,
     String? fields,
   }) async {
-    return await repoLocal.list(
+    return await repoRemote.list(
         compte: compte,
         page: page,
         limit: limit,
@@ -74,7 +74,7 @@ class NotificationOutputRepository implements NotificationOutputPort {
         dateFin: dateFin,
         keyword: keyword);
 
-    _updateLocal(result.data);
+    //_updateLocal(result.data);
 
     return result;
   }

@@ -134,10 +134,10 @@ class HomeScreenSPI extends StatelessWidget {
       // Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: const Color(0xFF2F296A),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: AppLocalizations.of(context)!.bottom_bar_home),
-          BottomNavigationBarItem(icon: Icon(Icons.swap_vert), label: AppLocalizations.of(context)!.bottom_bar_transaction),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: 'TouchPoint'),
+        items: [
+          BottomNavigationBarItem(icon: const Icon(Icons.home), label: AppLocalizations.of(context)!.bottom_bar_home),
+          BottomNavigationBarItem(icon: const Icon(Icons.swap_vert), label: AppLocalizations.of(context)!.bottom_bar_transaction),
+          const BottomNavigationBarItem(icon: Icon(Icons.star), label: 'TouchPoint'),
         ],
         currentIndex: 0,
         onTap: (index) {

@@ -36,9 +36,14 @@ class _NotificationBtnOpenWidgetState extends State<NotificationBtnOpenWidget> {
     super.initState();
     Alias alias = (context.read<AliasBloc>().state as AliasExistState).alias;
 
+    /*
     notificationBloc = NotificationBloc(
       Di.getNotificationInputPort(),
     )..add(NotificationCountEvent(alias.compte));
+     */
+    notificationBloc = NotificationBloc(
+      Di.getNotificationInputPort(),
+    );
   }
 
   @override

@@ -227,9 +227,9 @@ class AppNotifications {
   }) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
     AndroidNotificationDetails(
-      'transction_channel',
+      'transaction_channel',
       'Transaction',
-      channelDescription: 'Notifications de transaction',
+      channelDescription: 'Notification de transaction',
       importance: Importance.high,
       priority: Priority.high,
       showWhen: true,

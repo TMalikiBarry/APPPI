@@ -75,7 +75,7 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                           CtaWidget(
                             image: Images.iconMoneyReceiveHeaderHP,
                             label: traductions.homeActionRequest,
-                            disabled: false,
+                            disabled: true,
                             action: () => AppRouter.push(
                               context,
                               AppRouter.transactionReceive,

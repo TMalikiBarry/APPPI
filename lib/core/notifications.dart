@@ -233,6 +233,7 @@ class AppNotifications {
       importance: Importance.high,
       priority: Priority.high,
       showWhen: true,
+      icon: 'ic_stat_notify',
     );
 
     const DarwinNotificationDetails iOSPlatformChannelSpecifics =

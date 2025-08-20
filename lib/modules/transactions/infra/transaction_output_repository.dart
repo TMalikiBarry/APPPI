@@ -53,8 +53,12 @@ class TransactionOutputRepository implements TransactionOutputPort {
       sortBy: sortBy,
       fields: fields,
     );
-    for (var tx in liste.data) {
-      repoLocal.patch(tx);
+    try {
+      for (var tx in liste.data) {
+        repoLocal.patch(tx);
+      }
+    } catch(e){
+
     }
     // Trier les transactions par dateOperation dans l'ordre descendant
     liste.data.sort((a, b) => b.dateOperation!.compareTo(a.dateOperation!));

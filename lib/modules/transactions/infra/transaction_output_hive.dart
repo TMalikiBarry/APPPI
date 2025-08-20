@@ -101,36 +101,45 @@ class TransactionLocalHive {
 
   /// Enregistre une transaction dans la base locale
   Future<void> save(Transaction transaction) async {
-    await AppStorage.save(
-      collectionId,
-      transaction.endToEndId,
-      transaction.toJson(),
-    );
+    try{
+      await AppStorage.save(
+        collectionId,
+        transaction.endToEndId,
+        transaction.toJson(),
+      );
+    } catch(e){
+    }
   }
 
   /// MAJ une transaction dans la base locale
   Future<void> patch(Transaction transaction) async {
-    await AppStorage.patch(
-      collectionId,
-      transaction.endToEndId,
-      transaction.toJson(),
-    );
+    try{
+      await AppStorage.patch(
+        collectionId,
+        transaction.endToEndId,
+        transaction.toJson(),
+      );
+    }catch(e){
+    }
   }
 
   /// Ecoute sur les changements de la liste des transactions
   Future<Stream<List<Transaction>>> stream() async {
-    return await AppStorage.streamList(
-      collectionId,
-      Transaction.fromJson,
-    );
+      return await AppStorage.streamList(
+        collectionId,
+        Transaction.fromJson,
+      );
   }
 
   /// Enregistre une subscription dans la base locale
   Future<void> schedule(Transaction transaction) async {
-    await AppStorage.save(
-      collectionSchedule,
-      transaction.endToEndId,
-      transaction.toJson(),
-    );
+    try{
+      await AppStorage.save(
+        collectionSchedule,
+        transaction.endToEndId,
+        transaction.toJson(),
+      );
+    }catch(e){
+    }
   }
 }

@@ -35,7 +35,13 @@ class TransactionSendPageOptions extends StatelessWidget {
               Images.iconTransactionSendByAlias,
               traductions.transactionsSendOptionAliasTitle,
               traductions.transactionsSendOptionAliasSubtitle,
-              () => _displayForm(context, TransactionSendMethod.alias),
+              () {
+                if (action == "receive_now") {
+                  _displayForm(context, TransactionSendMethod.aliasRtb);
+                } else {
+                _displayForm(context, TransactionSendMethod.alias);
+                }
+              },
               iconSize: 20,
             ),
             // Pour un RTP, les options IBAN et OTHR sont désactivées
@@ -64,6 +70,7 @@ class TransactionSendPageOptions extends StatelessWidget {
         const SizedBox(height: 20),
 
         // Nouveau contact
+        /*
         MenuActionsWiget(
           items: [
             MenuActionItem(
@@ -99,6 +106,7 @@ class TransactionSendPageOptions extends StatelessWidget {
             ),
           ],
         ),
+         */
       ],
     );
   }

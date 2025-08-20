@@ -227,7 +227,10 @@ class TransactionOutputRemote {
       'clientId': aliasFrom,
       'userLogin': userLogin,
     });
-    if (command.method == TransactionSendMethod.alias || command.method == TransactionSendMethod.qrcode){
+    if (command.method == TransactionSendMethod.alias
+      || command.method == TransactionSendMethod.qrcode
+      || command.method == TransactionSendMethod.aliasRtb
+    ) {
       final ApiResponse response = await Api.get('/alias/sync/search/${command.alias!.value}');
       return Transaction.fromJsonTransactionVerificationSearchAlias(response.data["response"]);
     } else if (command.method == TransactionSendMethod.iban){
@@ -298,12 +301,12 @@ class TransactionOutputRemote {
       request['alias'] = command.transactionVerificationResultAlias!.alias;
     } else if (command.confirmationMethode.toString() == TransactionSendMethod.aliasRtb.toString()) {
       url = '/payments/init-claim';
+      request.remove("aliasFrom");
+      request.remove("aliasTo");
       request.addAll({
         'requestSenderAlias': aliasFrom,
-        'requestReceiverAlias': command.transactionVerificationResultAlias,
-        'cliendId': pref.getString("phone_number"),
+        'requestReceiverAlias': command.transactionVerificationResultAlias!.toJson(),
         'reason': command.motif ?? 'PI_REQUEST_TO_PAY'
-
       });
     }
       else if (command.confirmationMethode.toString() == TransactionSendMethod.iban.toString()){

@@ -44,6 +44,7 @@ class TransactionDetailsPageActions extends StatelessWidget {
               label: traductions.homeActionSend,
               //action: () => _actionSend(context, transaction),
               action: null,
+              disabled: true,
             ),
             // Transfert émis
             if (transaction.sens?.name == TransactionSens.debit.name) ...[
@@ -51,7 +52,7 @@ class TransactionDetailsPageActions extends StatelessWidget {
               CtaWidget(
                 image: Images.transactionCancel,
                 label: traductions.transactionDetailsAnnuler,
-                // disabled: transaction.retourDate != null,
+                disabled: true,
                 action: () => _actionCancel(
                   transaction,
                   context,
@@ -65,7 +66,8 @@ class TransactionDetailsPageActions extends StatelessWidget {
               CtaWidget(
                 image: Images.iconMoneyReceiveHeaderHP,
                 label: traductions.transactionDetailsRecevoir,
-                disabled: transaction.clientAlias == null,
+                //disabled: transaction.clientAlias == null,
+                disabled: true,
                 //action: transaction.clientAlias != null
                 //    ? () => _actionRtp(context, transaction)
                 //    : null,

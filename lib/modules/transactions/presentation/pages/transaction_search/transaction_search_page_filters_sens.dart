@@ -57,7 +57,7 @@ class TransactionSearchPageFiltersSensState
       TransactionSearchPageFiltersSensItem(
         sens: TransactionSens.debit,
         label: traductions.transactionSearchInputFilterCategoriesSensPayes,
-        icon: Icons.arrow_back_ios,
+        icon: Icons.arrow_back,
         selected: sensDebit!,
       ),
     ];

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logger/logger.dart';
@@ -39,9 +40,17 @@ class AppStorage {
     }
     // Fetch the data encryption key if exist
     else {
-      String? keyString = await secureStorage.read(key: keyId);
-      var key = base64Url.decode(keyString!);
-      dek = HiveAesCipher(key);
+      String? keyString;
+      try {
+        keyString = await secureStorage.read(key: keyId);
+        // utiliser value
+        var key = base64Url.decode(keyString!);
+        dek = HiveAesCipher(key);
+      } catch (e) {
+        if (e is PlatformException && e.message?.contains("BAD_DECRYPT") == true) {
+          await secureStorage.deleteAll();
+        }
+      }
     }
   }
 

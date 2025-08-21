@@ -117,13 +117,16 @@ class AliasPage extends StatelessWidget {
         appBar: AppBar(
           leading: BackButton(
             onPressed: () {
+              print("aliasState $aliasState");
               if (aliasState is AliasMBNOCreationState) {
+                print("aliasBloc.add(FetchAliasEvent(compte))");
                 aliasBloc.add(FetchAliasEvent(compte));
               } //
               else if (aliasState is AliasMBNOVerificationState) {
                 aliasBloc.add(CreateAliasMBNOEvent(compte));
               } //
               else {
+                print("AppRouter.pushReplacement");
                 AppRouter.pushReplacement(
                     context,
                     // AppRouter.introduction

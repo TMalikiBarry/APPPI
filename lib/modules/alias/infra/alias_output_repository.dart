@@ -31,6 +31,7 @@ class AliasOutputRepository implements AliasOutputPort {
       // Tentative de récupération depuis le serveur distant
       final alias = await repoRemote.recuperer(compte);
       logger.d("Alias récupéré du serveur : $alias");
+      print("Alias récupéré du serveur : $alias");
       logger.i(alias!.compte);
 
       if (alias != null) {

@@ -72,6 +72,7 @@ class AliasBloc extends Bloc<AliasEvent, AliasState> {
       emit(alias != null ? AliasExistState(alias) : AliasNotExistState());
     } on AliasRetrieveException catch (e) {
       logger.i("Exception : AliasRetrieveException ${e.error}");
+      print("Exception : AliasRetrieveException ${e.error}");
       if (e.error == ApiError.notFound) {
         emit(AliasNotExistState());
       } else {

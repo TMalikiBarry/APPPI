@@ -19,21 +19,24 @@ class AliasOutputRemote {
 
   Future<Alias?> recuperer(String compte) async {
     final prefs = await SharedPreferences.getInstance();
-    bool isFirstTime = prefs.getBool('isFirstTimeToRecover') ?? true;
 
     try {
       final ApiResponse response = await Api.get('/alias/sync/search/$compte');
       return response.data != null ? Alias.fromJson(response.data["response"]) : null;
     } on ApiException catch (e) {
-      if (e.error != ApiError.notFound && e.error != ApiError.unauthorized && isFirstTime){
+      if (e.error != ApiError.notFound && e.error != ApiError.unauthorized){
         logger.i("Retry PI-----------------------");
-        final ApiResponse response = await Api.get('/alias/sync/search/$compte');
-        prefs.setBool('isFirstTimeToRecover', false);
-        isFirstTime = false;
-        return response.data != null ? Alias.fromJson(response.data["response"]) : null;
+        try {
+          final ApiResponse response = await Api.get('/alias/sync/search/$compte');
+          return response.data != null ? Alias.fromJson(response.data["response"]) : null;
+        } on ApiException catch (e) {
+          if (e.error == ApiError.notFound) {
+            throw AliasRetrieveException(error: ApiError.notFound);
+          } else {
+            throw AliasRetrieveException(error: e.error, cause: e);
+          }
+        }
       }
-      prefs.setBool('isFirstTimeToRecover', false);
-      isFirstTime = false;
       //throw AliasRetrieveException(error: e.error, cause: e);
       // Si c'est un notFound (404), on retourne null
       logger.i("Exception : ApiException ${e.error}");

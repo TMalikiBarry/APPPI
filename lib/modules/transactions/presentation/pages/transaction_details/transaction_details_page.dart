@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -108,6 +109,9 @@ class TransactionDetailsPage extends StatelessWidget {
           //   transactionLocal.categorie = state.categorie;
           // }
           Transaction transaction = state.transaction;
+          logger.i("transaction_details_page");
+          logger.i(transaction.toJson());
+          print(transaction.toJson());
           if (state is TransactionDetailsCancelLoadingState) {
             return const LoadingPage();
           } else {

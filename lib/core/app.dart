@@ -61,6 +61,7 @@ class _AppState extends State<App> {
   bool _isLoading = true;
   ConfigBloc? configBloc;
   CategorieBloc? categorieBloc;
+  bool isFirstTime = true;
 
   // Couleurs pour le loader (à adapter selon votre thème)
   final Color primaryColor = const Color(0xFF6366F1); // Indigo
@@ -176,6 +177,23 @@ class _AppState extends State<App> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getInitialPage();
+  }
+
+  Future<void> getInitialPage() async {
+    final isFirstTimeInPi = await secureStorage.read(key: "isFirstTimeInPi");
+
+    if (isFirstTimeInPi == null || isFirstTimeInPi == "false") {
+      isFirstTime = true;
+    } else {
+      isFirstTime = false;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     //WidgetsFlutterBinding.ensureInitialized();
 
@@ -269,8 +287,12 @@ class _AppState extends State<App> {
         : Languages.fr;
     Locale language = lang != null ? Locale(lang.name) : Locale('fr');
 
+
     // Afficher la page principale
-    String pageInitiale = params[ConfigKey.introductionPassed.code] == null
+    String pageInitiale = (
+        params[ConfigKey.introductionPassed.code] == null
+        && isFirstTime
+    )
         ? AppRouter.introduction
         : AppRouter.home;
 

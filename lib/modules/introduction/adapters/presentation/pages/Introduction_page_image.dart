@@ -17,6 +17,7 @@ import 'introduction_footer.dart';
 import 'introduction_image.dart';
 import 'introduction_item_img.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // Un item introduction
 class IntroductionPageItem extends StatefulWidget {
@@ -41,6 +42,7 @@ class IntroductionPageItem extends StatefulWidget {
 class IntroductionPageUnItemState extends State<IntroductionPageItem>
     with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
+  final secureStorage = const FlutterSecureStorage();
 
   @override
   void initState() {
@@ -49,10 +51,11 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem>
       vsync: this,
       duration: const Duration(seconds: 5),
     )..forward()
-      ..addStatusListener((status) {
+      ..addStatusListener((status) async {
         if (status == AnimationStatus.completed) {
           final isLast = widget.item.position == widget.pageSize - 1;
           if (isLast) {
+            await secureStorage.write(key: 'isFirstTimeInPi', value: 'true');
             AppRouter.pushReplacement(context, AppRouter.home);
           } else {
             widget.pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
@@ -87,9 +90,10 @@ class IntroductionPageUnItemState extends State<IntroductionPageItem>
           Align(
             alignment: Alignment.topRight,
             child: TextButton(
-              onPressed: () {
+              onPressed: () async {
                 _ctrl.stop();
                 // 1) on enregistre qu'on a passé l'intro
+                await secureStorage.write(key: 'isFirstTimeInPi', value: 'true');
                 context.read<ConfigBloc>().add(
                           const ConfigChangeEvent(
                             ConfigKey.introductionPassed,

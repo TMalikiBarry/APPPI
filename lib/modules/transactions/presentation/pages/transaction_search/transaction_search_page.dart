@@ -52,7 +52,7 @@ class _TransactionSearchPageState extends State<TransactionSearchPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Barre de filtre: input et button
-              TransactionSearchPageInput(),
+              //TransactionSearchPageInput(),
 
               SizedBox(height: 32),
 

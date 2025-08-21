@@ -242,6 +242,7 @@ class TransactionDetailsPage extends StatelessWidget {
 
                         const SizedBox(height: 10),
 
+                        /*
                         // Autres
                         Card(
                           child: Column(
@@ -269,6 +270,7 @@ class TransactionDetailsPage extends StatelessWidget {
                         ),
 
                         const SizedBox(height: 10),
+                         */
 
                         // Poser une question
                       ],

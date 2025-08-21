@@ -30,7 +30,7 @@ class AppLogger {
     FlutterError.onError = (details) {
       FirebaseCrashlytics.instance.recordFlutterFatalError(details);
       FlutterError.presentError(details);
-      if (kReleaseMode) exit(1);
+      //if (kReleaseMode) exit(1);
     };
 
     // Transmettre toutes les erreurs asynchrones non détectées

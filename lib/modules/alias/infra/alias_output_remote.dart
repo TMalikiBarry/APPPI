@@ -25,7 +25,7 @@ class AliasOutputRemote {
       final ApiResponse response = await Api.get('/alias/sync/search/$compte');
       return response.data != null ? Alias.fromJson(response.data["response"]) : null;
     } on ApiException catch (e) {
-      if (e.error != ApiError.notFound && isFirstTime){
+      if (e.error != ApiError.notFound && e.error != ApiError.unauthorized && isFirstTime){
         logger.i("Retry PI-----------------------");
         final ApiResponse response = await Api.get('/alias/sync/search/$compte');
         prefs.setBool('isFirstTimeToRecover', false);

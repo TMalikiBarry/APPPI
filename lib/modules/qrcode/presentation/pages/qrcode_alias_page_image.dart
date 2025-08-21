@@ -9,7 +9,7 @@ class QrCodeAliasPageImage extends StatelessWidget {
   ///
   const QrCodeAliasPageImage({
     Key? key,
-    this.padding = const EdgeInsets.symmetric(vertical: 80.0, horizontal: 30.0),
+    this.padding = const EdgeInsets.symmetric(vertical: 100.0, horizontal: 40.0),
     required this.qrCode,
   }) : super(key: key);
 
@@ -19,8 +19,10 @@ class QrCodeAliasPageImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        clipBehavior:
-            Clip.antiAlias, // Important pour découper l'image dans le radius
+      clipBehavior: Clip.antiAlias,
+      child: Container( // <-- fixe une taille à la carte
+        width: double.infinity,
+        height: 500, // adapte selon ton besoin
         child: Stack(
           children: [
             // SVG en fond
@@ -28,33 +30,41 @@ class QrCodeAliasPageImage extends StatelessWidget {
               child: SvgPicture.asset(
                 'assets/images/qrCodePage.svg',
                 fit: BoxFit.cover,
-                package: 'common_dependencies', // si nécessaire
+                package: 'common_dependencies',
               ),
             ),
-            Center(
-              child: QrImageView(
-                size: 440,
-                data: qrCode,
-                version: QrVersions.auto,
-                gapless: false,
-                padding: padding,
-                embeddedImage: const AssetImage(Images.iconsPiOctogone,
-                    package: 'common_dependencies'),
-                embeddedImageStyle: const QrEmbeddedImageStyle(
-                  size: Size(40, 40),
-                ),
-                eyeStyle: const QrEyeStyle(
-                  color: Themer.primaryColor,
-                  eyeShape: QrEyeShape.square,
-                ),
-                dataModuleStyle: const QrDataModuleStyle(
-                  color: Themer.primaryColor,
-                  dataModuleShape: QrDataModuleShape.circle,
+            // QR code placé précisément
+            Positioned(
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: QrImageView(
+                  size: 400, // réduit si nécessaire
+                  data: qrCode,
+                  version: QrVersions.auto,
+                  gapless: false,
+                  padding: padding,
+                  embeddedImage: const AssetImage(
+                    Images.iconsPiOctogone,
+                    package: 'common_dependencies',
+                  ),
+                  embeddedImageStyle: const QrEmbeddedImageStyle(size: Size(40, 40)),
+                  eyeStyle: const QrEyeStyle(
+                    color: Themer.primaryColor,
+                    eyeShape: QrEyeShape.square,
+                  ),
+                  dataModuleStyle: const QrDataModuleStyle(
+                    color: Themer.primaryColor,
+                    dataModuleShape: QrDataModuleShape.circle,
+                  ),
                 ),
               ),
-            )
+            ),
           ],
-        )
+        ),
+      ),
     );
   }
 }

@@ -149,17 +149,27 @@ class TransactionSendCommand {
       action: TransactionSendCommand.actionSendNow,
       method: transaction.clientAlias != null
           ? TransactionSendMethod.alias
-          : TransactionSendMethod.othr,
+          : transaction.additionalInformations != null && transaction.additionalInformations!.movementType == TransactionSendMethod.iban.code
+            ? TransactionSendMethod.iban
+            : TransactionSendMethod.othr,
       compte: transaction.compte,
       canal: TransactionCanal.defaultCanal.code,
+      iban: transaction.additionalInformations != null && transaction.additionalInformations!.movementType == TransactionSendMethod.iban.code
+          ? TransactionSendCommandIban(value: transaction.additionalInformations!.clientIban)
+          : null,
       alias: transaction.clientAlias != null
           ? TransactionSendCommandAlias(value: transaction.clientAlias)
           : null,
       othr: transaction.clientAlias == null && transaction.userLogin != null
           ? TransactionSendCommandOthr(value: transaction.userLogin)
           : (transaction.clientCompte != null ? TransactionSendCommandOthr(value: transaction.clientCompte): null),
-      pspCode: transaction.clientPSP,
-      pspPays: transaction.clientPays,
+      pspCode: transaction.clientPSP ?? transaction.additionalInformations?.participant,
+      pspPays: transaction.additionalInformations != null && (
+          transaction.additionalInformations!.movementType == TransactionSendMethod.iban.code ||
+          transaction.additionalInformations!.movementType == TransactionSendMethod.othr.code
+        )
+          ? transaction.additionalInformations!.payePays
+          : transaction.clientPays,
       pspNom: transaction.clientPSPNom,
       amount: TransactionSendCommandAmount(value: transaction.montant),
     );

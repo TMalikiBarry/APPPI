@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,9 +43,9 @@ class TransactionDetailsPageActions extends StatelessWidget {
             CtaWidget(
               image: Images.iconMoneySendHeaderHP,
               label: traductions.homeActionSend,
-              //action: () => _actionSend(context, transaction),
-              action: null,
-              disabled: true,
+              action: () => _actionSend(context, transaction),
+              //action: null,
+              //disabled: true,
             ),
             // Transfert émis
             if (transaction.sens?.name == TransactionSens.debit.name) ...[
@@ -52,7 +53,7 @@ class TransactionDetailsPageActions extends StatelessWidget {
               CtaWidget(
                 image: Images.transactionCancel,
                 label: traductions.transactionDetailsAnnuler,
-                disabled: true,
+                //disabled: true,
                 action: () => _actionCancel(
                   transaction,
                   context,
@@ -151,9 +152,17 @@ class TransactionDetailsPageActions extends StatelessWidget {
 
   /// Renvoyer la transaction
   void _actionSend(BuildContext context, Transaction transaction) {
+    //logger.i("_actionSend");
+    //logger.i(transaction.toJson());
     // Passer le type de formulaire à afficher
     TransactionSendCommand command =
         TransactionSendCommand.fromTransaction(transaction);
+
+    //logger.i(command.iban);
+    //logger.i(command.pspPays);
+    //logger.i(command.pspCode);
+    //logger.i(command.pspNom);
+    //logger.i(command.method);
     context
         .read<TransactionSendBloc>()
         .add(TransactionSendDisplayFormEvent(command));

@@ -112,16 +112,17 @@ class TransactionVerificationPage extends StatelessWidget {
                     const SizedBox(height: 32),
 
                     // Alias
-                    if (command.alias != null)
+                    if (command.alias != null) ... [
                       CustomTextInput(
                         labelText: traductions.aliasFormLabel,
                         controller: TextEditingController(
                             text: command.alias!.value.toString()),
                         readOnly: true,
                       ),
+                    ]
 
                     // IBAN
-                    if (command.iban != null) ...[
+                    else if (command.iban != null) ...[
                       // Type
                       CustomTextInput(
                         labelText:
@@ -152,10 +153,10 @@ class TransactionVerificationPage extends StatelessWidget {
                         controller: TextEditingController(text: command.pspNom!),
                         readOnly: true,
                       ),
-                    ],
+                    ]
 
                     // Othr
-                    if (command.othr != null) ...[
+                    else if (command.othr != null) ...[
                       // Type
                       CustomTextInput(
                         labelText:

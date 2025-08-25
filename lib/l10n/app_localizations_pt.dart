@@ -1192,6 +1192,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionDetailsCancelRejectMessage => 'A demanda de cancelamento foi rejeitada com sucesso';
 
   @override
+  String get transactionDetailsRecuTitlePage => 'Payment completed';
+
+  @override
+  String get transactionDetailsRecuSubTitlePage => 'Pode partilhar ou descarregar o PDF';
+
+  @override
   String get transactionDetailsRecuTitle => 'Recebido do pagamento';
 
   @override

@@ -1192,6 +1192,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get transactionDetailsCancelRejectMessage => 'La demande d’annulation est rejetée avec succès';
 
   @override
+  String get transactionDetailsRecuTitlePage => 'Pagamento efetuado';
+
+  @override
+  String get transactionDetailsRecuSubTitlePage => 'Vous pouvez partager ou télécharger le PDF';
+
+  @override
   String get transactionDetailsRecuTitle => 'Reçu du paiement';
 
   @override

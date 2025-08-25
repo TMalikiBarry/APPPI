@@ -104,6 +104,8 @@ class Themer {
   static const moonColor = Color(0xffbbc0fb);
   static const moonColor2 = Color(0xFFE7E9FF);
   static const secondaryColor = Color(0xFF282C5D);
+  static const disabledColor = Color(0xFF667085);
+  static const backgroundSecondaryColor = Color(0xFFF5F6FF);
 
   static const TextStyle _defaultStyleLight = TextStyle(
     color: blackColor,

@@ -637,6 +637,7 @@
   "transactionDetailsCancelReasonLabel": "Reason",
   "transactionDetailsCancelRejectMessage": "The cancellation request has been successfully rejected",
   "@_TRANSACTIONS_DETAILS_PAGE_REÇU": {},
+  "transactionDetailsRecuTitlePage": "Payment completed",
   "transactionDetailsRecuTitle": "Transaction Statement",
   "transactionDetailsRecuSubTitle": "You can download or share the PDF file",
   "transactionDetailsRecuInfoIdentifiant": "Identifier",

@@ -107,3 +107,19 @@ final class TransactionSendLoadingState
   TransactionSendLoadingState(this.command);
   final TransactionSendCommand command;
 }
+
+
+
+final class TransactionSearchParticipantErrorState extends TransactionSendState {
+  TransactionSearchParticipantErrorState(
+      this.error, {
+        super.participants,
+      });
+  final String error;
+}
+
+final class TransactionSearchParticipant extends TransactionSendState {
+  /// Liste des dernières transactions affichées
+  final String? participantName;
+  const TransactionSearchParticipant({super.transactions, this.participantName});
+}

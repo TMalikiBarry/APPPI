@@ -2347,6 +2347,18 @@ abstract class AppLocalizations {
   /// **'The cancellation request has been successfully rejected'**
   String get transactionDetailsCancelRejectMessage;
 
+  /// No description provided for @transactionDetailsRecuTitlePage.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment completed'**
+  String get transactionDetailsRecuTitlePage;
+
+  /// No description provided for @transactionDetailsRecuSubTitlePage.
+  ///
+  /// In en, this message translates to:
+  /// **'You can share or download the PDF'**
+  String get transactionDetailsRecuSubTitlePage;
+
   /// No description provided for @transactionDetailsRecuTitle.
   ///
   /// In en, this message translates to:

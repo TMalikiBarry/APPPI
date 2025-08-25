@@ -1,14 +1,1 @@
-{
-  "pt": [
-    "homeTransactionsRecent",
-    "transactionsNoRecent",
-    "transactionsNoRecentSubtitle",
-    "transactionsErrorLoading",
-    "retry",
-    "transactionDetailsRecuInfoPayeurID",
-    "transactionDetailsRecuInfoPayeID",
-    "transactionSearchEmptySubtitle",
-    "transactionSearchEmptyTitle",
-    "loadMore"
-  ]
-}
+{}

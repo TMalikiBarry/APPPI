@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pi_mobile_app/core/theme.dart';
 
 import '../../core/assets.dart';
 import '../../core/router.dart';
@@ -90,7 +91,7 @@ class NotificationDialog extends StatelessWidget {
                   child: Text(
                     message!,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Themer.disabledColor),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -102,7 +103,7 @@ class NotificationDialog extends StatelessWidget {
                   child: Text(
                     title!,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Themer.primaryColor),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -114,7 +115,7 @@ class NotificationDialog extends StatelessWidget {
                   child: Text(
                     subtitle!,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Themer.disabledColor),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -125,7 +126,7 @@ class NotificationDialog extends StatelessWidget {
                 Text(
                   description!,
                   textAlign: TextAlign.center,
-                  style: isFullScreen ? Theme.of(context).textTheme.bodyLarge : Theme.of(context).textTheme.displaySmall,
+                  style: isFullScreen ? Theme.of(context).textTheme.bodyLarge!.copyWith(color: Themer.disabledColor) : Theme.of(context).textTheme.displayLarge!.copyWith(color: Themer.disabledColor),
                 ),
                 const SizedBox(height: 24),
               ],

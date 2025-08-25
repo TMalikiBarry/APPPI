@@ -102,9 +102,7 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
                       onPressed: () async{
                         Navigator.pop(context);
                       },
-                      icon: Icon(
-                        Platform.isIOS ?
-                        Icons.ios_share :
+                      icon: const Icon(
                         Icons.arrow_back_ios_new,
                         size: 28,
                         color: primaryColor,
@@ -119,10 +117,8 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
                           widget.transaction
                         );
                       },
-                      icon: Icon(
-                        Platform.isIOS ?
-                        Icons.ios_share :
-                        Icons.share_rounded,
+                      icon: const Icon(
+                        Icons.ios_share,
                         size: 28,
                         color: primaryColor,
                       ),
@@ -148,7 +144,7 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
                 child: Expanded(
                   child: SingleChildScrollView(
                     child: Container(
-                      padding: EdgeInsets.only(top: 15),
+                      padding: const EdgeInsets.only(top: 15),
                       decoration: const BoxDecoration(
                         color: Themer.backgroundSecondaryColor
                       ),

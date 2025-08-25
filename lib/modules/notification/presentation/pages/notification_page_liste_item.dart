@@ -2,6 +2,7 @@ import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pi_mobile_app/modules/notification/presentation/bloc/notification_event.dart';
+import 'package:pi_mobile_app/modules/transactions/domain/models/transaction.dart';
 
 import '../../../../core/assets.dart';
 import '../../../../core/router.dart';
@@ -205,27 +206,32 @@ class NotificationPageListeItem extends StatelessWidget {
     BuildContext context,
     my_notif.Notification notification,
   ) {
+    logger.i("notification : ${notification.toJson()}");
+
     // Marquer comme lu
-    if (notification.dateLecture == null) {
+    /*if (notification.dateLecture == null) {
       context.read<NotificationBloc>().add(
             NotificationReadEvent(
               notification: notification,
             ),
           );
-    }
+    }*/
 
     // Afficher la notification
     String route;
     if (notification.type == NotificationType.revendicationInitiee) {
       route = "/alias/revendications/${notification.idObject}";
     } else if (notification.type == NotificationType.annulationDemandee) {
-      route = "/transaction/cancel/${notification.idObject}";
+      route = "/transaction/cancel-transfer";
+      var transaction = Transaction(compte: '', montant: notification.details!["amount"], clientNom: notification.details!["clientName"], clientPays: "", endToEndId: notification.details!["endToEndId"] ?? "", guID: notification.idObject);
+      AppRouter.push(context, route, params: {"tx": transaction});
     } else if (notification.type == NotificationType.rtpInitiee ||
         notification.type == NotificationType.rtpRecue) {
       route = "/transaction/receive_now/${notification.idObject}";
     } else {
       route = "/notifications/${notification.idObject}";
     }
+    logger.i("route : $route");
     AppRouter.push(context, route, params: notification);
   }
 }

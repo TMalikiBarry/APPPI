@@ -21,24 +21,66 @@ import '../../bloc/transaction_cancel/transaction_cancel_state.dart';
 import '../transaction_details/transaction_details_page_error.dart';
 import 'transaction_cancel_reason_text.dart';
 
-class TransactionCancelPage extends StatelessWidget {
+class TransactionCancelPageTransfer extends StatelessWidget {
   ///
-  const TransactionCancelPage({super.key, required this.id});
+  const TransactionCancelPageTransfer({super.key, required this.tx});
 
-  final String id;
+  final Transaction tx;
 
   @override
   Widget build(BuildContext context) {
-    logger.i("route : $id");
     TransactionCancelBloc transactionCancelBloc = TransactionCancelBloc(
       Di.getTransactionInputPort(),
-      id,
+      tx.endToEndId,
     );
-    transactionCancelBloc.add(TransactionCancelFetchEvent(id));
+    //transactionCancelBloc.add(TransactionCancelFetchEvent(id));
     //
     AppLocalizations traductions = AppLocalizations.of(context)!;
 
+    return MyPageContainer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              BackButton(
+                onPressed: () {
+                  AppRouter.pop(context);
+                },
+              ),
+            ],
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: ListView(
+                children: [
+                  // Header: title and phone number
+                  _header(context, traductions, tx),
+                  const SizedBox(height: 20),
+
+                  // Infos sur le transfert
+                  _detailsTransfert(context, traductions, tx),
+
+                  const SizedBox(height: 10),
+
+                  // Infos sur la Demande d'annulation
+                  _detailsDemande(context, traductions, tx),
+                ],
+              ),
+            ),
+          ),
+          // Actions
+          if (tx.annulationStatut == TransactionStatut.initie &&
+              (tx.retourStatut == null ||
+                  tx.retourStatut != TransactionStatut.irrevocable))
+            _actions(context, traductions, tx, transactionCancelBloc),
+        ],
+      ),
+    );
     //
+    /*
     return BlocProvider<TransactionCancelBloc>(
       create: (_) => transactionCancelBloc,
       child: BlocConsumer<TransactionCancelBloc, TransactionCancelState>(
@@ -126,6 +168,7 @@ class TransactionCancelPage extends StatelessWidget {
         },
       ),
     );
+     */
   }
 
   Widget _header(
@@ -160,7 +203,7 @@ class TransactionCancelPage extends StatelessWidget {
           ),
           // Reference du transfert
           Text(
-            id,
+            tx.endToEndId,
             style: Theme.of(context).textTheme.displaySmall,
           ),
         ],
@@ -298,7 +341,7 @@ class TransactionCancelPage extends StatelessWidget {
                 // Pour envoyer la transaction après confirmation
                 if (state is IdentificationSuccessState) {
                   transactionCancelBloc.add(
-                    TransactionCancelAcceptEvent(id, tx),
+                    TransactionCancelAcceptEvent(tx.endToEndId, tx),
                   );
                 }
               },

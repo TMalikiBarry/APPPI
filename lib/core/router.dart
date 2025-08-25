@@ -6,6 +6,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:base_app/presenter/home.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/modules/transactions/presentation/pages/transaction_cancel/transaction_cancel_page_transfer.dart';
 import 'package:pi_mobile_app/modules/transactions/presentation/pages/transaction_split/transaction_split_page.dart';
 import 'package:pi_mobile_app/modules/transactions/presentation/pages/transaction_split/transaction_split_page_repartition.dart';
 
@@ -110,6 +111,7 @@ class AppRouter {
   static const transactionSearch = "/transaction-search";
   static const transactionSearchFilters = "/transaction-search/filters";
   static const transactionCancel = "/transaction/cancel/:id";
+  static const transactionCancelTransfer = "/transaction/cancel-transfer";
   static const transactionSplitPayment = "/transaction/split-payment";
   static const transactionSplitPaymentRepartition =
       "/transaction/split-payment/repartition";
@@ -429,6 +431,17 @@ class AppRouter {
         pageBuilder: (context, state) {
           final String id = state.pathParameters['id'] as String;
           return DialogPage(builder: (_) => TransactionCancelPage(id: id));
+        },
+      ),
+      // Transaction - Demande d'annulation transfer - details -
+      GoRoute(
+        path: transactionCancel,
+        pageBuilder: (context, state) {
+          final Map<String, dynamic> params = (state.extra!) as Map<String, dynamic>;
+          final Transaction tx = params["tx"] as Transaction;
+          return DialogPage(builder: (_) => TransactionCancelPageTransfer(
+              tx: tx)
+          );
         },
       ),
       // Transaction -transferts -list

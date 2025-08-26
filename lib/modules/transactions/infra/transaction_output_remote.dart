@@ -6,6 +6,7 @@ import 'package:flutter_client_sse/flutter_client_sse.dart';
 import 'package:logger/logger.dart';
 import 'package:pi_mobile_app/modules/security/domain/models/connected_user.dart';
 import 'package:pi_mobile_app/modules/transactions/domain/models/mappers/movement_mappers.dart';
+import 'package:pi_mobile_app/modules/transactions/domain/models/transaction_reject_reason.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // 1) On importe le modèle Transaction en n'important QUE les symboles dont on a besoin
@@ -455,14 +456,16 @@ class TransactionOutputRemote {
       }*/
       // Send transfer
       response = await Api.post(
-        '/movement/init-fund-return',
+        '/movement/respond-fund-return',
         data: {
           "guID": transaction.endToEndId,
-          "reason": "AM09",
+          "amount": transaction.montant.toInt(),
+          "reason": TransactionRejectReason.autre.code,
+          "decision": "ACCEPTED"
         },
       );
       //
-      transaction = Transaction.fromJsonCancel(response.data, transaction);
+      transaction = transaction;
     } catch (e) {
       logger.e("Reception reponse retour de fonds erreur", error: e);
       return Stream.error(e);
@@ -504,28 +507,50 @@ class TransactionOutputRemote {
     Transaction transaction,
     TransactionCancelReason reason,
   ) async {
-    // Send transfer
-    final ApiResponse response = await Api.post(
-      '/movement/init-fund-return',
-      data: {
-        "guID": transaction.endToEndId,
-        "reason": reason.code,
-      },
-    );
-    //
-    return Transaction.fromJsonCancel(response.data, transaction);
+    try {
+      // Send transfer
+      final ApiResponse response = await Api.post(
+        '/movement/init-fund-return',
+        data: {
+          "guID": transaction.endToEndId,
+          "reason": reason.code,
+          "clientID": transaction.clientAlias,
+          "clientName": transaction.additionalInformations?.clientName,
+          "amount": transaction.montant,
+          "impactDate": "${transaction.dateOperation}",
+          "clientCountry": transaction.additionalInformations?.payePays,
+        },
+      );
+      //
+      return Transaction.fromJsonCancel(response.data, transaction);
+    } catch (e) {
+      // Handle empty response appropriately
+      throw Exception("No transaction data available in cancel response.");
+    }
   }
 
   Future<Transaction> reject(
     Transaction transaction,
     String reason,
   ) async {
-    // Send transfer
-    final ApiResponse response = await Api.put(
-      '/transferts/${transaction.endToEndId}/rejets',
-      data: {"raison": reason},
-    );
-    //
-    return Transaction.fromJson(response.data);
+    try {
+      // Send transfer
+      final ApiResponse response = await Api.post(
+        '/movement/respond-fund-return',
+        data: {
+          "guID": transaction.endToEndId,
+          "amount": transaction.montant.toInt(),
+          "reason": TransactionRejectReason.autre.code,
+          "decision": "REJECTED"
+        },
+      );
+      //
+      return transaction;
+    } catch (e) {
+      // Handle empty response appropriately
+      logger.i("No transaction data available in reject response.");
+      rethrow;
+      //throw Exception("No transaction data available in reject response.");
+    }
   }
 }

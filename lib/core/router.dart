@@ -435,12 +435,13 @@ class AppRouter {
       ),
       // Transaction - Demande d'annulation transfer - details -
       GoRoute(
-        path: transactionCancel,
+        path: transactionCancelTransfer,
         pageBuilder: (context, state) {
-          final Map<String, dynamic> params = (state.extra!) as Map<String, dynamic>;
-          final Transaction tx = params["tx"] as Transaction;
-          return DialogPage(builder: (_) => TransactionCancelPageTransfer(
-              tx: tx)
+          final params = state.extra! as Map<String, Object?>;
+          final tx = params["tx"] as Transaction;
+
+          return DialogPage(
+            builder: (_) => TransactionCancelPageTransfer(tx: tx),
           );
         },
       ),

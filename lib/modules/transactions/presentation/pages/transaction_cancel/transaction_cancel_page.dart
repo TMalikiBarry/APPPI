@@ -74,8 +74,12 @@ class TransactionCancelPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          if (state is TransactionCancelLoadingState) {
+            return const LoadingPage();
+          }
           if (state is TransactionCancelDetailsState ||
-              state is TransactionCancelLoadingState ||
+              state is TransactionInitCancelState ||
+              //state is TransactionCancelLoadingState ||
               state is TransactionCancelReponseState) {
             Transaction tx = (state as dynamic).transaction;
             return MyPageContainer(

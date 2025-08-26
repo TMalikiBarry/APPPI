@@ -9,6 +9,8 @@ class TransactionCancelFetchEvent extends TransactionCancelEvent {
   const TransactionCancelFetchEvent(this.endToEndId);
 }
 
+class TransactionInitCancelEvent extends TransactionCancelEvent {}
+
 class TransactionCancelAcceptEvent extends TransactionCancelEvent {
   final String endToEndId;
   final Transaction transaction;

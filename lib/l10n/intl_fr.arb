@@ -636,7 +636,7 @@
   "transactionDetailsCancelReasonLabel": "Raison",
   "transactionDetailsCancelRejectMessage": "La demande d’annulation est rejetée avec succès",
   "@_TRANSACTIONS_DETAILS_PAGE_REÇU": {},
-  "transactionDetailsRecuTitlePage": "Pagamento efetuado",
+  "transactionDetailsRecuTitlePage": "Paiement effectué",
   "transactionDetailsRecuTitle": "Reçu du paiement",
   "transactionDetailsRecuSubTitle": "Vous pouvez partager ou télécharger le PDF",
   "transactionDetailsRecuInfoIdentifiant": "Identifiant",

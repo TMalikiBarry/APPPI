@@ -149,6 +149,7 @@ class Images {
 
   // QR Code
   static const String iconsPiOctogone = 'assets/icons/pi_octogone.png';
+  static const String iconsPiOctogone2 = 'assets/icons/pi_octogone2.png';
   // TODO change image
   static const String iconFlashOn = 'assets/icons/flash.png';
   static const String IconFlashOff = 'assets/icons/flash.png';

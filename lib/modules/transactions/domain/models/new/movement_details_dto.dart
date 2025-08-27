@@ -104,7 +104,7 @@ class MovementDetailsDTO {
     }
     if (additionalInformations != null && additionalInformations.payeAlias != null) {
       clientPays = clientPays ?? additionalInformations.payePays;
-      acquirerAccountLabel = additionalInformations.clientName;
+      acquirerAccountLabel = additionalInformations.clientName ?? additionalInformations.issuerName;
 
       if (
       additionalInformations.movementType == TransactionSendMethod.alias.code ||
@@ -155,7 +155,7 @@ class MovementDetailsDTO {
       ),
       issuerPhoneNumber: json['issuerPhoneNumber'] as String?,
       acquirerPhoneNumber: json['acquirerPhoneNumber'] as String?,
-      issuerAccountLabel: json['issuerAccountLabel'] as String?,
+      issuerAccountLabel: json['issuerAccountLabel'] ?? additionalInformations?.issuerName,
       acquirerAccountLabel: acquirerAccountLabel,
       clientAlias: clientAlias,
       clientPSP: clientPSP,

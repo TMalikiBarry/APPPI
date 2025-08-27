@@ -11,6 +11,7 @@ import 'package:pi_mobile_app/l10n/app_localizations.dart';
 import 'package:pi_mobile_app/modules/transactions/presentation/bloc/transaction_send/transaction_send_state.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../core/theme.dart';
 import '../../../domain/models/transaction.dart';
@@ -32,6 +33,7 @@ class TransactionDetailsPageRecu extends StatefulWidget {
 
 class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu> {
   String? participantName;
+  String? nomClient;
 
   @override
   void initState() {
@@ -40,8 +42,20 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
         widget.transaction.additionalInformations?.payePays ?? widget.transaction.clientPays,
         widget.transaction.additionalInformations?.participant ?? ""
     ));
-    participantName = widget.transaction.canal;
-    logger.i("participantName initState() : $participantName");
+    init();
+  }
+
+  init() async {
+    final pref = await SharedPreferences.getInstance();
+    var firstName = pref.getString("firstName");
+    var lastName = pref.getString("lastName");
+    if (mounted) {
+      setState(() {
+        nomClient = "$firstName $lastName";
+      });
+    }
+    print("nomClient : $nomClient");
+    print("transaction.sens : ${widget.transaction.sens}");
   }
 
   @override
@@ -302,22 +316,40 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
             rapportSubTitle: rapportSubTitle
         ),*/
         // Emetteur
-        _recuItem(
-          context,  traductions.transactionDetailsRecuInfoPayeurLabel,
-          data : transaction.clientNom,
-          rapportSmallTitle: rapportSmallTitle,
-          rapportSubTitle: rapportSubTitle
-        ),
+        if (transaction.sens == TransactionSens.debit) ... [
+          _recuItem(
+            context,  traductions.transactionDetailsRecuInfoPayeurLabel,
+            data : nomClient!,
+            rapportSmallTitle: rapportSmallTitle,
+            rapportSubTitle: rapportSubTitle
+          ),
+        ] else ... [
+          _recuItem(
+              context, traductions.transactionDetailsRecuInfoPayeurLabel,
+              data : transaction.clientNom,
+              rapportSmallTitle: rapportSmallTitle,
+              rapportSubTitle: rapportSubTitle
+          ),
+        ],
         //
         const SizedBox(height: 10,),
 
         // Recepteur
-        _recuItem(
+        if (transaction.sens == TransactionSens.credit) ... [
+          _recuItem(
             context, traductions.transactionDetailsRecuInfoPayeLabel,
-            data : transaction.acquirerAccountLabel!,
+            data : nomClient!,
             rapportSmallTitle: rapportSmallTitle,
             rapportSubTitle: rapportSubTitle
-        ),
+          ),
+        ] else ... [
+          _recuItem(
+              context, traductions.transactionDetailsRecuInfoPayeLabel,
+              data : transaction.acquirerAccountLabel!,
+              rapportSmallTitle: rapportSmallTitle,
+              rapportSubTitle: rapportSubTitle
+          ),
+        ],
         //
         const SizedBox(height: 10,),
 
@@ -335,12 +367,21 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
         const SizedBox(height: 10,),*/
 
         // identifiant de l' Emetteur
-        _recuItem(
-            context,traductions.transactionDetailsRecuInfoPayeurID,
-            data : transaction.clientId!,
-            rapportSmallTitle: rapportSmallTitle,
-            rapportSubTitle: rapportSubTitle
-        ),
+        if (transaction.clientId != null) ... [
+          _recuItem(
+              context,traductions.transactionDetailsRecuInfoPayeurID,
+              data : transaction.clientId!,
+              rapportSmallTitle: rapportSmallTitle,
+              rapportSubTitle: rapportSubTitle
+          ),
+        ] else if (transaction.clientCompte != null) ... [
+          _recuItem(
+              context,traductions.transactionDetailsRecuInfoPayeurID,
+              data : transaction.clientCompte!,
+              rapportSmallTitle: rapportSmallTitle,
+              rapportSubTitle: rapportSubTitle
+          ),
+        ],
         //
         const SizedBox(height: 10,),
 
@@ -357,11 +398,11 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
 
 
         // institution
-        if(transaction.canal != null)...[
+        if(participantName != null)...[
           _recuItem(
             context,
             traductions.transactionDetailsRecuInfoClientInstitution,
-            data : participantName ?? transaction.canal!,
+            data : participantName,
             rapportSmallTitle: rapportSmallTitle,
             rapportSubTitle: rapportSubTitle
           ),

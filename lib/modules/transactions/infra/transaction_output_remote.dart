@@ -464,6 +464,7 @@ class TransactionOutputRemote {
           "decision": "ACCEPTED"
         },
       );
+      transaction.annulationStatut = TransactionStatut.irrevocable;
       //
       transaction = transaction;
     } catch (e) {
@@ -544,6 +545,7 @@ class TransactionOutputRemote {
           "decision": "REJECTED"
         },
       );
+      transaction.annulationStatut = TransactionStatut.rejete;
       //
       return transaction;
     } catch (e) {

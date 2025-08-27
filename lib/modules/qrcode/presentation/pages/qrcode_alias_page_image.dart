@@ -47,7 +47,7 @@ class QrCodeAliasPageImage extends StatelessWidget {
                   gapless: false,
                   padding: padding,
                   embeddedImage: const AssetImage(
-                    Images.iconsPiOctogone,
+                    Images.iconsPiOctogone2,
                     package: 'common_dependencies',
                   ),
                   embeddedImageStyle: const QrEmbeddedImageStyle(size: Size(40, 40)),

@@ -594,9 +594,9 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
       // Émettre le nouvel état avec la liste des participants mise à jour
       emit(TransactionSearchParticipant(participantName: participantName));
     } catch (e) {
-      logger.e("Erreur lors de la récupération des participants: $e");
+      logger.i("Erreur lors de la récupération des participants: $e");
       // Émettre un état d'erreur ou état avec liste vide
-      emit(TransactionSearchParticipantErrorState(TransactionError.unknow.toString()));
+      emit(TransactionSearchParticipant(participantName: null));
     }
   }
 }

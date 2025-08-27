@@ -6,6 +6,7 @@ class AdditionalInfosMovement {
   final String? otherClient;
   final String? movementType;
   final String? clientIban;
+  final String? issuerName;
 
   AdditionalInfosMovement({
     this.clientName,
@@ -15,6 +16,7 @@ class AdditionalInfosMovement {
     this.otherClient,
     this.movementType,
     this.clientIban,
+    this.issuerName,
   });
 
   factory AdditionalInfosMovement.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class AdditionalInfosMovement {
       otherClient: json['otherClient'] as String?,
       movementType: json['movementType'] as String?,
       clientIban: json['clientIban'] as String?,
+      issuerName: json['issuerName'] as String?,
     );
   }
 
@@ -38,6 +41,7 @@ class AdditionalInfosMovement {
       'otherClient': otherClient,
       'movementType': movementType,
       'clientIban': clientIban,
+      'issuerName': issuerName,
     };
   }
 }

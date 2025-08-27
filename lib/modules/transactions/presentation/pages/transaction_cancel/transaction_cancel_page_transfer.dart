@@ -335,6 +335,7 @@ class TransactionCancelPageTransfer extends StatelessWidget {
           Expanded(
             child: FilledButton.tonal(
               onPressed: () {
+                tx.annulationStatut = TransactionStatut.rejete;
                 context.read<TransactionCancelBloc>() //
                   .add(
                   TransactionCancelRejectEvent(tx),
@@ -348,6 +349,7 @@ class TransactionCancelPageTransfer extends StatelessWidget {
           Expanded(
             child: ElevatedButton(
               onPressed: () {
+                tx.annulationStatut = TransactionStatut.irrevocable;
                 context.read<TransactionCancelBloc>() //
                   .add(TransactionCancelAcceptEvent(tx.endToEndId, tx),
                 );

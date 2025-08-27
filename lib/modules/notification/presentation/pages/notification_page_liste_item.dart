@@ -238,10 +238,10 @@ class NotificationPageListeItem extends StatelessWidget {
         annulationRaison: TransactionCancelReasonX.fromCode(
           notification.details?['raison'],
         ),
-        annulationStatut: TransactionStatut.initie
-        //annulationStatut: TransactionStatutX.fromCode(
-        //  notification.details?['status'],
-        //),
+        //annulationStatut: TransactionStatut.initie
+        annulationStatut: TransactionStatutX.fromCode(
+          notification.details?['status'],
+        ) ?? TransactionStatut.initie,
       );
       logger.i("transaction : ${{"tx": transaction}}");
     } else if (notification.type == NotificationType.rtpInitiee ||
@@ -284,7 +284,7 @@ extension TransactionStatutX on TransactionStatut {
   static TransactionStatut? fromCode(String? code) {
     if (code == null) return null;
     return TransactionStatut.values.firstWhere(
-          (e) => e == code,
+          (e) => e.name == code,
     );
   }
 }

@@ -53,9 +53,7 @@ class _QrcodeScanPageState extends State<QrcodeScanPage> {
       create: (_) => qrcodeScanBloc,
       child: BlocConsumer<QrcodeScanBloc, QrcodeScanState>(
         bloc: qrcodeScanBloc,
-        listenWhen: (previous, current) =>
-            current is QrcodeScanSuccessState ||
-            current is QrcodeScanErrorState,
+        listenWhen: (previous, current) => current is QrcodeScanSuccessState || current is QrcodeScanErrorState,
         listener: (context, state) {
           if (state is QrcodeScanSuccessState) {
             AppRouter.pushReplacement(
@@ -135,10 +133,7 @@ class _QrcodeScanPageState extends State<QrcodeScanPage> {
                   child: Text(
                     traductions.qrcodeScanPageMessage,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .displaySmall
-                        ?.copyWith(color: Themer.whiteColor),
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(color: Themer.primaryColor),
                   ),
                 ),
 
@@ -160,15 +155,7 @@ class _QrcodeScanPageState extends State<QrcodeScanPage> {
                     onPressed: () => controller.toggleTorch(),
                     elevation: 0,
                     heroTag: "flash",
-                    child: Image.asset(
-                      controller.torchEnabled
-                          ? Images.iconFlashOn
-                          : Images.IconFlashOff,
-                      width: 21,
-                      height: 21,
-                      color: Colors.white,
-                      package: 'common_dependencies'
-                    ),
+                    child: Image.asset(controller.torchEnabled ? Images.iconFlashOn : Images.IconFlashOff, width: 21, height: 21, color: Colors.white, package: 'common_dependencies'),
                   ),
                   const SizedBox(width: 16),
                   // Switch btn: Scan - Mon code
@@ -211,9 +198,7 @@ class _QrcodeScanPageState extends State<QrcodeScanPage> {
                     },
                     elevation: 0,
                     heroTag: "galery",
-                    child:
-                        Image.asset(Images.iconsGalerie, width: 21, height: 21,
-                            color: Colors.white, package: 'common_dependencies'),
+                    child: Image.asset(Images.iconsGalerie, width: 21, height: 21, color: Colors.white, package: 'common_dependencies'),
                   ),
                 ],
               ),
@@ -329,8 +314,6 @@ class ScanWindowPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(ScanWindowPainter oldDelegate) {
-    return oldDelegate.scanWindow != scanWindow ||
-        oldDelegate.color != color ||
-        oldDelegate.borderRadius != borderRadius;
+    return oldDelegate.scanWindow != scanWindow || oldDelegate.color != color || oldDelegate.borderRadius != borderRadius;
   }
 }

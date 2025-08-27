@@ -9,7 +9,6 @@ import '../../../domain/models/qrcode_decode_exception.dart';
 import '../../../ports/input/qrcode_input_port.dart';
 import 'qrcode_scan_event.dart';
 import 'qrcode_scan_state.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QrcodeScanBloc extends Bloc<QrcodeScanEvent, QrcodeScanState> {
   //
@@ -52,39 +51,28 @@ class QrcodeScanBloc extends Bloc<QrcodeScanEvent, QrcodeScanState> {
     Emitter<QrcodeScanState> emit,
   ) async {
     try {
-      // Sélectionner une image depuis la galerie
-      final XFile? image = await ImagePicker().pickImage(
+      var image = await ImagePicker().pickImage(
         source: ImageSource.gallery,
       );
-
-      if (image == null) {
+      if (image != null) {
+        // TODO review qr code scan package
+        // String? qrCode = await Scan.parse(image.path);
+        // if (qrCode != null) {
+        //   QrcodeData qrData = await qrcodeInputPort.decode(qrCode);
+        //   emit(QrcodeScanSuccessState(qrData));
+        // }
+        // // L'image n'est pas qrcode
+        // else {
+        //   emit(const QrcodeScanErrorState(
+        //     QrCodeDecodeError.notQrImage,
+        //   ));
+        // }
+      } else {
         emit(const QrcodeScanErrorState(QrCodeDecodeError.unknown));
-        return;
       }
-
-      // Créer un contrôleur scanner
-      final MobileScannerController scannerController = MobileScannerController();
-
-      //analyser image
-      final BarcodeCapture? capture = await scannerController.analyzeImage(image.path);
-
-      if (capture == null || capture.barcodes.isEmpty) {
-        emit(const QrcodeScanErrorState(QrCodeDecodeError.notQrImage));
-        return;
-      }
-
-      // Récupérer la première valeur de QR détectée
-      final String? qrCode = capture.barcodes.first.rawValue;
-
-      if (qrCode == null || qrCode.isEmpty) {
-        emit(const QrcodeScanErrorState(QrCodeDecodeError.notQrImage));
-        return;
-      }
-
-      // Décoder avec ton domaine
-      QrcodeData qrData = await qrcodeInputPort.decode(qrCode);
-      emit(QrcodeScanSuccessState(qrData));
-    } catch (e) {
+    }
+    //
+    catch (e) {
       if (e is QrcodeDecodeException) {
         emit(QrcodeScanErrorState(e.error));
       } else {

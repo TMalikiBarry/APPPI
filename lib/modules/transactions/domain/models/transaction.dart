@@ -482,7 +482,7 @@ class Transaction {
       montant: json['amount'] != null ? double.parse(json['amount']) : 0.0,
 
       // Champs dérivés
-      sens: _determineTransactionSens(json),
+      sens: _determineTransactionSens(json, fromTransfer: true),
       motif: message ?? json['motif'] as String? ?? '',
       canal: json['serviceCode'] as String? ?? 'TRANSFER_PI',
       serviceCode: json['serviceCode'] as String? ?? 'TRANSFER_PI',
@@ -575,12 +575,12 @@ class Transaction {
   }
 
   static TransactionSens? _determineTransactionSens(
-      Map<dynamic, dynamic> json) {
+      Map<dynamic, dynamic> json, {bool fromTransfer = false}) {
     final issuer = json['issuerPhoneNumber']?.toString() ?? '';
     final acquirer = json['acquirerPhoneNumber']?.toString() ?? '';
     final currentAccount = json['clientPhoneNumber']?.toString() ?? '';
 
-    return (currentAccount == issuer)
+    return (currentAccount == issuer || fromTransfer)
         ? TransactionSens.debit
         : TransactionSens.credit;
   }

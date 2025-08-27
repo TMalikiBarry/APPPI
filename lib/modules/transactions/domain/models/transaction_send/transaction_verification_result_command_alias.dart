@@ -14,7 +14,8 @@ class TransactionVerificationResultAlias {
     this.creationDate,
     this.modificationDate,
     this.preConfirmation = false,
-    /*
+
+
     this.aliasCreationId,
     this.clientNationality,
     this.companyCategory,
@@ -48,7 +49,7 @@ class TransactionVerificationResultAlias {
     this.modifiedAliasBody,
     this.callbackURL,
 
-     */
+
   });
 
   /// Compte du client
@@ -68,7 +69,7 @@ class TransactionVerificationResultAlias {
 
 
 
-  /*
+
   final String? aliasCreationId;
   final String? clientNationality;
   final String? companyName;
@@ -102,7 +103,7 @@ class TransactionVerificationResultAlias {
   final String? modifiedAliasBody;
   final String? callbackURL;
 
-   */
+
 
   Map<String, dynamic> toJson() {
     return {
@@ -119,7 +120,8 @@ class TransactionVerificationResultAlias {
       'creationDate': creationDate,
       'modificationDate': modificationDate,
       'preConfirmation': preConfirmation,
-      /*
+
+
       'aliasCreationId': aliasCreationId,
       'clientNationality': clientNationality,
       'companyName': companyName,
@@ -153,7 +155,7 @@ class TransactionVerificationResultAlias {
       'modifiedAliasBody': modifiedAliasBody,
       'callbackURL': callbackURL,
 
-       */
+
     };
   }
 
@@ -174,7 +176,8 @@ class TransactionVerificationResultAlias {
       creationDate: json['creationDate'] as String?,
       modificationDate: json['modificationDate'] as String?,
       preConfirmation: json['preConfirmation'] as bool,
-      /*
+
+
       aliasCreationId: json['aliasCreationId'] as String?,
       clientNationality: json['clientNationality'] as String?,
       companyName: json['companyName'] as String?,
@@ -207,7 +210,7 @@ class TransactionVerificationResultAlias {
       type: json['type'] as String?,
       modifiedAliasBody: json['modifiedAliasBody'] as String?,
       callbackURL: json['callbackURL'] as String?,
-       */
+
     );
   }
 }

@@ -208,7 +208,8 @@ class TransactionOutputRemote {
     } else {
       // Handle empty response appropriately
       print("No transaction data available in response.");
-      throw ApiException(error: ApiError.unknowError, statusCode: 404);
+      throw Exception("No transaction data available in response.");
+      //throw ApiException(error: ApiError.unknowError, statusCode: 404);
     }
   }
 

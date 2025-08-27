@@ -41,7 +41,8 @@ class TransactionDetailsPage extends StatelessWidget {
     TransactionDetailsBloc transactionDetailsBloc = TransactionDetailsBloc(
       Di.getTransactionInputPort(),
       transaction,
-    )..add(TransactionDetailsFetchEvent(transaction));
+    );
+      //..add(TransactionDetailsFetchEvent(transaction));
     //
     AppLocalizations traductions = AppLocalizations.of(context)!;
 

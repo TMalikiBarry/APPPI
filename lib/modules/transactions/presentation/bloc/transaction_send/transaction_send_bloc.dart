@@ -75,6 +75,8 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
 
     // Pour récupérer les participants selon le pays
     on<TransactionSendGetParticipantsByCountryEvent>(_onTransactionSendGetParticipantsByCountryEvent);
+
+    on<TransactionGetNameParticipant>(_onTransactionGetNameParticipant);
   }
 
   /// Pour obtenir la liste des transferts récents
@@ -558,6 +560,43 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
       logger.e("Erreur lors de la récupération des participants: $e");
       // Émettre un état d'erreur ou maintenir l'état actuel
       emit(TransactionSendFormInputState(event.command, participants: []));
+    }
+  }
+
+
+  /// Récupère les participants selon le pays sélectionné
+  void _onTransactionGetNameParticipant(
+      TransactionGetNameParticipant event,
+      Emitter<TransactionSendState> emit,
+      ) async {
+    try {
+      logger.i("CountryCode ${event.countryCode}");
+      logger.i("participantCode ${event.participantCode}");
+
+      // Récupérer la liste des participants pour le pays sélectionné
+      List<Participant> participants =
+      await participantInputPort.list(event.countryCode);
+      String? participantName;
+
+      // Vérifier si le participant sélectionné existe toujours
+      Participant? selected = participants.firstWhere(
+            (p) => p.codeMembre == event.participantCode,
+        orElse: null, // à adapter selon ton modèle
+      );
+
+      if (selected.codeMembre == null || selected.codeMembre!.isEmpty) {
+        // le participant n'existe plus -> on réinitialise
+        participantName = null;
+      } else {
+        participantName = selected.nomMembre;
+      }
+
+      // Émettre le nouvel état avec la liste des participants mise à jour
+      emit(TransactionSearchParticipant(participantName: participantName));
+    } catch (e) {
+      logger.e("Erreur lors de la récupération des participants: $e");
+      // Émettre un état d'erreur ou état avec liste vide
+      emit(TransactionSearchParticipantErrorState(TransactionError.unknow.toString()));
     }
   }
 }

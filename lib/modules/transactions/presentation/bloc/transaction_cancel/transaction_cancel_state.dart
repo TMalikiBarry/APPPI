@@ -29,3 +29,7 @@ class TransactionCancelReponseState extends TransactionCancelState {
     this.error,
   ]);
 }
+
+class TransactionInitCancelState extends TransactionCancelState {
+  const TransactionInitCancelState(super.endToEndId);
+}

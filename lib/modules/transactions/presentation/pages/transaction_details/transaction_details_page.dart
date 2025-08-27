@@ -2,6 +2,7 @@ import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:pi_mobile_app/core/notifications.dart';
 
 import '../../../../../core/di.dart';
 import '../../../../../core/router.dart';
@@ -83,18 +84,26 @@ class TransactionDetailsPage extends StatelessWidget {
               context: context,
               backgroundColor: Colors.transparent,
               builder: (BuildContext context) {
-                return state.error != null
-                    ? TransactionDetailsPageError(error: state.error!)
-                    : NotificationDialog(
-                        type: NotificationType.success,
-                        title:
-                            traductions.transactionDetailsCancelSuccessMessage,
-                        description: traductions
-                            .transactionDetailsCancelSuccessDescription,
-                        btnText: traductions.btnTextContinue,
-                        btnAction: () => {AppRouter.pop(context)},
-                        btnColor: Theme.of(context).colorScheme.tertiary,
-                      );
+                if ( state.error != null) {
+                  return TransactionDetailsPageError(error: state.error!);
+                } else {
+
+                  // Notification en cas de success
+                  AppNotifications.showCustomTransferNotification(
+                    title: traductions.transactionDetailsCancelSuccessMessage,
+                    body: traductions.transactionDetailsCancelSuccessDescriptionNotification,
+                  );
+                  return NotificationDialog(
+                    type: NotificationType.success,
+                    title:
+                        traductions.transactionDetailsCancelSuccessMessage,
+                    description: traductions
+                        .transactionDetailsCancelSuccessDescription,
+                    btnText: traductions.btnTextContinue,
+                    btnAction: () => {AppRouter.pop(context)},
+                    btnColor: Theme.of(context).colorScheme.tertiary,
+                  );
+                }
               },
               isScrollControlled: true,
             );

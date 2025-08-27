@@ -19,7 +19,7 @@ extension MovementDetailsMapper on MovementDetailsDTO {
     return Transaction(
       compte: compte,
       acquirerPhoneNumber: acquirerPhoneNumber ?? ' --- ',
-      acquirerAccountLabel: acquirerAccountLabel ?? '---',
+      acquirerAccountLabel: acquirerAccountLabel ?? additionalInformations?.clientName ?? '---',
       alias: null,
       montant: amount,
       montantFrais: globalFees,
@@ -29,12 +29,12 @@ extension MovementDetailsMapper on MovementDetailsDTO {
       // on stocke serviceTypeCode dans canal
       clientNom: issuerAccountLabel ?? '---',
       clientPays: countryISOCode ?? '',
-      clientPSP: null,
+      clientPSP: clientPSP,
       clientPSPNom: null,
       clientPhoto: null,
-      clientCompte: issuerAccount ?? ' --- ',
+      clientCompte: issuerAccount ?? clientCompte ?? '---',
       // on stocke ici l’issuerAccount
-      clientAlias: null,
+      clientAlias: clientAlias,
       endToEndId: endToEndId ?? guID,
       dateOperation: impactDate,
       statut: statut,
@@ -74,6 +74,7 @@ extension MovementDetailsMapper on MovementDetailsDTO {
       slipNumber: slipNumber,
       userLogin: userLogin,
       acquirerAccount: acquirerAccount ?? ' --- ',
+      additionalInformations: additionalInformations,
     );
   }
 }

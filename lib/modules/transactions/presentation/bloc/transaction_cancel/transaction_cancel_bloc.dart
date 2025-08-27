@@ -21,6 +21,9 @@ class TransactionCancelBloc
   TransactionCancelBloc(this.transactionInputPort, this.endToEndId)
       : super(TransactionCancelInitialState(endToEndId)) {
     // Pour recuperer une demande d'annulation
+    on<TransactionInitCancelEvent>(_onTransactionInitCancelEvent);
+
+    // Pour recuperer une demande d'annulation
     on<TransactionCancelFetchEvent>(_onTransactionCancelFetchEvent);
 
     // Pour accepter une demande d'annulation
@@ -30,6 +33,14 @@ class TransactionCancelBloc
 
     // Pour rejeter une demande d'annulation
     on<TransactionCancelRejectEvent>(_onTransactionCancelRejectEvent);
+  }
+
+  /// Pour initier une demande d'annulation
+  Future<void> _onTransactionInitCancelEvent(
+      TransactionInitCancelEvent event,
+      Emitter<TransactionCancelState> emit,
+      ) async {
+    emit(TransactionInitCancelState(endToEndId));
   }
 
   /// Pour Recuperer les infos sur la demande d'annulation

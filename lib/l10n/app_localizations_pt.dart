@@ -1175,6 +1175,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionDetailsCancelSuccessDescription => 'A demanda está aguardando o tratamento. \n Você será notificado assim que o beneficiário responder.';
 
   @override
+  String get transactionDetailsCancelSuccessDescriptionNotification => 'Você será notificado assim que o beneficiário responder.';
+
+  @override
   String get transactionDetailsCancelDemandeLabel => 'Solicitado em';
 
   @override
@@ -1193,9 +1196,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get transactionDetailsRecuTitlePage => 'Payment completed';
-
-  @override
-  String get transactionDetailsRecuSubTitlePage => 'Pode partilhar ou descarregar o PDF';
 
   @override
   String get transactionDetailsRecuTitle => 'Recebido do pagamento';

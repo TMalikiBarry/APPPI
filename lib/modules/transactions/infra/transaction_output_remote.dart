@@ -207,7 +207,8 @@ class TransactionOutputRemote {
       return MovementDetailsDTO.fromJson(dataList[0]).toTransaction();
     } else {
       // Handle empty response appropriately
-      throw Exception("No transaction data available in response.");
+      print("No transaction data available in response.");
+      throw ApiException(error: ApiError.unknowError, statusCode: 404);
     }
   }
 

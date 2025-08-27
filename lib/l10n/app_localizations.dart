@@ -2317,6 +2317,12 @@ abstract class AppLocalizations {
   /// **'The request is pending processing.\n You will be notified as soon as the beneficiary responds.'**
   String get transactionDetailsCancelSuccessDescription;
 
+  /// No description provided for @transactionDetailsCancelSuccessDescriptionNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be notified as soon as the beneficiary responds.'**
+  String get transactionDetailsCancelSuccessDescriptionNotification;
+
   /// No description provided for @transactionDetailsCancelDemandeLabel.
   ///
   /// In en, this message translates to:
@@ -2352,12 +2358,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment completed'**
   String get transactionDetailsRecuTitlePage;
-
-  /// No description provided for @transactionDetailsRecuSubTitlePage.
-  ///
-  /// In en, this message translates to:
-  /// **'You can share or download the PDF'**
-  String get transactionDetailsRecuSubTitlePage;
 
   /// No description provided for @transactionDetailsRecuTitle.
   ///

@@ -1175,6 +1175,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get transactionDetailsCancelSuccessDescription => 'La demande est en attente de traitement. \n Vous serez notifié dès que le bénéficiaire aura répondu.';
 
   @override
+  String get transactionDetailsCancelSuccessDescriptionNotification => 'Vous serez notifié dès que le bénéficiaire aura répondu.';
+
+  @override
   String get transactionDetailsCancelDemandeLabel => 'Demandé le';
 
   @override
@@ -1192,10 +1195,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get transactionDetailsCancelRejectMessage => 'La demande d’annulation est rejetée avec succès';
 
   @override
-  String get transactionDetailsRecuTitlePage => 'Pagamento efetuado';
-
-  @override
-  String get transactionDetailsRecuSubTitlePage => 'Vous pouvez partager ou télécharger le PDF';
+  String get transactionDetailsRecuTitlePage => 'Paiement effectué';
 
   @override
   String get transactionDetailsRecuTitle => 'Reçu du paiement';

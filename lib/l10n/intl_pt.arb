@@ -623,6 +623,7 @@
   "transactionDetailsCancelBtnSend": "Solicitar o cancelamento",
   "transactionDetailsCancelSuccessMessage": "Demanda de cancelamento enviada",
   "transactionDetailsCancelSuccessDescription": "A demanda está aguardando o tratamento. \n Você será notificado assim que o beneficiário responder.",
+  "transactionDetailsCancelSuccessDescriptionNotification": "Você será notificado assim que o beneficiário responder.",
   "transactionDetailsCancelDemandeLabel": "Solicitado em",
   "transactionDetailsCancelDateLabel": "Demanda de cancelamento",
   "transactionDetailsCancelHeadSubtitle": "{montant} recebido",

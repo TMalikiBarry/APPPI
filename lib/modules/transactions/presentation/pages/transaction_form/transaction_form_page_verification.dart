@@ -1,6 +1,7 @@
 import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pi_mobile_app/core/notifications.dart';
 
 import '../../../../../core/router.dart';
 import '../../../../../l10n/app_localizations.dart';
@@ -39,6 +40,13 @@ class TransactionVerificationPage extends StatelessWidget {
         else if (state is TransactionSendFormSuccessState) {
           // Hide loader
           CustomLoadingDialog.hide(context);
+
+          // Notification en cas de success
+          AppNotifications.showCustomTransferNotification(
+            title: "Opération réussie",
+            body: "Votre opération a été éffectuée avec succès!",
+          );
+
           // Show success popup
           bool isBottomSheetClosed = false;
           showModalBottomSheet<void>(

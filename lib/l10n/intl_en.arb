@@ -624,6 +624,7 @@
   "transactionDetailsCancelBtnSend": "Request cancellation",
   "transactionDetailsCancelSuccessMessage": "Request cancellation sent",
   "transactionDetailsCancelSuccessDescription": "The request is pending processing.\n You will be notified as soon as the beneficiary responds.",
+  "transactionDetailsCancelSuccessDescriptionNotification": "You will be notified as soon as the beneficiary responds.",
   "transactionDetailsCancelDemandeLabel": "Requested on",
   "transactionDetailsCancelDateLabel": "Cancelled on",
   "transactionDetailsCancelHeadSubtitle": "{montant} received",

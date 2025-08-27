@@ -107,7 +107,7 @@ class TransactionCancelPageTransfer extends StatelessWidget {
                   try {
                     AppNotifications.showCustomTransferNotification(
                       title: "Opération réussie",
-                      body: "Votre opération a été éffectuée avec succès!",
+                      body: successMessage,
                     );
                   } catch (e) {
                     print(e.toString());

@@ -194,7 +194,7 @@ class TransactionListItemWidget extends StatelessWidget {
       g = 0;
       b = x;
     }
-    final m = (l - c )/ 2.0;
+    final m = l - c / 2.0;
     final R = ((r + m) * 255).round().clamp(0, 255);
     final G = ((g + m) * 255).round().clamp(0, 255);
     final B = ((b + m) * 255).round().clamp(0, 255);

@@ -461,7 +461,7 @@ class TransactionOutputRemote {
           '/movement/fund-return',
           data: {
             "guID": transaction.endToEndId,
-            "reason": "AC06",
+            "reason": "MD06",
             "clientID": transaction.clientId,
             "amount": transaction.montant.toInt(),
             "clientName": transaction.clientNom,
@@ -485,7 +485,10 @@ class TransactionOutputRemote {
         //
         transaction = transaction;
       }
-    } catch (e) {
+    } on ApiException catch (e) {
+      throw ApiException(error: e.error, statusCode: e.statusCode);
+    }
+    catch (e) {
       logger.e("Reception reponse retour de fonds erreur", error: e);
       throw ApiException(error: ApiError.internalServerError, statusCode: 500);
       //return Stream.error(e);
@@ -517,6 +520,8 @@ class TransactionOutputRemote {
         controller.close();
         return controller.stream;
       }
+    }  on ApiException catch (e) {
+      throw ApiException(error: e.error, statusCode: e.statusCode);
     } catch (e) {
       logger.e("Reception reponse erreur", error: e);
       throw ApiException(error: ApiError.internalServerError, statusCode: 500);
@@ -544,6 +549,8 @@ class TransactionOutputRemote {
       );
       //
       return Transaction.fromJsonCancel(response.data, transaction);
+    }  on ApiException catch (e) {
+      throw ApiException(error: e.error, statusCode: e.statusCode);
     } catch (e) {
       // Handle empty response appropriately
       print("No transaction data available in cancel response.");
@@ -569,6 +576,8 @@ class TransactionOutputRemote {
       transaction.annulationStatut = TransactionStatut.rejete;
       //
       return transaction;
+    }  on ApiException catch (e) {
+      throw ApiException(error: e.error, statusCode: e.statusCode);
     } catch (e) {
       // Handle empty response appropriately
       logger.i("No transaction data available in reject response.");

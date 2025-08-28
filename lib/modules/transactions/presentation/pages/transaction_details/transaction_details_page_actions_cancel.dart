@@ -50,46 +50,62 @@ class _TransactionDetailsPageActionsCancelState
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 /// Title
-                Text(
-                  traductions.transactionDetailsCancelTitle,
-                  style: Theme.of(context).textTheme.headlineLarge,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () async{
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_ios_new,
+                        size: 28,
+                        color: Themer.primaryColor,
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      traductions.transactionDetailsCancelTitle,
+                      style: Theme.of(context).textTheme.headlineLarge!.copyWith(color: Themer.primaryColor, fontWeight: FontWeight.w700),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
 
                 // SubTitle
                 Text(
                   traductions.transactionDetailsCancelSubTitle,
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Themer.disabledColor),
                 ),
                 const SizedBox(height: 10),
 
                 // Raisons de la demande d'annulation
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Wrap(
+                  spacing: 8, // espace horizontal entre les chips
+                  runSpacing: 8, // espace vertical entre les lignes
                   children: TransactionCancelReason.values.map((motif) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: ActionChip(
-                        label: Text(
-                          TransactionCancelReasonText.label(motif, traductions),
-                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Themer.primaryColor),
+                    return ActionChip(
+                      label: Text(
+                        TransactionCancelReasonText.label(motif, traductions),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Themer.primaryColor,
                         ),
-                        avatar: reason != null && reason == motif
-                            ? const Icon(Icons.check)
-                            : null,
-                        backgroundColor: Themer.primaryLight,
-                        onPressed: () {
-                          setState(() {
-                            reason = motif;
-                          });
-                        },
                       ),
+                      avatar: reason != null && reason == motif
+                          ? const Icon(Icons.check)
+                          : null,
+                      backgroundColor: Themer.backgroundPrimaryColor,
+                      onPressed: () {
+                        setState(() {
+                          reason = motif;
+                        });
+                      },
                     );
                   }).toList(),
                 ),
 
                 // Bouton Demander l'annulation
-                const SizedBox(height: 10),
+                const SizedBox(height: 50),
                 SizedBox(
                   height: 56,
                   child: Expanded(

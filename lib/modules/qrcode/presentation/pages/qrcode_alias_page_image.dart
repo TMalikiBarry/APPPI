@@ -22,7 +22,7 @@ class QrCodeAliasPageImage extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: Container( // <-- fixe une taille à la carte
         width: double.infinity,
-        height: 500, // adapte selon ton besoin
+        height: MediaQuery.of(context).size.height * 0.6, // adapte selon ton besoin
         child: Stack(
           children: [
             // SVG en fond
@@ -41,13 +41,13 @@ class QrCodeAliasPageImage extends StatelessWidget {
               right: 0,
               child: Center(
                 child: QrImageView(
-                  size: 400, // réduit si nécessaire
+                  size: MediaQuery.of(context).size.height * 0.5, // réduit si nécessaire
                   data: qrCode,
                   version: QrVersions.auto,
                   gapless: false,
                   padding: padding,
                   embeddedImage: const AssetImage(
-                    Images.iconsPiOctogone,
+                    Images.iconsPiOctogone2,
                     package: 'common_dependencies',
                   ),
                   embeddedImageStyle: const QrEmbeddedImageStyle(size: Size(40, 40)),

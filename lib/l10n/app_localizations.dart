@@ -2065,6 +2065,12 @@ abstract class AppLocalizations {
   /// **'The payment request has been successfully rejected'**
   String get transactionRtpRejectMessage;
 
+  /// No description provided for @transactionDetailsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get transactionDetailsMessage;
+
   /// No description provided for @transactionDetailsFrequenceMois.
   ///
   /// In en, this message translates to:
@@ -2317,6 +2323,12 @@ abstract class AppLocalizations {
   /// **'The request is pending processing.\n You will be notified as soon as the beneficiary responds.'**
   String get transactionDetailsCancelSuccessDescription;
 
+  /// No description provided for @transactionDetailsCancelSuccessDescriptionNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be notified as soon as the beneficiary responds.'**
+  String get transactionDetailsCancelSuccessDescriptionNotification;
+
   /// No description provided for @transactionDetailsCancelDemandeLabel.
   ///
   /// In en, this message translates to:
@@ -2346,6 +2358,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The cancellation request has been successfully rejected'**
   String get transactionDetailsCancelRejectMessage;
+
+  /// No description provided for @transactionDetailsRecuTitlePage.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment completed'**
+  String get transactionDetailsRecuTitlePage;
 
   /// No description provided for @transactionDetailsRecuTitle.
   ///

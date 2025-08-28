@@ -1049,6 +1049,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transactionRtpRejectMessage => 'The payment request has been successfully rejected';
 
   @override
+  String get transactionDetailsMessage => 'Message';
+
+  @override
   String get transactionDetailsFrequenceMois => 'months';
 
   @override
@@ -1175,6 +1178,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transactionDetailsCancelSuccessDescription => 'The request is pending processing.\n You will be notified as soon as the beneficiary responds.';
 
   @override
+  String get transactionDetailsCancelSuccessDescriptionNotification => 'You will be notified as soon as the beneficiary responds.';
+
+  @override
   String get transactionDetailsCancelDemandeLabel => 'Requested on';
 
   @override
@@ -1190,6 +1196,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get transactionDetailsCancelRejectMessage => 'The cancellation request has been successfully rejected';
+
+  @override
+  String get transactionDetailsRecuTitlePage => 'Payment completed';
 
   @override
   String get transactionDetailsRecuTitle => 'Transaction Statement';

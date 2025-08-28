@@ -2,6 +2,7 @@ import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:pi_mobile_app/core/notifications.dart';
 
 import '../../../../../core/di.dart';
 import '../../../../../core/router.dart';
@@ -21,24 +22,67 @@ import '../../bloc/transaction_cancel/transaction_cancel_state.dart';
 import '../transaction_details/transaction_details_page_error.dart';
 import 'transaction_cancel_reason_text.dart';
 
-class TransactionCancelPage extends StatelessWidget {
+class TransactionCancelPageTransfer extends StatelessWidget {
   ///
-  const TransactionCancelPage({super.key, required this.id});
+  const TransactionCancelPageTransfer({super.key, required this.tx});
 
-  final String id;
+  final Transaction tx;
 
   @override
   Widget build(BuildContext context) {
-    logger.i("route : $id");
     TransactionCancelBloc transactionCancelBloc = TransactionCancelBloc(
       Di.getTransactionInputPort(),
-      id,
+      tx.endToEndId,
     );
-    transactionCancelBloc.add(TransactionCancelFetchEvent(id));
+    transactionCancelBloc.add(TransactionInitCancelEvent());
     //
     AppLocalizations traductions = AppLocalizations.of(context)!;
 
+    /*return MyPageContainer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              BackButton(
+                onPressed: () {
+                  AppRouter.pop(context);
+                },
+              ),
+            ],
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: ListView(
+                children: [
+                  // Header: title and phone number
+                  _header(context, traductions, tx),
+                  const SizedBox(height: 20),
+
+                  // Infos sur le transfert
+                  _detailsTransfert(context, traductions, tx),
+
+                  const SizedBox(height: 10),
+
+                  // Infos sur la Demande d'annulation
+                  _detailsDemande(context, traductions, tx),
+                ],
+              ),
+            ),
+          ),
+          // Actions
+          if (tx.annulationStatut == TransactionStatut.initie &&
+              (tx.retourStatut == null ||
+                  tx.retourStatut != TransactionStatut.irrevocable))
+            _actions(context, traductions, tx, transactionCancelBloc),
+        ],
+      ),
+    );
+    */
     //
+
     return BlocProvider<TransactionCancelBloc>(
       create: (_) => transactionCancelBloc,
       child: BlocConsumer<TransactionCancelBloc, TransactionCancelState>(
@@ -46,11 +90,9 @@ class TransactionCancelPage extends StatelessWidget {
             current is TransactionCancelLoadingState ||
             current is TransactionCancelReponseState,
         listener: (context, state) {
-          if (state is TransactionCancelLoadingState) {
-            CustomLoadingDialog.show(context);
-          }
+          logger.i("transaction_cancel_page_transfer listenWhen state $state");
           if (state is TransactionCancelReponseState) {
-            CustomLoadingDialog.hide(context);
+           // CustomLoadingDialog.hide(context);
             var successMessage =
                 state.transaction.annulationStatut == TransactionStatut.rejete
                     ? traductions.transactionDetailsCancelRejectMessage
@@ -59,29 +101,39 @@ class TransactionCancelPage extends StatelessWidget {
               context: context,
               backgroundColor: Colors.transparent,
               builder: (BuildContext context) {
-                return state.error != null
-                    ? TransactionDetailsPageError(error: state.error!)
-                    : NotificationDialog(
-                        type: NotificationType.success,
-                        message: successMessage,
-                        btnText: traductions.btnTextContinue,
-                        btnAction: () => {AppRouter.pop(context)},
-                        btnColor: Theme.of(context).colorScheme.tertiary,
-                      );
+                if (state.error != null) {
+                  return TransactionDetailsPageError(error: state.error!);
+                } else {
+                  try {
+                    AppNotifications.showCustomTransferNotification(
+                      title: "Opération réussie",
+                      body: successMessage,
+                    );
+                  } catch (e) {
+                    print(e.toString());
+                  }
+                  return NotificationDialog(
+                    type: NotificationType.success,
+                    message: successMessage,
+                    btnText: traductions.btnTextContinue,
+                    btnAction: () => {AppRouter.pushReplacement(context, AppRouter.home)},
+                    btnColor: Theme.of(context).colorScheme.tertiary,
+                  );
+                }
               },
               isScrollControlled: true,
             );
           }
         },
         builder: (context, state) {
+          logger.i("transaction_cancel_page_transfer builder state $state");
           if (state is TransactionCancelLoadingState) {
             return const LoadingPage();
           }
           if (state is TransactionCancelDetailsState ||
-              state is TransactionInitCancelState ||
               //state is TransactionCancelLoadingState ||
+              state is TransactionInitCancelState ||
               state is TransactionCancelReponseState) {
-            Transaction tx = (state as dynamic).transaction;
             return MyPageContainer(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -130,6 +182,7 @@ class TransactionCancelPage extends StatelessWidget {
         },
       ),
     );
+
   }
 
   Widget _header(
@@ -164,7 +217,7 @@ class TransactionCancelPage extends StatelessWidget {
           ),
           // Reference du transfert
           Text(
-            id,
+            tx.endToEndId,
             style: Theme.of(context).textTheme.displaySmall,
           ),
         ],
@@ -206,7 +259,7 @@ class TransactionCancelPage extends StatelessWidget {
             _detail(
               context,
               title: traductions.transactionDetailsPays,
-              subtitle: UEMOACountry.get(tx.clientPays)!.name,
+              subtitle: UEMOACountry.get(tx.clientPays)?.name ?? "",
             ),
             const SizedBox(height: 10),
           ],
@@ -282,41 +335,24 @@ class TransactionCancelPage extends StatelessWidget {
           Expanded(
             child: FilledButton.tonal(
               onPressed: () {
-                transactionCancelBloc.add(
+                context.read<TransactionCancelBloc>() //
+                  .add(
                   TransactionCancelRejectEvent(tx),
                 );
               },
               child: Text(traductions.btnTextReject),
             ),
           ),
-          //
-          const SizedBox(width: 16),
           // Confirmer
+          const SizedBox(width: 16),
           Expanded(
-            child: BlocListener<IdentificationBloc, IdentificationState>(
-              listener: (context, state) async {
-                // Pour afficher page code pin form
-                if (state is IdentificationRequiredState) {
-                  await AppRouter.push(context, AppRouter.identificationCheck);
-                }
-                // Pour envoyer la transaction après confirmation
-                if (state is IdentificationSuccessState) {
-                  transactionCancelBloc.add(
-                    TransactionCancelAcceptEvent(id, tx),
-                  );
-                }
+            child: ElevatedButton(
+              onPressed: () {
+                context.read<TransactionCancelBloc>() //
+                  .add(TransactionCancelAcceptEvent(tx.endToEndId, tx),
+                );
               },
-              listenWhen: (previous, current) =>
-                  previous is IdentificationSuccessState ||
-                  current is IdentificationSuccessState,
-              child: ElevatedButton(
-                onPressed: () {
-                  context
-                      .read<IdentificationBloc>() //
-                      .add(const AskIdentificationBeforeActionEvent());
-                },
-                child: Text(traductions.btnTextAccept),
-              ),
+              child: Text(traductions.btnTextAccept),
             ),
           ),
         ],

@@ -44,11 +44,18 @@ class TransactionDetailsBloc
     Emitter<TransactionDetailsState> emit,
   ) async {
     print("fetch details");
+    try {
     Transaction tx = await transactionInputPort.get(transaction.guID ?? transaction.endToEndId);
     // //TODO remove before release
     // if (AppEnv.mode != "demo") {
       emit(TransactionDetailsInitialState(tx));
     // }
+    } on ApiException catch (e) {
+      emit(TransactionDetailsReturnState(
+        transaction,
+        TransactionError.unknow,
+      ));
+    }
   }
 
   /// Pour mettre à jour la catégorie de transaction
@@ -68,6 +75,8 @@ class TransactionDetailsBloc
     Emitter<TransactionDetailsState> emit,
   ) async {
     Transaction tx = event.transaction;
+    tx.retourDate = tx.dateOperation;
+    emit(TransactionReturnLoadingState(tx));
     // return funds
     try {
       Stream<Transaction> stream = await transactionInputPort.returnFunds(tx);
@@ -119,6 +128,7 @@ class TransactionDetailsBloc
     Emitter<TransactionDetailsState> emit,
   ) {
     Transaction tx = event.transaction;
+    //emit(TransactionReturnLoadingState(tx));
     if (tx.retourDate != null) {
       emit(TransactionDetailsReturnState(tx, null));
     } else {

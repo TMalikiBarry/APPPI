@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 //import 'package:scan/scan.dart';
 
 import '../../../domain/models/qrcode_data.dart';
@@ -67,6 +68,31 @@ class QrcodeScanBloc extends Bloc<QrcodeScanEvent, QrcodeScanState> {
         //     QrCodeDecodeError.notQrImage,
         //   ));
         // }
+
+        // Créer un contrôleur scanner
+        final MobileScannerController scannerController = MobileScannerController();
+
+        //analyser image
+        final BarcodeCapture? capture = await scannerController.analyzeImage(image.path);
+
+        if (capture == null || capture.barcodes.isEmpty) {
+          emit(const QrcodeScanErrorState(QrCodeDecodeError.notQrImage));
+          return;
+        }
+
+        // Récupérer la première valeur de QR détectée
+        final String? qrCode = capture.barcodes.first.rawValue;
+
+        if (qrCode == null || qrCode.isEmpty) {
+          emit(const QrcodeScanErrorState(QrCodeDecodeError.notQrImage));
+          return;
+        }
+
+        // Décoder avec ton domaine
+        QrcodeData qrData = await qrcodeInputPort.decode(qrCode);
+        emit(QrcodeScanSuccessState(qrData));
+
+
       } else {
         emit(const QrcodeScanErrorState(QrCodeDecodeError.unknown));
       }

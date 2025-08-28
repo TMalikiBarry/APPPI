@@ -1,8 +1,11 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:pi_mobile_app/modules/transactions/domain/models/transaction_liste.dart';
 
 import '../../../../shared/models/frequence_command.dart';
+import 'new/movement_details_additional_infos_dto.dart';
 import 'transaction_canal.dart';
 import 'transaction_cancel_reason.dart';
+import 'transaction_send/transaction_send_method.dart';
 import 'transaction_send/transaction_verification_result_command_alias.dart';
 import 'transaction_send/transaction_verification_result_command_othr.dart';
 
@@ -76,6 +79,7 @@ class Transaction {
     this.transactionVerificationResultAlias,
     this.transactionVerificationResultIban,
     this.transactionVerificationResultOthr,
+    this.additionalInformations,
   });
 
   /// Compte du client
@@ -184,6 +188,8 @@ class Transaction {
   TransactionVerificationResultOthr? transactionVerificationResultIban;
   TransactionVerificationResultOthr? transactionVerificationResultOthr;
 
+  final AdditionalInfosMovement? additionalInformations;
+
   /// Est ce que c'est une demande de paiement
   bool isRTP() {
     return canal != null &&
@@ -225,10 +231,50 @@ class Transaction {
   }
 
   static Transaction fromJson(Map<dynamic, dynamic> json) {
+    var additionalInformations = json['additionalInformations'] != null
+        ?  AdditionalInfosMovement.fromJson(json["additionalInformations"])
+        : null;
+    String? clientAlias;
+    String? clientPSP;
+    String? clientPays;
+    String? clientCompte;
+    String? acquirerAccountLabel;
+    if (json['clientAlias'] != null) {
+      clientAlias = json['clientAlias'];
+    }
+    if (json['clientPSP'] != null) {
+      clientPSP = json['clientPSP'];
+    }
+    if (json['clientCompte'] != null) {
+      clientCompte = json['clientCompte'];
+    }
+    if (json['clientPays'] != null) {
+      clientCompte = json['clientPays'];
+    }
+    if (json['acquirerAccountLabel'] != null) {
+      acquirerAccountLabel = json['acquirerAccountLabel'];
+    }
+    if (additionalInformations != null && additionalInformations.payeAlias != null) {
+      clientPays = clientPays ?? additionalInformations.payePays;
+      acquirerAccountLabel = acquirerAccountLabel ?? additionalInformations.clientName;
+
+      if (
+        additionalInformations.movementType == TransactionSendMethod.alias.code ||
+        additionalInformations.movementType == TransactionSendMethod.qrcode.code
+      ) {
+        clientAlias = clientAlias ?? additionalInformations.payeAlias;
+      } else if (additionalInformations.movementType == TransactionSendMethod.iban.code) {
+        clientPSP = clientPSP ?? additionalInformations.participant;
+      }
+      else if (additionalInformations.movementType == TransactionSendMethod.othr.code) {
+        clientCompte = clientCompte ?? additionalInformations.otherClient;
+      }
+    }
+
     return Transaction(
       compte: json['compte'],
       acquirerPhoneNumber: json['acquirerPhoneNumber'],
-      acquirerAccountLabel: json['acquirerAccountLabel'],
+      acquirerAccountLabel: acquirerAccountLabel,
       alias: json['alias'] as String?,
       montant: double.parse(json['amount'].toString()),
       montantFrais: json['montantFrais'] != null
@@ -240,10 +286,10 @@ class Transaction {
       clientNom: json['clientName'] as String,
       clientPays: json['country'] as String,
       clientPhoto: json['clientPhoto'] as String?,
-      clientPSP: json['clientPSP'] as String?,
+      clientPSP: clientPSP,
       issuerPhoneNumber: json['issuerPhoneNumber'] as String?,
-      clientCompte: json['clientCompte'] as String?,
-      clientAlias: json['clientAlias'] as String?,
+      clientCompte: clientCompte,
+      clientAlias: clientAlias,
       bankCode: json['bankCode'] as String?,
       productCode: json['productCode'] as String?,
       clientId: json['clientId'] as String?,
@@ -333,6 +379,7 @@ class Transaction {
       differeMontant: json['differeMontant'] != null
           ? double.parse(json['differeMontant'].toString())
           : null,
+      additionalInformations: additionalInformations
     );
   }
 
@@ -435,7 +482,7 @@ class Transaction {
       montant: json['amount'] != null ? double.parse(json['amount']) : 0.0,
 
       // Champs dérivés
-      sens: _determineTransactionSens(json),
+      sens: _determineTransactionSens(json, fromTransfer: true),
       motif: message ?? json['motif'] as String? ?? '',
       canal: json['serviceCode'] as String? ?? 'TRANSFER_PI',
       serviceCode: json['serviceCode'] as String? ?? 'TRANSFER_PI',
@@ -528,12 +575,12 @@ class Transaction {
   }
 
   static TransactionSens? _determineTransactionSens(
-      Map<dynamic, dynamic> json) {
+      Map<dynamic, dynamic> json, {bool fromTransfer = false}) {
     final issuer = json['issuerPhoneNumber']?.toString() ?? '';
     final acquirer = json['acquirerPhoneNumber']?.toString() ?? '';
     final currentAccount = json['clientPhoneNumber']?.toString() ?? '';
 
-    return (currentAccount == issuer)
+    return (currentAccount == issuer || fromTransfer)
         ? TransactionSens.debit
         : TransactionSens.credit;
   }

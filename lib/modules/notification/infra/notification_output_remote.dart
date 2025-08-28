@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/modules/security/domain/models/connected_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/api.dart';
@@ -20,12 +21,15 @@ class NotificationOutputRemote {
     // 1. Récupération du phoneNumber en local
     final pref = await SharedPreferences.getInstance();
     final phone_number = pref.getString('phone_number') ?? '';
-    if (phone_number.isEmpty) {
-      throw Exception('Aucun phoneNumber en SharedPreferences');
+    var alias = ConnectedUser.current?.alias;
+    if (alias != null){
+      alias = ConnectedUser.current?.alias;
+    } else {
+      alias = phone_number;
     }
 
     // 2. Appel API sans queryParameters
-    final resp = await Api.get('/notification/$phone_number');
+    final resp = await Api.get('/notification/$alias?type=ALIAS');
     logger.i('← notifications() status=${resp.statusCode}');
 
     // 3. Extraction du tableau JSON
@@ -75,13 +79,15 @@ class NotificationOutputRemote {
 
     final pref = await SharedPreferences.getInstance();
     final phone_number = pref.getString('phone_number') ?? '';
-
-    if (phone_number.isEmpty) {
-      throw Exception('Aucun phone_number en SharedPreferences');
+    var alias = ConnectedUser.current?.alias;
+    if (alias != null){
+      alias = ConnectedUser.current?.alias;
+    } else {
+      alias = phone_number;
     }
 
     final ApiResponse response = await Api.get(
-      '/notification/$phone_number',
+      '/notification/$alias?type=ALIAS',
       queryParameters: queryParameters,
     );
 
@@ -121,7 +127,7 @@ class NotificationOutputRemote {
   /// Marquer Comme Lu la notification
   Future<Notification> read(String id) async {
     final ApiResponse response = await Api.put(
-      '/notifications/$id',
+      '/notification/$id',
       data: {
         "dateLecture": DateTime.now().toIso8601String(),
       },

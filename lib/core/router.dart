@@ -6,6 +6,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:base_app/presenter/home.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/modules/transactions/presentation/pages/transaction_cancel/transaction_cancel_page_transfer.dart';
 import 'package:pi_mobile_app/modules/transactions/presentation/pages/transaction_split/transaction_split_page.dart';
 import 'package:pi_mobile_app/modules/transactions/presentation/pages/transaction_split/transaction_split_page_repartition.dart';
 
@@ -54,6 +55,7 @@ import '../modules/transactions/domain/models/transaction_send/transaction_send_
 import '../modules/transactions/domain/models/transaction_send/transaction_send_method.dart';
 import '../modules/transactions/presentation/bloc/transaction_search/transaction_search_bloc.dart';
 import '../modules/transactions/presentation/pages/transaction_cancel/transaction_cancel_page.dart';
+import '../modules/transactions/presentation/pages/transaction_details/transaction_details_notification_page.dart';
 import '../modules/transactions/presentation/pages/transaction_details/transaction_details_page.dart';
 import '../modules/transactions/presentation/pages/transaction_form/transaction_form_page.dart';
 import '../modules/transactions/presentation/pages/transaction_form/transaction_form_page_qrcode.dart';
@@ -63,6 +65,7 @@ import '../modules/transactions/presentation/pages/transaction_rtp/transaction_r
 import '../modules/transactions/presentation/pages/transaction_search/transaction_search_page.dart';
 import '../modules/transactions/presentation/pages/transaction_search/transaction_search_page_filters.dart';
 import '../modules/transactions/presentation/pages/transaction_send/transaction_send_page.dart';
+import 'package:pi_mobile_app/modules/notification/domain/models/notification.dart' as my_notif;
 
 /// Définit la logique de routage / navigation entre les différentes pages de l'application
 class AppRouter {
@@ -110,6 +113,8 @@ class AppRouter {
   static const transactionSearch = "/transaction-search";
   static const transactionSearchFilters = "/transaction-search/filters";
   static const transactionCancel = "/transaction/cancel/:id";
+  static const transactionCancelTransfer = "/transaction/cancel-transfer";
+  static const transactionDetailsNotification = "/transaction/details-notification";
   static const transactionSplitPayment = "/transaction/split-payment";
   static const transactionSplitPaymentRepartition =
       "/transaction/split-payment/repartition";
@@ -429,6 +434,30 @@ class AppRouter {
         pageBuilder: (context, state) {
           final String id = state.pathParameters['id'] as String;
           return DialogPage(builder: (_) => TransactionCancelPage(id: id));
+        },
+      ),
+      // Transaction - Demande d'annulation transfer - details -
+      GoRoute(
+        path: transactionCancelTransfer,
+        pageBuilder: (context, state) {
+          final params = state.extra! as Map<String, Object?>;
+          final tx = params["tx"] as Transaction;
+
+          return DialogPage(
+            builder: (_) => TransactionCancelPageTransfer(tx: tx),
+          );
+        },
+      ),
+
+      GoRoute(
+        path: transactionDetailsNotification,
+        pageBuilder: (context, state) {
+          final params = state.extra! as Map<String, Object?>;
+          final notification = params["notification"] as my_notif.Notification;
+
+          return DialogPage(
+            builder: (_) => TransactionDetailsNotificationPage(notification: notification),
+          );
         },
       ),
       // Transaction -transferts -list

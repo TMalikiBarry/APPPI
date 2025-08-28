@@ -1,7 +1,10 @@
 import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:pi_mobile_app/modules/notification/presentation/bloc/notification_event.dart';
+import 'package:pi_mobile_app/modules/transactions/domain/models/transaction.dart';
+import 'package:pi_mobile_app/modules/transactions/domain/models/transaction_cancel_reason.dart';
 
 import '../../../../core/assets.dart';
 import '../../../../core/router.dart';
@@ -205,28 +208,56 @@ class NotificationPageListeItem extends StatelessWidget {
     BuildContext context,
     my_notif.Notification notification,
   ) {
+    logger.i("notification : ${notification.toJson()}");
+
     // Marquer comme lu
-    if (notification.dateLecture == null) {
+    /*if (notification.dateLecture == null) {
       context.read<NotificationBloc>().add(
             NotificationReadEvent(
               notification: notification,
             ),
           );
-    }
+    }*/
 
     // Afficher la notification
     String route;
+    Transaction? transaction;
     if (notification.type == NotificationType.revendicationInitiee) {
       route = "/alias/revendications/${notification.idObject}";
     } else if (notification.type == NotificationType.annulationDemandee) {
-      route = "/transaction/cancel/${notification.idObject}";
+      route = "/transaction/cancel-transfer";
+      transaction = Transaction(
+        compte: '',
+        montant:  notification.details?['amount'] != null ? double.parse(notification.details?['amount']) : 0.0,
+        clientNom: notification.details?["clientName"] ?? "",
+        clientPays: notification.details?["clientCountry"] ?? "Pays inconnu",
+        endToEndId: notification.details?["guID"] ?? "",
+        guID: notification.idObject,
+        dateOperation: DateTime.parse(notification.details!['impactDate']).toLocal(),
+        annulationDate: DateFormat("dd/MM/yyyy HH:mm:ss").parse(notification.details?['date']),
+        annulationRaison: TransactionCancelReasonX.fromCode(
+          notification.details?['raison'],
+        ),
+        //annulationStatut: TransactionStatut.initie
+        annulationStatut: TransactionStatutX.fromCode(
+          notification.details?['status'],
+        ) ?? TransactionStatut.initie,
+      );
+      //logger.i("transaction : ${{"tx": transaction}}");
     } else if (notification.type == NotificationType.rtpInitiee ||
         notification.type == NotificationType.rtpRecue) {
       route = "/transaction/receive_now/${notification.idObject}";
     } else {
-      route = "/notifications/${notification.idObject}";
+      route = "/transaction/details-notification";
     }
-    AppRouter.push(context, route, params: notification);
+    logger.i("route : $route");
+    if (notification.type == NotificationType.annulationDemandee) {
+      AppRouter.push(context, route, params: {"tx": transaction});
+    } else if (route == "/transaction/details-notification") {
+      AppRouter.push(context, route, params: {"notification": notification});
+    } else {
+      AppRouter.push(context, route, params: notification);
+    }
   }
 }
 
@@ -240,4 +271,22 @@ double? extractAmountFromBody(String? body) {
     return double.tryParse(match.group(1)!.replaceAll(',', '.'));
   }
   return null;
+}
+
+extension TransactionCancelReasonX on TransactionCancelReason {
+  static TransactionCancelReason? fromCode(String? code) {
+    if (code == null) return null;
+    return TransactionCancelReason.values.firstWhere(
+          (e) => e.code == code,
+    );
+  }
+}
+
+extension TransactionStatutX on TransactionStatut {
+  static TransactionStatut? fromCode(String? code) {
+    if (code == null) return null;
+    return TransactionStatut.values.firstWhere(
+          (e) => e.name == code,
+    );
+  }
 }

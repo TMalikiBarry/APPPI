@@ -104,3 +104,10 @@ class TransactionSendSplitSendEvent extends TransactionSendEvent {
   final String method;
   TransactionSendSplitSendEvent(this.commands, this.method);
 }
+
+/// Événement pour récupérer un des participants selon le pays sélectionné et son code participant
+class TransactionGetNameParticipant extends TransactionSendEvent {
+  TransactionGetNameParticipant(this.countryCode, this.participantCode);
+  final String countryCode;
+  final String participantCode;
+}

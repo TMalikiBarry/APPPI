@@ -170,7 +170,7 @@ class TransactionSendPageRecentsItem extends StatelessWidget {
       ),
       onTap: () {
         // envoie à un client à qui tu as dejà payé ou à qui t'a payé
-        // _displayForm(context, transaction);
+        _displayForm(context, transaction);
       },
     );
   }

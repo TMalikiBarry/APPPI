@@ -14,7 +14,7 @@ class AppStorage {
   static const String keyId = "DEK";
 
   /// The Data Encryption Key
-  static late HiveAesCipher dek;
+  static late HiveAesCipher? dek;
 
   /// Opened Collections
   /// By default, the entire content of a box is stored in memory
@@ -60,8 +60,13 @@ class AppStorage {
     if (collections.containsKey(collectionId)) {
       return Future.delayed(Duration.zero, () => collections[collectionId]!);
     } else {
-      Box<Map<dynamic, dynamic>> box =
-          await Hive.openBox(collectionId, encryptionCipher: dek);
+      Box<Map<dynamic, dynamic>> box;
+
+      if (dek != null) {
+        box = await Hive.openBox(collectionId, encryptionCipher: dek);
+      } else {
+        box = await Hive.openBox(collectionId);
+      }
       collections[collectionId] = box;
       return box;
     }

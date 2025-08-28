@@ -2,6 +2,7 @@ import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:pi_mobile_app/core/notifications.dart';
 
 import '../../../../../core/di.dart';
 import '../../../../../core/router.dart';
@@ -40,7 +41,8 @@ class TransactionDetailsPage extends StatelessWidget {
     TransactionDetailsBloc transactionDetailsBloc = TransactionDetailsBloc(
       Di.getTransactionInputPort(),
       transaction,
-    )..add(TransactionDetailsFetchEvent(transaction));
+    );
+      //..add(TransactionDetailsFetchEvent(transaction));
     //
     AppLocalizations traductions = AppLocalizations.of(context)!;
 
@@ -51,28 +53,38 @@ class TransactionDetailsPage extends StatelessWidget {
         listenWhen: (previous, current) =>
             current is TransactionDetailsReturnState ||
             current is TransactionDetailsCancelLoadingState ||
+            current is TransactionReturnLoadingState ||
             current is TransactionDetailsCancelState,
         listener: (context, state) {
-          if (state is! TransactionDetailsCancelLoadingState){
+          if (state is! TransactionDetailsCancelLoadingState && state is! TransactionReturnLoadingState){
             CustomLoadingDialog.hide(context);
           }
-          AppRouter.pop(context); //close form
+          if (Navigator.of(context).canPop()) {
+            AppRouter.pop(context); // close form
+          }
           // Retour de fonds
           if (state is TransactionDetailsReturnState) {
             showModalBottomSheet<void>(
               context: context,
               backgroundColor: Colors.transparent,
               builder: (BuildContext context) {
-                return state.error != null
-                    ? TransactionDetailsPageError(error: state.error!)
-                    : NotificationDialog(
-                        type: NotificationType.success,
-                        message:
-                            traductions.transactionDetailsReturnSuccessMessage,
-                        btnText: traductions.btnTextContinue,
-                        btnAction: () => {AppRouter.pop(context)},
-                        btnColor: Theme.of(context).colorScheme.tertiary,
-                      );
+                if (state.error != null) {
+                  return  TransactionDetailsPageError(error: state.error!);
+                } else {
+                  // Notification en cas de success
+                  AppNotifications.showCustomTransferNotification(
+                    title: "Opération réussie",
+                    body: traductions.transactionDetailsReturnSuccessMessage,
+                  );
+                  return NotificationDialog(
+                    type: NotificationType.success,
+                    message:
+                        traductions.transactionDetailsReturnSuccessMessage,
+                    btnText: traductions.btnTextContinue,
+                    btnAction: () => {AppRouter.pop(context)},
+                    btnColor: Theme.of(context).colorScheme.tertiary,
+                  );
+                }
               },
               isScrollControlled: true,
             );
@@ -83,36 +95,34 @@ class TransactionDetailsPage extends StatelessWidget {
               context: context,
               backgroundColor: Colors.transparent,
               builder: (BuildContext context) {
-                return state.error != null
-                    ? TransactionDetailsPageError(error: state.error!)
-                    : NotificationDialog(
-                        type: NotificationType.success,
-                        title:
-                            traductions.transactionDetailsCancelSuccessMessage,
-                        description: traductions
-                            .transactionDetailsCancelSuccessDescription,
-                        btnText: traductions.btnTextContinue,
-                        btnAction: () => {AppRouter.pop(context)},
-                        btnColor: Theme.of(context).colorScheme.tertiary,
-                      );
+                if ( state.error != null) {
+                  return TransactionDetailsPageError(error: state.error!);
+                } else {
+
+                  // Notification en cas de success
+                  AppNotifications.showCustomTransferNotification(
+                    title: traductions.transactionDetailsCancelSuccessMessage,
+                    body: traductions.transactionDetailsCancelSuccessDescriptionNotification,
+                  );
+                  return NotificationDialog(
+                    type: NotificationType.success,
+                    title:
+                        traductions.transactionDetailsCancelSuccessMessage,
+                    description: traductions
+                        .transactionDetailsCancelSuccessDescription,
+                    btnText: traductions.btnTextContinue,
+                    btnAction: () => {AppRouter.pop(context)},
+                    btnColor: Theme.of(context).colorScheme.tertiary,
+                  );
+                }
               },
               isScrollControlled: true,
             );
           }
         },
         builder: (context, state) {
-          // if (state is TransactionDetailsSuccessState) {
-          //   imgFilePath = state.transaction.ticketDeCaisse;
-          // } else if (state is LoadTicketSuccessState) {
-          //   imgFilePath = state.imagePath;
-          // } else if (state is AddCategorieSuccessState) {
-          //   transactionLocal.categorie = state.categorie;
-          // }
           Transaction transaction = state.transaction;
-          logger.i("transaction_details_page");
-          logger.i(transaction.toJson());
-          print(transaction.toJson());
-          if (state is TransactionDetailsCancelLoadingState) {
+          if (state is TransactionDetailsCancelLoadingState || state is TransactionReturnLoadingState) {
             return const LoadingPage();
           } else {
           return MyPageContainer(

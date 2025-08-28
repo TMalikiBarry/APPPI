@@ -6,6 +6,7 @@ import 'package:flutter_client_sse/flutter_client_sse.dart';
 import 'package:logger/logger.dart';
 import 'package:pi_mobile_app/modules/security/domain/models/connected_user.dart';
 import 'package:pi_mobile_app/modules/transactions/domain/models/mappers/movement_mappers.dart';
+import 'package:pi_mobile_app/modules/transactions/domain/models/transaction_reject_reason.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // 1) On importe le modèle Transaction en n'important QUE les symboles dont on a besoin
@@ -206,7 +207,8 @@ class TransactionOutputRemote {
       return MovementDetailsDTO.fromJson(dataList[0]).toTransaction();
     } else {
       // Handle empty response appropriately
-      throw Exception("No transaction data available in response.");
+      print("No transaction data available in response.");
+      throw ApiException(error: ApiError.unknowError, statusCode: 404);
     }
   }
 
@@ -454,18 +456,42 @@ class TransactionOutputRemote {
         );
       }*/
       // Send transfer
-      response = await Api.post(
-        '/movement/init-fund-return',
-        data: {
-          "guID": transaction.endToEndId,
-          "reason": "AM09",
-        },
-      );
-      //
-      transaction = Transaction.fromJsonCancel(response.data, transaction);
-    } catch (e) {
+      if (transaction.sens?.name == TransactionSens.credit.name) {
+        response = await Api.post(
+          '/movement/fund-return',
+          data: {
+            "guID": transaction.endToEndId,
+            "reason": "MD06",
+            "clientID": transaction.clientId,
+            "amount": transaction.montant.toInt(),
+            "clientName": transaction.clientNom,
+            "endToEndId": transaction.additionalInformations?.endToEndId
+          },
+        );
+        transaction.annulationStatut = TransactionStatut.irrevocable;
+        //
+        transaction = transaction;
+      } else {
+        response = await Api.post(
+          '/movement/respond-fund-return',
+          data: {
+            "guID": transaction.endToEndId,
+            "amount": transaction.montant.toInt(),
+            "reason": TransactionRejectReason.autre.code,
+            "decision": "ACCEPTED"
+          },
+        );
+        transaction.annulationStatut = TransactionStatut.irrevocable;
+        //
+        transaction = transaction;
+      }
+    } on ApiException catch (e) {
+      throw ApiException(error: e.error, statusCode: e.statusCode);
+    }
+    catch (e) {
       logger.e("Reception reponse retour de fonds erreur", error: e);
-      return Stream.error(e);
+      throw ApiException(error: ApiError.internalServerError, statusCode: 500);
+      //return Stream.error(e);
     }
 
     // GET REQUEST
@@ -486,7 +512,7 @@ class TransactionOutputRemote {
       else {
         //return streamResponse(transaction);
         // Return transaction directly without contacting SSE endpoint
-        logger.i(transaction.toJson());
+        //logger.i(transaction.toJson());
         final controller = StreamController<Transaction>();
         transaction.dateOperation = DateTime.now();
         transaction.statut = TransactionStatut.irrevocable; // or whatever default status you want
@@ -494,9 +520,12 @@ class TransactionOutputRemote {
         controller.close();
         return controller.stream;
       }
+    }  on ApiException catch (e) {
+      throw ApiException(error: e.error, statusCode: e.statusCode);
     } catch (e) {
       logger.e("Reception reponse erreur", error: e);
-      return Stream.error(e);
+      throw ApiException(error: ApiError.internalServerError, statusCode: 500);
+      //return Stream.error(e);
     }
   }
 
@@ -504,28 +533,56 @@ class TransactionOutputRemote {
     Transaction transaction,
     TransactionCancelReason reason,
   ) async {
-    // Send transfer
-    final ApiResponse response = await Api.post(
-      '/movement/init-fund-return',
-      data: {
-        "guID": transaction.endToEndId,
-        "reason": reason.code,
-      },
-    );
-    //
-    return Transaction.fromJsonCancel(response.data, transaction);
+    try {
+      // Send transfer
+      final ApiResponse response = await Api.post(
+        '/movement/init-fund-return',
+        data: {
+          "guID": transaction.endToEndId,
+          "reason": reason.code,
+          "clientID": transaction.clientAlias,
+          "clientName": transaction.additionalInformations?.clientName,
+          "amount": transaction.montant,
+          "impactDate": "${transaction.dateOperation}",
+          "clientCountry": transaction.additionalInformations?.payePays,
+        },
+      );
+      //
+      return Transaction.fromJsonCancel(response.data, transaction);
+    }  on ApiException catch (e) {
+      throw ApiException(error: e.error, statusCode: e.statusCode);
+    } catch (e) {
+      // Handle empty response appropriately
+      print("No transaction data available in cancel response.");
+      throw ApiException(error: ApiError.internalServerError, statusCode: 500);
+    }
   }
 
   Future<Transaction> reject(
     Transaction transaction,
     String reason,
   ) async {
-    // Send transfer
-    final ApiResponse response = await Api.put(
-      '/transferts/${transaction.endToEndId}/rejets',
-      data: {"raison": reason},
-    );
-    //
-    return Transaction.fromJson(response.data);
+    try {
+      // Send transfer
+      final ApiResponse response = await Api.post(
+        '/movement/respond-fund-return',
+        data: {
+          "guID": transaction.endToEndId,
+          "amount": transaction.montant.toInt(),
+          "reason": TransactionRejectReason.autre.code,
+          "decision": "REJECTED"
+        },
+      );
+      transaction.annulationStatut = TransactionStatut.rejete;
+      //
+      return transaction;
+    }  on ApiException catch (e) {
+      throw ApiException(error: e.error, statusCode: e.statusCode);
+    } catch (e) {
+      // Handle empty response appropriately
+      logger.i("No transaction data available in reject response.");
+      rethrow;
+      //throw Exception("No transaction data available in reject response.");
+    }
   }
 }

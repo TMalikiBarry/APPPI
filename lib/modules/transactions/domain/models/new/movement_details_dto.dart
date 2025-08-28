@@ -1,3 +1,5 @@
+import '../transaction_send/transaction_send_method.dart';
+import 'movement_details_additional_infos_dto.dart';
 import 'movement_history_dto.dart';
 import 'movement_operation_dto.dart';
 
@@ -32,6 +34,11 @@ class MovementDetailsDTO {
   final String? acquirerPhoneNumber;
   final String? issuerAccountLabel;
   final String? acquirerAccountLabel;
+  final String? clientAlias;
+  final String? clientPSP;
+  final String? clientPays;
+  final String? clientCompte;
+  final AdditionalInfosMovement? additionalInformations;
 
   MovementDetailsDTO({
     this.accountNumber,
@@ -64,9 +71,53 @@ class MovementDetailsDTO {
     this.acquirerPhoneNumber,
     this.issuerAccountLabel,
     this.acquirerAccountLabel,
+    this.clientAlias,
+    this.clientPSP,
+    this.clientPays,
+    this.clientCompte,
+    this.additionalInformations,
   });
 
   factory MovementDetailsDTO.fromJson(Map<String, dynamic> json) {
+    var additionalInformations = json['additionalInformations'] != null
+        ?  AdditionalInfosMovement.fromJson(json["additionalInformations"])
+        : null;
+    String? clientAlias;
+    String? clientPSP;
+    String? clientPays;
+    String? clientCompte;
+    String? acquirerAccountLabel;
+    if (json['clientAlias'] != null) {
+      clientAlias = json['clientAlias'];
+    }
+    if (json['clientPSP'] != null) {
+      clientPSP = json['clientPSP'];
+    }
+    if (json['clientCompte'] != null) {
+      clientCompte = json['clientCompte'];
+    }
+    if (json['clientPays'] != null) {
+      clientCompte = json['clientPays'];
+    }
+    if (json['acquirerAccountLabel'] != null) {
+      acquirerAccountLabel = json['acquirerAccountLabel'];
+    }
+    if (additionalInformations != null && additionalInformations.payeAlias != null) {
+      clientPays = clientPays ?? additionalInformations.payePays;
+      acquirerAccountLabel = additionalInformations.clientName ?? additionalInformations.issuerName;
+
+      if (
+      additionalInformations.movementType == TransactionSendMethod.alias.code ||
+          additionalInformations.movementType == TransactionSendMethod.qrcode.code
+      ) {
+        clientAlias = clientAlias ?? additionalInformations.payeAlias;
+      } else if (additionalInformations.movementType == TransactionSendMethod.iban.code) {
+        clientPSP = clientPSP ?? additionalInformations.participant;
+      }
+      else if (additionalInformations.movementType == TransactionSendMethod.othr.code) {
+        clientCompte = clientCompte ?? additionalInformations.otherClient;
+      }
+    }
     return MovementDetailsDTO(
       accountNumber: json['accountNumber'] as String?,
       amount: (json['amount'] as num).toDouble(),
@@ -104,8 +155,16 @@ class MovementDetailsDTO {
       ),
       issuerPhoneNumber: json['issuerPhoneNumber'] as String?,
       acquirerPhoneNumber: json['acquirerPhoneNumber'] as String?,
-      issuerAccountLabel: json['issuerAccountLabel'] as String?,
-      acquirerAccountLabel: json['acquirerAccountLabel'] as String?,
+      issuerAccountLabel: json['issuerAccountLabel'] ?? additionalInformations?.issuerName,
+      acquirerAccountLabel: acquirerAccountLabel,
+      clientAlias: clientAlias,
+      clientPSP: clientPSP,
+      clientPays: clientPays,
+      clientCompte: clientCompte,
+      additionalInformations: json['additionalInformations'] == null
+          ? null
+          : AdditionalInfosMovement.fromJson(json['additionalInformations'] as Map<String, dynamic>),
     );
   }
 }
+

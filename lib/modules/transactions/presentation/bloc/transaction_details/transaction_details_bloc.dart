@@ -75,6 +75,8 @@ class TransactionDetailsBloc
     Emitter<TransactionDetailsState> emit,
   ) async {
     Transaction tx = event.transaction;
+    tx.retourDate = tx.dateOperation;
+    emit(TransactionReturnLoadingState(tx));
     // return funds
     try {
       Stream<Transaction> stream = await transactionInputPort.returnFunds(tx);
@@ -126,6 +128,7 @@ class TransactionDetailsBloc
     Emitter<TransactionDetailsState> emit,
   ) {
     Transaction tx = event.transaction;
+    //emit(TransactionReturnLoadingState(tx));
     if (tx.retourDate != null) {
       emit(TransactionDetailsReturnState(tx, null));
     } else {

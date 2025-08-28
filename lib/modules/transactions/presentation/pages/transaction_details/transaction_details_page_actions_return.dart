@@ -94,13 +94,23 @@ class TransactionDetailsPageActionsReturn extends StatelessWidget {
                       // Séparateur
                       const SizedBox(width: 16),
                       // Oui je  retourne les fonds
-                      Expanded(
+                      /*Expanded(
                           child: _btnConfirm(
                         context,
                         traductions,
                         transactionDetailsBloc,
                         tx,
-                      )),
+                      )),*/
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            context.read<TransactionDetailsBloc>().add(
+                              TransactionReturnSendEvent(tx),
+                            );
+                          },
+                          child: Text(traductions.btnTextYes),
+                        ),
+                      ),
                     ],
                   ),
                 ),

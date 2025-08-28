@@ -78,8 +78,8 @@ class TransactionDetailsPageActions extends StatelessWidget {
               CtaWidget(
                 image: Images.transactionCancel,
                 label: traductions.transactionDetailsRetourner,
-                // disabled: transaction.retourDate != null,
-                disabled: true,
+                disabled: transaction.retourDate != null,
+                //disabled: true,
                 action: () => _actionReturn(
                   transaction,
                   context,

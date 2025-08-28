@@ -24,6 +24,10 @@ class TransactionDetailsCancelLoadingState extends TransactionDetailsState {
   TransactionDetailsCancelLoadingState(super.transaction);
 }
 
+class TransactionReturnLoadingState extends TransactionDetailsState {
+  TransactionReturnLoadingState(super.transaction);
+}
+
 // class TransactionDetailsLoadingState extends TransactionDetailsState {
 //   const TransactionDetailsLoadingState(super.transaction);
 // }

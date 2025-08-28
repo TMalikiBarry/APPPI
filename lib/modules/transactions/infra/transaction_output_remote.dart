@@ -456,21 +456,42 @@ class TransactionOutputRemote {
         );
       }*/
       // Send transfer
-      response = await Api.post(
-        '/movement/respond-fund-return',
-        data: {
-          "guID": transaction.endToEndId,
-          "amount": transaction.montant.toInt(),
-          "reason": TransactionRejectReason.autre.code,
-          "decision": "ACCEPTED"
-        },
-      );
-      transaction.annulationStatut = TransactionStatut.irrevocable;
-      //
-      transaction = transaction;
-    } catch (e) {
+      if (transaction.sens?.name == TransactionSens.credit.name) {
+        response = await Api.post(
+          '/movement/fund-return',
+          data: {
+            "guID": transaction.endToEndId,
+            "reason": "MD06",
+            "clientID": transaction.clientId,
+            "amount": transaction.montant.toInt(),
+            "clientName": transaction.clientNom,
+            "endToEndId": transaction.additionalInformations?.endToEndId
+          },
+        );
+        transaction.annulationStatut = TransactionStatut.irrevocable;
+        //
+        transaction = transaction;
+      } else {
+        response = await Api.post(
+          '/movement/respond-fund-return',
+          data: {
+            "guID": transaction.endToEndId,
+            "amount": transaction.montant.toInt(),
+            "reason": TransactionRejectReason.autre.code,
+            "decision": "ACCEPTED"
+          },
+        );
+        transaction.annulationStatut = TransactionStatut.irrevocable;
+        //
+        transaction = transaction;
+      }
+    } on ApiException catch (e) {
+      throw ApiException(error: e.error, statusCode: e.statusCode);
+    }
+    catch (e) {
       logger.e("Reception reponse retour de fonds erreur", error: e);
-      return Stream.error(e);
+      throw ApiException(error: ApiError.internalServerError, statusCode: 500);
+      //return Stream.error(e);
     }
 
     // GET REQUEST
@@ -491,7 +512,7 @@ class TransactionOutputRemote {
       else {
         //return streamResponse(transaction);
         // Return transaction directly without contacting SSE endpoint
-        logger.i(transaction.toJson());
+        //logger.i(transaction.toJson());
         final controller = StreamController<Transaction>();
         transaction.dateOperation = DateTime.now();
         transaction.statut = TransactionStatut.irrevocable; // or whatever default status you want
@@ -499,9 +520,12 @@ class TransactionOutputRemote {
         controller.close();
         return controller.stream;
       }
+    }  on ApiException catch (e) {
+      throw ApiException(error: e.error, statusCode: e.statusCode);
     } catch (e) {
       logger.e("Reception reponse erreur", error: e);
-      return Stream.error(e);
+      throw ApiException(error: ApiError.internalServerError, statusCode: 500);
+      //return Stream.error(e);
     }
   }
 
@@ -525,9 +549,12 @@ class TransactionOutputRemote {
       );
       //
       return Transaction.fromJsonCancel(response.data, transaction);
+    }  on ApiException catch (e) {
+      throw ApiException(error: e.error, statusCode: e.statusCode);
     } catch (e) {
       // Handle empty response appropriately
-      throw Exception("No transaction data available in cancel response.");
+      print("No transaction data available in cancel response.");
+      throw ApiException(error: ApiError.internalServerError, statusCode: 500);
     }
   }
 
@@ -549,6 +576,8 @@ class TransactionOutputRemote {
       transaction.annulationStatut = TransactionStatut.rejete;
       //
       return transaction;
+    }  on ApiException catch (e) {
+      throw ApiException(error: e.error, statusCode: e.statusCode);
     } catch (e) {
       // Handle empty response appropriately
       logger.i("No transaction data available in reject response.");

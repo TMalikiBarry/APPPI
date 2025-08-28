@@ -578,6 +578,7 @@
   "transactionRtpRejectRsnMontant": "Montant incorrect",
   "transactionRtpRejectRsnRemittance": "Facture incorrecte",
   "transactionRtpRejectMessage": "La demande de paiement est rejetée avec succès",
+  "transactionDetailsMessage": "Message",
   "transactionDetailsFrequenceMois": "mois",
   "transactionDetailsFrequenceSemaine": "semaines",
   "transactionDetailsFrequenceJour": "jours",

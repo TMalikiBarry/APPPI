@@ -1049,6 +1049,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionRtpRejectMessage => 'A solicitação de pagamento foi rejeitada com sucesso';
 
   @override
+  String get transactionDetailsMessage => 'Mensagem';
+
+  @override
   String get transactionDetailsFrequenceMois => 'meses';
 
   @override

@@ -23,6 +23,8 @@ class ConnectedUser {
   //
   final String? alias;
 
+  final String? shid;
+
   ConnectedUser({
     //
     required this.id,
@@ -35,6 +37,7 @@ class ConnectedUser {
     this.email,
     this.avatar, //
     this.alias, //
+    this.shid,
   });
 
   // Retourne le nom complet de l'utilisateur
@@ -48,6 +51,8 @@ class ConnectedUser {
 
   // Reference client /  Numéro de compte du client
   String? paymentAddress() => alias;
+
+  String? getShid() => shid;
 
   String? myAvatar() => avatar;
 
@@ -64,6 +69,7 @@ class ConnectedUser {
       email: json['email'] as String?,
       avatar: json['avatar'] as String?,
       alias: json['alias'] as String?,
+      shid: json['shid'] as String?,
     );
   }
 
@@ -79,6 +85,7 @@ class ConnectedUser {
       'telephone': instance.telephone,
       'email': instance.email,
       'avatar': instance.avatar,
+      'shid': instance.shid,
     };
   }
 }

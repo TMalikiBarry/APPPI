@@ -2065,6 +2065,12 @@ abstract class AppLocalizations {
   /// **'The payment request has been successfully rejected'**
   String get transactionRtpRejectMessage;
 
+  /// No description provided for @transactionDetailsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get transactionDetailsMessage;
+
   /// No description provided for @transactionDetailsFrequenceMois.
   ///
   /// In en, this message translates to:

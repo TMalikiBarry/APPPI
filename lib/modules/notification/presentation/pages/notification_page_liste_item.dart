@@ -243,16 +243,18 @@ class NotificationPageListeItem extends StatelessWidget {
           notification.details?['status'],
         ) ?? TransactionStatut.initie,
       );
-      logger.i("transaction : ${{"tx": transaction}}");
+      //logger.i("transaction : ${{"tx": transaction}}");
     } else if (notification.type == NotificationType.rtpInitiee ||
         notification.type == NotificationType.rtpRecue) {
       route = "/transaction/receive_now/${notification.idObject}";
     } else {
-      route = "/notifications/${notification.idObject}";
+      route = "/transaction/details-notification";
     }
     logger.i("route : $route");
     if (notification.type == NotificationType.annulationDemandee) {
       AppRouter.push(context, route, params: {"tx": transaction});
+    } else if (route == "/transaction/details-notification") {
+      AppRouter.push(context, route, params: {"notification": notification});
     } else {
       AppRouter.push(context, route, params: notification);
     }

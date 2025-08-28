@@ -126,7 +126,9 @@ print(jsonEncode(alias));
     mAccountInfo.addPaymentNetworkSpecific(
       id: "01",
       value: //"246bd9aa-8bf6-4783-b01d-318042e60cd8"
-          alias.type == AliasType.mbno ? alias.shid : alias.cle,
+          alias.type == AliasType.mbno
+            ? alias.shid
+            : alias.shid ?? alias.cle,
     );
     emv.addMerchantAccountInformation(id: "36", value: mAccountInfo);
 

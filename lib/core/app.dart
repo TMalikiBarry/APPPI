@@ -88,12 +88,14 @@ class _AppState extends State<App> {
       telephone: json["phone_number"],
       email: json["email"],
       alias: json["alias"],
+      shid: json["shid"],
       avatar: null,
     );
 
     print("ConnectedUser.current1");
     print(ConnectedUser.current);
     print(ConnectedUser.current!.alias);
+    //print(ConnectedUser.current!.shid);
   }
 
   Future<void> _config() async {

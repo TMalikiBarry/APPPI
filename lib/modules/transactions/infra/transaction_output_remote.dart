@@ -460,7 +460,7 @@ class TransactionOutputRemote {
         response = await Api.post(
           '/movement/fund-return',
           data: {
-            "guID": transaction.endToEndId,
+            "guID": transaction.guID,
             "reason": "MD06",
             "clientID": transaction.clientId,
             "amount": transaction.montant.toInt(),
@@ -475,7 +475,7 @@ class TransactionOutputRemote {
         response = await Api.post(
           '/movement/respond-fund-return',
           data: {
-            "guID": transaction.endToEndId,
+            "guID": transaction.guID,
             "amount": transaction.montant.toInt(),
             "reason": TransactionRejectReason.autre.code,
             "decision": "ACCEPTED"
@@ -538,7 +538,7 @@ class TransactionOutputRemote {
       final ApiResponse response = await Api.post(
         '/movement/init-fund-return',
         data: {
-          "guID": transaction.endToEndId,
+          "guID": transaction.guID,
           "reason": reason.code,
           "clientID": transaction.clientAlias,
           "clientName": transaction.additionalInformations?.clientName,
@@ -567,7 +567,7 @@ class TransactionOutputRemote {
       final ApiResponse response = await Api.post(
         '/movement/respond-fund-return',
         data: {
-          "guID": transaction.endToEndId,
+          "guID": transaction.guID,
           "amount": transaction.montant.toInt(),
           "reason": TransactionRejectReason.autre.code,
           "decision": "REJECTED"

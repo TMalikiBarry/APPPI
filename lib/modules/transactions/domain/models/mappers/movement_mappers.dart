@@ -35,7 +35,7 @@ extension MovementDetailsMapper on MovementDetailsDTO {
       clientCompte: issuerAccount ?? clientCompte ?? '---',
       // on stocke ici l’issuerAccount
       clientAlias: clientAlias,
-      endToEndId: endToEndId ?? guID,
+      endToEndId: endToEndId ?? "",
       dateOperation: impactDate,
       statut: statut,
       issuerPhoneNumber: issuerPhoneNumber,

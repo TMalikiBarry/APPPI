@@ -147,7 +147,6 @@ class AppNotifications {
     }
 
     if (kDebugMode) {
-      print("FCM Token récupéré : $fcmToken");
     }
 
     // Save toekn after configuration

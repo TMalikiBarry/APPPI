@@ -314,17 +314,12 @@ class TokenInterceptor extends Interceptor {
       var pref = await SharedPreferences.getInstance();
       int? expirationDateStr = pref.getInt("tokenExpiration");
       int? refreshExpirationDateStr = pref.getInt("refreshTokenExpiration");
-      print("expirationDateStr: $expirationDateStr");
-      print("refreshExpirationDateStr: $refreshExpirationDateStr");
       var now = DateTime.now().millisecondsSinceEpoch ~/ 1000; // Valeur actuelle en secondes
-      print("now: $now");
       if (now >= expirationDateStr! && now < refreshExpirationDateStr!) {
         _isRefreshing = true;
         try {
-          print("PI Token expired but refresh token is still valid, refreshing token...");
           await HttpInterceptors().refreshToken();
           String? newToken = pref.getString("accessToken");
-          print("token after refresh $newToken");
           // Appliquer le token aux requêtes en attente
           for (final callback in _queuedRequests) {
             callback(newToken!);
@@ -342,7 +337,6 @@ class TokenInterceptor extends Interceptor {
         }
       }
       else {
-        print("Both token and refresh token expired, redirecting to login...");
         _triggerRefreshServiceEvent();
       }
     }
@@ -370,7 +364,6 @@ class TokenInterceptor extends Interceptor {
       RouteEvents.walletTFSEvents.refreshServiceEvent("USER"),
     );
     return;
-    //print("Événement refreshServiceEvent déclenché.");
   }
 
 }

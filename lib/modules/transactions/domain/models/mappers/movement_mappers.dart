@@ -44,6 +44,7 @@ extension MovementDetailsMapper on MovementDetailsDTO {
       facture: null,
       dateExpiration: null,
       txId: guID,
+      guID: guID,
       dateDebut: null,
       dateFin: null,
       frequence: null,

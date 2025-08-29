@@ -108,18 +108,16 @@ class _TransactionDetailsPageActionsCancelState
                 const SizedBox(height: 50),
                 SizedBox(
                   height: 56,
-                  child: Expanded(
-                    child: ElevatedButton(
-                      onPressed: reason != null
-                          ? () {
-                              // CustomLoadingDialog.show(context);
-                              transactionDetailsBloc.add(
-                                TransactionCancelSendEvent(tx, reason!),
-                              );
-                            }
-                          : null,
-                      child: Text(traductions.transactionDetailsCancelBtnSend),
-                    ),
+                  child: ElevatedButton(
+                    onPressed: reason != null
+                        ? () {
+                            // CustomLoadingDialog.show(context);
+                            transactionDetailsBloc.add(
+                              TransactionCancelSendEvent(tx, reason!),
+                            );
+                          }
+                        : null,
+                    child: Text(traductions.transactionDetailsCancelBtnSend),
                   ),
                 ),
               ],

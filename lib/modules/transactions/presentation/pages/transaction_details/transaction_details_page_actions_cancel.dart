@@ -113,10 +113,9 @@ class _TransactionDetailsPageActionsCancelState
                       onPressed: reason != null
                           ? () {
                               // CustomLoadingDialog.show(context);
-                              print("tx : ${tx.toJson()}");
-                              /*transactionDetailsBloc.add(
+                              transactionDetailsBloc.add(
                                 TransactionCancelSendEvent(tx, reason!),
-                              );*/
+                              );
                             }
                           : null,
                       child: Text(traductions.transactionDetailsCancelBtnSend),

@@ -303,7 +303,7 @@ class Transaction {
       userLogin: json['userLogin'] as String?,
       guID: json['guID'] as String?,
       acquirerAccount: json['acquirerAccount'] as String?,
-      endToEndId: json['endToEndId'] as String,
+      endToEndId: additionalInformations?.endToEndId ?? "",
       dateOperation: json['dateOperation'] != null
           ? DateTime.parse(json['dateOperation'] as String)
           : null,
@@ -383,6 +383,7 @@ class Transaction {
     );
   }
 
+  /*
   static Transaction fromJsonSearch(Map<dynamic, dynamic> json) {
     // Extraction des détails de réponse si présents
     final responseDetails = json['responseDetails'] as Map<String, dynamic>?;
@@ -411,7 +412,7 @@ class Transaction {
 
       // Identifiants techniques
       guID: json['guID'] as String?,
-      endToEndId: json['endToEndId'] as String? ?? '',
+      endToEndId: additionalInformations?.endToEndId ?? "",
       legalEntityCode: json['legalEntityCode'] as String?,
 
       // Statut et dates
@@ -465,6 +466,7 @@ class Transaction {
       differeMontant: null,
     );
   }
+  */
 
   static Transaction fromJsonTransfer(Map<dynamic, dynamic> json) {
     // Extraction des détails de réponse si présents
@@ -628,6 +630,7 @@ class Transaction {
       'issuerPhoneNumber': issuerPhoneNumber,
       'acquirerAccount': acquirerAccount,
       'endToEndId': endToEndId,
+      'guID': guID,
       'canal': canal,
       'dateOperation': dateOperation?.toIso8601String(),
       'statut': statut?.name,
@@ -689,6 +692,7 @@ class Transaction {
         ' userLogin: $userLogin,'
         ' acquirerAccount: $acquirerAccount,'
         ' endToEndId: $endToEndId,'
+        ' guID: $guID,'
         ' dateOperation: $dateOperation,'
         ' statut: $statut,'
         ' statutRaison: $statutRaison,'

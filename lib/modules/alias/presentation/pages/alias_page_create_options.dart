@@ -48,6 +48,21 @@ class AliasPageCreateOptions extends StatelessWidget {
                   const SizedBox(height: 32),
 
                   // Bouton créer alias SHID
+                  MenuActionsWiget(
+                    items: [
+                      // Programmer un paiement
+                      MenuActionItem(
+                        Images.aliasIconUser,
+                        traductions.aliasCreateSHIDTitle,
+                        traductions.aliasCreateSHIDSubTitle,
+                        () => aliasBloc.add(CreateAliasSHIDEvent(compte)),
+                        iconSize: 20,
+                      ),
+                    ],
+                  ),
+
+                  // Séparateur
+                  const SizedBox(height: 20.0),
 
                   // - type MBNO
                   MenuActionsWiget(
@@ -60,21 +75,6 @@ class AliasPageCreateOptions extends StatelessWidget {
                             () => {
                           aliasBloc.add(CreateAliasMBNOEvent(compte)),
                         },
-                        iconSize: 20,
-                      ),
-                    ],
-                  ),
-                  // Séparateur
-                  const SizedBox(height: 20.0),
-
-                  MenuActionsWiget(
-                    items: [
-                      // Programmer un paiement
-                      MenuActionItem(
-                        Images.aliasIconUser,
-                        traductions.aliasCreateSHIDTitle,
-                        traductions.aliasCreateSHIDSubTitle,
-                        () => aliasBloc.add(CreateAliasSHIDEvent(compte)),
                         iconSize: 20,
                       ),
                     ],

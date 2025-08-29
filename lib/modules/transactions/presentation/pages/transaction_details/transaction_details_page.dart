@@ -182,10 +182,10 @@ class TransactionDetailsPage extends StatelessWidget {
                         ],
 
                         // Note
-                        if (transaction.motif != null &&
-                            transaction.motif!.startsWith("@SPLIT")) ...[
-                          _paiementPartage(context, traductions, transaction),
-                        ] else ...[
+                        //if (transaction.motif != null &&
+                        //    transaction.motif!.startsWith("@SPLIT")) ...[
+                        //  _paiementPartage(context, traductions, transaction),
+                        //] else ...[
                           TransactionDetailsPageDetail(
                             label: _motif(
                               transaction,
@@ -193,7 +193,7 @@ class TransactionDetailsPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 10),
-                        ],
+                        //],
 
                         // facture
                         if (transaction.facture != null) ...[
@@ -301,16 +301,16 @@ class TransactionDetailsPage extends StatelessWidget {
   }
 
   String _motif(Transaction transaction, AppLocalizations traductions) {
-    if (transaction.motif != null) {
-      return transaction.motif!;
-    } //
-    else {
+    //if (transaction.motif != null) {
+    //  return transaction.motif!;
+    //} //
+    //else {
       if (transaction.sens == TransactionSens.credit) {
         return traductions.transactionDetailsMotifCredit;
       } else {
         return traductions.transactionDetailsMotifDebit;
       }
-    }
+    //}
   }
 
   /// Details sur le Paiement partagé

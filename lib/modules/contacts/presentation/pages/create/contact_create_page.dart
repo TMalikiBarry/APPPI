@@ -54,87 +54,93 @@ class _ContactCreatePageState extends State<ContactCreatePage> {
           else {}
         },
         builder: (context, state) {
-          return Scaffold(
-            // Pour avoir le bouton de retour
-            appBar: AppBar(),
-            // Contenu de la page
-            body: MyPageContainer(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        // Titre de la page
-                        Text(
-                          traductions.contactCreateTitle,
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
+          if (state is ContactCreateLoadingState) {
+            return const Scaffold(
+              body: LoadingPage(),
+            );
+          } else {
+            return Scaffold(
+              // Pour avoir le bouton de retour
+              appBar: AppBar(),
+              // Contenu de la page
+              body: MyPageContainer(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          // Titre de la page
+                          Text(
+                            traductions.contactCreateTitle,
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
 
-                        //
-                        const SizedBox(height: 5.0),
+                          //
+                          const SizedBox(height: 5.0),
 
-                        // Sous titre de la page
-                        Text(
-                          traductions.contactCreateSubtitle,
-                          style: Theme.of(context).textTheme.displaySmall,
-                        ),
+                          // Sous titre de la page
+                          Text(
+                            traductions.contactCreateSubtitle,
+                            style: Theme.of(context).textTheme.displaySmall,
+                          ),
 
-                        //
-                        const SizedBox(height: 32),
+                          //
+                          const SizedBox(height: 32),
 
-                        // Champ Nom du contact
-                        CustomTextInput(
-                          labelText: traductions.contactCreateNameLabel,
-                          // Message d'erreur à afficher
-                          messageError: contact.name.isEmpty
-                              ? traductions.contactCreateNameErrorEmpty
-                              : "",
-                          // Quand le texte change
-                          onChange: (value) {
-                            setState(() {
-                              contact.name = value;
-                            });
-                          },
-                        ),
+                          // Champ Nom du contact
+                          CustomTextInput(
+                            labelText: traductions.contactCreateNameLabel,
+                            // Message d'erreur à afficher
+                            messageError: contact.name.isEmpty
+                                ? traductions.contactCreateNameErrorEmpty
+                                : "",
+                            // Quand le texte change
+                            onChange: (value) {
+                              setState(() {
+                                contact.name = value;
+                              });
+                            },
+                          ),
 
-                        // Espacement de 16 pixels
-                        const SizedBox(height: 16),
+                          // Espacement de 16 pixels
+                          const SizedBox(height: 16),
 
-                        // Champ Alias
-                        InputAliasWidget(
-                          command: aliasCommand,
-                          onChange: (value) {
-                            setState(() {
-                              contact.alias = value;
-                            });
-                          },
-                        ),
-                      ],
-                    )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: ElevatedButton(
-                      onPressed:
-                          contact.name.isNotEmpty && aliasCommand.isValid()
-                              ? () {
-                                  // creer
-                                  CustomLoadingDialog.show(context);
-                                  contactBloc
-                                      .add(ContactCreateSubmitEvent(contact));
-                                }
-                              : null,
-                      child: Text(traductions.contactBtnSave),
+                          // Champ Alias
+                          InputAliasWidget(
+                            command: aliasCommand,
+                            onChange: (value) {
+                              setState(() {
+                                contact.alias = value;
+                              });
+                            },
+                          ),
+                        ],
+                      )),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: ElevatedButton(
+                        onPressed:
+                            contact.name.isNotEmpty && aliasCommand.isValid()
+                                ? () {
+                                    // creer
+                                    //CustomLoadingDialog.show(context);
+                                    contactBloc
+                                        .add(ContactCreateSubmitEvent(contact));
+                                  }
+                                : null,
+                        child: Text(traductions.contactBtnSave),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
+            );
+          }
         },
       ),
     );

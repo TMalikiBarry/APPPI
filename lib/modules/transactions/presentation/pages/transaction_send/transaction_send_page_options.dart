@@ -70,7 +70,6 @@ class TransactionSendPageOptions extends StatelessWidget {
         const SizedBox(height: 20),
 
         // Nouveau contact
-        /*
         MenuActionsWiget(
           items: [
             MenuActionItem(
@@ -106,7 +105,6 @@ class TransactionSendPageOptions extends StatelessWidget {
             ),
           ],
         ),
-         */
       ],
     );
   }

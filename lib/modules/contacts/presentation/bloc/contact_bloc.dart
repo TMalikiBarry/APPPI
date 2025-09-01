@@ -56,8 +56,9 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     // Si après ajout ne retourne pas plus de 50 pour afficher
     List<Contact> contacts = event.contacts;
 
-    final start = event.contacts.length + 1;
-    final end = 20 * event.index;
+    final start = (event.index - 1) * 20;
+    int rawEnd = event.index * 20;
+    final end = rawEnd.clamp(0, contactsAll.length);
     if (end <= contactsAll.length) {
       contacts.addAll(contactsAll.getRange(
         start,

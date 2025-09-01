@@ -87,10 +87,18 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     // en fonction de là ou on se trouves
     List<Contact> contactsAll = state.contactsAll!;
     if (event.keyword != null && event.keyword!.isNotEmpty) {
-      List<Contact> contacts = contactsAll
-          .where((element) =>
-              element.displayName.toLowerCase().contains(event.keyword!))
-          .toList();
+      List<Contact> contacts = contactsAll.where((element) {
+        final name = element.displayName.toLowerCase();
+        final keyword = event.keyword!.toLowerCase();
+
+        final matchName = name.contains(keyword);
+
+        final matchPhone = element.phones.any(
+              (phone) => phone.number.replaceAll(' ', '').contains(keyword),
+        );
+
+        return matchName || matchPhone;
+      }).toList();
       emit(ContactState(contactsAll, contacts, 0));
     } else {
       add(const ContactListEvent(null));

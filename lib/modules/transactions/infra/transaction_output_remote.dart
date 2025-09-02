@@ -299,7 +299,11 @@ class TransactionOutputRemote {
       command.confirmationMethode.toString() == TransactionSendMethod.alias.toString() ||
       command.confirmationMethode.toString() == TransactionSendMethod.qrcode.toString()
     ){
-      logger.i(command.transactionVerificationResultAlias!.alias);
+      if (command.confirmationMethode.toString() == TransactionSendMethod.qrcode.toString()) {
+        request.addAll({
+          'channel': command.channel,
+        });
+      }
       request['alias'] = command.transactionVerificationResultAlias!.alias;
     } else if (command.confirmationMethode.toString() == TransactionSendMethod.aliasRtb.toString()) {
       url = '/payments/init-claim';

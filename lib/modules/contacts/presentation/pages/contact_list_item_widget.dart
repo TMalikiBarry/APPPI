@@ -49,8 +49,18 @@ class ContactListItemWidget extends StatelessWidget {
       // Avatar
       leading: Stack(
         children: [
-          const CircleAvatar(
+          /*const CircleAvatar(
             backgroundImage: AssetImage(Images.transactionAvatar,package: 'common_dependencies'),
+          ),*/
+          CircleAvatar(
+            backgroundColor: _generateColorFromString(contact.displayName),
+            child: Text(
+              _getInitials(contact.displayName),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           if (alias != null)
             Positioned(
@@ -118,5 +128,41 @@ class ContactListItemWidget extends StatelessWidget {
       // No item found
       return null;
     }
+  }
+
+
+  String _getInitials(String name) {
+    final parts = name.trim().split(RegExp(r'\s+'));
+    if (parts.length == 1) {
+      return parts.first.substring(0, 1).toUpperCase();
+    } else {
+      return (parts.first[0] + parts.last[0]).toUpperCase();
+    }
+  }
+
+  Color _generateColorFromString(String input) {
+    final hash = input.runes.fold(0, (prev, code) => prev + code);
+    // Tu choisis un ensemble de couleurs prédéfinies
+    const palette = [
+      Color(0xE6E57373),
+      Color(0xE6BA68C8),
+      Color(0xE664B5F6),
+      Color(0xE699EDB1),
+      Color(0xE6FFD54F),
+      Color(0xE6A1887F),
+      Color(0xE6204093),
+      Color(0xE6DC1A36),
+      Color(0xE657050F),
+      Color(0xE60BEA14),
+      Color(0xFF603942),
+      Color(0xE6836503),
+      Color(0xFF5C0A4E),
+      Color(0xE6BD7F0C),
+      Color(0xE60A8DF6),
+      Color(0xE6047E0A),
+      Color(0xE6011423),
+      Color(0xE65A349F),
+    ];
+    return palette[hash % palette.length];
   }
 }

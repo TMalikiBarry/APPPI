@@ -42,6 +42,7 @@ class _ContactListWidgetState extends State<ContactListWidget> {
     super.initState();
     contacts = [];
     index = 1;
+    context.read<ContactBloc>().add(ContactListEvent(null));
     scrollController = ScrollController()
       ..addListener(() {
         if (scrollController.position.pixels ==

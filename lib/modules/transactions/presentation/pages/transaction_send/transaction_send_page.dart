@@ -82,9 +82,9 @@ class _TransactionSendPageState extends State<TransactionSendPage> {
                       ],
 
                       // Input de recherche d'un contact et btn qrcode
-                      /*TransactionSendPageInput(
+                      TransactionSendPageInput(
                         action: widget.action,
-                      ),*/
+                      ),
 
                       if (state is TransactionSendInitialState) ...[
                         // Boutons d'actions pour faire la transaction

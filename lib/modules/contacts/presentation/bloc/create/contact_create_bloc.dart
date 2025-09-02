@@ -19,6 +19,7 @@ class ContactCreateBloc extends Bloc<ContactCreateEvent, ContactCreateState> {
     ContactCreateSubmitEvent event,
     Emitter<ContactCreateState> emit,
   ) async {
+    emit(ContactCreateLoadingState(null));
     final newContact = Contact()
       ..name.first = event.contact.name
       ..phones = [

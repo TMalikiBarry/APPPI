@@ -7,6 +7,11 @@ class ContactCreateState {
   const ContactCreateState(this.contact);
 }
 
+class ContactCreateLoadingState extends ContactCreateState {
+  ///
+  const ContactCreateLoadingState(super.contact);
+}
+
 class ContactCreateSuccessState extends ContactCreateState {
   ///
   const ContactCreateSuccessState(super.contact);

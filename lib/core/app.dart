@@ -92,16 +92,10 @@ class _AppState extends State<App> {
       avatar: null,
     );
 
-    print("ConnectedUser.current1");
-    print(ConnectedUser.current);
-    print(ConnectedUser.current!.alias);
-    //print(ConnectedUser.current!.shid);
   }
 
   Future<void> _config() async {
     try {
-      print("ConnectedUser.currentg1");
-
       _decodeIdToken(idToken);
 
       // Temporairement à cause du certificat autosigné
@@ -145,7 +139,6 @@ class _AppState extends State<App> {
         _isLoading = false;
       });
     } catch (e) {
-      print('Erreur lors de la configuration: $e');
       // En cas d'erreur, on peut soit afficher une page d'erreur
       // soit continuer avec _isLoading = false
       setState(() {
@@ -161,8 +154,6 @@ class _AppState extends State<App> {
     if (_isLoading) {
       // Récupération des arguments seulement si on est en train de charger
       final args = ModalRoute.of(context)!.settings.arguments as BceaoPiAppEvent;
-      print("args.user");
-      print(args.user);
       idToken = args.user;
       prefs = args.prefs;
 

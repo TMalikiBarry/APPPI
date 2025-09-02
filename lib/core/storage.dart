@@ -79,15 +79,19 @@ class AppStorage {
     // required Function(T) toJson,
   ) async {
     //
-    Box<Map<dynamic, dynamic>> collection =
-        await AppStorage.collection(collectionId);
+    try {
+      Box<Map<dynamic, dynamic>> collection =
+      await AppStorage.collection(collectionId);
 
-    if (collection.length == 0) return [];
+      if (collection.length == 0) return [];
 
-    // Récuperer les elements
-    return collection.values
-        .map((Map<dynamic, dynamic> e) => fromJson(e) as T)
-        .toList();
+      // Récuperer les elements
+      return collection.values
+          .map((Map<dynamic, dynamic> e) => fromJson(e) as T)
+          .toList();
+    } catch(e) {
+      return [];
+    }
   }
 
   /// Retrieve data

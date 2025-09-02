@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 import '../../../../shared/models/uemoa_countries.dart';
 import '../../../alias/domain/models/alias.dart';
 import '../../../alias/domain/models/alias_type.dart';
+import '../../../security/domain/models/connected_user.dart';
 import '../../ports/input/qrcode_input_port.dart';
 import '../models/qrcode_data.dart';
 import '../models/qrcode_decode_error.dart';
@@ -119,16 +120,14 @@ class QrcodeService implements QrcodeInputPort {
     emv.setPayloadFormatIndicator("01");
     emv.setTransactionCurrency(currency);
     emv.setCountryCode(alias.pays);
-print(jsonEncode(alias));
     /// merchant account information
     MerchantAccountInformation mAccountInfo = MerchantAccountInformation();
     mAccountInfo.setGloballyUniqueIdentifier(globallyUniqueIdentifier);
     mAccountInfo.addPaymentNetworkSpecific(
       id: "01",
       value: //"246bd9aa-8bf6-4783-b01d-318042e60cd8"
-          alias.type == AliasType.mbno
-            ? alias.shid
-            : alias.shid ?? alias.cle,
+      ConnectedUser.current != null && ConnectedUser.current?.shid != null ? ConnectedUser.current?.shid
+       : alias.shid ?? alias.cle,
     );
     emv.addMerchantAccountInformation(id: "36", value: mAccountInfo);
 

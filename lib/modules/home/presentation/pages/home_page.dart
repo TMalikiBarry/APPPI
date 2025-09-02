@@ -34,7 +34,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int selectedIndex = 0;
+  int selectedIndex = 2;
 
   @override
   void initState() {
@@ -157,9 +157,9 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: TabBarView(
                 children: [
-                  HomeTabCompte(),
-                  SubscriptionListWidget(),
                   Icon(Icons.games),
+                  SubscriptionListWidget(),
+                  HomeTabCompte(),
                 ],
               ),
             ),

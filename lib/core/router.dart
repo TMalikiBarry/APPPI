@@ -532,7 +532,7 @@ class AppRouter {
       GoRoute(
         path: subscriptionList,
         builder: (context, state) {
-          return HomePage(selectedTab: 1);
+          return HomePage(selectedTab: 2);
         },
       ),
       // Subscription - Details

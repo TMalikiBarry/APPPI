@@ -285,6 +285,7 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
         transactionVerificationResultAlias: event.transaction.transactionVerificationResultAlias,
         transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
         transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
+        channel: event.command.canal
       ));
 
       stream.listen(

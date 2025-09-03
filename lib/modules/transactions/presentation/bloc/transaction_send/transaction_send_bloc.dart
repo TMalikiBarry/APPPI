@@ -87,7 +87,7 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
     // Récuperer la liste
     TransactionListe transactions = await transactionsInputPort.list(
       compte: event.compte,
-      limit: 10,
+      limit: 3,
     );
     // Retourner la liste
     emit(TransactionSendInitialState(transactions: transactions));

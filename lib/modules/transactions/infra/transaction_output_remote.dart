@@ -482,6 +482,7 @@ class TransactionOutputRemote {
             "guID": transaction.guID,
             "amount": transaction.montant.toInt(),
             "reason": TransactionRejectReason.autre.code,
+            "clientID": transaction.clientId,
             "decision": "ACCEPTED"
           },
         );
@@ -574,6 +575,7 @@ class TransactionOutputRemote {
           "guID": transaction.guID,
           "amount": transaction.montant.toInt(),
           "reason": TransactionRejectReason.autre.code,
+          "clientID": transaction.clientId,
           "decision": "REJECTED"
         },
       );

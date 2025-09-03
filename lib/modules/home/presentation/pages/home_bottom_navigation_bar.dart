@@ -108,7 +108,7 @@ class HomeBottomNavigationBar extends StatelessWidget {
                     AppRouter.go(context, AppRouter.homePage);
                   },
                   elevation: 0,
-                  heroTag: "customer App",
+                  heroTag: "MyTouchPoint +",
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   child: Image.asset(
                     "assets/images/touch-logo.png",

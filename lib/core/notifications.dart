@@ -206,10 +206,6 @@ class AppNotifications {
     logger.i("Message reçu depuis l'arrière-plan");
 
     try {
-      await Firebase.initializeApp(
-        name: 'pibceao',
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
       _sendEvent(message);
     } catch (e) {
       logger.e("Erreur lors de l'initialisation Firebase: $e");

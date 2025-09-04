@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:pi_mobile_app/core/theme.dart';
 
 import '../../../../../core/assets.dart';
 import '../../../../../core/router.dart';
@@ -32,7 +33,7 @@ class ContactListItemActionsWidget extends StatelessWidget {
         type: NotificationType.error,
         title: traductions.serverErrorTitle,
         description: traductions.contactWithNoPhoneNumber,
-        btnColor: Theme.of(context).colorScheme.tertiary,
+        btnColor: Themer.error,
         btnText: traductions.btnTextContinue,
         btnAction: () => {AppRouter.pop(context)},
       );

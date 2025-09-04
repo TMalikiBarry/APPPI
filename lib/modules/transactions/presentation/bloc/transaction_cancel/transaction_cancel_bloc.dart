@@ -60,7 +60,7 @@ class TransactionCancelBloc
     Transaction tx = event.transaction;
     emit(TransactionCancelLoadingState(tx.endToEndId, tx));
     try {
-      tx = await transactionInputPort.reject(tx, TransactionRejectReason.autre);
+      tx = await transactionInputPort.reject(tx, TransactionRejectReason.autre, false);
       emit(TransactionCancelReponseState(tx.endToEndId, tx));
     }
     // Erreurs

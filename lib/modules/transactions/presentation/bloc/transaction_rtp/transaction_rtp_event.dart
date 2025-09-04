@@ -6,8 +6,9 @@ abstract class TransactionRtpEvent {
 }
 
 class TransactionRtpFetchEvent extends TransactionRtpEvent {
-  final String endToEndId;
-  const TransactionRtpFetchEvent(this.endToEndId);
+  //final String endToEndId;
+  final Transaction transaction;
+  const TransactionRtpFetchEvent(this.transaction);
 }
 
 class TransactionRtpFrequenceEvent extends TransactionRtpEvent {
@@ -36,5 +37,6 @@ class TransactionRtpAcceptResponseEvent extends TransactionRtpEvent {
 class TransactionRtpRejectEvent extends TransactionRtpEvent {
   final Transaction transaction;
   final TransactionRejectReason raison;
-  const TransactionRtpRejectEvent(this.transaction, this.raison);
+  final bool isRtp;
+  const TransactionRtpRejectEvent(this.transaction, this.raison, this.isRtp);
 }

@@ -33,7 +33,7 @@ class TransactionRtpPageActions extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Programmer Possible si c'est 631, 401, 520
-          if (tx.canSchedule()) ...[
+          /*if (tx.canSchedule()) ...[
             FloatingActionButton(
               onPressed: () {
                 //transactionSendBloc.add(TransactionSendScheduleEvent(command));
@@ -43,7 +43,7 @@ class TransactionRtpPageActions extends StatelessWidget {
               child: const Icon(Icons.calendar_month_outlined, size: 24),
             ),
             const SizedBox(width: 16),
-          ],
+          ],*/
 
           // Rejeter
           Expanded(
@@ -65,6 +65,13 @@ class TransactionRtpPageActions extends StatelessWidget {
           const SizedBox(width: 16),
           // Confirmer
           Expanded(
+            child: ElevatedButton(
+              onPressed: () {
+                bloc.add(TransactionRtpAcceptPayEvent(tx, "RtpAcceptPay"));
+              },
+              child: Text(traductions.btnTextPay),
+            ),
+            /*
             child: BlocListener<IdentificationBloc, IdentificationState>(
               listener: (context, state) async {
                 // Pour afficher page code pin form
@@ -88,6 +95,7 @@ class TransactionRtpPageActions extends StatelessWidget {
                 child: Text(traductions.btnTextPay),
               ),
             ),
+             */
           ),
         ],
       ),

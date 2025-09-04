@@ -81,10 +81,10 @@ class _NotificationPageListeState extends State<NotificationPageListe> {
               } else if ( state is NotificationErrorState) {
                 return NotificationDialog(
                   type: NotificationType.error,
-                  message: "Erreur chargement des notifications", // ou state.error
+                  message: AppLocalizations.of(context)!.serverErrorSubtitle, // ou state.error
                   description: state.error,
                   btnText: AppLocalizations.of(context)!.retry,
-                  btnColor: Theme.of(context).colorScheme.error,
+                  btnColor: Themer.amberColor,
                   btnAction: () {
                     Navigator.of(context).pop();  // ferme le dialog
                     context.read<NotificationBloc>()

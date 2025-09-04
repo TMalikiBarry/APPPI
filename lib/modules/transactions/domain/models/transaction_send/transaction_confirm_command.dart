@@ -19,6 +19,8 @@ class TransactionConfirmCommand {
     this.transactionVerificationResultAlias,
     this.transactionVerificationResultIban,
     this.channel,
+    this.clientAlias,
+    this.guID,
   });
 
   // Transfert
@@ -34,6 +36,8 @@ class TransactionConfirmCommand {
   String confirmationDate;
   String confirmationMethode;
   String? channel;
+  String? clientAlias;
+  String? guID;
 
   // Type d'operations transactionnelles possibles
   static const String actionSendNow = "send_now"; // paiement immediat

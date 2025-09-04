@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/modules/transactions/domain/models/transaction_send/transaction_send_method.dart';
 
 import '../../../../../core/api.dart';
 import '../../../../compte/ports/input/compte_input_port.dart';
@@ -321,7 +322,10 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
     Emitter<TransactionSendState> emit,
   ) {
     Transaction transaction = event.transaction;
-    if (transaction.statut == TransactionStatut.irrevocable) {
+    if (transaction.statut == TransactionStatut.irrevocable ||
+        (event.command.method == TransactionSendMethod.aliasRtb && transaction.statut == TransactionStatut.initie) ||
+        (event.command.method == "RtpAcceptPay" && transaction.statut == TransactionStatut.rejete)
+    ) {
       emit(TransactionSendFormSuccessState(
         event.command,
         event.transaction,

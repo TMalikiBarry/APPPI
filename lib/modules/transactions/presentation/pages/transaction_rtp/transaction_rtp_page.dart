@@ -24,9 +24,9 @@ import 'transaction_rtp_page_header.dart';
 
 class TransactionRtpPage extends StatefulWidget {
   ///
-  const TransactionRtpPage({super.key, required this.id});
+  const TransactionRtpPage({super.key, required this.tx});
 
-  final String id;
+  final Transaction tx;
 
   @override
     State<TransactionRtpPage> createState() => _TransactionRtpPageState();
@@ -39,12 +39,13 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
   @override
   void initState() {
     super.initState();
+    print("tx : ${widget.tx.sens}");
     transactionRtpBloc = TransactionRtpBloc(
       Di.getTransactionInputPort(),
       Di.getPermissionInputPort(),
-      widget.id,
+      widget.tx.endToEndId,
     );
-    transactionRtpBloc.add(TransactionRtpFetchEvent(widget.id));
+    transactionRtpBloc.add(TransactionRtpFetchEvent(widget.tx));
   }
 
   @override
@@ -61,7 +62,7 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
             current is TransactionRtpReponseState,
         listener: (context, state) async {
           if (state is TransactionRtpLoadingState) {
-            CustomLoadingDialog.show(context);
+            //CustomLoadingDialog.show(context);
           }
           if (state is TransactionRtpReponseState) {
             CustomLoadingDialog.hide(context);
@@ -73,6 +74,11 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
           if (state is TransactionRtpDetailsState ||
               state is TransactionRtpLoadingState ||
               state is TransactionRtpReponseState) {
+            if (state is TransactionRtpLoadingState) {
+              return Scaffold(
+                body: LoadingPage(),
+              );
+            }
             Transaction tx = (state as dynamic).transaction;
             return MyPageContainer(
               child: Column(
@@ -215,14 +221,22 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
         child: Column(
           children: [
             // date d'échéance
-            if (tx.canSchedule()) ...[
+            /*if (tx.canSchedule()) ...[
               _detail(
                 context,
                 title: traductions.transactionRtpDetailsEcheanceDate,
                 subtitle: DateFormat('d MMM, HH:mm').format(tx.dateExpiration!),
               ),
               const SizedBox(height: 10),
-            ],
+            ],*/
+
+            // date demande
+            _detail(
+              context,
+              title: traductions.aliasClaimDetailsDateDemande,
+              subtitle: DateFormat('d MMM, HH:mm').format(tx.dateOperation!),
+            ),
+            const SizedBox(height: 10),
 
             // statut
             _detail(
@@ -605,6 +619,7 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
                     btnAction: () {
                       isBottomSheetClosed = true;
                       AppRouter.pop(context);
+                      AppRouter.go(context, AppRouter.home);
                     },
                     btnColor: Theme.of(context).colorScheme.tertiary,
                   )

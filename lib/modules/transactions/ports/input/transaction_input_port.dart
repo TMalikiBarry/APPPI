@@ -83,5 +83,6 @@ abstract class TransactionInputPort {
   Future<Transaction> reject(
     Transaction transaction,
     TransactionRejectReason reason,
+    bool isRtp,
   );
 }

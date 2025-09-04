@@ -8,6 +8,7 @@ import '../../../../security/ports/input/permission_input_port.dart';
 import '../../../domain/models/transaction.dart';
 import '../../../domain/models/transaction_error.dart';
 import '../../../domain/models/transaction_send/transaction_confirm_command.dart';
+import '../../../domain/models/transaction_send/transaction_send_command_amount.dart';
 import '../../../ports/input/transaction_input_port.dart';
 import 'transaction_rtp_event.dart';
 import 'transaction_rtp_state.dart';
@@ -44,8 +45,8 @@ class TransactionRtpBloc
     TransactionRtpFetchEvent event,
     Emitter<TransactionRtpState> emit,
   ) async {
-    Transaction tx = await transactionInputPort.get(endToEndId);
-    emit(TransactionRtpDetailsState(endToEndId, tx));
+    //Transaction tx = await transactionInputPort.get(endToEndId);
+    emit(TransactionRtpDetailsState(endToEndId, event.transaction));
   }
 
   /// Pour dire si on accepte le débit différé payé en plusieurs fois
@@ -98,6 +99,9 @@ class TransactionRtpBloc
         confirmationMethode: event.method,
         latitude: position.latitude,
         longitude: position.longitude,
+        clientAlias: tx.clientAlias,
+        amount: TransactionSendCommandAmount(value: tx.montant),
+        guID: tx.guID
       );
       Stream<Transaction> stream = await transactionInputPort.confirm(command);
 
@@ -154,7 +158,10 @@ class TransactionRtpBloc
     Emitter<TransactionRtpState> emit,
   ) {
     Transaction tx = event.transaction;
-    if (tx.statut == TransactionStatut.irrevocable) {
+    if (tx.statut == TransactionStatut.irrevocable ||
+        tx.statut == TransactionStatut.initie ||
+        tx.statut == TransactionStatut.rejete
+    ) {
       emit(TransactionRtpReponseState(tx.endToEndId, tx));
     }
     // Transaction rejetée
@@ -198,7 +205,7 @@ class TransactionRtpBloc
     Transaction tx = event.transaction;
     emit(TransactionRtpLoadingState(tx.endToEndId, tx));
     try {
-      tx = await transactionInputPort.reject(tx, event.raison);
+      tx = await transactionInputPort.reject(tx, event.raison, event.isRtp);
       emit(TransactionRtpReponseState(tx.endToEndId, tx));
     }
     // Erreurs

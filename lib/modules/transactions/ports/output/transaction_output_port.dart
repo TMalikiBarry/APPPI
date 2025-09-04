@@ -75,5 +75,5 @@ abstract class TransactionOutputPort {
   Future<Transaction> get(String reference);
 
   /// Rejeter une transaction
-  Future<Transaction> reject(Transaction transaction, String reason);
+  Future<Transaction> reject(Transaction transaction, String reason, {isRtp = false});
 }

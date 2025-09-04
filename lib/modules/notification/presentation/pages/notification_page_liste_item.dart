@@ -246,12 +246,30 @@ class NotificationPageListeItem extends StatelessWidget {
       //logger.i("transaction : ${{"tx": transaction}}");
     } else if (notification.type == NotificationType.rtpInitiee ||
         notification.type == NotificationType.rtpRecue) {
-      route = "/transaction/receive_now/${notification.idObject}";
+      transaction = Transaction(
+        compte: '',
+        clientAlias: notification.details?["alias"] ?? "",
+        montant:  notification.details?['montant'] != null ? double.parse(notification.details?['montant']) : 0.0,
+        clientNom: notification.details?["nomClient"] ?? "",
+        clientPays: notification.details?["country"] ?? "Pays inconnu",
+        endToEndId: notification.details?["endToEndId"] ?? "",
+        guID: notification.idObject,
+        dateOperation: DateFormat("dd/MM/yyyy HH:mm:ss").parse(notification.details?['date']),
+        acquirerAccountLabel: notification.details?["nomClient"] ?? "",
+        motif: notification.details?["note"],
+        statut: TransactionStatutX.fromCode(
+          notification.details?['status'],
+        ) ?? TransactionStatut.initie,
+        sens: TransactionSens.debit
+      );
+      route = "/transaction/receive_now-rtp";
     } else {
       route = "/transaction/details-notification";
     }
     logger.i("route : $route");
-    if (notification.type == NotificationType.annulationDemandee) {
+    if (notification.type == NotificationType.annulationDemandee ||
+        notification.type == NotificationType.rtpInitiee ||
+        notification.type == NotificationType.rtpRecue) {
       AppRouter.push(context, route, params: {"tx": transaction});
     } else if (route == "/transaction/details-notification") {
       AppRouter.push(context, route, params: {"notification": notification});

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pi_mobile_app/core/theme.dart';
 
 import '../../../../../core/router.dart';
 import '../../../../../l10n/app_localizations.dart';
@@ -20,7 +21,7 @@ class TransactionSendPageError extends StatelessWidget {
       type: NotificationType.error,
       title: _getTitle(localisation),
       description: _getDescription(localisation),
-      btnColor: Theme.of(context).colorScheme.tertiary,
+      btnColor: Themer.error,
       btns: _getBtns(localisation, context),
     );
   }

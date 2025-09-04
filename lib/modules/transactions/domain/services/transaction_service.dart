@@ -124,8 +124,9 @@ class TransactionService implements TransactionInputPort {
   Future<Transaction> reject(
     Transaction transaction,
     TransactionRejectReason reason,
+    isRtp
   ) async {
-    return await transactionOutputPort.reject(transaction, reason.code);
+    return await transactionOutputPort.reject(transaction, reason.code, isRtp: isRtp);
   }
 
   @override

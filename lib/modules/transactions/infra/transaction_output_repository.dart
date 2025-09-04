@@ -176,8 +176,8 @@ class TransactionOutputRepository implements TransactionOutputPort {
   }
 
   @override
-  Future<Transaction> reject(Transaction transaction, String reason) async {
-    transaction = await repoRemote.reject(transaction, reason);
+  Future<Transaction> reject(Transaction transaction, String reason, {isRtp = false}) async {
+    transaction = await repoRemote.reject(transaction, reason, isRtp: isRtp);
     await repoLocal.save(transaction);
     return transaction;
   }

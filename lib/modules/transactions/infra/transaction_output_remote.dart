@@ -207,7 +207,6 @@ class TransactionOutputRemote {
       return MovementDetailsDTO.fromJson(dataList[0]).toTransaction();
     } else {
       // Handle empty response appropriately
-      print("No transaction data available in response.");
       throw ApiException(error: ApiError.unknowError, statusCode: 404);
     }
   }
@@ -558,7 +557,6 @@ class TransactionOutputRemote {
       throw ApiException(error: e.error, statusCode: e.statusCode);
     } catch (e) {
       // Handle empty response appropriately
-      print("No transaction data available in cancel response.");
       throw ApiException(error: ApiError.internalServerError, statusCode: 500);
     }
   }

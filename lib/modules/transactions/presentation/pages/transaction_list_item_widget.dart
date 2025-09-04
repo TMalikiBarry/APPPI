@@ -54,12 +54,16 @@ class TransactionListItemWidget extends StatelessWidget {
       userName = traductions.externalCustomer;
     }
 
+    final color = generateVividColorFromString(userName);
+    final textColor = idealTextColorForBackground(color);
+
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: Stack(
         children: [
           CircleAvatar(
-            backgroundColor: _generateColorFromString(userName),
+            // backgroundColor: _generateColorFromString(userName),
+            backgroundColor: color,
             child: Text(
               _getInitials(userName),
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -148,6 +152,78 @@ class TransactionListItemWidget extends StatelessWidget {
     } else {
       return (parts.first[0] + parts.last[0]).toUpperCase();
     }
+  }
+
+  /// djb2 hash — meilleure distribution que sum(runes)
+  int _djb2(String input) {
+    int hash = 5381;
+    for (final code in input.runes) {
+      hash = ((hash << 5) + hash + code) & 0x7fffffff; // hash * 33 + code, keep positive
+    }
+    return hash;
+  }
+
+  /// Convert HSL -> Color (expects h in 0..360, s,l in 0..1)
+  Color _hslToColor(double h, double s, double l) {
+    final c = (1.0 - (2.0 * l - 1.0).abs()) * s;
+    final hh = h / 60.0;
+    final x = c * (1.0 - ((hh % 2) - 1.0).abs());
+    double r = 0, g = 0, b = 0;
+    if (hh >= 0 && hh < 1) {
+      r = c;
+      g = x;
+      b = 0;
+    } else if (hh < 2) {
+      r = x;
+      g = c;
+      b = 0;
+    } else if (hh < 3) {
+      r = 0;
+      g = c;
+      b = x;
+    } else if (hh < 4) {
+      r = 0;
+      g = x;
+      b = c;
+    } else if (hh < 5) {
+      r = x;
+      g = 0;
+      b = c;
+    } else {
+      r = c;
+      g = 0;
+      b = x;
+    }
+    final m = l - c / 2.0;
+    final R = ((r + m) * 255).round().clamp(0, 255);
+    final G = ((g + m) * 255).round().clamp(0, 255);
+    final B = ((b + m) * 255).round().clamp(0, 255);
+    return Color.fromARGB(0xFF, R, G, B);
+  }
+
+  /// Génère une couleur vive, opaque (FF), pseudo-unique pour une string.
+  Color generateVividColorFromString(String input) {
+    final hash = _djb2(input);
+
+    // Hue réparti sur 0..359
+    final hue = (hash % 360).toDouble();
+
+    // Petite variation de saturation & lightness selon bits du hash
+    // Saturation entre 0.62 .. 0.88 (vives)
+    final sat = 0.62 + ((hash >> 8) % 27) / 100.0; // 0.62..0.88
+
+    // Lightness entre 0.40 .. 0.55 (évite très sombre ou trop clair)
+    final light = 0.40 + ((hash >> 16) % 16) / 100.0; // 0.40..0.55
+
+    return _hslToColor(hue, sat.clamp(0.0, 1.0), light.clamp(0.0, 1.0));
+  }
+
+  /// Retourne Colors.white ou Colors.black selon contraste (WCAG-like simple)
+  Color idealTextColorForBackground(Color bg) {
+    // Perception luminance (ITU-R BT.709)
+    final lum = (0.299 * bg.red + 0.587 * bg.green + 0.114 * bg.blue) / 255.0;
+    // seuil 0.6 est conservateur pour texte lisible sur couleurs vives
+    return lum > 0.6 ? Colors.black : Colors.white;
   }
 
   Color _generateColorFromString(String input) {

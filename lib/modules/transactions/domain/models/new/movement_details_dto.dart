@@ -125,7 +125,7 @@ class MovementDetailsDTO {
       clientId: json['clientId'] as String?,
       countryISOCode: json['countryISOCode'] as String,
       flowCode: json['flowCode'] as String,
-      endToEndId: json['endToEndId'] as String? ,
+      endToEndId: additionalInformations?.endToEndId ?? "",
       globalCommission: (json['globalCommission'] as num).toDouble(),
       globalFees: (json['globalFees'] as num).toDouble(),
       guID: json['guID'] as String,

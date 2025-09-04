@@ -365,7 +365,6 @@ class TokenInterceptor extends Interceptor {
       RouteEvents.walletTFSEvents.refreshServiceEvent("USER"),
     );
     return;
-    //print("Événement refreshServiceEvent déclenché.");
   }
 
 }

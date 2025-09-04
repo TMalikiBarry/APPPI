@@ -127,6 +127,7 @@ class TransactionSendCommand {
         break;
       case TransactionSendMethod.qrcode:
         json['alias'] = alias?.value;
+        json['channel'] = canal;
         break;
       case TransactionSendMethod.iban:
         json['iban'] = iban?.value;

@@ -17,7 +17,7 @@ class BottomNavbar extends StatefulWidget {
 
   const BottomNavbar({
     super.key,
-    this.currentIndex = 0,
+    this.currentIndex = 2,
     this.onTap,
   });
 
@@ -32,13 +32,13 @@ class _BottomNavbarState extends State<BottomNavbar> {
     // Redirection personnalisée
     switch (index) {
       case 0:
-        AppRouter.go(context, AppRouter.home); // ou Navigator.push(...)
+        AppRouter.go(context, AppRouter.homePage); // ou Navigator.push(...)
         break;
       case 1:
         AppRouter.go(context, AppRouter.transactionSearch);
         break;
       case 2:
-        AppRouter.go(context, AppRouter.homePage);
+        AppRouter.go(context, AppRouter.home);
         break;
     }
 
@@ -101,12 +101,12 @@ class _BottomNavbarState extends State<BottomNavbar> {
               ),
             ),
             BottomNavigationBarItem(
-              label: "TouchPoint",
+              label: "PI",
               icon: Image.asset(
-                "assets/images/touch-logo.png",
+                "assets/images/pi_new.png",
                 package: "common_dependencies",
-                width: 24,
-                height: 24,
+                width: 32,
+                height: 32,
               ),
             ),
           ],

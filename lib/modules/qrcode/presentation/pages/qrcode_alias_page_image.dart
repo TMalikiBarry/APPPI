@@ -18,6 +18,7 @@ class QrCodeAliasPageImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size ;
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Container( // <-- fixe une taille à la carte
@@ -27,6 +28,10 @@ class QrCodeAliasPageImage extends StatelessWidget {
           children: [
             // SVG en fond
             Positioned.fill(
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
               child: SvgPicture.asset(
                 'assets/images/qrCodePage.svg',
                 fit: BoxFit.cover,
@@ -41,11 +46,10 @@ class QrCodeAliasPageImage extends StatelessWidget {
               right: 0,
               child: Center(
                 child: QrImageView(
-                  size: MediaQuery.of(context).size.height * 0.5, // réduit si nécessaire
+                  size: MediaQuery.of(context).size.height * 0.3, // réduit si nécessaire
                   data: qrCode,
                   version: QrVersions.auto,
                   gapless: false,
-                  padding: padding,
                   embeddedImage: const AssetImage(
                     Images.iconsPiOctogone2,
                     package: 'common_dependencies',

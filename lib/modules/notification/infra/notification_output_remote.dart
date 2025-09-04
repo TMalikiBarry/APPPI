@@ -27,6 +27,7 @@ class NotificationOutputRemote {
     } else {
       alias = phone_number;
     }
+    logger.i('← notifications() status=/notification/$alias?type=ALIAS');
 
     // 2. Appel API sans queryParameters
     final resp = await Api.get('/notification/$alias?type=ALIAS');
@@ -85,6 +86,7 @@ class NotificationOutputRemote {
     } else {
       alias = phone_number;
     }
+    logger.i('← notifications() status=/notification/$alias?type=ALIAS');
 
     final ApiResponse response = await Api.get(
       '/notification/$alias?type=ALIAS',

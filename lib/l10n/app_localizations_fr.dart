@@ -251,34 +251,34 @@ class AppLocalizationsFr extends AppLocalizations {
   String get identificationErrorPinInvalid => 'Le code PIN est invalide';
 
   @override
-  String get biometric_auth => 'Biometric authentication';
+  String get biometric_auth => 'Authentification biométrique';
 
   @override
-  String get biometric_auth_required => 'Use your fingerprint or facial recognition';
+  String get biometric_auth_required => 'Utilisez votre empreinte digitale ou la reconnaissance faciale';
 
   @override
-  String get biometric_use_pwd => 'Use a secret code';
+  String get biometric_use_pwd => 'Utiliser un code';
 
   @override
-  String get biometric_use_fingerprint => 'Verify identity';
+  String get biometric_use_fingerprint => 'Vérification d\'identité';
 
   @override
-  String get biometric_echec_biometric => 'Biometric failure. Try again';
+  String get biometric_echec_biometric => 'Échec biométrique. Réessayez.';
 
   @override
-  String get biometric_error => 'Biometric error';
+  String get biometric_error => 'Erreur biométrique';
 
   @override
-  String get biometric_success_authentification => 'Successful authentication';
+  String get biometric_success_authentification => 'Authentification réussie';
 
   @override
-  String get biometric_success_setting => 'Settings';
+  String get biometric_success_setting => 'Paramètres';
 
   @override
-  String get biometric_activation_setting => 'Activate biometrics in your settings';
+  String get biometric_activation_setting => 'Activez la biométrie dans vos paramètres.';
 
   @override
-  String get biometric_tmp_later => 'Biometrics temporarily disabled. Try again later';
+  String get biometric_tmp_later => 'La biométrie est temporairement désactivée. Veuillez réessayer plus tard.';
 
   @override
   String get upgrade_profile_tier1 => 'Niveau 1';

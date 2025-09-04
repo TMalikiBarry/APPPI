@@ -1,3 +1,5 @@
+import 'package:pi_mobile_app/modules/security/domain/models/connected_user.dart';
+
 import 'alias_type.dart';
 
 class Alias {
@@ -21,7 +23,7 @@ class Alias {
   factory Alias.fromJson(Map<dynamic, dynamic> json) {
     return Alias(
       cle: json['alias'] as String,
-      shid: json['alias'] as String?,
+      shid: json['shid'] as String?,
       compte: json['clientPhoneNumber'] as String,
       pays: json['clientResidenceCountry'] as String,
       type: AliasType.values
@@ -36,7 +38,7 @@ class Alias {
       'compte': compte,
       'type': type.code,
       'pays': pays,
-      'shid': shid
+      'shid': shid ?? ConnectedUser.current!.shid
     };
   }
 }

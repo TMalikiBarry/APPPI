@@ -314,6 +314,7 @@ class TokenInterceptor extends Interceptor {
       var pref = await SharedPreferences.getInstance();
       int? expirationDateStr = pref.getInt("tokenExpiration");
       int? refreshExpirationDateStr = pref.getInt("refreshTokenExpiration");
+
       var now = DateTime.now().millisecondsSinceEpoch ~/ 1000; // Valeur actuelle en secondes
       if (now >= expirationDateStr! && now < refreshExpirationDateStr!) {
         _isRefreshing = true;

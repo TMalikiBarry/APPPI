@@ -54,8 +54,8 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
         nomClient = "$firstName $lastName";
       });
     }
-    print("nomClient : $nomClient");
-    print("transaction.sens : ${widget.transaction.sens}");
+    ///print("nomClient : $nomClient");
+    //print("transaction.sens : ${widget.transaction.sens}");
   }
 
   @override
@@ -388,7 +388,10 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
         // identifiant du Recepteur
         _recuItem(
             context,traductions.transactionDetailsRecuInfoPayeID,
-            data : transaction.additionalInformations?.payeAlias ?? transaction.acquirerAccountLabel!,
+            data : transaction.additionalInformations?.payeAlias
+                ?? transaction.additionalInformations?.otherClient
+                ?? transaction.additionalInformations?.clientIban
+                ?? transaction.acquirerAccountLabel!,
             rapportSmallTitle: rapportSmallTitle,
             rapportSubTitle: rapportSubTitle
         ),

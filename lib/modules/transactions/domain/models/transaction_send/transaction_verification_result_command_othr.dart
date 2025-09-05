@@ -77,6 +77,8 @@ class TransactionVerificationResultOthr {
       'devise': devise,
       'typeClient': typeClient,
       'otherClient': otherClient,
+      'numeroIdentification': numeroIdentification,
+      'systemeIdentification': systemeIdentification,
       'adresseComplete': adresseComplete,
       'dateNaissance': dateNaissance,
       'paysNaissance': paysNaissance,

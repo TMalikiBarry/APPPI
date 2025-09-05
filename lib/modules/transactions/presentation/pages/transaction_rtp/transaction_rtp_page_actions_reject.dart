@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../core/router.dart';
+import '../../../../../core/theme.dart';
 import '../../../../../l10n/app_localizations.dart';
 import '../../../domain/models/transaction.dart';
 import '../../../domain/models/transaction_reject_reason.dart';
@@ -68,7 +69,7 @@ class _TransactionRtpPageActionsRejectState
                 const SizedBox(height: 20),
 
                 // Raisons du rejet
-                Column(
+                /*Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: TransactionRejectReason.values
                       .where((motif) => motif != TransactionRejectReason.autre)
@@ -83,7 +84,7 @@ class _TransactionRtpPageActionsRejectState
                         avatar: reason != null && reason == motif
                             ? Icon(Icons.check)
                             : null,
-                        backgroundColor: Theme.of(context).secondaryHeaderColor,
+                        backgroundColor: Theme.of(context).colorScheme.surface,
                         onPressed: () {
                           setState(() {
                             reason = motif;
@@ -93,6 +94,35 @@ class _TransactionRtpPageActionsRejectState
                     );
                   }).toList(),
                 ),
+
+                 */
+
+                Wrap(
+                  spacing: 8, // espace horizontal entre les chips
+                  runSpacing: 8, // espace vertical entre les lignes
+                  children: TransactionRejectReason.values
+                      .where((motif) => motif != TransactionRejectReason.autre)
+                      .map((motif) {
+                    return ActionChip(
+                      label: Text(
+                        _raison(motif, traductions),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Themer.primaryColor,
+                        ),
+                      ),
+                      avatar: reason != null && reason == motif
+                          ? const Icon(Icons.check)
+                          : null,
+                      backgroundColor: Themer.backgroundPrimaryColor,
+                      onPressed: () {
+                        setState(() {
+                          reason = motif;
+                        });
+                      },
+                    );
+                  }).toList(),
+                ),
+
 
                 // Bouton
                 const SizedBox(height: 10),
@@ -104,7 +134,7 @@ class _TransactionRtpPageActionsRejectState
                           ? () {
                               AppRouter.pop(context);
                               bloc.add(
-                                TransactionRtpRejectEvent(tx, reason!),
+                                TransactionRtpRejectEvent(tx, reason!, true),
                               );
                             }
                           : null,

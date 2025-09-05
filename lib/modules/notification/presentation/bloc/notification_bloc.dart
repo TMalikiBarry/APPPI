@@ -124,15 +124,27 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     // Appeler le service pour obtenir la liste
     NotificationSearchCommand command = event.command;
 
-    // Rechercher d'abord en local et afficher
-    final donneesLocales = await pNotificationInputPort.list(
-      compte: command.compte!,
-      limit: command.limit,
-      dateDebut: command.filters.dateDebut,
-      dateFin: command.filters.dateFin,
-      types: command.filters.types,
-      keyword: command.keyWord,
-    );
+    var donneesLocales;
+    try {
+      // Rechercher d'abord en local et afficher
+      donneesLocales = await pNotificationInputPort.list(
+        compte: command.compte!,
+        limit: command.limit,
+        dateDebut: command.filters.dateDebut,
+        dateFin: command.filters.dateFin,
+        types: command.filters.types,
+        keyword: command.keyWord,
+      );
+    } catch (e, st) {
+      logger.e("Error loading notifications", error: e, stackTrace: st);
+      emit(NotificationErrorState(
+        "Problème lors de la récupération des notifications",
+        st.toString(),
+        state.notifications,
+        state.count,
+        state.command,
+      ));
+    }
     if (donneesLocales.data.isNotEmpty) {
       emit(NotificationInitialState(donneesLocales, state.count, command));
     }

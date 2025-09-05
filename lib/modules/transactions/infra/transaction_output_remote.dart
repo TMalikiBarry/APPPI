@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
 import 'package:flutter_client_sse/flutter_client_sse.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
 import 'package:pi_mobile_app/modules/security/domain/models/connected_user.dart';
 import 'package:pi_mobile_app/modules/transactions/domain/models/mappers/movement_mappers.dart';
@@ -320,9 +321,35 @@ class TransactionOutputRemote {
     } else if (command.confirmationMethode.toString() == TransactionSendMethod.othr.toString()) {
       url = '/transfer/eme/external?transferType=ACCOUNT';
     }
+
+    if (command.confirmationMethode.toString() == "RtpAcceptPay") {
+      url = '/payments/respond-claim';
+      logger.i("RtpAcceptPay");
+      request = {
+        "requestReceiverAlias": {
+          "alias": aliasFrom
+        },
+        "requestSenderAlias": command.clientAlias,
+        "amount": command.amount?.value,
+        "response": "IMMEDIATE",
+        "userLogin": userLogin,
+        "clientId": aliasFrom,
+        "endToEndId": command.endToendId,
+        "guID": command.guID,
+        "longitude": command.longitude,
+        "lattitude": command.latitude
+      };
+    }
+
     // Send transfer
     final ApiResponse response = await Api.post(url, data: request);
-    Transaction transaction = Transaction.fromJsonTransfer(response.data['response']);
+    logger.i("response : ${response.data}");
+    Transaction? transaction;
+    if (command.confirmationMethode.toString() == "RtpAcceptPay") {
+      transaction = Transaction.fromJsonTransfer(response.data['response'], isRtp: true);
+    } else {
+      transaction = Transaction.fromJsonTransfer(response.data['response'], isRtp: false);
+    }
 
     // GET REQUEST
     try {
@@ -332,7 +359,7 @@ class TransactionOutputRemote {
         Future.delayed(
           const Duration(seconds: 1),
           () {
-            transaction.dateOperation = DateTime.now();
+            transaction!.dateOperation = DateTime.now();
             transaction.statut = TransactionStatut.irrevocable;
             controller.add(transaction);
           },
@@ -342,10 +369,17 @@ class TransactionOutputRemote {
       else {
         //return streamResponse(transaction);
         // Return transaction directly without contacting SSE endpoint
-        logger.i(transaction.toJson());
         final controller = StreamController<Transaction>();
         transaction.dateOperation = DateTime.now();
-        transaction.statut = TransactionStatut.irrevocable; // or whatever default status you want
+        if (
+          command.confirmationMethode.toString() == "RtpAcceptPay"
+        ) {
+          transaction.statut = TransactionStatut.rejete; // or whatever default status you want
+        } else if (command.confirmationMethode.toString() == TransactionSendMethod.aliasRtb.toString()){
+          transaction.statut = TransactionStatut.initie;
+        } else {
+          transaction.statut = TransactionStatut.irrevocable; // or whatever default status you want
+        }
         controller.add(transaction);
         controller.close();
         return controller.stream;
@@ -564,20 +598,66 @@ class TransactionOutputRemote {
   Future<Transaction> reject(
     Transaction transaction,
     String reason,
-  ) async {
+      {bool isRtp = false}
+    ) async {
+
     try {
-      // Send transfer
-      final ApiResponse response = await Api.post(
-        '/movement/respond-fund-return',
-        data: {
-          "guID": transaction.guID,
-          "amount": transaction.montant.toInt(),
-          "reason": TransactionRejectReason.autre.code,
-          "clientID": transaction.clientId,
-          "decision": "REJECTED"
-        },
-      );
-      transaction.annulationStatut = TransactionStatut.rejete;
+      if (isRtp){
+        // Récuperer position GPS
+        Position? position;
+        try {
+          position = await _askPosition();
+        } //
+        catch (e) {
+          position = await _askPosition();
+        }
+        // S'il ne donne pas sa position on fait rien
+        if (position == null) {
+          // Il reste sur le formulaire - pas de confirmation
+        } else {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          var aliasFrom = ConnectedUser.current?.alias;
+          if (aliasFrom != null){
+            aliasFrom = ConnectedUser.current?.alias;
+          } else {
+            aliasFrom = pref.getString("phone_number");
+          }
+          var userLogin = pref.getString('phoneNumber');
+
+          final ApiResponse response = await Api.post(
+            '/payments/respond-claim',
+            data: {
+              "requestReceiverAlias": {
+                "alias": aliasFrom
+              },
+              "requestSenderAlias": transaction.clientAlias,
+              "amount": "${transaction.montant.toInt()}",
+              "reason": reason,
+              "response":"REJECTED",
+              "userLogin": userLogin,
+              "clientId": aliasFrom,
+              "endToEndId": transaction.endToEndId,
+              "guID": transaction.guID,
+              "longitude": position.longitude,
+              "lattitude": position.latitude
+            },
+          );
+        }
+      }
+      else {
+        // Send transfer
+        final ApiResponse response = await Api.post(
+          '/movement/respond-fund-return',
+          data: {
+            "guID": transaction.guID,
+            "amount": transaction.montant.toInt(),
+            "reason": TransactionRejectReason.autre.code,
+            "clientID": transaction.clientId,
+            "decision": "REJECTED"
+          },
+        );
+      }
+      transaction.statut == TransactionStatut.rejete;
       //
       return transaction;
     }  on ApiException catch (e) {
@@ -588,5 +668,17 @@ class TransactionOutputRemote {
       rethrow;
       //throw Exception("No transaction data available in reject response.");
     }
+  }
+
+  // Demander position GPS
+  Future<Position> _askPosition() async {
+    final LocationSettings locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 100,
+    );
+
+    return await Geolocator.getCurrentPosition(
+      locationSettings: locationSettings,
+    );
   }
 }

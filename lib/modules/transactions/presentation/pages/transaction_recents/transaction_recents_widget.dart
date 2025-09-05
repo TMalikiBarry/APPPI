@@ -163,10 +163,10 @@ class _TransactionRecentsWidgetState extends State<TransactionRecentsWidget> {
     return NotificationDialog(
       type: NotificationType.error,
       message: trad.transactionsErrorLoading, // ou state.error
-      // description: trad.transactionsErrorLoadingSubtitle, // optionnel
+      //description: trad.serverErrorSubtitle, // optionnel
       description: "Problème lors de la récupération des transactions récentes",
       btnText: trad.retry,
-      btnColor: Theme.of(context).colorScheme.error,
+      btnColor: Themer.error,
       btnAction: () {
         Navigator.of(context).pop();  // ferme le dialog
         transactionsBloc.add(TransactionRecentsListEvent(compte)); // retry

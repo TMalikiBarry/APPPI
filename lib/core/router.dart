@@ -106,7 +106,7 @@ class AppRouter {
   static const transactionSendDetailsCategorie =
       "/transaction/send_now/details/categorie";
   static const transactionReceive = "/transaction/receive_now";
-  static const transactionReceiveDetails = "/transaction/receive_now/:id";
+  static const transactionReceiveDetails = "/transaction/receive_now-rtp";
   static const transactionFormPage = "/transaction-form-fields";
   static const transactionFormVerification = "/transaction-form-verification";
   static const transactionFormSchedule = "/transaction-form-schedule";
@@ -424,8 +424,9 @@ class AppRouter {
       GoRoute(
         path: transactionReceiveDetails,
         pageBuilder: (context, state) {
-          final String id = state.pathParameters['id'] as String;
-          return DialogPage(builder: (_) => TransactionRtpPage(id: id));
+          final Map<String, dynamic> params = (state.extra!) as Map<String, dynamic>;
+          final tx = params["tx"] as Transaction;
+          return DialogPage(builder: (_) => TransactionRtpPage(tx: tx));
         },
       ),
       // Transaction - Demande d'annulation - details -

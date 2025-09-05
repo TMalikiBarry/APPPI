@@ -32,6 +32,8 @@ class TransactionSendPageSuccess extends StatelessWidget {
         if (onClose != null) {
           onClose!();
         }
+        AppRouter.go(context, AppRouter.home);
+        /*
         // RTP
         if (transaction.isRTP() &&
             transaction.statut == TransactionStatut.initie) {
@@ -82,6 +84,7 @@ class TransactionSendPageSuccess extends StatelessWidget {
             },
           );
         }
+        */
       },
       btnColor: Theme.of(context).colorScheme.tertiary,
     );
@@ -93,9 +96,11 @@ class TransactionSendPageSuccess extends StatelessWidget {
       if (transaction.isSplit()) {
         return localisation.btnTextContinue;
       }
-      return localisation.transactionsRtpSuccessBtnVoir;
+      //return localisation.transactionsRtpSuccessBtnVoir;
+      return localisation.btnTextContinue;
     } else {
-      return localisation.transactionsSendSuccessBtnVoir;
+      //return localisation.transactionsSendSuccessBtnVoir;
+      return localisation.btnTextContinue;
     }
   }
 

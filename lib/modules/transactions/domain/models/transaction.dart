@@ -80,6 +80,7 @@ class Transaction {
     this.transactionVerificationResultIban,
     this.transactionVerificationResultOthr,
     this.additionalInformations,
+    this.codeMembreParticipantPayeur,
   });
 
   /// Compte du client
@@ -189,6 +190,8 @@ class Transaction {
   TransactionVerificationResultOthr? transactionVerificationResultOthr;
 
   final AdditionalInfosMovement? additionalInformations;
+
+  final String? codeMembreParticipantPayeur;
 
   /// Est ce que c'est une demande de paiement
   bool isRTP() {
@@ -379,7 +382,8 @@ class Transaction {
       differeMontant: json['differeMontant'] != null
           ? double.parse(json['differeMontant'].toString())
           : null,
-      additionalInformations: additionalInformations
+      additionalInformations: additionalInformations,
+      codeMembreParticipantPayeur: json['codeMembreParticipantPayeur'] as String?,
     );
   }
 
@@ -766,6 +770,7 @@ class Transaction {
           : null,
       annulationStatut: _getStatut(json['annulationStatut']),
       annulationStatutRaison: json['annulationStatutRaison'] as String?,
+      codeMembreParticipantPayeur: json['codeMembreParticipantPayeur'] as String?,
     );
   }
 }

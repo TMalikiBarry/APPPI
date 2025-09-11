@@ -516,7 +516,8 @@ class TransactionOutputRemote {
             "amount": transaction.montant.toInt(),
             "reason": TransactionRejectReason.autre.code,
             "clientID": transaction.clientId,
-            "decision": "ACCEPTED"
+            "decision": "ACCEPTED",
+            "codeMembreParticipantPayeur": transaction.codeMembreParticipantPayeur
           },
         );
         transaction.annulationStatut = TransactionStatut.irrevocable;
@@ -583,6 +584,7 @@ class TransactionOutputRemote {
           "amount": transaction.montant,
           "impactDate": "${transaction.dateOperation}",
           "clientCountry": transaction.additionalInformations?.payePays,
+          "codeMembreParticipantPaye": transaction.additionalInformations?.participant
         },
       );
       //
@@ -653,7 +655,8 @@ class TransactionOutputRemote {
             "amount": transaction.montant.toInt(),
             "reason": TransactionRejectReason.autre.code,
             "clientID": transaction.clientId,
-            "decision": "REJECTED"
+            "decision": "REJECTED",
+            "codeMembreParticipantPayeur": transaction.codeMembreParticipantPayeur
           },
         );
       }

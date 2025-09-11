@@ -295,10 +295,10 @@ class TransactionCancelPageTransfer extends StatelessWidget {
             _detail(
               context,
               title: traductions.transactionDetailsCancelReasonLabel,
-              subtitle: TransactionCancelReasonText.label(
+              subtitle: tx.annulationRaison != null ? TransactionCancelReasonText.label(
                 tx.annulationRaison!,
                 traductions,
-              ),
+              ) : tx.motif!,
             ),
             const SizedBox(height: 10),
 

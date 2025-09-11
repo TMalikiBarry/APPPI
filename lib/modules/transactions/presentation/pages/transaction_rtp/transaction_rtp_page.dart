@@ -39,7 +39,7 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
   @override
   void initState() {
     super.initState();
-    print("tx : ${widget.tx.sens}");
+    // print("tx : ${widget.tx.dateOperation}");
     transactionRtpBloc = TransactionRtpBloc(
       Di.getTransactionInputPort(),
       Di.getPermissionInputPort(),
@@ -184,7 +184,7 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
             _detail(
               context,
               title: traductions.transactionDetailsPays,
-              subtitle: UEMOACountry.get(tx.clientPays)!.name,
+              subtitle: UEMOACountry.get(tx.clientPays)?.name ?? tx.clientPays,
             ),
             const SizedBox(height: 10),
             // Alias
@@ -231,11 +231,13 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
             ],*/
 
             // date demande
-            _detail(
-              context,
-              title: traductions.aliasClaimDetailsDateDemande,
-              subtitle: DateFormat('d MMM, HH:mm').format(tx.dateOperation!),
-            ),
+            if (tx.dateOperation != null) ... [
+              _detail(
+                context,
+                title: traductions.aliasClaimDetailsDateDemande,
+                subtitle: DateFormat('d MMM, HH:mm').format(tx.dateOperation!),
+              ),
+            ],
             const SizedBox(height: 10),
 
             // statut

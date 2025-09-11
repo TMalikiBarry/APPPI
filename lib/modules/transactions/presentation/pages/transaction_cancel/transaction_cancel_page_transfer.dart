@@ -240,12 +240,14 @@ class TransactionCancelPageTransfer extends StatelessWidget {
         child: Column(
           children: [
             // Recu de
-            _detail(
-              context,
-              title: traductions.transactionDetailsDateLabel,
-              subtitle: DateFormat('d MMM, HH:mm').format(tx.dateOperation!),
-            ),
-            const SizedBox(height: 10),
+            if (tx.dateOperation != null) ... [
+              _detail(
+                context,
+                title: traductions.transactionDetailsDateLabel,
+                subtitle: DateFormat('d MMM, HH:mm').format(tx.dateOperation!),
+              ),
+              const SizedBox(height: 10),
+            ],
 
             // Recu de
             _detail(
@@ -283,11 +285,13 @@ class TransactionCancelPageTransfer extends StatelessWidget {
         child: Column(
           children: [
             // date demande
-            _detail(
-              context,
-              title: traductions.aliasClaimDetailsDateDemande,
-              subtitle: DateFormat('d MMM, HH:mm').format(tx.annulationDate!),
-            ),
+            if (tx.annulationDate != null) ... [
+              _detail(
+                context,
+                title: traductions.aliasClaimDetailsDateDemande,
+                subtitle: DateFormat('d MMM, HH:mm').format(tx.annulationDate!),
+              ),
+            ],
 
             const SizedBox(height: 10),
 

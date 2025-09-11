@@ -233,8 +233,8 @@ class NotificationPageListeItem extends StatelessWidget {
         clientPays: notification.details?["clientCountry"] ?? "Pays inconnu",
         endToEndId: notification.details?["guID"] ?? "",
         guID: notification.idObject,
-        dateOperation: DateTime.parse(notification.details!['impactDate']).toLocal(),
         annulationDate:  _parseImpactDate(notification.details?['impactDate']),
+        dateOperation: _parseImpactDate(notification.details!['impactDate']),
         annulationRaison: TransactionCancelReasonX.fromCode(
           notification.details?['raison'],
         ),
@@ -256,7 +256,7 @@ class NotificationPageListeItem extends StatelessWidget {
         clientPays: notification.details?["country"] ?? "Pays inconnu",
         endToEndId: notification.details?["endToEndId"] ?? "",
         guID: notification.idObject,
-        dateOperation: DateFormat("dd/MM/yyyy HH:mm:ss").parse(notification.details?['date']),
+        dateOperation: _parseImpactDate(notification.details?['date']),
         acquirerAccountLabel: notification.details?["nomClient"] ?? "",
         motif: notification.details?["note"],
         statut: TransactionStatutX.fromCode(

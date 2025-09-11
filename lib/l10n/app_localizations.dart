@@ -1066,7 +1066,7 @@ abstract class AppLocalizations {
   /// No description provided for @aliasFormInvalid.
   ///
   /// In en, this message translates to:
-  /// **'Must be a 36-character payment address or a phone number with the country code'**
+  /// **'Must be a 36-character payment address or a phone number with the country code (+22x)'**
   String get aliasFormInvalid;
 
   /// No description provided for @aliasFormNotFound.

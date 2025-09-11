@@ -512,7 +512,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aliasFormEmpty => 'Required';
 
   @override
-  String get aliasFormInvalid => 'Must be a 36-character payment address or a phone number with the country code';
+  String get aliasFormInvalid => 'Must be a 36-character payment address or a phone number with the country code (+22x)';
 
   @override
   String get aliasFormNotFound => 'The beneficiary\'s alias does not exist in PI';

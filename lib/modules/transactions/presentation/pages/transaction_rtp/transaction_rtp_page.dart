@@ -181,11 +181,13 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
         child: Column(
           children: [
             // Pays
-            _detail(
-              context,
-              title: traductions.transactionDetailsPays,
-              subtitle: UEMOACountry.get(tx.clientPays)?.name ?? tx.clientPays,
-            ),
+            if (UEMOACountry.get(tx.clientPays)?.name != null) ... [
+              _detail(
+                context,
+                title: traductions.transactionDetailsPays,
+                subtitle: UEMOACountry.get(tx.clientPays)?.name ?? tx.clientPays,
+              ),
+            ],
             const SizedBox(height: 10),
             // Alias
             _detail(

@@ -258,11 +258,13 @@ class TransactionCancelPageTransfer extends StatelessWidget {
             const SizedBox(height: 10),
 
             // Pays
-            _detail(
-              context,
-              title: traductions.transactionDetailsPays,
-              subtitle: UEMOACountry.get(tx.clientPays)?.name ?? "",
-            ),
+            if (UEMOACountry.get(tx.clientPays)?.name != null) ... [
+              _detail(
+                context,
+                title: traductions.transactionDetailsPays,
+                subtitle: UEMOACountry.get(tx.clientPays)?.name ?? "",
+              ),
+            ],
             const SizedBox(height: 10),
           ],
         ),

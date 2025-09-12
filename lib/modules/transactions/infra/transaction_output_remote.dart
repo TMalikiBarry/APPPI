@@ -660,7 +660,10 @@ class TransactionOutputRemote {
           },
         );
       }
-      transaction.statut == TransactionStatut.rejete;
+      // Pour modifier l'objet
+      transaction = transaction.copyWith(
+        statut: TransactionStatut.rejete,
+      );
       //
       return transaction;
     }  on ApiException catch (e) {

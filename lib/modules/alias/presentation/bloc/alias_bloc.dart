@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/modules/security/domain/models/connected_user.dart';
 
 import '../../../../core/api.dart';
 import '../../domain/exceptions/alias_retrieve_exception.dart';
@@ -107,6 +108,14 @@ class AliasBloc extends Bloc<AliasEvent, AliasState> {
     emit(AliasCreatingState(aliasC));
     try {
       Alias alias = await aliasInputPort.creer(aliasC);
+      print("User initial : alias : ${ConnectedUser.current?.alias}, shid: ${ConnectedUser.current?.shid}");
+
+      ConnectedUser.current = ConnectedUser.current?.copyWith(
+        alias: alias.cle,
+        shid: alias.shid,
+      );
+      print("User modifié : shid: ${ConnectedUser.current?.shid}, alias: ${ConnectedUser.current?.alias}");
+
       emit(AliasExistState(alias));
     } //
     on ApiException catch (e) {

@@ -244,6 +244,7 @@ class NotificationPageListeItem extends StatelessWidget {
         annulationStatut: TransactionStatutX.fromCode(
           notification.details?['status'],
         ) ?? TransactionStatut.initie,
+        clientId: notification.details?['clientId']
       );
       //logger.i("transaction : ${{"tx": transaction}}");
     } else if (notification.type == NotificationType.rtpInitiee ||
@@ -262,7 +263,8 @@ class NotificationPageListeItem extends StatelessWidget {
         statut: TransactionStatutX.fromCode(
           notification.details?['status'],
         ) ?? TransactionStatut.initie,
-        sens: TransactionSens.debit
+        sens: TransactionSens.debit,
+        clientId: notification.details?['clientId']
       );
       route = "/transaction/receive_now-rtp";
     } else {

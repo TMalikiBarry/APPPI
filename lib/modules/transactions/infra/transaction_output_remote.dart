@@ -663,6 +663,7 @@ class TransactionOutputRemote {
       // Pour modifier l'objet
       transaction = transaction.copyWith(
         statut: TransactionStatut.rejete,
+        annulationStatut: TransactionStatut.rejete,
       );
       //
       return transaction;

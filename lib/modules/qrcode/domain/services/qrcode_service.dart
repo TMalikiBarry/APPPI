@@ -120,6 +120,9 @@ class QrcodeService implements QrcodeInputPort {
     emv.setPayloadFormatIndicator("01");
     emv.setTransactionCurrency(currency);
     emv.setCountryCode(alias.pays);
+
+    emv.setMerchantCategoryCode("0000");
+
     /// merchant account information
     MerchantAccountInformation mAccountInfo = MerchantAccountInformation();
     mAccountInfo.setGloballyUniqueIdentifier(globallyUniqueIdentifier);

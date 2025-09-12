@@ -8,6 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:pi_mobile_app/l10n/app_localizations.dart';
+import 'package:pi_mobile_app/modules/security/domain/models/connected_user.dart';
 import 'package:pi_mobile_app/modules/transactions/presentation/bloc/transaction_send/transaction_send_state.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +35,7 @@ class TransactionDetailsPageRecu extends StatefulWidget {
 class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu> {
   String? participantName;
   String? nomClient;
+  String? numClient;
 
   @override
   void initState() {
@@ -49,6 +51,7 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
     final pref = await SharedPreferences.getInstance();
     var firstName = pref.getString("firstName");
     var lastName = pref.getString("lastName");
+    numClient = pref.getString("phoneNumber");
     if (mounted) {
       setState(() {
         nomClient = "$firstName $lastName";
@@ -386,16 +389,28 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
         const SizedBox(height: 10,),
 
         // identifiant du Recepteur
-        _recuItem(
-            context,traductions.transactionDetailsRecuInfoPayeID,
-            data : transaction.additionalInformations?.payeAlias
-                ?? transaction.additionalInformations?.otherClient
-                ?? transaction.additionalInformations?.clientIban
-                ?? transaction.acquirerAccountLabel!,
-            rapportSmallTitle: rapportSmallTitle,
-            rapportSubTitle: rapportSubTitle
-        ),
-        //
+        if (transaction.sens == TransactionSens.credit) ... [
+            _recuItem(
+                context,traductions.transactionDetailsRecuInfoPayeID,
+                data : numClient
+                    ?? ConnectedUser.current?.alias
+                    ?? ConnectedUser.current!.shid!,
+                rapportSmallTitle: rapportSmallTitle,
+                rapportSubTitle: rapportSubTitle
+            ),
+        ] else ... [
+          _recuItem(
+              context,traductions.transactionDetailsRecuInfoPayeID,
+              data : transaction.additionalInformations?.payeAlias
+                  ?? transaction.additionalInformations?.otherClient
+                  ?? transaction.additionalInformations?.clientIban
+                  ?? transaction.acquirerAccountLabel!,
+              rapportSmallTitle: rapportSmallTitle,
+              rapportSubTitle: rapportSubTitle
+          ),
+        ],
+
+    //
         const SizedBox(height: 10,),
 
 

@@ -68,7 +68,7 @@ class TransactionOutputRemote {
       'page'     : page.toString(),
       'issuerAccount' : issuerAccount,
       'scope' : 'PI',
-      'status': 'SUCCESSFUL',
+      'status': 'CANCELLED',
     };
 
     // 1) Appel relatif

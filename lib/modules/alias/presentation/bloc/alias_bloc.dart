@@ -108,13 +108,13 @@ class AliasBloc extends Bloc<AliasEvent, AliasState> {
     emit(AliasCreatingState(aliasC));
     try {
       Alias alias = await aliasInputPort.creer(aliasC);
-      print("User initial : alias : ${ConnectedUser.current?.alias}, shid: ${ConnectedUser.current?.shid}");
+      logger.i("User initial : alias : ${ConnectedUser.current?.alias}, shid: ${ConnectedUser.current?.shid}");
 
       ConnectedUser.current = ConnectedUser.current?.copyWith(
         alias: alias.cle,
         shid: alias.shid,
       );
-      print("User modifié : shid: ${ConnectedUser.current?.shid}, alias: ${ConnectedUser.current?.alias}");
+      logger.i("User modifié : shid: ${ConnectedUser.current?.shid}, alias: ${ConnectedUser.current?.alias}");
 
       emit(AliasExistState(alias));
     } //

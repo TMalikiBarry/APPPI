@@ -350,7 +350,7 @@ void main() {
           dateOperation: DateTime.now());
 
       var result = await service.reject(
-          transaction, TransactionRejectReason.erreurMontant);
+          transaction, TransactionRejectReason.erreurMontant, false);
 
       expect(result.endToEndId, transaction.endToEndId);
     });

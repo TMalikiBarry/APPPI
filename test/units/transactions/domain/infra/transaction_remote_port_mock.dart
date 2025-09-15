@@ -84,7 +84,7 @@ class MockTransactionOutputPort implements TransactionOutputPort {
   }
 
   @override
-  Future<Transaction> reject(Transaction transaction, String reason) async {
+  Future<Transaction> reject(Transaction transaction, String reason, {isRtp = false}) async {
     return Transaction(
         montant: 100.00,
         sens: TransactionSens.debit,

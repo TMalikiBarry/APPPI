@@ -131,7 +131,7 @@ class TransactionFormPage extends StatelessWidget {
                       child: _buildForm(state.command),
                     ),
                   ),
-                  Padding(
+                  /*Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: ElevatedButton(
                       onPressed: isLoading
@@ -153,7 +153,31 @@ class TransactionFormPage extends StatelessWidget {
                           : Text(traductions.transactionFormContinueBtn),
                     ),
                   ),
+
+                   */
                 ],
+              ),
+            ),
+            bottomNavigationBar: SafeArea(
+              minimum: const EdgeInsets.all(16),
+              child: ElevatedButton(
+                onPressed: isLoading
+                    ? null
+                    : state.command.isValid()
+                    ? () {
+                  print("demande de paiement: $state.command");
+                  logger.i("#### RTP CONFIRM pressed for command=${state.command.toJson()}");
+                  // initiate
+                  context.read<TransactionSendBloc>().add(TransactionSendInitiateEvent(state.command));
+                }
+                    : null,
+                child: isLoading
+                    ? LoadingAnimationWidget.flickr(
+                  leftDotColor: primaryColor,
+                  rightDotColor: secondaryColor,
+                  size: 25,
+                )
+                    : Text(traductions.transactionFormContinueBtn),
               ),
             ),
           );
@@ -170,7 +194,7 @@ class TransactionFormPage extends StatelessWidget {
                       child: _buildForm(state.command),
                     ),
                   ),
-                  Padding(
+                  /*Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: ElevatedButton(
                       onPressed: () {
@@ -179,8 +203,18 @@ class TransactionFormPage extends StatelessWidget {
 
                       child: Text(traductions.transactionFormContinueBtn),
                     ),
-                  ),
+                  ),*/
                 ],
+              ),
+            ),
+            bottomNavigationBar: SafeArea(
+              minimum: const EdgeInsets.all(16),
+              child: ElevatedButton(
+                onPressed: () {
+                  //print("demande de paiement: $state.command");
+                }, // Désactivé pendant le chargement
+
+                child: Text(traductions.transactionFormContinueBtn),
               ),
             ),
           );

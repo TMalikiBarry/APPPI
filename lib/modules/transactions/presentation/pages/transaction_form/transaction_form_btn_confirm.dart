@@ -101,18 +101,20 @@ class TransactionFormBtnConfirm extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () async {
                     // Authorize
-                    context
+                    /*context
                         .read<IdentificationBloc>() //
                         .add(const AskIdentificationBeforeActionEvent());
 
-                    /*
+                     */
+
+
                     context
                         .read<TransactionSendBloc>() //
                         .add(TransactionSendConfirmEvent(
                       command,
                       transaction,
                       command.method.toString(),
-                    ));*/
+                    ));
                   },
                   child:
                       Text(traductions.transactionFormVerificationBtnConfirm),

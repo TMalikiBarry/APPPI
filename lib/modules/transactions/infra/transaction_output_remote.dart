@@ -289,12 +289,12 @@ class TransactionOutputRemote {
     }
     var userLogin = pref.getString('phoneNumber');
     var url = '/transfer/eme/external';
-    Map<String, dynamic> request = command.toJson();
-    request.addAll({
+    Map<String, dynamic> request = {
       'clientId': aliasFrom,
       'aliasFrom': aliasFrom,
       'userLogin': userLogin,
-    });
+    };
+    request.addAll(command.toJson());
     if (
       command.confirmationMethode.toString() == TransactionSendMethod.alias.toString() ||
       command.confirmationMethode.toString() == TransactionSendMethod.qrcode.toString()
@@ -337,7 +337,8 @@ class TransactionOutputRemote {
         "endToEndId": command.endToendId,
         "guID": command.guID,
         "longitude": command.longitude,
-        "lattitude": command.latitude
+        "lattitude": command.latitude,
+        "codeMembreParticipantPayer" : command.codeMembreParticipantPayer
       };
     }
 
@@ -641,7 +642,8 @@ class TransactionOutputRemote {
               "endToEndId": transaction.endToEndId,
               "guID": transaction.guID,
               "longitude": position.longitude,
-              "lattitude": position.latitude
+              "lattitude": position.latitude,
+              "codeMembreParticipantPayer": transaction.codeMembreParticipantPayer
             },
           );
         }

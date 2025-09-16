@@ -175,12 +175,21 @@ class _TransactionSplitPageState
             ),
 
             // Bouron Envoyer
-            TransactionSplitPageConfirm(
+            /*TransactionSplitPageConfirm(
               transaction: widget.transaction,
               selectedItems: selectedItems,
               repartition: repartition,
-            ),
+            ),*/
           ],
+        ),
+      ),
+      // Bouton fixé en bas
+      bottomNavigationBar: SafeArea(
+        minimum: const EdgeInsets.all(16),
+        child: TransactionSplitPageConfirm(
+          transaction: widget.transaction,
+          selectedItems: selectedItems,
+          repartition: repartition,
         ),
       ),
     );

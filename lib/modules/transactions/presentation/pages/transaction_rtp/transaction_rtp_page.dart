@@ -190,11 +190,13 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
             ],
             const SizedBox(height: 10),
             // Alias
-            _detail(
-              context,
-              title: traductions.transactionDetailsAlias,
-              subtitle: tx.clientAlias!,
-            ),
+            if (tx.clientAlias != null) ... [
+              _detail(
+                context,
+                title: traductions.transactionDetailsAlias,
+                subtitle: tx.clientAlias!,
+              ),
+            ],
           ],
         ),
       ),

@@ -34,9 +34,9 @@ class TransactionFormBtnConfirm extends StatelessWidget {
           current is IdentificationRequiredState ||
           current is IdentificationSuccessState,
       listener: (context, state) async {
-        logger.i("transaction_form_btn_confirm state $state");
-        logger.i("commands : ${command.toJson()}");
-        logger.i("transactions : ${transaction.toJson()}");
+        //logger.i("transaction_form_btn_confirm state $state");
+        //logger.i("commands : ${command.toJson()}");
+        //logger.i("transactions : ${transaction.toJson()}");
         // Pour afficher page code pin form
         if (state is IdentificationRequiredState) {
           await AppRouter.push(context, AppRouter.identificationCheck);
@@ -101,18 +101,18 @@ class TransactionFormBtnConfirm extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () async {
                     // Authorize
-                    /*context
+                    context
                         .read<IdentificationBloc>() //
                         .add(const AskIdentificationBeforeActionEvent());
 
-                     */
+                    /*
                     context
                         .read<TransactionSendBloc>() //
                         .add(TransactionSendConfirmEvent(
                       command,
                       transaction,
                       command.method.toString(),
-                    ));
+                    ));*/
                   },
                   child:
                       Text(traductions.transactionFormVerificationBtnConfirm),

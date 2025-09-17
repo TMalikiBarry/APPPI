@@ -7,6 +7,7 @@ class Alias {
   Alias({
     required this.cle,
     this.shid,
+    this.participant,
     required this.compte,
     required this.pays,
     required this.type,
@@ -14,6 +15,7 @@ class Alias {
 
   final String cle;
   final String? shid;
+  final String? participant;
   final String compte;
   // Pays du compte / participant
   final String pays;
@@ -26,6 +28,7 @@ class Alias {
       shid: json['shid'] as String?,
       compte: json['clientPhoneNumber'] as String,
       pays: json['clientResidenceCountry'] as String,
+      participant: json['participant'] as String,
       type: AliasType.values
           .firstWhere((element) => element.code == json['aliasType'] as String),
     );
@@ -38,6 +41,7 @@ class Alias {
       'compte': compte,
       'type': type.code,
       'pays': pays,
+      'participant': participant,
       'shid': shid ?? ConnectedUser.current!.shid
     };
   }

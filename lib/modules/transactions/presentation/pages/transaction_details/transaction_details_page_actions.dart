@@ -91,8 +91,8 @@ class TransactionDetailsPageActions extends StatelessWidget {
             CtaWidget(
               image: Images.transactionPartager,
               label: traductions.transactionDetailsPartager,
-              disabled: transaction.sens?.name == TransactionSens.credit.name,
-              //disabled: true,
+              //disabled: transaction.sens?.name == TransactionSens.credit.name,
+              disabled: true,
               action: transaction.sens?.name == TransactionSens.debit.name
                   ? () => _actionSplit(context, transaction)
                   : null,

@@ -140,7 +140,8 @@ class QrcodeService implements QrcodeInputPort {
     mInfoLang.setMerchantCity("X");
     mInfoLang.setMerchantName("X");
     emv.setMerchantInformationLanguageTemplate(mInfoLang);
-
+    emv.setMerchantCity("X");
+    emv.setMerchantName("X");
     // Pour tester montant dans QR cdynamique emv.setTransactionAmount("10000");
 
     // Additional Field
@@ -149,6 +150,7 @@ class QrcodeService implements QrcodeInputPort {
     // TxadditionalData.setMerchantChannel("400"); // Personne morale QR Dynamique
     additionalData.setMerchantChannel("731"); // Personne physique
     emv.setAdditionalDataFieldTemplate(additionalData);
+    logger.i("emv  -------> ${jsonEncode(emv.value)}");
 
     // encode data to emvCo
     final emvEncode = EMVMPM.encode(emv);

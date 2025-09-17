@@ -1049,6 +1049,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transactionRtpRejectMessage => 'The payment request has been successfully rejected';
 
   @override
+  String get transactionRtpAcceptedMessage => 'La demande de paiement est acceptée avec succès';
+
+  @override
   String get transactionDetailsMessage => 'Message';
 
   @override

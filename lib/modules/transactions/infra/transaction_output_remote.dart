@@ -375,7 +375,10 @@ class TransactionOutputRemote {
         if (
           command.confirmationMethode.toString() == "RtpAcceptPay"
         ) {
-          transaction.statut = TransactionStatut.rejete; // or whatever default status you want
+          logger.i("RtpAcceptPay jsonEncode(transaction)");
+          logger.i(jsonEncode(transaction));
+          transaction = transaction.copyWith(statut: TransactionStatut.irrevocable, canal: "631"); // or whatever default status you want
+          //transaction.statut = TransactionStatut.r; // or whatever default status you want
         } else if (command.confirmationMethode.toString() == TransactionSendMethod.aliasRtb.toString()){
           transaction.statut = TransactionStatut.initie;
         } else {
@@ -581,7 +584,7 @@ class TransactionOutputRemote {
           "guID": transaction.guID,
           "reason": reason.code,
           "clientID": transaction.clientAlias,
-          "clientName": transaction.additionalInformations?.clientName,
+          "clientName": "${ConnectedUser.current?.firstName} ${ConnectedUser.current?.lastName}",
           "amount": transaction.montant,
           "impactDate": "${transaction.dateOperation}",
           "clientCountry": transaction.additionalInformations?.payePays,
@@ -657,7 +660,7 @@ class TransactionOutputRemote {
             "amount": transaction.montant.toInt(),
             "reason": TransactionRejectReason.autre.code,
             "clientID": transaction.clientId,
-            "decision": "REJECTED",
+            "decision": "REFUSED",
             "codeMembreParticipantPayeur": transaction.codeMembreParticipantPayeur
           },
         );

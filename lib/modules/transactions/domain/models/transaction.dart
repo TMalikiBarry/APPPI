@@ -81,6 +81,7 @@ class Transaction {
     this.transactionVerificationResultOthr,
     this.additionalInformations,
     this.codeMembreParticipantPayeur,
+    this.codeMembreParticipantPayer,
   });
 
   /// Compte du client
@@ -192,6 +193,7 @@ class Transaction {
   final AdditionalInfosMovement? additionalInformations;
 
   final String? codeMembreParticipantPayeur;
+  final String? codeMembreParticipantPayer;
 
   /// Est ce que c'est une demande de paiement
   bool isRTP() {
@@ -384,6 +386,7 @@ class Transaction {
           : null,
       additionalInformations: additionalInformations,
       codeMembreParticipantPayeur: json['codeMembreParticipantPayeur'] as String?,
+      codeMembreParticipantPayer: json['codeMembreParticipantPayer'] as String?,
     );
   }
 
@@ -771,6 +774,7 @@ class Transaction {
       annulationStatut: _getStatut(json['annulationStatut']),
       annulationStatutRaison: json['annulationStatutRaison'] as String?,
       codeMembreParticipantPayeur: json['codeMembreParticipantPayeur'] as String?,
+      codeMembreParticipantPayer: json['codeMembreParticipantPayer'] as String?,
     );
   }
 }
@@ -843,6 +847,7 @@ extension TransactionCopyWith on Transaction {
     TransactionVerificationResultOthr? transactionVerificationResultOthr,
     AdditionalInfosMovement? additionalInformations,
     String? codeMembreParticipantPayeur,
+    String? codeMembreParticipantPayer,
   }) {
     return Transaction(
       compte: compte ?? this.compte,
@@ -916,6 +921,8 @@ extension TransactionCopyWith on Transaction {
       additionalInformations ?? this.additionalInformations,
       codeMembreParticipantPayeur:
       codeMembreParticipantPayeur ?? this.codeMembreParticipantPayeur,
+      codeMembreParticipantPayer :
+        codeMembreParticipantPayer ?? this.codeMembreParticipantPayer,
     );
   }
 }

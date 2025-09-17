@@ -80,7 +80,7 @@ class TransactionRtpPageActions extends StatelessWidget {
                 }
                 // Pour envoyer la transaction après confirmation
                 if (state is IdentificationSuccessState) {
-                  bloc.add(TransactionRtpAcceptPayEvent(tx, state.method));
+                  bloc.add(TransactionRtpAcceptPayEvent(tx, "RtpAcceptPay"));
                 }
               },
               listenWhen: (previous, current) =>

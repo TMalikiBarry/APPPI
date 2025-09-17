@@ -7,6 +7,7 @@ import '../../../domain/models/transaction_send/transaction_send_command.dart';
 import '../../bloc/transaction_send/transaction_send_bloc.dart';
 import '../../bloc/transaction_send/transaction_send_event.dart';
 import '../../bloc/transaction_send/transaction_send_state.dart';
+import '../transaction_send/transaction_send_page_error.dart';
 import 'transaction_form_page.dart';
 
 /// Page tampon logique de redirection après scan d'un QR Code
@@ -37,6 +38,19 @@ class TransactionFormPageQrcode extends StatelessWidget {
               current is TransactionSendFormVerificationLoadingState ||
               current is TransactionSendFormErrorState,
           listener: (context, state) async {
+            if (state is TransactionSendFormErrorState) {
+              // Hide loader
+              CustomLoadingDialog.hide(context);
+              // Show success popup
+              showModalBottomSheet<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  return TransactionSendPageError(error: state.error);
+                },
+                backgroundColor: Colors.transparent,
+                isScrollControlled: true,
+              );
+            }
             // Show verification Page
             if (state is TransactionSendFormVerificationAskingState) {
               CustomLoadingDialog.hide(context);
@@ -49,6 +63,7 @@ class TransactionFormPageQrcode extends StatelessWidget {
             }
           },
           buildWhen: (previous, current) =>
+              current is TransactionSendLoadingState ||
               current is TransactionSendFormVerificationLoadingState ||
               current is TransactionSendFormVerificationAskingState,
           builder: (context, state) {

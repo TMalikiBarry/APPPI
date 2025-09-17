@@ -101,7 +101,8 @@ class TransactionRtpBloc
         longitude: position.longitude,
         clientAlias: tx.clientAlias,
         amount: TransactionSendCommandAmount(value: tx.montant),
-        guID: tx.guID
+        guID: tx.guID,
+        codeMembreParticipantPayer: tx.codeMembreParticipantPayer,
       );
       Stream<Transaction> stream = await transactionInputPort.confirm(command);
 

@@ -289,12 +289,12 @@ class TransactionOutputRemote {
     }
     var userLogin = pref.getString('phoneNumber');
     var url = '/transfer/eme/external';
-    Map<String, dynamic> request = command.toJson();
-    request.addAll({
+    Map<String, dynamic> request = {
       'clientId': aliasFrom,
       'aliasFrom': aliasFrom,
       'userLogin': userLogin,
-    });
+    };
+    request.addAll(command.toJson());
     if (
       command.confirmationMethode.toString() == TransactionSendMethod.alias.toString() ||
       command.confirmationMethode.toString() == TransactionSendMethod.qrcode.toString()
@@ -337,7 +337,8 @@ class TransactionOutputRemote {
         "endToEndId": command.endToendId,
         "guID": command.guID,
         "longitude": command.longitude,
-        "lattitude": command.latitude
+        "lattitude": command.latitude,
+        "codeMembreParticipantPayer" : command.codeMembreParticipantPayer
       };
     }
 
@@ -374,7 +375,10 @@ class TransactionOutputRemote {
         if (
           command.confirmationMethode.toString() == "RtpAcceptPay"
         ) {
-          transaction.statut = TransactionStatut.rejete; // or whatever default status you want
+          logger.i("RtpAcceptPay jsonEncode(transaction)");
+          logger.i(jsonEncode(transaction));
+          transaction = transaction.copyWith(statut: TransactionStatut.irrevocable, canal: "631"); // or whatever default status you want
+          //transaction.statut = TransactionStatut.r; // or whatever default status you want
         } else if (command.confirmationMethode.toString() == TransactionSendMethod.aliasRtb.toString()){
           transaction.statut = TransactionStatut.initie;
         } else {
@@ -580,7 +584,7 @@ class TransactionOutputRemote {
           "guID": transaction.guID,
           "reason": reason.code,
           "clientID": transaction.clientAlias,
-          "clientName": transaction.additionalInformations?.clientName,
+          "clientName": "${ConnectedUser.current?.firstName} ${ConnectedUser.current?.lastName}",
           "amount": transaction.montant,
           "impactDate": "${transaction.dateOperation}",
           "clientCountry": transaction.additionalInformations?.payePays,
@@ -641,7 +645,8 @@ class TransactionOutputRemote {
               "endToEndId": transaction.endToEndId,
               "guID": transaction.guID,
               "longitude": position.longitude,
-              "lattitude": position.latitude
+              "lattitude": position.latitude,
+              "codeMembreParticipantPayer": transaction.codeMembreParticipantPayer
             },
           );
         }
@@ -655,7 +660,7 @@ class TransactionOutputRemote {
             "amount": transaction.montant.toInt(),
             "reason": TransactionRejectReason.autre.code,
             "clientID": transaction.clientId,
-            "decision": "REJECTED",
+            "decision": "REFUSED",
             "codeMembreParticipantPayeur": transaction.codeMembreParticipantPayeur
           },
         );

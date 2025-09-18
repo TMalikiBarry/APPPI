@@ -11,7 +11,7 @@ class SkeletonWidget extends StatefulWidget {
     this.height = 15,
     this.width = 200,
     this.radius,
-    this.isList = true,
+    this.isList = true, Color? color,
   });
 
   ///

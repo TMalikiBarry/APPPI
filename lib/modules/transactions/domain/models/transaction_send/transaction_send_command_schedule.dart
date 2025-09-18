@@ -28,7 +28,10 @@ class TransactionSendCommandSchedule {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {
-      'dateDebut': dateDebut!.toIso8601String(),
+      //'dateDebut': dateDebut!.toIso8601String(),
+      "year": dateDebut!.year,
+      "month": dateDebut!.month,
+      "dayOfMonth": dateDebut!.day,
     };
 
     if (frequence != null && frequence!.value != null) {

@@ -475,13 +475,13 @@ class Transaction {
   }
   */
 
-  static Transaction fromJsonTransfer(Map<dynamic, dynamic> json, {bool isRtp = false}) {
+  static Transaction fromJsonTransfer(Map<dynamic, dynamic> json, {bool isRtpOrSchedule = false}) {
     // Extraction des détails de réponse si présents
     final responseDetails = json['responseDetails'] as Map<String, dynamic>?;
     final status = responseDetails?['status'] as String?;
     final message = responseDetails?['message'] as String?;
 
-    if (!isRtp) {
+    if (!isRtpOrSchedule) {
       return Transaction(
         // Champs directs
         acquirerPhoneNumber: json['acquirerPhoneNumber'] as String?,
@@ -533,7 +533,7 @@ class Transaction {
         endToEndId: json['endToEndId'] ?? "",
         canal: json['canalCommunication'],
         statut: TransactionStatut.initie,
-        dateDebut: DateTime.now()
+        dateDebut: json['dateDebut'] ?? DateTime.now()
       );
     }
   }

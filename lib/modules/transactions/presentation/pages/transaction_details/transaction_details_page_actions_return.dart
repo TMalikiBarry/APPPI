@@ -128,6 +128,15 @@ class TransactionDetailsPageActionsReturn extends StatelessWidget {
     TransactionDetailsBloc transactionDetailsBloc,
     Transaction tx,
   ) {
+    return ElevatedButton(
+      onPressed: () {
+        context
+            .read<IdentificationBloc>() //
+            .add(const AskIdentificationBeforeActionEvent());
+      },
+      child: Text(traductions.btnTextYes),
+    );
+    /*
     return BlocListener<IdentificationBloc, IdentificationState>(
       listener: (context, state) async {
         // Pour afficher page code pin form
@@ -156,5 +165,6 @@ class TransactionDetailsPageActionsReturn extends StatelessWidget {
         child: Text(traductions.btnTextYes),
       ),
     );
+     */
   }
 }

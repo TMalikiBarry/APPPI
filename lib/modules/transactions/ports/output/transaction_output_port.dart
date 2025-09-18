@@ -56,6 +56,7 @@ abstract class TransactionOutputPort {
   /// Programmer une transaction
   Future<Transaction> schedule(
     String endToEndId,
+    TransactionConfirmCommand confirmCommand,
     TransactionSendCommandSchedule command,
   );
 

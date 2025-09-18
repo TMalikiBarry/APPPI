@@ -20,6 +20,11 @@ class TransactionSendPageSuccess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logger.i("transaction :");
+    logger.i(transaction.statut);
+    logger.i(transaction.isRTP());
+    logger.i(transaction.isSplit());
+    logger.i(transaction.dateDebut);
     //
     AppLocalizations localisation = AppLocalizations.of(context)!;
     //

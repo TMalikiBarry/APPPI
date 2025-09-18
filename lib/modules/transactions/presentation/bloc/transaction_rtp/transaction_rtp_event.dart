@@ -1,5 +1,6 @@
 import '../../../domain/models/transaction.dart';
 import '../../../domain/models/transaction_reject_reason.dart';
+import '../../../domain/models/transaction_send/transaction_send_method.dart';
 
 abstract class TransactionRtpEvent {
   const TransactionRtpEvent();
@@ -20,7 +21,7 @@ class TransactionRtpFrequenceEvent extends TransactionRtpEvent {
 class TransactionRtpAcceptPayEvent extends TransactionRtpEvent {
   final Transaction transaction;
   // Methode d'authentification
-  final String method;
+  final TransactionSendMethod method;
   const TransactionRtpAcceptPayEvent(this.transaction, this.method);
 }
 

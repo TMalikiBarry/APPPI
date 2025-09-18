@@ -34,12 +34,12 @@ class TransactionVerificationPage extends StatelessWidget {
       listener: (context, state) async {
         // Envoie en cours
         if (state is TransactionSendFormSendingState) {
-          //CustomLoadingDialog.show(context);
+          CustomLoadingDialog.show(context);
         }
         // Envoyé avec succès - Irrevocable
         else if (state is TransactionSendFormSuccessState) {
           // Hide loader
-          //CustomLoadingDialog.hide(context);
+          CustomLoadingDialog.hide(context);
 
           // Notification en cas de success
           AppNotifications.showCustomTransferNotification(

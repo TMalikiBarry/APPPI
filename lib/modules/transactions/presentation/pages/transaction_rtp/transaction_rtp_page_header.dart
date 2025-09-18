@@ -42,9 +42,14 @@ class TransactionRtpPageHeader extends StatelessWidget {
                   child: Text(
                     tx.sens == TransactionSens.credit
                         ? traductions
-                            .transactionRtpDetailsTitleInitiee(tx.acquirerAccountLabel!)
+                            .transactionRtpDetailsTitleInitiee(
+                              tx.acquirerAccountLabel ??
+                              tx.additionalInformations?.clientName ??
+                              tx.additionalInformations?.issuerName
+                            ?? "")
                         : traductions
-                            .transactionRtpDetailsTitleRecue(tx.acquirerAccountLabel!),
+                            .transactionRtpDetailsTitleRecue(tx.acquirerAccountLabel ??
+                    tx.additionalInformations?.clientName ?? ""),
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                     overflow: TextOverflow.ellipsis,

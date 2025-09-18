@@ -35,7 +35,7 @@ class TransactionConfirmCommand {
 
   // Confirmation
   String confirmationDate;
-  String confirmationMethode;
+  TransactionSendMethod confirmationMethode;
   String? channel;
   String? clientAlias;
   String? guID;

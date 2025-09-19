@@ -512,7 +512,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get aliasFormEmpty => 'Obligatoire';
 
   @override
-  String get aliasFormInvalid => 'Doit être une adresse de paiement de 36 caractères ou un numéro de téléphone avec l\'indicatif';
+  String get aliasFormInvalid => 'Doit être une adresse de paiement de 36 caractères ou un numéro de téléphone avec l\'indicatif (+22x)';
 
   @override
   String get aliasFormNotFound => 'L’alias du bénéficiaire n’existe pas dans PI';
@@ -1055,6 +1055,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get transactionRtpRejectMessage => 'La demande de paiement est rejetée avec succès';
+
+  @override
+  String get transactionRtpAcceptedMessage => 'La demande de paiement est acceptée avec succès';
 
   @override
   String get transactionDetailsMessage => 'Message';
@@ -1690,4 +1693,28 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bottom_bar_transaction => 'Transactions';
+
+  @override
+  String get contact_us_whatsapp => 'Nous contacter par Whatsapp';
+
+  @override
+  String get contact_us_whatsapp_desc => 'Appelez ou envoyez des messages';
+
+  @override
+  String get contact_us_phone => 'Nous appeler';
+
+  @override
+  String get contact_us_phone_title => 'Appelez le service client';
+
+  @override
+  String get contact_us_phone_desc => 'Contactez nos agents de 07h à 23h';
+
+  @override
+  String get contact_service_client => 'Contacter le service client';
+
+  @override
+  String get contact_us_description => 'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.';
+
+  @override
+  String get contact_us_default_message => 'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.';
 }

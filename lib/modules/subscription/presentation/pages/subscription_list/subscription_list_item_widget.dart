@@ -7,6 +7,7 @@ import '../../../../../l10n/app_localizations.dart';
 import '../../../../../shared/widgets/amount_widget.dart';
 import '../../../domain/models/subscription.dart';
 import '../subscription_status_text.dart';
+import 'package:common_dependencies/utils/utils.dart';
 
 class SubscriptionListItemWidget extends StatelessWidget {
   ///
@@ -30,8 +31,18 @@ class SubscriptionListItemWidget extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       leading: Stack(
         children: [
-          const CircleAvatar(
+          /*const CircleAvatar(
             backgroundImage: AssetImage(Images.transactionAvatar,package: 'common_dependencies'),
+          ),*/
+          CircleAvatar(
+            backgroundColor: generateColorFromString(subscription.clientNom),
+            child: Text(
+              getInitialsPi(subscription.clientNom),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           if (subscription.clientAlias != null)
             Positioned(

@@ -10,6 +10,7 @@ class CtaWidget extends StatelessWidget {
     this.icon,
     this.image,
     this.disabled = false,
+    this.message,
   });
 
   final String label;
@@ -17,6 +18,7 @@ class CtaWidget extends StatelessWidget {
   final Icon? icon;
   final String? image;
   final bool disabled;
+  final String? message;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,8 @@ class CtaWidget extends StatelessWidget {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(traductions.coming_soon, style: TextStyle(color: Themer.whiteColor),),
+              content: Text(
+                message ?? traductions.coming_soon, style: TextStyle(color: Themer.whiteColor),),
               backgroundColor: Themer.primaryColor,
             ),
           );

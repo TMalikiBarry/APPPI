@@ -49,7 +49,8 @@ class SubscriptionDetailsPageActions extends StatelessWidget {
               CtaWidget(
                 icon: const Icon(Icons.cancel_outlined),
                 label: traductions.btnTextDisable,
-                disabled: subscription.isFinished(),
+                //disabled: subscription.isFinished(),
+                disabled: true,
                 action: () => !subscription.hasStarted()
                     ? context.read<SubscriptionDetailsBloc>().add(
                           SubscriptionDetailsDisableEvent(subscription),

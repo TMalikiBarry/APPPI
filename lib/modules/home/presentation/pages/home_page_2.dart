@@ -8,6 +8,9 @@ import 'package:pi_mobile_app/modules/config/domain/models/config_keys.dart';
 import 'package:pi_mobile_app/modules/home/presentation/pages/support_page.dart';
 import '../../../../core/assets.dart';
 import '../../../../core/theme.dart';
+import '../../../alias/domain/models/alias.dart';
+import '../../../alias/presentation/bloc/alias_bloc.dart';
+import '../../../alias/presentation/bloc/alias_state.dart';
 import '../../../config/adapters/ui/bloc/config_event.dart';
 import '../../../contacts/presentation/bloc/contact_bloc.dart';
 import '../../../contacts/presentation/bloc/contact_event.dart';
@@ -34,7 +37,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const disabledTabs = <int>{ 2 };  // indices des onglets à griser
+  var disabledTabs = <int>{ 1, 2 };  // indices des onglets à griser
+
+  @override
+  initState () {
+    Alias alias = (context.read<AliasBloc>().state as AliasExistState).alias;
+    if (alias.accountType == "TRAN") {
+      disabledTabs = <int>{ 2 };  // indices des onglets à griser
+    }
+    super.initState();
+  }
   int selectedIndex = 2;
   final baseWidth = 375;
 

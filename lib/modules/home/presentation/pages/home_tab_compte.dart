@@ -4,9 +4,13 @@ import '../../../../core/assets.dart';
 import '../../../../core/router.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/cta_widget.dart';
+import '../../../alias/domain/models/alias.dart';
+import '../../../alias/presentation/bloc/alias_bloc.dart';
+import '../../../alias/presentation/bloc/alias_state.dart';
 import '../../../compte/presentation/pages/solde_widget_card.dart';
 import '../../../transactions/presentation/pages/transaction_recents/transaction_recents_widget.dart';
 import 'home_tab_compte_more_menu.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeTabCompte extends StatefulWidget {
   const HomeTabCompte({super.key});
@@ -18,6 +22,17 @@ class HomeTabCompte extends StatefulWidget {
 class _HomeTabCompteState extends State<HomeTabCompte> {
   // Clé unique pour forcer le rebuilt des enfants
   UniqueKey _refreshKey = UniqueKey();
+  bool isTran = false;
+
+  @override
+  initState () {
+    Alias alias = (context.read<AliasBloc>().state as AliasExistState).alias;
+    if (alias.accountType == "TRAN") {
+      isTran = true;  // indices des onglets à griser
+    }
+    super.initState();
+  }
+
 
   Future<void> _handleRefresh() async {
     setState(() {
@@ -75,11 +90,12 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                           CtaWidget(
                             image: Images.iconMoneyReceiveHeaderHP,
                             label: traductions.homeActionRequest,
-                            //disabled: true,
+                            disabled: !isTran,
                             action: () => AppRouter.push(
                               context,
                               AppRouter.transactionReceive,
                             ),
+                            message: "Veuillez déplafonner votre compte pour accéder à cette fonctionnalité.",
                           ),
 
                           // Plus
@@ -87,7 +103,7 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                             // icon: const Icon(Icons.more_horiz, size: 30),
                             image: Images.iconMoreActionHeaderHP,
                             label: traductions.homeActionMore,
-                            //disabled: true,
+                            disabled: !isTran,
                             action: () => {
                               showModalBottomSheet<void>(
                                 context: context,
@@ -97,6 +113,7 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                                 isScrollControlled: true,
                               )
                             },
+                            message: "Veuillez déplafonner votre compte pour accéder à cette fonctionnalité.",
                           ),
                         ],
                       ),

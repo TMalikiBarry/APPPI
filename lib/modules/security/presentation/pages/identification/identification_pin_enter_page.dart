@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:common_dependencies/utils/numeric_keyboard.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/core/theme.dart';
 
 import '../../../../../core/assets.dart';
 import '../../../../../l10n/app_localizations.dart';
@@ -15,17 +18,27 @@ import '../../bloc/identification/identification_bloc.dart';
 import '../../bloc/identification/identification_event.dart';
 import '../../bloc/identification/identification_state.dart';
 import '../../bloc/login/login_bloc.dart';
+import 'package:pinput/pinput.dart';
+import 'package:common_dependencies/utils/utils.dart';
 
-class IdentificationPinEnterPage extends StatelessWidget {
+class IdentificationPinEnterPage extends StatefulWidget {
   //
   const IdentificationPinEnterPage({super.key});
 
   static final logger = Logger();
 
+  static const IconData circle = IconData(0xe163, fontFamily: 'MaterialIcons');
+
+  @override
+  State<IdentificationPinEnterPage> createState() => _IdentificationPinEnterPageState();
+}
+
+class _IdentificationPinEnterPageState extends State<IdentificationPinEnterPage> {
   // Nombre de chiffres du code PIN
   final int pinLength = PinCommand.pinSize;
-  //
-  static const IconData circle = IconData(0xe163, fontFamily: 'MaterialIcons');
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -42,17 +55,21 @@ class IdentificationPinEnterPage extends StatelessWidget {
 
         return BlocBuilder<IdentificationBloc, IdentificationState>(
           builder: (context, identificationState) {
+            List<BiometricMethod> methods = identificationState.methods;
+
             // read bloc
             final identificationBloc = context.read<IdentificationBloc>();
 
             return Scaffold(
               // Contenu de la page de connexion
+              appBar: AppBar(),
               body: MyPageContainer(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     // Connected user
+                    /*
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -94,32 +111,115 @@ class IdentificationPinEnterPage extends StatelessWidget {
                           )
                       ],
                     ),
-
-                    // Virtual keyboard
-                    SizedBox(
-                      height: padHeight,
-                      child: GridView.count(
-                        crossAxisCount: 3,
-                        padding: EdgeInsets.all(padPadding),
-                        children: drawNumberPad(
-                          context,
-                          identificationState,
-                          identificationBloc,
+                    */
+                    Container(
+                      alignment: Alignment.topCenter,
+                      child: SizedBox(
+                        width: 150,
+                        height: 100,
+                        child: Image.asset(
+                          package: 'common_dependencies',
+                          'assets/images/logo_mytouchpoint.png',
+                          width: 130,
+                          height: 130,
                         ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 35,
+                    ),
+
+                    /*Text(
+                      AppLocalizations.of(context)!.welcome,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 20, color: Themer.primaryColor),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),*/
+
+                    Text(
+                      "${ConnectedUser.current!.firstName} ${ConnectedUser.current!.lastName}",
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 20, color: Themer.primaryColor),
+                    ),
+                    const SizedBox(
+                      height: 35,
+                    ),
+                    Text(
+                      formatPhoneNumberUser(ConnectedUser.current!.telephone, international: true) ?? '',
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 20, color: Themer.primaryColor),
+                    ),
+
+                    const SizedBox(
+                      height: 35,
+                    ),
+
+                    Text(
+                      traductions.identificationFormLoginMessage,
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 20, color: Themer.primaryColor),
+                    ),
+
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    // Virtual keyboard
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Pinput(
+                            controller: _controller,
+                            focusNode: _focusNode,
+                            defaultPinTheme: defaultPinTheme,
+                            focusedPinTheme: focusedPinTheme,
+                            submittedPinTheme: submittedPinTheme,
+                            pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                            // Default => show number pad
+                            keyboardType: TextInputType.none,
+                            // Accepts digits only
+                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                            obscureText: true,
+                            obscuringCharacter: "*",
+                            showCursor: true,
+                            onCompleted: (pin) async {
+                              _focusNode.requestFocus();
+                              /*
+                                identificationBloc.add(
+                                  PinNumberSelectedEvent(
+                                    i,
+                                    PinCommand(identificationState.pinCode),
+                                    4,
+                                  )
+                                );
+                              */
+                            },
+                          ),
+
+                          const SizedBox(
+                            height: 35,
+                          ),
+                          NumericKeypad(
+                            controller: _controller,
+                            onPress: () {
+                              identificationBloc.add(CheckBiometryEvent(methods));
+                            }
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-              bottomNavigationBar: SizedBox(
+              /*bottomNavigationBar: SizedBox(
                 height: 60,
                 child: TextButton(
                   onPressed: () {
-                    logger.i('mot de passe oublié');
+                    IdentificationPinEnterPage.logger.i('mot de passe oublié');
                   },
                   child: Text(traductions.identificationFormForgotMessage),
                 ),
-              ),
+              ),*/
             );
           },
         );
@@ -230,7 +330,7 @@ class IdentificationPinEnterPage extends StatelessWidget {
               size: 24,
             ) //
           : Icon(
-            Icons.fingerprint_rounded, 
+            Icons.fingerprint_rounded,
             color: Theme.of(context).colorScheme.onSurface
           );
       btns.add(
@@ -298,7 +398,7 @@ class IdentificationPinEnterPage extends StatelessWidget {
           }
         },
         icon: Icon(
-          Icons.backspace_outlined, 
+          Icons.backspace_outlined,
           color: Theme.of(context).colorScheme.onSurface
         ),
         label: const Text(""),
@@ -321,13 +421,13 @@ class IdentificationPinEnterPage extends StatelessWidget {
       if (i <= entered) {
         // affiche un cercle coloré
         icons.add(Icon(
-          circle,
+          IdentificationPinEnterPage.circle,
           color: selectedColor,
           size: 10,
         ));
       } else {
         // affiche un cercle gris
-        icons.add(const Icon(circle, size: 8));
+        icons.add(const Icon(IdentificationPinEnterPage.circle, size: 8));
       }
       if (i != pinLength) icons.add(const SizedBox(width: 8));
     }

@@ -13,13 +13,13 @@ class FrequenceCommand {
 /// Frequences de paiement
 enum Frequence {
   //  Quotidienne
-  quotidienne("J"),
+  quotidienne("DAILY"),
   // hebdomadaire
-  hebdomadaire("S"),
+  hebdomadaire("WEEKLY"),
   // Mensuelle
-  mensuelle("M"),
+  mensuelle("MONTHLY"),
   // Annuelle
-  annuelle("A");
+  annuelle("YEARLY");
 
   // Codification du paramètre
   final String code;

@@ -136,9 +136,10 @@ class TransactionOutputRepository implements TransactionOutputPort {
   @override
   Future<Transaction> schedule(
     String endToEndId,
+    TransactionConfirmCommand confirmCommand,
     TransactionSendCommandSchedule command,
   ) async {
-    Transaction transaction = await repoRemote.schedule(endToEndId, command);
+    Transaction transaction = await repoRemote.schedule(endToEndId, confirmCommand, command);
     repoLocal.schedule(transaction);
     return transaction;
   }

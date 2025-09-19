@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/core/api.dart';
 
 import '../../../domain/models/subscription.dart';
 import '../../../ports/input/subscription_input_port.dart';
@@ -30,9 +31,21 @@ class SubscriptionListBloc
     Emitter<SubscriptionListState> emit,
   ) async {
     // Récuperer la liste
-    List<Subscription> liste = await pSubscriptionInputPort.list(
-      compte: event.compte,
-    );
+    List<Subscription> liste;
+    try {
+      liste = await pSubscriptionInputPort.list(
+        compte: event.compte,
+      );
+    } on ApiException catch (e) {
+      logger.i("${e.statusCode} ${e.message} ${e.name} ${e.error} ${e.problem}");
+      liste = [];
+      //throw ApiException(error: e.error, statusCode: e.statusCode);
+      /*if (e.error == ApiError.notFound || e.error == ApiError.internalServerError) {
+        throw ApiException(error: e.error, statusCode: e.statusCode);
+      } else {
+        liste = [];
+      }*/
+    }
     emit(SubscriptionListDisplayState(liste, event.compte));
   }
 

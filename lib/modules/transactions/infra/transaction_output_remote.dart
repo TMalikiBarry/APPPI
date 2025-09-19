@@ -8,6 +8,7 @@ import 'package:logger/logger.dart';
 import 'package:pi_mobile_app/modules/security/domain/models/connected_user.dart';
 import 'package:pi_mobile_app/modules/transactions/domain/models/mappers/movement_mappers.dart';
 import 'package:pi_mobile_app/modules/transactions/domain/models/transaction_reject_reason.dart';
+import 'package:pi_mobile_app/shared/models/frequence_command.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // 1) On importe le modèle Transaction en n'important QUE les symboles dont on a besoin
@@ -256,14 +257,95 @@ class TransactionOutputRemote {
   /// Programmer une transaction
   Future<Transaction> schedule(
     String endToEndId,
+    TransactionConfirmCommand confirmCommand,
     TransactionSendCommandSchedule command,
   ) async {
     // Schedule transfer
-    var datas = command.toJson();
-    datas["endToEndId"] = endToEndId;
-    final ApiResponse response = await Api.post('/souscriptions', data: datas);
-    //
-    return Transaction.fromJson(response.data);
+
+    final ApiResponse response;
+    if (command.id != null && command.action == "edit_schedule") {
+      var datas = command.toJson();
+      if (command.frequence?.value == null) {
+        datas.addAll({
+          "planificationType": "SIMPLE",
+          "planificationStatus": "CREATED",
+        });
+      } else {
+        datas.addAll({
+          "planificationType": "RECURRENT",
+        });
+      }
+      response = await Api.put("/movement/schedule/${command.id}", data: datas);
+      return Transaction.fromJsonSupcription(response.data['response']).copyWith(
+        statut: TransactionStatut.irrevocable
+      );
+    } else {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      var aliasFrom = ConnectedUser.current?.alias;
+      if (aliasFrom != null) {
+        aliasFrom = ConnectedUser.current?.alias;
+      } else {
+        aliasFrom = pref.getString("phone_number");
+      }
+      var userLogin = pref.getString('phoneNumber');
+
+      var datas = command.toJson();
+
+      datas['movement'] = {
+        'aliasFrom': aliasFrom,
+        'amount': confirmCommand.amount,
+        'clientId': aliasFrom,
+        'userLogin': userLogin,
+        'alias': confirmCommand.transactionVerificationResultAlias?.alias
+      };
+      datas['movement'].addAll(confirmCommand.toJson());
+
+      if (
+      confirmCommand.confirmationMethode == TransactionSendMethod.alias ||
+          confirmCommand.confirmationMethode == TransactionSendMethod.qrcode
+      ) {
+        if (confirmCommand.confirmationMethode ==
+            TransactionSendMethod.qrcode) {
+          datas['movement']['channel'] = confirmCommand.channel;
+        }
+        datas['movement']['alias'] =
+            confirmCommand.transactionVerificationResultAlias!.alias;
+      } else if (confirmCommand.confirmationMethode ==
+          TransactionSendMethod.aliasRtb) {
+        datas['movement'].remove("aliasFrom");
+        datas['movement'].remove("aliasTo");
+        datas['movement'].addAll({
+          'requestSenderAlias': aliasFrom,
+          'requestReceiverAlias': confirmCommand
+              .transactionVerificationResultAlias!.toJson(),
+          'reason': confirmCommand.motif ?? 'PI_REQUEST_TO_PAY'
+        });
+      }
+
+      if (command.frequence?.value == null) {
+        datas.addAll({
+          "planificationType": "SIMPLE",
+          "planificationStatus": "CREATED",
+        });
+      } else {
+        datas.addAll({
+          "planificationType": "RECURRENT",
+          "planificationStatus": "CREATED",
+        });
+      }
+
+      //logger.i("data schedule 2 : $datas");
+      response = await Api.post("/movement/schedule", data: datas);
+
+      return Transaction.fromJsonTransfer({
+        "aliasClientPayeur" : confirmCommand.transactionVerificationResultAlias!.alias,
+        "montant" : "${confirmCommand.amount?.value!.toInt()}",
+        "nomClientPayeur" : confirmCommand.transactionVerificationResultAlias!.clientName,
+        "paysClientPayeur" : confirmCommand.transactionVerificationResultAlias!.clientResidenceCountry,
+        "endToEndId" : confirmCommand.transactionVerificationResultAlias!.endToEndId,
+        "dateDebut" : command.dateDebut
+      }, isRtpOrSchedule: true);
+    }
   }
 
   /// Génère les headers communs pour les requêtes SSE
@@ -296,16 +378,14 @@ class TransactionOutputRemote {
     };
     request.addAll(command.toJson());
     if (
-      command.confirmationMethode.toString() == TransactionSendMethod.alias.toString() ||
-      command.confirmationMethode.toString() == TransactionSendMethod.qrcode.toString()
+      command.confirmationMethode == TransactionSendMethod.alias ||
+      command.confirmationMethode == TransactionSendMethod.qrcode
     ){
-      if (command.confirmationMethode.toString() == TransactionSendMethod.qrcode.toString()) {
-        request.addAll({
-          'channel': command.channel,
-        });
+      if (command.confirmationMethode == TransactionSendMethod.qrcode) {
+        request['channel'] = command.channel;
       }
       request['alias'] = command.transactionVerificationResultAlias!.alias;
-    } else if (command.confirmationMethode.toString() == TransactionSendMethod.aliasRtb.toString()) {
+    } else if (command.confirmationMethode == TransactionSendMethod.aliasRtb) {
       url = '/payments/init-claim';
       request.remove("aliasFrom");
       request.remove("aliasTo");
@@ -315,16 +395,16 @@ class TransactionOutputRemote {
         'reason': command.motif ?? 'PI_REQUEST_TO_PAY'
       });
     }
-      else if (command.confirmationMethode.toString() == TransactionSendMethod.iban.toString()){
+      else if (command.confirmationMethode == TransactionSendMethod.iban){
       logger.i("On est la");
       url = '/transfer/eme/external?transferType=IBAN';
-    } else if (command.confirmationMethode.toString() == TransactionSendMethod.othr.toString()) {
+    } else if (command.confirmationMethode == TransactionSendMethod.othr) {
       url = '/transfer/eme/external?transferType=ACCOUNT';
     }
 
-    if (command.confirmationMethode.toString() == "RtpAcceptPay") {
+    if (command.confirmationMethode == TransactionSendMethod.rtpAcceptPay) {
       url = '/payments/respond-claim';
-      logger.i("RtpAcceptPay");
+      logger.i(TransactionSendMethod.rtpAcceptPay);
       request = {
         "requestReceiverAlias": {
           "alias": aliasFrom
@@ -344,12 +424,11 @@ class TransactionOutputRemote {
 
     // Send transfer
     final ApiResponse response = await Api.post(url, data: request);
-    logger.i("response : ${response.data}");
     Transaction? transaction;
-    if (command.confirmationMethode.toString() == "RtpAcceptPay") {
-      transaction = Transaction.fromJsonTransfer(response.data['response'], isRtp: true);
+    if (command.confirmationMethode == TransactionSendMethod.rtpAcceptPay) {
+      transaction = Transaction.fromJsonTransfer(response.data['response'], isRtpOrSchedule: true);
     } else {
-      transaction = Transaction.fromJsonTransfer(response.data['response'], isRtp: false);
+      transaction = Transaction.fromJsonTransfer(response.data['response'], isRtpOrSchedule: false);
     }
 
     // GET REQUEST
@@ -373,13 +452,11 @@ class TransactionOutputRemote {
         final controller = StreamController<Transaction>();
         transaction.dateOperation = DateTime.now();
         if (
-          command.confirmationMethode.toString() == "RtpAcceptPay"
+          command.confirmationMethode == TransactionSendMethod.rtpAcceptPay
         ) {
-          logger.i("RtpAcceptPay jsonEncode(transaction)");
-          logger.i(jsonEncode(transaction));
-          transaction = transaction.copyWith(statut: TransactionStatut.irrevocable, canal: "631"); // or whatever default status you want
-          //transaction.statut = TransactionStatut.r; // or whatever default status you want
-        } else if (command.confirmationMethode.toString() == TransactionSendMethod.aliasRtb.toString()){
+          transaction.statut = TransactionStatut.irrevocable; // or whatever default status you want
+          transaction = transaction.copyWith(statut: TransactionStatut.irrevocable, canal: "631");
+        } else if (command.confirmationMethode == TransactionSendMethod.aliasRtb){
           transaction.statut = TransactionStatut.initie;
         } else {
           transaction.statut = TransactionStatut.irrevocable; // or whatever default status you want

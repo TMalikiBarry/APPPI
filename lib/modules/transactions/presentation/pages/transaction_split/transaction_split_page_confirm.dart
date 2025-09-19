@@ -100,6 +100,7 @@ class TransactionSplitPageConfirm extends StatelessWidget {
 
           // Show success popup
           if (state is TransactionSendFormSuccessState) {
+            CustomLoadingDialog.hide(context);
             bool isBottomSheetClosed = false;
             showModalBottomSheet<void>(
               context: context,
@@ -123,6 +124,7 @@ class TransactionSplitPageConfirm extends StatelessWidget {
 
           // Show Error popup
           if (state is TransactionSendFormErrorState) {
+            CustomLoadingDialog.hide(context);
             showModalBottomSheet<void>(
               context: context,
               builder: (BuildContext context) {

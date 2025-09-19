@@ -39,10 +39,12 @@ class TransactionFormPage extends StatelessWidget {
           current is TransactionSendLoadingState ||
           // Retour au formulaire après le loader - FIX: Améliorer la condition
           (previous is TransactionSendFormVerificationLoadingState && current is TransactionSendFormInputState) ||
+          (previous is TransactionSendLoadingState && current is TransactionSendFormInputState) ||
           // UNIQUEMENT rediriger à l'accueil si on sort de VerificationAskingState
           (previous is TransactionSendFormVerificationAskingState && current is TransactionSendInitialState) ||
           // Succès RTP
-          (current is TransactionSendFormSuccessState && current.transaction.isRTP()) ||
+          //(current is TransactionSendFormSuccessState && current.transaction.isRTP()) ||
+          (current is TransactionSendFormSuccessState) ||
           // Erreur
           current is TransactionSendFormErrorState ||
           // FIX: Ajouter cette condition pour gérer le retour depuis l'erreur

@@ -129,18 +129,16 @@ class _TransactionRtpPageActionsRejectState
                 const SizedBox(height: 10),
                 SizedBox(
                   height: 56,
-                  child: Expanded(
-                    child: ElevatedButton(
-                      onPressed: reason != null
-                          ? () {
-                              AppRouter.pop(context);
-                              bloc.add(
-                                TransactionRtpRejectEvent(tx, reason!, true),
-                              );
-                            }
-                          : null,
-                      child: Text(traductions.btnTextReject),
-                    ),
+                  child: ElevatedButton(
+                    onPressed: reason != null
+                      ? () {
+                          AppRouter.pop(context);
+                          bloc.add(
+                            TransactionRtpRejectEvent(tx, reason!, true),
+                          );
+                        }
+                      : null,
+                    child: Text(traductions.btnTextReject),
                   ),
                 ),
               ],

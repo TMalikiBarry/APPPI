@@ -21,15 +21,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get internetErrorTitle => '😔 Oooops';
 
   @override
-  String get internetErrorSubtitle =>
-      'Parece que você não tem conexão com a internet ou que o servidor não está disponível!';
+  String get internetErrorSubtitle => 'Parece que você não tem conexão com a internet ou que o servidor não está disponível!';
 
   @override
   String get serverErrorTitle => '😔 Oooops';
 
   @override
-  String get serverErrorSubtitle =>
-      'Ocorreu um erro, tente novamente mais tarde.';
+  String get serverErrorSubtitle => 'Ocorreu um erro, tente novamente mais tarde.';
 
   @override
   String get erreurInattendue => 'Ocorreu um erro inesperado';
@@ -107,23 +105,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get introductionLegende => 'Bem-vindo ao SPI';
 
   @override
-  String get introductionItem1 =>
-      'Gerencie suas despesas atribuindo orçamentos';
+  String get introductionItem1 => 'Gerencie suas despesas atribuindo orçamentos';
 
   @override
   String get introductionItem2 => 'Economize para realizar seus sonhos';
 
   @override
-  String get introductionItem3 =>
-      'Planeje seus pagamentos para se livrar da dor';
+  String get introductionItem3 => 'Planeje seus pagamentos para se livrar da dor';
 
   @override
-  String get introductionItem4 =>
-      'Pague e transfira gratuitamente para qualquer conta';
+  String get introductionItem4 => 'Pague e transfira gratuitamente para qualquer conta';
 
   @override
-  String get introductionItem5 =>
-      'Economize e compartilhe despesas entre amigos';
+  String get introductionItem5 => 'Economize e compartilhe despesas entre amigos';
 
   @override
   String get introductionItem6 => 'Utilize o alias para privacidade e precisão';
@@ -144,8 +138,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get loginPageTitle => 'Conectar';
 
   @override
-  String get loginPageSubTitle =>
-      'Utilize o identificador obtido da sua instituição financeira';
+  String get loginPageSubTitle => 'Utilize o identificador obtido da sua instituição financeira';
 
   @override
   String get loginPageFooterIntro => 'Continuando, você concorda com ';
@@ -190,8 +183,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get changePasswordPageTitle => 'Mudar senha';
 
   @override
-  String get changePasswordPageSubTitle =>
-      'Por favor, mude sua senha para a segurança';
+  String get changePasswordPageSubTitle => 'Por favor, mude sua senha para a segurança';
 
   @override
   String get changePasswordFormPasswordHint => 'Definir uma nova senha';
@@ -206,8 +198,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get changePasswordErrorEmpty => 'Nova senha obrigatória';
 
   @override
-  String get changePasswordErrorInvalid =>
-      'Deve conter pelo menos um dígito, uma letra e o caractere @ ou _';
+  String get changePasswordErrorInvalid => 'Deve conter pelo menos um dígito, uma letra e o caractere @ ou _';
 
   @override
   String get changePasswordErrorDifferent => 'As duas senhas são diferentes';
@@ -216,8 +207,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get createCodePinFormTitle => 'Crie seu código pin';
 
   @override
-  String get createCodePinFormSubTitle =>
-      'Ele contribui para proteger suas informações confidenciais na próxima vez que você abrir o aplicativo';
+  String get createCodePinFormSubTitle => 'Ele contribui para proteger suas informações confidenciais na próxima vez que você abrir o aplicativo';
 
   @override
   String get configureBiometryMethod => 'a biometria';
@@ -264,8 +254,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get biometric_auth => 'Autenticação biométrica';
 
   @override
-  String get biometric_auth_required =>
-      'Use sua impressão digital ou reconhecimento facial';
+  String get biometric_auth_required => 'Use sua impressão digital ou reconhecimento facial';
 
   @override
   String get biometric_use_pwd => 'Use um código secreto';
@@ -286,12 +275,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get biometric_success_setting => 'Configurações';
 
   @override
-  String get biometric_activation_setting =>
-      'Ative a biometria em suas configurações';
+  String get biometric_activation_setting => 'Ative a biometria em suas configurações';
 
   @override
-  String get biometric_tmp_later =>
-      'Biometria temporariamente desativada. Tente novamente mais tarde';
+  String get biometric_tmp_later => 'Biometria temporariamente desativada. Tente novamente mais tarde';
 
   @override
   String get upgrade_profile_tier1 => 'Nível Um';
@@ -309,8 +296,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get permissionNotificationTitle => 'Não perca nada';
 
   @override
-  String get permissionNotificationSubTitle =>
-      'Receba notificações sobre despesas, segurança e suas economias para ficar sempre atualizado';
+  String get permissionNotificationSubTitle => 'Receba notificações sobre despesas, segurança e suas economias para ficar sempre atualizado';
 
   @override
   String get permissionNotificationEnableBtn => 'Ativar notificações';
@@ -325,8 +311,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get permissionContactSubTitle1 => 'Você mantém o controle! ';
 
   @override
-  String get permissionContactSubTitle2 =>
-      'Nós nunca conservamos seus contatos telefônicos.';
+  String get permissionContactSubTitle2 => 'Nós nunca conservamos seus contatos telefônicos.';
 
   @override
   String get permissionContactEnableBtn => 'Acesso e atualização dos contatos';
@@ -344,16 +329,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get permissionErrorToken => 'Ocorreu um erro. Tente novamente';
 
   @override
-  String get permissionErrorApi =>
-      'Erro de comunicação - Verifique sua conexão com a internet ou tente novamente mais tarde!';
+  String get permissionErrorApi => 'Erro de comunicação - Verifique sua conexão com a internet ou tente novamente mais tarde!';
 
   @override
-  String get securityLogoutTitle =>
-      'Você tem certeza que deseja se desconectar?';
+  String get securityLogoutTitle => 'Você tem certeza que deseja se desconectar?';
 
   @override
-  String get securityLogoutSubTitle =>
-      'Se você deseja continuar trabalhando, clique em « Cancelar » e você voltará para o seu estado atual. Se você realmente deseja se desconectar, clique em « Desconectar ».';
+  String get securityLogoutSubTitle => 'Se você deseja continuar trabalhando, clique em « Cancelar » e você voltará para o seu estado atual. Se você realmente deseja se desconectar, clique em « Desconectar ».';
 
   @override
   String get securityLogoutBtnConfirmer => 'Desconectar';
@@ -365,15 +347,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get aliasCreatePageTitle => 'Criar um alias';
 
   @override
-  String get aliasCreatePageSubTitle =>
-      'As pessoas podem enviar dinheiro para você a partir de seu alias';
+  String get aliasCreatePageSubTitle => 'As pessoas podem enviar dinheiro para você a partir de seu alias';
 
   @override
   String get aliasCreateSHIDTitle => 'Escolher o endereço de pagamento';
 
   @override
-  String get aliasCreateSHIDSubTitle =>
-      'O endereço de pagamento é criado pelo SPI';
+  String get aliasCreateSHIDSubTitle => 'O endereço de pagamento é criado pelo SPI';
 
   @override
   String get aliasCreateMBNOTitle => 'Escolher o número de telefone';
@@ -388,22 +368,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get aliaSuccessPageSubTitle => 'Seu alias está criado';
 
   @override
-  String get aliaSuccessPageDescription =>
-      'Você pode compartilhá-lo com outras pessoas, o que permite que elas realizem transferências para seu conta. O alias simplifica o processo e permite que você realize transações com facilidade, preservando sua privacidade';
+  String get aliaSuccessPageDescription => 'Você pode compartilhá-lo com outras pessoas, o que permite que elas realizem transferências para seu conta. O alias simplifica o processo e permite que você realize transações com facilidade, preservando sua privacidade';
 
   @override
   String get aliaSuccessPageBtnText => 'Continue';
 
   @override
-  String get aliaSuccessClaimPageTitle =>
-      'Demanda de reivindicação enviada com sucesso';
+  String get aliaSuccessClaimPageTitle => 'Demanda de reivindicação enviada com sucesso';
 
   @override
   String get addPhoneNumberPageTitle => 'Número de telefone';
 
   @override
-  String get addPhoneNumberPageSubTitle =>
-      'Um código de verificação será enviado para este número';
+  String get addPhoneNumberPageSubTitle => 'Um código de verificação será enviado para este número';
 
   @override
   String get addPhoneNumberFormHint => 'Telefone móvel';
@@ -446,8 +423,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get aliaErrorPageSubTitle => 'Este alias está ocupado';
 
   @override
-  String get aliaErrorPageDescription =>
-      'O número de telefone já está registrado como alias em outro conta';
+  String get aliaErrorPageDescription => 'O número de telefone já está registrado como alias em outro conta';
 
   @override
   String get aliaErrorPageReclamationBtnText => 'Revendiquer o alias';
@@ -456,20 +432,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get aliaErrorPageChoisisserBtnText => 'Escolha outro alias';
 
   @override
-  String get aliaErrorClaimNotExistPageSubTitle =>
-      'Revendicação não encontrada';
+  String get aliaErrorClaimNotExistPageSubTitle => 'Revendicação não encontrada';
 
   @override
-  String get aliaErrorClaimNotExistPageDescription =>
-      'Esta reivindicação não está mais disponível. Ela terminou, foi fechada ou arquivada!';
+  String get aliaErrorClaimNotExistPageDescription => 'Esta reivindicação não está mais disponível. Ela terminou, foi fechada ou arquivada!';
 
   @override
-  String get aliaErrorClaimLockedPageSubTitle =>
-      'Uma reivindicação está em curso neste alias';
+  String get aliaErrorClaimLockedPageSubTitle => 'Uma reivindicação está em curso neste alias';
 
   @override
-  String get aliaErrorClaimNotFoundPageSubTitle =>
-      'O alias foi deletado pelo seu proprietário';
+  String get aliaErrorClaimNotFoundPageSubTitle => 'O alias foi deletado pelo seu proprietário';
 
   @override
   String get aliasClaimDetailsHeadTitle => 'Revendicação de alias';
@@ -495,8 +467,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get aliasClaimAcceptDialogTitle =>
-      'Você tem certeza que deseja aceitar a reivindicação?';
+  String get aliasClaimAcceptDialogTitle => 'Você tem certeza que deseja aceitar a reivindicação?';
 
   @override
   String aliasClaimAcceptDialogMessage(String alias) {
@@ -520,12 +491,10 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get aliasClaimDetailsRefusPageSubTitile =>
-      'O rejeito só pode ser aceito se você provar que o número de telefone pertence a você inserindo o código OTP';
+  String get aliasClaimDetailsRefusPageSubTitile => 'O rejeito só pode ser aceito se você provar que o número de telefone pertence a você inserindo o código OTP';
 
   @override
-  String get aliasClaimConfirmError =>
-      'A confirmação falhou, por favor, tente novamente';
+  String get aliasClaimConfirmError => 'A confirmação falhou, por favor, tente novamente';
 
   @override
   String get aliasClaimConfirmSuccessRejectTitle => 'Alias conservado';
@@ -543,8 +512,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get aliasFormEmpty => 'Obrigatório';
 
   @override
-  String get aliasFormInvalid =>
-      'Deve ser um endereço de pagamento de 36 caracteres ou um número de telefone com o indicativo';
+  String get aliasFormInvalid => 'Deve ser um endereço de pagamento de 36 caracteres ou um número de telefone com o indicativo';
 
   @override
   String get aliasFormNotFound => 'O alias do beneficiário não existe em PI';
@@ -553,8 +521,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get contactActionsTitle => 'Contato';
 
   @override
-  String get contactWithNoPhoneNumber =>
-      'Este contato não possui um número de telefone';
+  String get contactWithNoPhoneNumber => 'Este contato não possui um número de telefone';
 
   @override
   String get contactTransferTitle => 'Transfert por contato';
@@ -615,8 +582,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionsNoRecent => 'Nenhuma transação recente';
 
   @override
-  String get transactionsNoRecentSubtitle =>
-      'Suas transações recentes aparecerão aqui';
+  String get transactionsNoRecentSubtitle => 'Suas transações recentes aparecerão aqui';
 
   @override
   String get transactionsErrorLoading => 'Erro ao carregar as transações';
@@ -628,8 +594,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get homeTransactionsRecentsNombreTitle => 'Últimas transações';
 
   @override
-  String get homeTransactionsRecentsNombreSubTitle =>
-      'Escolha o número de transações que você deseja ver aparecer em seu widget';
+  String get homeTransactionsRecentsNombreSubTitle => 'Escolha o número de transações que você deseja ver aparecer em seu widget';
 
   @override
   String get homeTransactionsRecentsNombreBtnSave => 'Salvar';
@@ -638,43 +603,37 @@ class AppLocalizationsPt extends AppLocalizations {
   String get homeActionMoreSheetProgrammerTitle => 'Programar um pagamento';
 
   @override
-  String get homeActionMoreSheetProgrammerSubTitle =>
-      'Criar um novo transferência';
+  String get homeActionMoreSheetProgrammerSubTitle => 'Criar um novo transferência';
 
   @override
   String get homeActionMoreSheetAbonnementTitle => 'Trouver un abonnement';
 
   @override
-  String get homeActionMoreSheetAbonnementSubTitle =>
-      'Convertir un paiement passé en abonnement';
+  String get homeActionMoreSheetAbonnementSubTitle => 'Convertir un paiement passé en abonnement';
 
   @override
   String get homeActionMoreSheetPartagerTitle => 'Compartilhar um pagamento';
 
   @override
-  String get homeActionMoreSheetPartagerSubTitle =>
-      'Dividir um pagamento entre amigos';
+  String get homeActionMoreSheetPartagerSubTitle => 'Dividir um pagamento entre amigos';
 
   @override
   String get homeActionMoreSheetTirelireTitle => 'Nova bolsa';
 
   @override
-  String get homeActionMoreSheetTirelireSubTitle =>
-      'Adicionar uma bolsa para um objetivo';
+  String get homeActionMoreSheetTirelireSubTitle => 'Adicionar uma bolsa para um objetivo';
 
   @override
   String get homeActionMoreSheetBudgetTitle => 'Definir um orçamento';
 
   @override
-  String get homeActionMoreSheetBudgetSubTitle =>
-      'Criar um orçamento para suas despesas';
+  String get homeActionMoreSheetBudgetSubTitle => 'Criar um orçamento para suas despesas';
 
   @override
   String get homeActionMoreSheetWidgetTitle => 'Adicionar um widget';
 
   @override
-  String get homeActionMoreSheetAWidgetSubTitle =>
-      'Gerenciar os widgets do ecrã principal';
+  String get homeActionMoreSheetAWidgetSubTitle => 'Gerenciar os widgets do ecrã principal';
 
   @override
   String get transactionsSeeAll => 'Todas as transações';
@@ -704,8 +663,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionsSendOptionNewContactTitle => 'Novo contato';
 
   @override
-  String get transactionsSendOptionNewContactSubtitle =>
-      'Adicionar um contato com seu alias';
+  String get transactionsSendOptionNewContactSubtitle => 'Adicionar um contato com seu alias';
 
   @override
   String get transactionsSendRecentItemYouSend => 'Você enviou ';
@@ -741,8 +699,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionsSendFormOthrTitle => 'Transferência por outro conta';
 
   @override
-  String get transactionsSendFormOthrSubtitle =>
-      'Número de conta de um SFD ou de um EME';
+  String get transactionsSendFormOthrSubtitle => 'Número de conta de um SFD ou de um EME';
 
   @override
   String get transactionsSendFormIbanTitle => 'Transferência por IBAN';
@@ -751,8 +708,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionsSendFormIbanSubtitle => 'Cole ou digite o IBAN';
 
   @override
-  String get transactionsSendFormQrCodeTitleTransfer =>
-      'Transferência por QR Code';
+  String get transactionsSendFormQrCodeTitleTransfer => 'Transferência por QR Code';
 
   @override
   String get transactionsSendFormQrCodeTitlePayment => 'Pagamento por QR Code';
@@ -845,8 +801,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionFormVerificationTitle => 'Verificação';
 
   @override
-  String get transactionFormVerificationSubtitle =>
-      'Você realmente deseja fazer um transferência para este beneficiário?';
+  String get transactionFormVerificationSubtitle => 'Você realmente deseja fazer um transferência para este beneficiário?';
 
   @override
   String get transactionFormVerificationTypeLabel => 'Tipo';
@@ -855,8 +810,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionFormVerificationTypeIBAN => 'Transferência por IBAN';
 
   @override
-  String get transactionFormVerificationTypeOTHR =>
-      'Transferência por outro conta';
+  String get transactionFormVerificationTypeOTHR => 'Transferência por outro conta';
 
   @override
   String get transactionFormVerificationClientName => 'Nome do cliente';
@@ -871,22 +825,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionFormScheduleTitle => 'Programar';
 
   @override
-  String get transactionFormScheduleSubtitle =>
-      'Seu pagamento será feito na data escolhida';
+  String get transactionFormScheduleSubtitle => 'Seu pagamento será feito na data escolhida';
 
   @override
   String get transactionFormScheduleDateLabel => 'Data';
 
   @override
-  String get transactionFormScheduleDateRangeLabel =>
-      'Data de início - Data de fim';
+  String get transactionFormScheduleDateRangeLabel => 'Data de início - Data de fim';
 
   @override
   String get transactionFormScheduleDateSelectTitle => 'Selecionar uma data';
 
   @override
-  String get transactionFormScheduleDateRangeSelectTitle =>
-      'Selecionar uma faixa de datas';
+  String get transactionFormScheduleDateRangeSelectTitle => 'Selecionar uma faixa de datas';
 
   @override
   String get transactionFormScheduleFrequenceLabel => 'Frequência';
@@ -913,8 +864,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionFormSchedulePeriodiciteLabel => 'Périodicité';
 
   @override
-  String transactionFormScheduleFrequenceSelected(
-      String periodicite, String frequence) {
+  String transactionFormScheduleFrequenceSelected(String periodicite, String frequence) {
     return 'Todos os $periodicite $frequence';
   }
 
@@ -950,8 +900,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get subscriptionEmptyTitle => 'Transações a vir';
 
   @override
-  String get subscriptionEmptySubTitle =>
-      'Gerencie seus assinaturas e pagamentos programados em um só lugar';
+  String get subscriptionEmptySubTitle => 'Gerencie seus assinaturas e pagamentos programados em um só lugar';
 
   @override
   String get subscriptionListOnceTitle => 'Pagamentos programados';
@@ -966,19 +915,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get subscriptionMenuScheduleTitle => 'Programar um pagamento';
 
   @override
-  String get subscriptionMenuScheduleSubtitle =>
-      'Executar um pagamento em uma data específica';
+  String get subscriptionMenuScheduleSubtitle => 'Executar um pagamento em uma data específica';
 
   @override
   String get subscriptionMenuSubscribeTitle => 'Criar um assinatura';
 
   @override
-  String get subscriptionMenuSubscribeSubtitle =>
-      'Converter um pagamento em uma assinatura';
+  String get subscriptionMenuSubscribeSubtitle => 'Converter um pagamento em uma assinatura';
 
   @override
-  String get subscriptionMenuSubscribeSubtitle2 =>
-      'Procure em suas transações e selecione um pagamento recorrente';
+  String get subscriptionMenuSubscribeSubtitle2 => 'Procure em suas transações e selecione um pagamento recorrente';
 
   @override
   String get subscriptionDateScheduledForTitle => 'Programado para';
@@ -1049,8 +995,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get transactionRtpDetailsSplitPaymentTitle =>
-      'Pagamento compartilhado';
+  String get transactionRtpDetailsSplitPaymentTitle => 'Pagamento compartilhado';
 
   @override
   String get transactionRtpDetailsSplitPaymentTo => 'Pagado para';
@@ -1074,16 +1019,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionRtpDetailsDiffereTitle => 'Débito diferido';
 
   @override
-  String get transactionRtpDetailsDiffereSubtitle =>
-      'Compre agora, pague mais tarde!';
+  String get transactionRtpDetailsDiffereSubtitle => 'Compre agora, pague mais tarde!';
 
   @override
-  String get transactionRtpDetailsDiffereDescription =>
-      'Seu saldo será debitado no final do mês';
+  String get transactionRtpDetailsDiffereDescription => 'Seu saldo será debitado no final do mês';
 
   @override
-  String transactionRtpDetailsDifferePayFrequence(
-      int occurence, String frequence) {
+  String transactionRtpDetailsDifferePayFrequence(int occurence, String frequence) {
     return 'Pagar em $occurence $frequence';
   }
 
@@ -1112,8 +1054,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionRtpRejectRsnRemittance => 'Fatura incorreta';
 
   @override
-  String get transactionRtpRejectMessage =>
-      'A solicitação de pagamento foi rejeitada com sucesso';
+  String get transactionRtpRejectMessage => 'A solicitação de pagamento foi rejeitada com sucesso';
 
   @override
   String get transactionRtpAcceptedMessage => 'La demande de paiement est acceptée avec succès';
@@ -1194,15 +1135,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionDetailsRecuPaiementPDF => 'Recebido do pagamento';
 
   @override
-  String get transactionDetailsRecuPaiementPDFSousTitre =>
-      'Você pode compartilhar ou baixar o PDF';
+  String get transactionDetailsRecuPaiementPDFSousTitre => 'Você pode compartilhar ou baixar o PDF';
 
   @override
   String get transactionDetailsTicketCaisse => 'Recebido pago';
 
   @override
-  String get transactionDetailsTicketCaisseSubtitle =>
-      'Você pode compartilhar o recibo';
+  String get transactionDetailsTicketCaisseSubtitle => 'Você pode compartilhar o recibo';
 
   @override
   String get transactionDetailsCompte => 'Conta';
@@ -1211,12 +1150,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionDetailsInstitution => 'Instituição';
 
   @override
-  String get transactionDetailsReturnTitle =>
-      'Êtes-vous sûr de vouloir retourner les fonds ?';
+  String get transactionDetailsReturnTitle => 'Êtes-vous sûr de vouloir retourner les fonds ?';
 
   @override
-  String get transactionDetailsReturnSuccessMessage =>
-      'Você retornou os fundos com sucesso';
+  String get transactionDetailsReturnSuccessMessage => 'Você retornou os fundos com sucesso';
 
   @override
   String get transactionDetailsRetourDateLabel => 'Retornado em';
@@ -1246,16 +1183,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionDetailsCancelBtnSend => 'Solicitar o cancelamento';
 
   @override
-  String get transactionDetailsCancelSuccessMessage =>
-      'Demanda de cancelamento enviada';
+  String get transactionDetailsCancelSuccessMessage => 'Demanda de cancelamento enviada';
 
   @override
-  String get transactionDetailsCancelSuccessDescription =>
-      'A demanda está aguardando o tratamento. \n Você será notificado assim que o beneficiário responder.';
+  String get transactionDetailsCancelSuccessDescription => 'A demanda está aguardando o tratamento. \n Você será notificado assim que o beneficiário responder.';
 
   @override
-  String get transactionDetailsCancelSuccessDescriptionNotification =>
-      'Você será notificado assim que o beneficiário responder.';
+  String get transactionDetailsCancelSuccessDescriptionNotification => 'Você será notificado assim que o beneficiário responder.';
 
   @override
   String get transactionDetailsCancelDemandeLabel => 'Solicitado em';
@@ -1272,8 +1206,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionDetailsCancelReasonLabel => 'Razão';
 
   @override
-  String get transactionDetailsCancelRejectMessage =>
-      'A demanda de cancelamento foi rejeitada com sucesso';
+  String get transactionDetailsCancelRejectMessage => 'A demanda de cancelamento foi rejeitada com sucesso';
 
   @override
   String get transactionDetailsRecuTitlePage => 'Payment completed';
@@ -1282,8 +1215,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionDetailsRecuTitle => 'Recebido do pagamento';
 
   @override
-  String get transactionDetailsRecuSubTitle =>
-      'Você pode compartilhar ou baixar o PDF';
+  String get transactionDetailsRecuSubTitle => 'Você pode compartilhar ou baixar o PDF';
 
   @override
   String get transactionDetailsRecuInfoIdentifiant => 'Identificador';
@@ -1328,8 +1260,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionDetailsRecuInfoMontant => 'Montante';
 
   @override
-  String get transactionDetailsTicketSaveTitle =>
-      'Salvar o recibo da transação';
+  String get transactionDetailsTicketSaveTitle => 'Salvar o recibo da transação';
 
   @override
   String get transactionDetailsTicketSaveGallery => 'Abrir a galeria';
@@ -1361,8 +1292,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionSplitRepartitionPartDoit => 'Você deve';
 
   @override
-  String get transactionSplitRepartitionSuccessMessage =>
-      'Solicitações de pagamento enviadas';
+  String get transactionSplitRepartitionSuccessMessage => 'Solicitações de pagamento enviadas';
 
   @override
   String get transactionErrorSoldeInsuffisant => 'Saldo insuficiente';
@@ -1374,19 +1304,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionErrorDelaiDepasse => 'A data limite foi ultrapassada';
 
   @override
-  String get transactionErrorDestinataireIndisponible =>
-      'Instituição do beneficiário momentaneamente indisponível';
+  String get transactionErrorDestinataireIndisponible => 'Instituição do beneficiário momentaneamente indisponível';
 
   @override
-  String get transactionErrorUnknow =>
-      'Sua solicitação não pode ser processada no momento. Por favor, tente novamente mais tarde';
+  String get transactionErrorUnknow => 'Sua solicitação não pode ser processada no momento. Por favor, tente novamente mais tarde';
 
   @override
   String get transactionSearchTitle => 'Transações';
 
   @override
-  String get transactionSearchEmptySubtitle =>
-      'Nenhuma transação corresponde à sua pesquisa';
+  String get transactionSearchEmptySubtitle => 'Nenhuma transação corresponde à sua pesquisa';
 
   @override
   String get transactionSearchEmptyTitle => 'Nenhum resultado';
@@ -1412,8 +1339,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get transactionSearchInputFilterDateSelectTitle =>
-      'Selecionar uma faixa de datas';
+  String get transactionSearchInputFilterDateSelectTitle => 'Selecionar uma faixa de datas';
 
   @override
   String get transactionSearchInputFilterCategoriesTitle => 'Categorias';
@@ -1446,12 +1372,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get qrcodePagePartageAliasTitle => 'Seu alias';
 
   @override
-  String get qrcodePagePartageAliasSubTitle =>
-      'Copie o alias no presse-papiers';
+  String get qrcodePagePartageAliasSubTitle => 'Copie o alias no presse-papiers';
 
   @override
-  String get qrcodeScanPageMessage =>
-      'Ponha sua câmera no QR code.\nO scan é feito automaticamente';
+  String get qrcodeScanPageMessage => 'Ponha sua câmera no QR code.\nO scan é feito automaticamente';
 
   @override
   String get qrcodeEncodeErrorMsg => 'Erro ao exibir seu QR Code!';
@@ -1460,8 +1384,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get qrcodeDecodeErrorNotQrImage => 'Imagem do QR Code inválida';
 
   @override
-  String get qrcodeDecodeErrorInvalideAlias =>
-      'Alias contido no QR Code é inválido';
+  String get qrcodeDecodeErrorInvalideAlias => 'Alias contido no QR Code é inválido';
 
   @override
   String get qrcodeDecodeErrorInvalideFormat => 'Formato do QR Code inválido';
@@ -1518,8 +1441,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get profileSecuriteMenuItemMontantTitle => 'Ocultar os montantes';
 
   @override
-  String get profileSecuriteMenuItemMontantSubTitle =>
-      'Bascule o ecrã do seu dispositivo para baixo para ocultar e exibir rapidamente os montantes';
+  String get profileSecuriteMenuItemMontantSubTitle => 'Bascule o ecrã do seu dispositivo para baixo para ocultar e exibir rapidamente os montantes';
 
   @override
   String get profileSecuriteMenuConfidentialiteTitle => 'Confidencialidade';
@@ -1528,15 +1450,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get profileSecuriteMenuItemShakeToPayTitle => 'Rendez-me descobridor';
 
   @override
-  String get profileSecuriteMenuItemShakeToPaySubTitle =>
-      'Quando eu sacudir o telefone';
+  String get profileSecuriteMenuItemShakeToPaySubTitle => 'Quando eu sacudir o telefone';
 
   @override
   String get profileSecuriteMontantPopupTitle => 'Exibição dos montantes';
 
   @override
-  String get profileSecuriteMontantPopupSubTitle =>
-      'Bascule o ecrã do seu dispositivo para baixo para ocultar e exibir rapidamente os montantes.';
+  String get profileSecuriteMontantPopupSubTitle => 'Bascule o ecrã do seu dispositivo para baixo para ocultar e exibir rapidamente os montantes.';
 
   @override
   String get comptePageTitle => 'Conta';
@@ -1581,23 +1501,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get compteDetailsPageBtnSupprimer => 'Suprimir o meu alias';
 
   @override
-  String get compteDetailsPagePopupDeleteAliasTitle =>
-      'Você tem certeza que deseja suprimir o seu alias?';
+  String get compteDetailsPagePopupDeleteAliasTitle => 'Você tem certeza que deseja suprimir o seu alias?';
 
   @override
-  String get compteDetailsPagePopupDeleteAliasSubTitle =>
-      'Se você confirmar a supressão do seu alias, esta ação será irreversível. Seu alias será completamente removido do nosso sistema e os outros usuários não poderão mais realizar pagamentos em seu nome ou encontrá-lo usando este alias. Por favor, note que você também perderá todas as informações associadas ao alias, incluindo o histórico de pagamentos e os registros de informações relacionadas.';
+  String get compteDetailsPagePopupDeleteAliasSubTitle => 'Se você confirmar a supressão do seu alias, esta ação será irreversível. Seu alias será completamente removido do nosso sistema e os outros usuários não poderão mais realizar pagamentos em seu nome ou encontrá-lo usando este alias. Por favor, note que você também perderá todas as informações associadas ao alias, incluindo o histórico de pagamentos e os registros de informações relacionadas.';
 
   @override
-  String get compteDetailsPagePopupDeleteAliasBtnConfirmer =>
-      'Suprimir o meu alias';
+  String get compteDetailsPagePopupDeleteAliasBtnConfirmer => 'Suprimir o meu alias';
 
   @override
   String get compteDetailsPagePopupDeleteAliasBtnAnnuler => 'Cancelar';
 
   @override
-  String get compteDetailsPagePopupDeleteAliasErrorMsg =>
-      'A supressão do seu alias falhou, por favor, tente novamente mais tarde';
+  String get compteDetailsPagePopupDeleteAliasErrorMsg => 'A supressão do seu alias falhou, por favor, tente novamente mais tarde';
 
   @override
   String get appSettingPageTitle => 'Configurações da aplicação';
@@ -1615,8 +1531,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appSettingPageMenuLanguagePt => 'Português';
 
   @override
-  String get appSettingPageMenuLanguageSelectTitle =>
-      'Escolha o idioma para a aplicação';
+  String get appSettingPageMenuLanguageSelectTitle => 'Escolha o idioma para a aplicação';
 
   @override
   String get appSettingPageMenuThemeTitle => 'Tema';
@@ -1646,12 +1561,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appSettingPageMenuQrCodeTitle => 'Meu QR Code por defeito';
 
   @override
-  String get appSettingPageMenuQrCodeSelectTitle =>
-      'Ativar para exibir o meu QR Code por defeito';
+  String get appSettingPageMenuQrCodeSelectTitle => 'Ativar para exibir o meu QR Code por defeito';
 
   @override
-  String get appSettingPageMenuQrCodeDeselectTitle =>
-      'Desativar para exibir a câmera por defeito';
+  String get appSettingPageMenuQrCodeDeselectTitle => 'Desativar para exibir a câmera por defeito';
 
   @override
   String get appSettingPageMenuNotificationTitle => 'Notificações na aplicação';
@@ -1666,8 +1579,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appSettingPageMenuNotificationStyleDialog => 'Alertas';
 
   @override
-  String get appSettingPageMenuNotificationStyleDialogDesc =>
-      'Os alertas requerem uma ação antes de continuar. Os banners aparecem no topo da tela e desaparecem automaticamente';
+  String get appSettingPageMenuNotificationStyleDialogDesc => 'Os alertas requerem uma ação antes de continuar. Os banners aparecem no topo da tela e desaparecem automaticamente';
 
   @override
   String get appSettingPageMenuNotificationStyleNone => 'Nenhum';
@@ -1685,8 +1597,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appSettingPageMenuNotificationVibrTitle => 'Vibração';
 
   @override
-  String get appSettingPageMenuNotificationVibrSubtitle =>
-      'Vibrações para notificação';
+  String get appSettingPageMenuNotificationVibrSubtitle => 'Vibrações para notificação';
 
   @override
   String get categorieDefaultTitle => 'Categorias por defeito';
@@ -1707,8 +1618,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get categorieFormCreateBtn => 'Criar';
 
   @override
-  String get categorieFormNameInvalid =>
-      'O nome não deve ter mais de 25 caracteres';
+  String get categorieFormNameInvalid => 'O nome não deve ter mais de 25 caracteres';
 
   @override
   String get categorieFormNameAlready => 'Esta categoria já existe';
@@ -1738,8 +1648,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get notificationPageListeEmptyTitle => 'Você está ciente de tudo';
 
   @override
-  String get notificationPageListeEmptySubTitle =>
-      'Revenez plus tard pour obtenir des informations et des recommandations afin de maintenir votre compte à jour';
+  String get notificationPageListeEmptySubTitle => 'Revenez plus tard pour obtenir des informations et des recommandations afin de maintenir votre compte à jour';
 
   @override
   String get notificationPageClaimTitle => 'Revendação de alias';
@@ -1786,7 +1695,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get bottom_bar_transaction => 'Transactions';
 
   @override
-  String get contact_service_client => 'Entre em contacto com o serviço de apoio ao cliente';
+  String get contact_us_whatsapp => 'Nous contacter par Whatsapp';
+
+  @override
+  String get contact_us_whatsapp_desc => 'Appelez ou envoyez des messages';
 
   @override
   String get contact_us_phone => 'Nous appeler';
@@ -1798,22 +1710,11 @@ class AppLocalizationsPt extends AppLocalizations {
   String get contact_us_phone_desc => 'Contactez nos agents de 07h à 23h';
 
   @override
-  String get contact_us_or => 'OU';
+  String get contact_service_client => 'Contacter le service client';
 
   @override
-  String get contact_us_default_message =>
-      'Tell us about your request and our team will contact you shortly.';
-
+  String get contact_us_description => 'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.';
 
   @override
-  // TODO: implement contact_us_description
-  String get contact_us_description => throw UnimplementedError();
-
-  @override
-  // TODO: implement contact_us_whatsapp
-  String get contact_us_whatsapp => throw UnimplementedError();
-
-  @override
-  // TODO: implement contact_us_whatsapp_desc
-  String get contact_us_whatsapp_desc => throw UnimplementedError();
+  String get contact_us_default_message => 'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.';
 }

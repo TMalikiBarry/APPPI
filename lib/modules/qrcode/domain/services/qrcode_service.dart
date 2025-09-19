@@ -135,11 +135,11 @@ class QrcodeService implements QrcodeInputPort {
     emv.addMerchantAccountInformation(id: "36", value: mAccountInfo);
 
     // merchant info language
-    MerchantInformationLanguageTemplate mInfoLang =
+    /*MerchantInformationLanguageTemplate mInfoLang =
         MerchantInformationLanguageTemplate();
     mInfoLang.setMerchantCity("X");
     mInfoLang.setMerchantName("X");
-    emv.setMerchantInformationLanguageTemplate(mInfoLang);
+    emv.setMerchantInformationLanguageTemplate(mInfoLang);*/
     emv.setMerchantCity("X");
     emv.setMerchantName("X");
     // Pour tester montant dans QR cdynamique emv.setTransactionAmount("10000");

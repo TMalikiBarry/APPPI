@@ -4,12 +4,16 @@ import '../../../../../shared/models/frequence_command.dart';
 class TransactionSendCommandSchedule {
   //
   TransactionSendCommandSchedule({
+    this.id,
+    this.action = "create_schedule",
     this.dateDebut,
     this.dateFin,
     this.frequence,
     this.error,
   });
 
+  int? id;
+  String? action;
   DateTime? dateDebut;
   DateTime? dateFin;
   FrequenceCommand? frequence;
@@ -29,6 +33,7 @@ class TransactionSendCommandSchedule {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {
       //'dateDebut': dateDebut!.toIso8601String(),
+      "id": id,
       "year": dateDebut!.year,
       "month": dateDebut!.month,
       "dayOfMonth": dateDebut!.day,

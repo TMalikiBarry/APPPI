@@ -352,6 +352,7 @@
   },
   "transactionsSendErrorTitle": "😔 Oooops",
   "transactionsSendErrorDescription": "A transação falhou.",
+  "transactionsSendErrorALias": "O alias do destinatário não existe no PI",
   "transactionsSendErrorBtn": "Continuar",
   "@_TRANSACTIONS_FORM_FIELDS": {},
   "transactionFormAmountHint": "Montante",
@@ -439,6 +440,18 @@
       }
     }
   },
+  "transactionFormEditScheduleSuccessMessage": "O montante previsto de {montant} FCFA para {payee} foi editado com sucesso.",
+      "@transactionFormEditScheduleSuccessMessage": {
+        "placeholders": {
+            "montant": {
+              "type": "String"
+            },
+            "payee": {
+              "type": "String"
+            }
+        }
+      },
+
   "transactionFormScheduleSuccessBtn": "Ver o abonnamento",
   "subscriptionEmptyTitle": "Transações a vir",
   "subscriptionEmptySubTitle": "Gerencie seus assinaturas e pagamentos programados em um só lugar",

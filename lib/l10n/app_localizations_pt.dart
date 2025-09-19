@@ -729,6 +729,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transactionsSendErrorDescription => 'A transação falhou.';
 
   @override
+  String get transactionsSendErrorALias => 'O alias do destinatário não existe no PI';
+
+  @override
   String get transactionsSendErrorBtn => 'Continuar';
 
   @override
@@ -878,6 +881,11 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String transactionFormScheduleSuccessMessage(String montant, String payee) {
     return 'Você programou $montant FCFA para $payee';
+  }
+
+  @override
+  String transactionFormEditScheduleSuccessMessage(String montant, String payee) {
+    return 'O montante previsto de $montant FCFA para $payee foi editado com sucesso.';
   }
 
   @override

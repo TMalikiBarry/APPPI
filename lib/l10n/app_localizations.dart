@@ -1489,6 +1489,12 @@ abstract class AppLocalizations {
   /// **'Transaction failed'**
   String get transactionsSendErrorDescription;
 
+  /// No description provided for @transactionsSendErrorALias.
+  ///
+  /// In en, this message translates to:
+  /// **'The recipient\'s alias does not exist in PI.'**
+  String get transactionsSendErrorALias;
+
   /// No description provided for @transactionsSendErrorBtn.
   ///
   /// In en, this message translates to:
@@ -1776,6 +1782,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You have scheduled {montant} FCFA for {payee}'**
   String transactionFormScheduleSuccessMessage(String montant, String payee);
+
+  /// No description provided for @transactionFormEditScheduleSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The scheduled {montant} FCFA for {payee} has been successfully edited'**
+  String transactionFormEditScheduleSuccessMessage(String montant, String payee);
 
   /// No description provided for @transactionFormScheduleSuccessBtn.
   ///

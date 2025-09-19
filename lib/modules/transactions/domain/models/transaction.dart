@@ -777,6 +777,26 @@ class Transaction {
       codeMembreParticipantPayer: json['codeMembreParticipantPayer'] as String?,
     );
   }
+
+  static Transaction fromJsonSupcription(Map<dynamic, dynamic> json) {
+    return Transaction(
+      // Champs directs
+      compte: json['id'].toString(),
+      montant: json['amount'] != null ? double.parse(json['amount'].toString()) : 0.0,
+      clientNom: json['clientName'] as String? ?? '',
+      clientPays: json['country'] as String? ?? 'SN',
+      endToEndId: json['id'].toString(),
+      acquirerAccountLabel: json['clientName'] as String? ?? '',
+      statut: TransactionStatut.initie,
+      dateDebut: DateTime.parse(json['nextExecutionTime'] as String),
+      frequence:  json['frequence'] != null
+          ? Frequence.values.firstWhere(
+              (element) => element.code == json['frequence'] as String)
+          : null,
+      alias: json['aliasDestinataire'] as String?,
+      clientAlias: json['aliasDestinataire'] as String?,
+    );
+  }
 }
 
 

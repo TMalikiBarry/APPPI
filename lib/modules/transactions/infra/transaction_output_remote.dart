@@ -261,75 +261,91 @@ class TransactionOutputRemote {
     TransactionSendCommandSchedule command,
   ) async {
     // Schedule transfer
-    var url = '/movement/schedule';
 
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    var aliasFrom = ConnectedUser.current?.alias;
-    if (aliasFrom != null){
-      aliasFrom = ConnectedUser.current?.alias;
+    final ApiResponse response;
+    if (command.id != null && command.action == "edit_schedule") {
+      var datas = command.toJson();
+      if (command.frequence?.value == null) {
+        datas.addAll({
+          "planificationType": "SIMPLE",
+          "planificationStatus": "CREATED",
+        });
+      } else {
+        datas.addAll({
+          "planificationType": "RECURRENT",
+        });
+      }
+      response = await Api.put("/movement/schedule/${command.id}", data: datas);
+      return Transaction.fromJsonSupcription(response.data['response']).copyWith(
+        statut: TransactionStatut.irrevocable
+      );
     } else {
-      aliasFrom = pref.getString("phone_number");
-    }
-    var userLogin = pref.getString('phoneNumber');
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      var aliasFrom = ConnectedUser.current?.alias;
+      if (aliasFrom != null) {
+        aliasFrom = ConnectedUser.current?.alias;
+      } else {
+        aliasFrom = pref.getString("phone_number");
+      }
+      var userLogin = pref.getString('phoneNumber');
 
-    var datas = command.toJson();
-    logger.i("data schedule -1 : ${confirmCommand.toJson()}");
-    logger.i("data schedule 0 : ${command.toJson()}");
-    logger.i("data schedule 1 : $datas");
+      var datas = command.toJson();
 
-    datas['movement'] = {
+      datas['movement'] = {
         'aliasFrom': aliasFrom,
         'amount': confirmCommand.amount,
         'clientId': aliasFrom,
         'userLogin': userLogin,
-        'alias' : confirmCommand.transactionVerificationResultAlias?.alias
+        'alias': confirmCommand.transactionVerificationResultAlias?.alias
       };
-    datas['movement'].addAll(confirmCommand.toJson());
+      datas['movement'].addAll(confirmCommand.toJson());
 
-    if (
-    confirmCommand.confirmationMethode == TransactionSendMethod.alias ||
-        confirmCommand.confirmationMethode == TransactionSendMethod.qrcode
-    ) {
-      if (confirmCommand.confirmationMethode == TransactionSendMethod.qrcode) {
-        datas['movement']['channel'] = confirmCommand.channel;
+      if (
+      confirmCommand.confirmationMethode == TransactionSendMethod.alias ||
+          confirmCommand.confirmationMethode == TransactionSendMethod.qrcode
+      ) {
+        if (confirmCommand.confirmationMethode ==
+            TransactionSendMethod.qrcode) {
+          datas['movement']['channel'] = confirmCommand.channel;
+        }
+        datas['movement']['alias'] =
+            confirmCommand.transactionVerificationResultAlias!.alias;
+      } else if (confirmCommand.confirmationMethode ==
+          TransactionSendMethod.aliasRtb) {
+        datas['movement'].remove("aliasFrom");
+        datas['movement'].remove("aliasTo");
+        datas['movement'].addAll({
+          'requestSenderAlias': aliasFrom,
+          'requestReceiverAlias': confirmCommand
+              .transactionVerificationResultAlias!.toJson(),
+          'reason': confirmCommand.motif ?? 'PI_REQUEST_TO_PAY'
+        });
       }
-      datas['movement']['alias'] = confirmCommand.transactionVerificationResultAlias!.alias;
-    }  else if (confirmCommand.confirmationMethode == TransactionSendMethod.aliasRtb) {
-      datas['movement'].remove("aliasFrom");
-      datas['movement'].remove("aliasTo");
-      datas['movement'].addAll({
-        'requestSenderAlias': aliasFrom,
-        'requestReceiverAlias': confirmCommand.transactionVerificationResultAlias!.toJson(),
-        'reason': confirmCommand.motif ?? 'PI_REQUEST_TO_PAY'
-      });
-    }
 
-    if (command.frequence?.value == null) {
-      datas.addAll({
-        "planificationType": "SIMPLE",
-        "planificationStatus": "CREATED",
-        "email": "test@yopmail.com",
-      });
-    } else {
-      datas.addAll({
-        "planificationType": "RECURRENT",
-        "frequence": command.frequence!.value,
-        "email": "test@yopmail.com",
-      });
-    }
+      if (command.frequence?.value == null) {
+        datas.addAll({
+          "planificationType": "SIMPLE",
+          "planificationStatus": "CREATED",
+        });
+      } else {
+        datas.addAll({
+          "planificationType": "RECURRENT",
+          "planificationStatus": "CREATED",
+        });
+      }
 
-    logger.i("data schedule 2 : $datas");
-    final ApiResponse response = await Api.post(url, data: datas);
-    //final ApiResponse response = await Api.post(url, data: datas);
-    //
-    return Transaction.fromJsonTransfer({
-      "aliasClientPayeur" : confirmCommand.transactionVerificationResultAlias!.alias,
-      "montant" : "${confirmCommand.amount?.value!.toInt()}",
-      "nomClientPayeur" : confirmCommand.transactionVerificationResultAlias!.clientName,
-      "paysClientPayeur" : confirmCommand.transactionVerificationResultAlias!.clientResidenceCountry,
-      "endToEndId" : confirmCommand.transactionVerificationResultAlias!.endToEndId,
-      "dateDebut" : command.dateDebut
-    }, isRtpOrSchedule: true);
+      //logger.i("data schedule 2 : $datas");
+      response = await Api.post("/movement/schedule", data: datas);
+
+      return Transaction.fromJsonTransfer({
+        "aliasClientPayeur" : confirmCommand.transactionVerificationResultAlias!.alias,
+        "montant" : "${confirmCommand.amount?.value!.toInt()}",
+        "nomClientPayeur" : confirmCommand.transactionVerificationResultAlias!.clientName,
+        "paysClientPayeur" : confirmCommand.transactionVerificationResultAlias!.clientResidenceCountry,
+        "endToEndId" : confirmCommand.transactionVerificationResultAlias!.endToEndId,
+        "dateDebut" : command.dateDebut
+      }, isRtpOrSchedule: true);
+    }
   }
 
   /// Génère les headers communs pour les requêtes SSE

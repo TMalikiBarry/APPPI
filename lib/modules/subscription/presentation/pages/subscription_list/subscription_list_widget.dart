@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -65,10 +66,14 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
             // Liste par type: sans frequence et avec fréquence
             else {
               List<Subscription> withFrequence =
-                  transactions.where((t) => t.frequence != null).toList();
+                  transactions.where((t) => (t.frequence != null && t.montant != 0)
+                ).toList()
+              ..sort((a, b) => b.dateDebut!.compareTo(a.dateDebut!));
               // TODO sort prochain nextPaymentDate plus recent
               List<Subscription> withoutFrequence =
-                  transactions.where((t) => t.frequence == null).toList();
+                  transactions.where((t) => (t.frequence == null && t.montant != 0)
+                  ).toList()
+                    ..sort((a, b) => b.dateDebut!.compareTo(a.dateDebut!));
 
               return SingleChildScrollView(
                 child: Column(
@@ -147,6 +152,7 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: ListView.builder(
               padding: const EdgeInsets.all(0),
+              //physics: const NeverScrollableScrollPhysics(),
               itemCount: liste.length,
               shrinkWrap: true,
               itemBuilder: (context, index) => SubscriptionListItemWidget(

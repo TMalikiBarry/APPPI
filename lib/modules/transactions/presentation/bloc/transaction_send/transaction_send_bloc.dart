@@ -251,6 +251,23 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
     ));*/
     emit(TransactionSendLoadingState(event.command));
 
+    /*
+    logger.i("TransactionSendLoadingState :");
+    logger.i(TransactionConfirmCommand(
+        endToendId: transaction.endToEndId,
+        confirmationDate: DateTime.now().toIso8601String(),
+        confirmationMethode: event.method,
+        latitude: event.command.latitude,
+        longitude: event.command.longitude,
+        amount: event.command.amount,
+        transactionVerificationResultAlias: event.transaction.transactionVerificationResultAlias,
+        transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
+        transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
+        channel: event.command.canal
+    ).toJson());
+    logger.i(event.command.schedule?.toJson());
+
+     */
     // Initier
     if (event.command.schedule != null) {
       // Just schedule
@@ -272,11 +289,6 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
           event.command.schedule!,
         );
 
-        logger.i("transaction ::");
-        logger.i(transaction.statut);
-        logger.i(transaction.isRTP());
-        logger.i(transaction.isSplit());
-        logger.i(transaction.dateDebut);
         emit(TransactionSendFormSuccessState(
           event.command,
           transaction,

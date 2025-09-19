@@ -352,6 +352,7 @@
   },
   "transactionsSendErrorTitle": "😔 Oooops",
   "transactionsSendErrorDescription": "La transaction a échouée.",
+  "transactionsSendErrorALias": "L’alias du destinataire n’existe pas dans PI",
   "transactionsSendErrorBtn": "Continuer",
   "@_TRANSACTIONS_FORM_FIELDS": {},
   "transactionFormAmountHint": "Montant",
@@ -437,6 +438,17 @@
       "payee": {
         "type": "String"
       }
+    }
+  },
+  "transactionFormEditScheduleSuccessMessage": "La programmation de {montant} FCFA pour {payee} est modifié avec succès",
+  "@transactionFormEditScheduleSuccessMessage": {
+    "placeholders": {
+        "montant": {
+          "type": "String"
+        },
+        "payee": {
+          "type": "String"
+        }
     }
   },
   "transactionFormScheduleSuccessBtn": "Voir l'abonnement",

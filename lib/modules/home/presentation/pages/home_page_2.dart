@@ -33,7 +33,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const disabledTabs = <int>{1, 2};  // indices des onglets à griser
+  static const disabledTabs = <int>{ 2 };  // indices des onglets à griser
   int selectedIndex = 2;
 
   @override

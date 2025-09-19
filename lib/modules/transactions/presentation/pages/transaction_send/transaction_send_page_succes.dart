@@ -20,11 +20,6 @@ class TransactionSendPageSuccess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger.i("transaction :");
-    logger.i(transaction.statut);
-    logger.i(transaction.isRTP());
-    logger.i(transaction.isSplit());
-    logger.i(transaction.dateDebut);
     //
     AppLocalizations localisation = AppLocalizations.of(context)!;
     //
@@ -118,6 +113,16 @@ class TransactionSendPageSuccess extends StatelessWidget {
       return localisation.transactionsRtpSuccessBtnTitle(transaction.clientNom);
     }
     // Scheduled
+    else if (transaction.dateDebut != null && transaction.statut == TransactionStatut.irrevocable) {
+      return localisation.transactionFormEditScheduleSuccessMessage(
+        NumberFormat.currency(
+          locale: Localizations.localeOf(context).toString(),
+          symbol: '',
+          decimalDigits: 0,
+        ).format(transaction.montant),
+        transaction.clientNom,
+      );
+    }
     else if (transaction.dateDebut != null) {
       return localisation.transactionFormScheduleSuccessMessage(
         NumberFormat.currency(

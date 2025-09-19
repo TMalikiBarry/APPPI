@@ -128,13 +128,15 @@ class TransactionDetailsPageActionsReturn extends StatelessWidget {
     TransactionDetailsBloc transactionDetailsBloc,
     Transaction tx,
   ) {
-    return ElevatedButton(
-      onPressed: () {
-        context
-            .read<IdentificationBloc>() //
-            .add(const AskIdentificationBeforeActionEvent());
-      },
-      child: Text(traductions.btnTextYes),
+    return Expanded(
+      child: ElevatedButton(
+        onPressed: () {
+          context.read<TransactionDetailsBloc>().add(
+            TransactionReturnSendEvent(tx),
+          );
+        },
+        child: Text(traductions.btnTextYes),
+      ),
     );
     /*
     return BlocListener<IdentificationBloc, IdentificationState>(

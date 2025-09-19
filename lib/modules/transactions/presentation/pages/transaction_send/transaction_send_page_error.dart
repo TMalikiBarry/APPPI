@@ -29,7 +29,7 @@ class TransactionSendPageError extends StatelessWidget {
   String? _getTitle(AppLocalizations localisation) {
     // Alias introuvable apres recherche d'alias
     if (error == TransactionSendCommandAliasError.notFound.code) {
-      return "L’alias du destinataire n’existe pas dans PI"; // TODO translate
+      return localisation.transactionsSendErrorALias; // TODO translate
     }
     // Toute autre erreur
     else {

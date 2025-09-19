@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pi_mobile_app/core/theme.dart';
 
 import '../../../../../../core/assets.dart';
 import '../../../../../l10n/app_localizations.dart';
@@ -16,43 +17,74 @@ class SubscriptionListEmptyWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
-          height: 260,
+          height: 220,
           width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-          decoration: ShapeDecoration(
-            color: Theme.of(context).secondaryHeaderColor,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(15.0),
-                topLeft: Radius.circular(15.0),
-              ),
-            ),
+          padding: const EdgeInsets.only(left: 20),
+          decoration: BoxDecoration(
+            color: Themer.backgroundPiProgramme,
+            borderRadius: BorderRadius.circular(15.0),
           ),
-          child: Column(
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Image Illustration
               Expanded(
-                child: const Align(
-                  alignment: Alignment.centerRight,
-                  child: Image(
-                    image: AssetImage(Images.subscriptionCalendar,package: 'common_dependencies'),
-                    width: 142,
-                    height: 142,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    // Titre
+                    Text(
+                      traductions.subscriptionEmptyTitle,
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        fontSize: 18, color: Themer.primaryColor,
+                      ),
+                    ),
+
+                    // Sous titre
+                    Text(
+                      traductions.subscriptionEmptySubTitle,
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+
+                    SizedBox(
+                      width: 120,
+                      height: 40,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          padding: const WidgetStatePropertyAll(EdgeInsets.zero),
+                          shape: WidgetStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                        ),
+                        onPressed: () => showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const SubscriptionMenuWidget();
+                          },
+                          isScrollControlled: true,
+                        ),
+                        child: Text(traductions.subscriptionEmptyBtnCreate),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              // Titre
-              SizedBox(
-                child: Text(
-                  traductions.subscriptionEmptyTitle,
-                  style: Theme.of(context).textTheme.titleSmall,
+              // Image Illustration
+              const Align(
+                alignment: Alignment.centerRight,
+                child: Image(
+                  image: AssetImage(Images.subscriptionCalendar,package: 'common_dependencies'),
+                  width: 132,
+                  height: 132,
                 ),
               ),
             ],
           ),
         ),
         // Card Bouton Nouveau
+        /*
         Container(
           height: 92,
           width: MediaQuery.of(context).size.width,
@@ -101,6 +133,7 @@ class SubscriptionListEmptyWidget extends StatelessWidget {
             ],
           ),
         ),
+        */
       ],
     );
   }

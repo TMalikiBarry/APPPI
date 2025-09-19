@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/modules/security/domain/models/connected_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/api.dart';
 import '../domain/models/subscription.dart';
@@ -16,12 +18,43 @@ class SubscriptionOutputRemote {
 
   /// Lister les souscriptions
   Future<List<Subscription>> list({required String compte}) async {
-    final ApiResponse response = await Api.get(
-      '/souscriptions/$compte',
-    );
-    return (response.data['data'] as List<dynamic>)
-        .map((e) => Subscription.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final pref = await SharedPreferences.getInstance();
+    final phone_number = pref.getString('phone_number') ?? '';
+    var alias = ConnectedUser.current?.alias;
+    if (alias != null){
+      alias = ConnectedUser.current?.alias;
+    } else {
+      alias = phone_number;
+    }
+    final now    = DateTime.now();
+    final start  = now.subtract(const Duration(days: 2000));
+    final finish = now.add(const Duration(days: 1));
+
+    final qs = {
+      'startDate': start.toIso8601String().split('T').first,
+      'endDate'  : finish.toIso8601String().split('T').first,
+    };
+    logger.i('/movement/schedule/history');
+    logger.i(qs);
+
+    try {
+      final ApiResponse response = await Api.get(
+        '/movement/schedule/history',
+        queryParameters: qs,
+      );
+      return (response.data['response'] as List<dynamic>)
+          .map((e) => Subscription.fromJson(e as Map<String, dynamic>))
+          .toList();
+    }
+    on ApiException catch (e) {
+      logger.i("${e.statusCode} ${e.message} ${e.name} ${e.error} ${e.problem}");
+      throw ApiException(error: e.error, statusCode: e.statusCode);
+    }
+    catch (e) {
+      logger.i(e.toString());
+      // Handle empty response appropriately
+      throw ApiException(error: ApiError.internalServerError, statusCode: 500);
+    }
   }
 
   /// Modifier une souscription
@@ -31,7 +64,7 @@ class SubscriptionOutputRemote {
   ) async {
     // Schedule transfer
     final ApiResponse response = await Api.put(
-      '/souscriptions/$endToEndId',
+      '/movement/schedule/$endToEndId',
       data: command.toJson(),
     );
     //
@@ -42,7 +75,7 @@ class SubscriptionOutputRemote {
   Future<Subscription> disable(String endToEndId) async {
     // Schedule transfer
     final ApiResponse response = await Api.put(
-      '/souscriptions/$endToEndId/desactivations',
+      '/movement/schedule/$endToEndId/desactivations',
     );
     //
     return Subscription.fromJson(response.data);
@@ -54,7 +87,7 @@ class SubscriptionOutputRemote {
   ) async {
     // Schedule transfer
     final ApiResponse response = await Api.put(
-      '/souscriptions/$endToEndId/reactivations',
+      '/movement/schedule/$endToEndId/reactivations',
     );
     //
     return Subscription.fromJson(response.data);
@@ -62,6 +95,11 @@ class SubscriptionOutputRemote {
 
   /// Supprimer une souscription
   Future<void> delete(String endToEndId) async {
-    await Api.delete('/souscriptions/$endToEndId');
+    try {
+      await Api.delete('/movement/schedule/$endToEndId');
+    } catch (e) {
+      //logger.i("delete souscription");
+      //logger.i(e.toString());
+    }
   }
 }

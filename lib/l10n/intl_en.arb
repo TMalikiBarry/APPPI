@@ -591,6 +591,7 @@
   "transactionRtpRejectRsnMontant": "Incorrect amount",
   "transactionRtpRejectRsnRemittance": "Incorrect invoice",
   "transactionRtpRejectMessage": "The payment request has been successfully rejected",
+  "transactionRtpAcceptedMessage": "La demande de paiement est acceptée avec succès",
   "transactionDetailsMessage": "Message",
   "transactionDetailsFrequenceMois": "months",
   "transactionDetailsFrequenceSemaine": "weeks",

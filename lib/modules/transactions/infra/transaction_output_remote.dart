@@ -455,6 +455,7 @@ class TransactionOutputRemote {
           command.confirmationMethode == TransactionSendMethod.rtpAcceptPay
         ) {
           transaction.statut = TransactionStatut.irrevocable; // or whatever default status you want
+          transaction = transaction.copyWith(statut: TransactionStatut.irrevocable, canal: "631");
         } else if (command.confirmationMethode == TransactionSendMethod.aliasRtb){
           transaction.statut = TransactionStatut.initie;
         } else {
@@ -660,7 +661,7 @@ class TransactionOutputRemote {
           "guID": transaction.guID,
           "reason": reason.code,
           "clientID": transaction.clientAlias,
-          "clientName": transaction.additionalInformations?.clientName,
+          "clientName": "${ConnectedUser.current?.firstName} ${ConnectedUser.current?.lastName}",
           "amount": transaction.montant,
           "impactDate": "${transaction.dateOperation}",
           "clientCountry": transaction.additionalInformations?.payePays,
@@ -736,7 +737,7 @@ class TransactionOutputRemote {
             "amount": transaction.montant.toInt(),
             "reason": TransactionRejectReason.autre.code,
             "clientID": transaction.clientId,
-            "decision": "REJECTED",
+            "decision": "REFUSED",
             "codeMembreParticipantPayeur": transaction.codeMembreParticipantPayeur
           },
         );

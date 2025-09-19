@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/di.dart';
 import '../../../../core/notifications.dart';
@@ -30,6 +31,7 @@ class NotificationBtnOpenWidget extends StatefulWidget {
 
 class _NotificationBtnOpenWidgetState extends State<NotificationBtnOpenWidget> {
   late NotificationBloc notificationBloc;
+  final baseWidth = 375;
 
   @override
   void initState() {
@@ -48,6 +50,10 @@ class _NotificationBtnOpenWidgetState extends State<NotificationBtnOpenWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+    fem = MediaQuery.of(context).size.width / baseWidth;
+    ffem = fem * 0.97;
     return BlocProvider<NotificationBloc>.value(
       value: notificationBloc,
       child: BlocConsumer<NotificationBloc, NotificationState>(
@@ -75,10 +81,11 @@ class _NotificationBtnOpenWidgetState extends State<NotificationBtnOpenWidget> {
               //     BlendMode.srcIn,
               //   ),
               // ),
-              icon: ImageIcon(
-                const AssetImage(Images.iconNotificationHeaderHP, package: 'common_dependencies'),
-                color: Theme.of(context).colorScheme.onSurface,
-                size: 24,
+              icon: SvgPicture.asset(
+                "assets/images/icone_notification.svg",
+                package: 'common_dependencies',
+                height: 22 * fem,
+                width: 22 * fem,
               ),
               onPressed: () {
                 // Aller sur la page notifications

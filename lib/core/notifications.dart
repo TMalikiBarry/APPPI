@@ -207,6 +207,13 @@ class AppNotifications {
 
     try {
       _sendEvent(message);
+      // Marquer qu'une notification est arrivée
+    /*  NotificationArrival.lastMessage = message;
+      NotificationArrival.justArrived.value = true;*/
+
+      // Sauvegarder dans SharedPreferences
+      final pref = await SharedPreferences.getInstance();
+      await pref.setBool('hasUnreadNotification', true);
     } catch (e) {
       logger.e("Erreur lors de l'initialisation Firebase: $e");
     }
@@ -319,7 +326,7 @@ class AppNotifications {
     );
   }
 
-  static void _handleForegroundMessage(RemoteMessage message) {
+  static Future<void> _handleForegroundMessage(RemoteMessage message) async {
     logger.i("Message reçu au premier plan");
     RemoteNotification? notification = message.notification;
 
@@ -330,6 +337,13 @@ class AppNotifications {
 
     // Diffuse l'événement
     _sendEvent(message);
+
+/*    NotificationArrival.lastMessage = message;
+    NotificationArrival.justArrived.value = true;*/
+
+    // Sauvegarder dans SharedPreferences
+    final pref = await SharedPreferences.getInstance();
+    await pref.setBool('hasUnreadNotification', true);
   }
 
   /// Affiche une notification locale

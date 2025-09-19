@@ -111,6 +111,8 @@ class TransactionSendPageSuccess extends StatelessWidget {
         return localisation.transactionSplitRepartitionSuccessMessage;
       }
       return localisation.transactionsRtpSuccessBtnTitle(transaction.clientNom);
+    } else if (transaction.isRTP() && transaction.statut == TransactionStatut.irrevocable) {
+      return localisation.transactionRtpAcceptedMessage;
     }
     // Scheduled
     else if (transaction.dateDebut != null && transaction.statut == TransactionStatut.irrevocable) {

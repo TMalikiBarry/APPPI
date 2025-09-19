@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,6 +27,22 @@ class TransactionFormPageScheduleBtn extends StatelessWidget {
     ///
     AppLocalizations traductions = AppLocalizations.of(context)!;
     //
+    return ElevatedButton(
+      onPressed: command.schedule != null && command.schedule!.isValid()
+        ? () async {
+          // Authorize
+          context.read<TransactionSendBloc>().add(
+            TransactionSendConfirmEvent(
+              command,
+              transaction,
+              command.method,
+            ),
+          );
+        }
+        : null,
+      child: Text(traductions.transactionFormVerificationBtnConfirm),
+    );
+    /*
     return BlocListener<IdentificationBloc, IdentificationState>(
       listener: (context, state) async {
         // Pour afficher page code pin form
@@ -38,7 +55,7 @@ class TransactionFormPageScheduleBtn extends StatelessWidget {
                 TransactionSendConfirmEvent(
                   command,
                   transaction,
-                  state.method.toString(),
+                  command.method,
                 ),
               );
         }
@@ -60,5 +77,6 @@ class TransactionFormPageScheduleBtn extends StatelessWidget {
         ),
       ),
     );
+    */
   }
 }

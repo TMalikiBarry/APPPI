@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:common_dependencies/utils/colors.dart';
@@ -58,7 +59,6 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
       });
     }
     ///print("nomClient : $nomClient");
-    //print("transaction.sens : ${widget.transaction.sens}");
   }
 
   @override

@@ -33,7 +33,7 @@ class Subscription extends Transaction {
   DateTime? nextPaymentDate;
 
   static Subscription fromJson(Map<dynamic, dynamic> json) {
-    Transaction transaction = Transaction.fromJson(json);
+    Transaction transaction = Transaction.fromJsonSupcription(json);
     Subscription subs = Subscription(
       compte: transaction.compte,
       alias: transaction.alias,

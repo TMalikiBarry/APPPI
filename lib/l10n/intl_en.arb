@@ -345,6 +345,7 @@
   "transactionsSendSuccessBtnReessayer": "Retry",
   "transactionsSendErrorTitle": "😔 Oooops",
   "transactionsSendErrorDescription": "Transaction failed",
+  "transactionsSendErrorALias": "The recipient's alias does not exist in PI.",
   "transactionsSendErrorBtn": "Continue",
   "@_TRANSACTIONS_FORM_FIELDS": {},
   "transactionFormAmountHint": "Amount",
@@ -432,6 +433,17 @@
       }
     }
   },
+  "transactionFormEditScheduleSuccessMessage": "The scheduled {montant} FCFA for {payee} has been successfully edited",
+    "@transactionFormEditScheduleSuccessMessage": {
+      "placeholders": {
+          "montant": {
+            "type": "String"
+          },
+          "payee": {
+            "type": "String"
+          }
+      }
+    },
   "transactionFormScheduleSuccessBtn": "View subscription",
   "transactionsSendSuccessBtnTitle": "You sent money to {payee}",
   "@transactionsSendSuccessBtnTitle": {
@@ -579,6 +591,7 @@
   "transactionRtpRejectRsnMontant": "Incorrect amount",
   "transactionRtpRejectRsnRemittance": "Incorrect invoice",
   "transactionRtpRejectMessage": "The payment request has been successfully rejected",
+  "transactionRtpAcceptedMessage": "La demande de paiement est acceptée avec succès",
   "transactionDetailsMessage": "Message",
   "transactionDetailsFrequenceMois": "months",
   "transactionDetailsFrequenceSemaine": "weeks",

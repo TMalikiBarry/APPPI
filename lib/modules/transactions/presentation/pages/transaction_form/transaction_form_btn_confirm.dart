@@ -29,15 +29,88 @@ class TransactionFormBtnConfirm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return SizedBox(
+      height: 56,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // schedule
+          if (command.action !=
+              TransactionSendCommand.actionSendSchedule) ...[
+            FloatingActionButton(
+              onPressed: () {
+                _scheduleTransaction(context);
+              },
+              elevation: 0,
+              heroTag: "schedule",
+              child: const Icon(Icons.calendar_month_outlined, size: 24),
+            ),
+          ],
+
+
+          // Séparateur
+          const SizedBox(width: 16),
+
+          // Annuler
+          Expanded(
+            child: FilledButton.tonal(
+              onPressed: () {
+                Navigator.pop(context);
+                // reject
+                context
+                    .read<TransactionSendBloc>()
+                    .add(TransactionSendRejectEvent(command));
+              },
+              child: Text(traductions.transactionFormVerificationBtnReject),
+            ),
+          ),
+
+          // Séparateur
+          const SizedBox(width: 16),
+
+          // Confirm
+          if (command.action !=
+              TransactionSendCommand.actionSendSchedule) ...[
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () async {
+                  context
+                      .read<TransactionSendBloc>() //
+                      .add(TransactionSendConfirmEvent(
+                    command,
+                    transaction,
+                    command.method,
+                  ));
+                },
+                child:
+                Text(traductions.transactionFormVerificationBtnConfirm),
+              ),
+            ),
+          ],
+
+          // Programmer
+          if (command.action ==
+              TransactionSendCommand.actionSendSchedule) ...[
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () async {
+                  _scheduleTransaction(context);
+                },
+                child: Text(traductions.transactionFormScheduleTitle),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+
+    /*
     return BlocListener<IdentificationBloc, IdentificationState>(
       listenWhen: (previous, current) =>
           current is IdentificationRequiredState ||
           current is IdentificationSuccessState,
       listener: (context, state) async {
-        logger.i("transaction_form_btn_confirm state $state");
-        logger.i("commands : ${command.toJson()}");
-        logger.i("transactions : ${transaction.toJson()}");
-        // Pour afficher page code pin form
         if (state is IdentificationRequiredState) {
           await AppRouter.push(context, AppRouter.identificationCheck);
         }
@@ -61,7 +134,8 @@ class TransactionFormBtnConfirm extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // schedule
-            /*if (command.action !=
+
+            if (command.action !=
                 TransactionSendCommand.actionSendSchedule) ...[
               FloatingActionButton(
                 onPressed: () {
@@ -72,7 +146,7 @@ class TransactionFormBtnConfirm extends StatelessWidget {
                 child: const Icon(Icons.calendar_month_outlined, size: 24),
               ),
             ],
-             */
+
 
             // Séparateur
             const SizedBox(width: 16),
@@ -101,18 +175,9 @@ class TransactionFormBtnConfirm extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () async {
                     // Authorize
-                    /*context
+                    context
                         .read<IdentificationBloc>() //
                         .add(const AskIdentificationBeforeActionEvent());
-
-                     */
-                    context
-                        .read<TransactionSendBloc>() //
-                        .add(TransactionSendConfirmEvent(
-                      command,
-                      transaction,
-                      command.method.toString(),
-                    ));
                   },
                   child:
                       Text(traductions.transactionFormVerificationBtnConfirm),
@@ -136,6 +201,7 @@ class TransactionFormBtnConfirm extends StatelessWidget {
         ),
       ),
     );
+    */
   }
 
   void _scheduleTransaction(BuildContext context) {

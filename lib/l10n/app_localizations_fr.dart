@@ -512,7 +512,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get aliasFormEmpty => 'Obligatoire';
 
   @override
-  String get aliasFormInvalid => 'Doit être une adresse de paiement de 36 caractères ou un numéro de téléphone avec l\'indicatif (+22x)';
+  String get aliasFormInvalid => 'Doit être une adresse de paiement de 36 caractères ou un numéro de téléphone avec l\'indicatif';
 
   @override
   String get aliasFormNotFound => 'L’alias du bénéficiaire n’existe pas dans PI';
@@ -729,6 +729,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get transactionsSendErrorDescription => 'La transaction a échouée.';
 
   @override
+  String get transactionsSendErrorALias => 'L’alias du destinataire n’existe pas dans PI';
+
+  @override
   String get transactionsSendErrorBtn => 'Continuer';
 
   @override
@@ -878,6 +881,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String transactionFormScheduleSuccessMessage(String montant, String payee) {
     return 'Vous avez programmé $montant FCFA pour $payee';
+  }
+
+  @override
+  String transactionFormEditScheduleSuccessMessage(String montant, String payee) {
+    return 'La programmation de $montant FCFA pour $payee est modifié avec succès';
   }
 
   @override

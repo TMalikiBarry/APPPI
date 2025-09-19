@@ -1,5 +1,6 @@
 import '../../../domain/models/transaction.dart';
 import '../../../domain/models/transaction_send/transaction_send_command.dart';
+import '../../../domain/models/transaction_send/transaction_send_method.dart';
 
 class TransactionSendEvent {
   const TransactionSendEvent();
@@ -80,7 +81,7 @@ class TransactionSendConfirmEvent extends TransactionSendEvent {
   );
   final TransactionSendCommand command;
   final Transaction transaction;
-  final String method;
+  final TransactionSendMethod method;
 }
 
 /// Quand une réponse à un transfert est reçue

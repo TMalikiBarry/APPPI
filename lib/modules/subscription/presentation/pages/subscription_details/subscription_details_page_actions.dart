@@ -92,6 +92,8 @@ class SubscriptionDetailsPageActions extends StatelessWidget {
     //
     command.action = TransactionSendCommand.actionSendSchedule;
     command.schedule = TransactionSendCommandSchedule(
+      id: int.tryParse(transaction.endToEndId),
+      action: "edit_schedule",
       dateDebut: transaction.dateDebut,
       dateFin: transaction.dateFin,
       frequence: FrequenceCommand(

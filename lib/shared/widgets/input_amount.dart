@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 import '../../core/theme.dart';
 import 'amount_widget.dart';
@@ -53,6 +54,7 @@ class InputAmountState extends State<InputAmount> {
   final FocusNode _focusNode = FocusNode();
 
   Color? _borderColor;
+  var formatter = NumberFormat('#,##0', 'en_US');
 
   @override
   void initState() {
@@ -187,5 +189,14 @@ class InputAmountState extends State<InputAmount> {
         ]
       ],
     );
+  }
+
+  String formatWithSpaces(double? number) {
+    String formattedNumber = "";
+    if(number != null) {
+      formattedNumber = formatter.format(number);
+    }
+
+    return formattedNumber.replaceAll(',', ' ');
   }
 }

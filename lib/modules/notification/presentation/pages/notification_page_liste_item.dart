@@ -264,7 +264,8 @@ class NotificationPageListeItem extends StatelessWidget {
           notification.details?['status'],
         ) ?? TransactionStatut.initie,
         sens: TransactionSens.debit,
-        clientId: notification.details?['clientId']
+        clientId: notification.details?['clientId'],
+        codeMembreParticipantPayer: notification.details?['codeMembreParticipantPayer'],
       );
       route = "/transaction/receive_now-rtp";
     } else {

@@ -70,29 +70,26 @@ class _TransactionSplitPageState extends State<TransactionSplitPage> {
             ),
 
             // Bouton continuer et créer un groupe
-            if (selectedItems != null && selectedItems!.isNotEmpty) ...[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Continuer
-                  ElevatedButton(
-                    onPressed: () async {
-                      AppRouter.push(
-                        context,
-                        AppRouter.transactionSplitPaymentRepartition,
-                        params: {
-                          "tx": widget.transaction,
-                          "contacts": selectedItems!,
-                        },
-                      );
-                    },
-                    child: Text(traductions.btnTextContinue),
-                  ),
-                ],
-              ),
-            ],
           ],
+        ),
+      ),
+
+
+      bottomNavigationBar: SafeArea(
+        minimum: const EdgeInsets.all(16),
+        child: ElevatedButton(
+          onPressed:  (selectedItems != null && selectedItems!.isNotEmpty)
+            ? () async {
+              AppRouter.push(
+                context,
+                AppRouter.transactionSplitPaymentRepartition,
+                params: {
+                  "tx": widget.transaction,
+                  "contacts": selectedItems!,
+                },
+              );
+            } : null,
+          child: Text(traductions.btnTextContinue),
         ),
       ),
     );

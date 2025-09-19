@@ -111,8 +111,20 @@ class TransactionSendPageSuccess extends StatelessWidget {
         return localisation.transactionSplitRepartitionSuccessMessage;
       }
       return localisation.transactionsRtpSuccessBtnTitle(transaction.clientNom);
+    } else if (transaction.isRTP() && transaction.statut == TransactionStatut.irrevocable) {
+      return localisation.transactionRtpAcceptedMessage;
     }
     // Scheduled
+    else if (transaction.dateDebut != null && transaction.statut == TransactionStatut.irrevocable) {
+      return localisation.transactionFormEditScheduleSuccessMessage(
+        NumberFormat.currency(
+          locale: Localizations.localeOf(context).toString(),
+          symbol: '',
+          decimalDigits: 0,
+        ).format(transaction.montant),
+        transaction.clientNom,
+      );
+    }
     else if (transaction.dateDebut != null) {
       return localisation.transactionFormScheduleSuccessMessage(
         NumberFormat.currency(

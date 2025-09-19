@@ -9,7 +9,9 @@ enum TransactionSendMethod {
   // QR Code
   qrcode("QRCODE"),
   // autre
-  contact("CONTACT");
+  contact("CONTACT"),
+  
+  rtpAcceptPay("rtpAcceptPay");
 
   // Codification du paramètre
   final String code;

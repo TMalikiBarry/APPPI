@@ -7,6 +7,7 @@ import '../../../../security/presentation/bloc/identification/identification_blo
 import '../../../../security/presentation/bloc/identification/identification_event.dart';
 import '../../../../security/presentation/bloc/identification/identification_state.dart';
 import '../../../domain/models/transaction.dart';
+import '../../../domain/models/transaction_send/transaction_send_method.dart';
 import '../../bloc/transaction_rtp/transaction_rtp_bloc.dart';
 import '../../bloc/transaction_rtp/transaction_rtp_event.dart';
 import 'transaction_rtp_page_actions_reject.dart';
@@ -67,7 +68,7 @@ class TransactionRtpPageActions extends StatelessWidget {
           Expanded(
             child: ElevatedButton(
               onPressed: () {
-                bloc.add(TransactionRtpAcceptPayEvent(tx, "RtpAcceptPay"));
+                bloc.add(TransactionRtpAcceptPayEvent(tx, TransactionSendMethod.rtpAcceptPay));
               },
               child: Text(traductions.btnTextPay),
             ),
@@ -80,7 +81,7 @@ class TransactionRtpPageActions extends StatelessWidget {
                 }
                 // Pour envoyer la transaction après confirmation
                 if (state is IdentificationSuccessState) {
-                  bloc.add(TransactionRtpAcceptPayEvent(tx, state.method));
+                  bloc.add(TransactionRtpAcceptPayEvent(tx, TransactionSendMethod.rtpAcceptPay));
                 }
               },
               listenWhen: (previous, current) =>

@@ -81,6 +81,7 @@ class Transaction {
     this.transactionVerificationResultOthr,
     this.additionalInformations,
     this.codeMembreParticipantPayeur,
+    this.codeMembreParticipantPayer,
   });
 
   /// Compte du client
@@ -192,6 +193,7 @@ class Transaction {
   final AdditionalInfosMovement? additionalInformations;
 
   final String? codeMembreParticipantPayeur;
+  final String? codeMembreParticipantPayer;
 
   /// Est ce que c'est une demande de paiement
   bool isRTP() {
@@ -384,6 +386,7 @@ class Transaction {
           : null,
       additionalInformations: additionalInformations,
       codeMembreParticipantPayeur: json['codeMembreParticipantPayeur'] as String?,
+      codeMembreParticipantPayer: json['codeMembreParticipantPayer'] as String?,
     );
   }
 
@@ -472,13 +475,13 @@ class Transaction {
   }
   */
 
-  static Transaction fromJsonTransfer(Map<dynamic, dynamic> json, {bool isRtp = false}) {
+  static Transaction fromJsonTransfer(Map<dynamic, dynamic> json, {bool isRtpOrSchedule = false}) {
     // Extraction des détails de réponse si présents
     final responseDetails = json['responseDetails'] as Map<String, dynamic>?;
     final status = responseDetails?['status'] as String?;
     final message = responseDetails?['message'] as String?;
 
-    if (!isRtp) {
+    if (!isRtpOrSchedule) {
       return Transaction(
         // Champs directs
         acquirerPhoneNumber: json['acquirerPhoneNumber'] as String?,
@@ -530,7 +533,7 @@ class Transaction {
         endToEndId: json['endToEndId'] ?? "",
         canal: json['canalCommunication'],
         statut: TransactionStatut.initie,
-        dateDebut: DateTime.now()
+        dateDebut: json['dateDebut'] ?? DateTime.now()
       );
     }
   }
@@ -771,6 +774,27 @@ class Transaction {
       annulationStatut: _getStatut(json['annulationStatut']),
       annulationStatutRaison: json['annulationStatutRaison'] as String?,
       codeMembreParticipantPayeur: json['codeMembreParticipantPayeur'] as String?,
+      codeMembreParticipantPayer: json['codeMembreParticipantPayer'] as String?,
+    );
+  }
+
+  static Transaction fromJsonSupcription(Map<dynamic, dynamic> json) {
+    return Transaction(
+      // Champs directs
+      compte: json['id'].toString(),
+      montant: json['amount'] != null ? double.parse(json['amount'].toString()) : 0.0,
+      clientNom: json['clientName'] as String? ?? '',
+      clientPays: json['country'] as String? ?? 'SN',
+      endToEndId: json['id'].toString(),
+      acquirerAccountLabel: json['clientName'] as String? ?? '',
+      statut: TransactionStatut.initie,
+      dateDebut: DateTime.parse(json['nextExecutionTime'] as String),
+      frequence:  json['frequence'] != null
+          ? Frequence.values.firstWhere(
+              (element) => element.code == json['frequence'] as String)
+          : null,
+      alias: json['aliasDestinataire'] as String?,
+      clientAlias: json['aliasDestinataire'] as String?,
     );
   }
 }
@@ -843,6 +867,7 @@ extension TransactionCopyWith on Transaction {
     TransactionVerificationResultOthr? transactionVerificationResultOthr,
     AdditionalInfosMovement? additionalInformations,
     String? codeMembreParticipantPayeur,
+    String? codeMembreParticipantPayer,
   }) {
     return Transaction(
       compte: compte ?? this.compte,
@@ -916,6 +941,8 @@ extension TransactionCopyWith on Transaction {
       additionalInformations ?? this.additionalInformations,
       codeMembreParticipantPayeur:
       codeMembreParticipantPayeur ?? this.codeMembreParticipantPayeur,
+      codeMembreParticipantPayer :
+        codeMembreParticipantPayer ?? this.codeMembreParticipantPayer,
     );
   }
 }

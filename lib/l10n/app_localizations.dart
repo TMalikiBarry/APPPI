@@ -63,8 +63,7 @@ import 'app_localizations_pt.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -72,8 +71,7 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -85,8 +83,7 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -1766,8 +1763,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Every {periodicite} {frequence}'**
-  String transactionFormScheduleFrequenceSelected(
-      String periodicite, String frequence);
+  String transactionFormScheduleFrequenceSelected(String periodicite, String frequence);
 
   /// No description provided for @transactionFormScheduleDateRange.
   ///
@@ -2037,8 +2033,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Pay in {occurence} {frequence}'**
-  String transactionRtpDetailsDifferePayFrequence(
-      int occurence, String frequence);
+  String transactionRtpDetailsDifferePayFrequence(int occurence, String frequence);
 
   /// 52,000 per month
   ///
@@ -3318,56 +3313,6 @@ abstract class AppLocalizations {
   /// **'Alias copied !'**
   String get alias_copied;
 
-  /// No description provided for @contact_service_client.
-  ///
-  /// In en, this message translates to:
-  /// **'contact_service_client copied !'**
-  String get contact_service_client;
-
-  /// No description provided for @contact_us_whatsapp.
-  ///
-  /// In en, this message translates to:
-  /// **'contact_us_whatsapp copied !'**
-  String get contact_us_whatsapp;
-
-  String get contact_us_phone;
-
-  /// No description provided for @contact_us_phone_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Call customer service'**
-  String get contact_us_phone_title;
-
-  /// No description provided for @contact_us_phone_desc.
-  ///
-  /// In en, this message translates to:
-  /// **'Contact our agents from 7 a.m. to 11 p.m.'**
-  String get contact_us_phone_desc;
-
-
-  /// No description provided for @contact_us_or.
-  ///
-  /// In en, this message translates to:
-  /// **'OR'**
-  String get contact_us_or;
-
-  /// No description provided for @contact_us_whatsapp_desc.
-  ///
-  /// In en, this message translates to:
-  /// **'Call or send messages.'**
-  String get contact_us_whatsapp_desc;
-
-  /// No description provided for @contact_us_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Tell us about your request by opening a ticket and our team will contact you shortly.'**
-  String get contact_us_description;
-
-  /// No description provided for @contact_us_default_message.
-  ///
-  /// In en, this message translates to:
-  /// **'Tell us about your request and our team will contact you shortly.'**
-  String get contact_us_default_message;
   /// No description provided for @bottom_bar_home.
   ///
   /// In en, this message translates to:
@@ -3379,10 +3324,57 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transactions'**
   String get bottom_bar_transaction;
+
+  /// No description provided for @contact_us_whatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'Nous contacter par Whatsapp'**
+  String get contact_us_whatsapp;
+
+  /// No description provided for @contact_us_whatsapp_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Appelez ou envoyez des messages'**
+  String get contact_us_whatsapp_desc;
+
+  /// No description provided for @contact_us_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nous appeler'**
+  String get contact_us_phone;
+
+  /// No description provided for @contact_us_phone_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Appelez le service client'**
+  String get contact_us_phone_title;
+
+  /// No description provided for @contact_us_phone_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Contactez nos agents de 07h à 23h'**
+  String get contact_us_phone_desc;
+
+  /// No description provided for @contact_service_client.
+  ///
+  /// In en, this message translates to:
+  /// **'Contacter le service client'**
+  String get contact_service_client;
+
+  /// No description provided for @contact_us_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.'**
+  String get contact_us_description;
+
+  /// No description provided for @contact_us_default_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.'**
+  String get contact_us_default_message;
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -3391,27 +3383,26 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'fr', 'pt'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'fr', 'pt'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en':
-      return AppLocalizationsEn();
-    case 'fr':
-      return AppLocalizationsFr();
-    case 'pt':
-      return AppLocalizationsPt();
+    case 'en': return AppLocalizationsEn();
+    case 'fr': return AppLocalizationsFr();
+    case 'pt': return AppLocalizationsPt();
   }
 
   throw FlutterError(
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

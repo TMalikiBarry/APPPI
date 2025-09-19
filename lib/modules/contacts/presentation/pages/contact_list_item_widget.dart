@@ -27,6 +27,7 @@ class ContactListItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     //
     String? alias = _getAliasValue(contact);
+    logger.i("alias $alias");
     if (showCheckbox != null && showCheckbox == true) {
       return CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
@@ -98,6 +99,8 @@ class ContactListItemWidget extends StatelessWidget {
       ),
       onTap: onTap
           ? () {
+        logger.i("contact");
+        logger.i(contact);
               if (onSelect != null) onSelect!(contact, alias, null);
             }
           : null,
@@ -107,14 +110,17 @@ class ContactListItemWidget extends StatelessWidget {
   /// Récupère la valeur de l'alias
   String? _getAliasValue(Contact contact) {
     // TODO remove after test IOS
-    // List<SocialMedia> socialMedias = contact.socialMedias;
-    // for (var element in socialMedias) {
-    //   if (element.label == SocialMediaLabel.custom &&
-    //       element.customLabel == _label &&
-    //       element.userName.isNotEmpty) {
-    //     return element.userName;
-    //   }
-    // }
+    List<SocialMedia> socialMedias = contact.socialMedias;
+     for (var element in socialMedias) {
+       if (element.label == SocialMediaLabel.custom &&
+           element.customLabel == AliasPI.label &&
+           element.userName.isNotEmpty) {
+         logger.i("element.userName");
+         logger.i(element.userName);
+
+         return element.userName;
+       }
+     }
     // return null;
 
     try {
@@ -123,6 +129,9 @@ class ContactListItemWidget extends StatelessWidget {
               phone.label == PhoneLabel.custom &&
               phone.customLabel == AliasPI.label)
           .first;
+      logger.i("aliasRecord.number");
+      logger.i(aliasRecord.toString());
+
       return aliasRecord.number;
     } catch (e) {
       // No item found

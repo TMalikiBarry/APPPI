@@ -47,7 +47,7 @@ class AvatarCircleWidget extends StatelessWidget {
 
       if (names.length > 1) {
         // Ajoute la première lettre du dernier mot si le nom a plus d'un mot
-        initials += names.last[0].toUpperCase();
+        initials += names.last.isNotEmpty ? names.last[0].toUpperCase() : "";
       }
     }
 

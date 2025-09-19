@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
+import 'package:pi_mobile_app/modules/security/domain/models/connected_user.dart';
 
 import '../../../../core/api.dart';
 import '../../domain/exceptions/alias_retrieve_exception.dart';
@@ -69,10 +70,11 @@ class AliasBloc extends Bloc<AliasEvent, AliasState> {
     try {
       emit(AliasLoadingState());
       Alias? alias = await aliasInputPort.recuperer(event.compte);
-      emit(alias != null ? AliasExistState(alias) : AliasNotExistState());
+      emit(alias != null && alias.participant != null && alias.participant == "SNC004"
+          ? AliasExistState(alias)
+          : AliasNotExistState());
     } on AliasRetrieveException catch (e) {
       logger.i("Exception : AliasRetrieveException ${e.error}");
-      print("Exception : AliasRetrieveException ${e.error}");
       if (e.error == ApiError.notFound) {
         emit(AliasNotExistState());
       } else {
@@ -107,6 +109,14 @@ class AliasBloc extends Bloc<AliasEvent, AliasState> {
     emit(AliasCreatingState(aliasC));
     try {
       Alias alias = await aliasInputPort.creer(aliasC);
+      logger.i("User initial : alias : ${ConnectedUser.current?.alias}, shid: ${ConnectedUser.current?.shid}");
+
+      ConnectedUser.current = ConnectedUser.current?.copyWith(
+        alias: alias.cle,
+        shid: alias.shid,
+      );
+      logger.i("User modifié : shid: ${ConnectedUser.current?.shid}, alias: ${ConnectedUser.current?.alias}");
+
       emit(AliasExistState(alias));
     } //
     on ApiException catch (e) {

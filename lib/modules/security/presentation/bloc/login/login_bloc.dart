@@ -35,8 +35,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   ConnectedUser? getConnectedUser() {
-    print("ConnectedUser.current");
-    print(ConnectedUser.current);
+    //print("ConnectedUser.current");
+    //print(ConnectedUser.current);
     return state is LoginSuccessState
         ? (state as LoginSuccessState).user!
         : ConnectedUser.current;

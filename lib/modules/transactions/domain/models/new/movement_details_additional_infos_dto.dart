@@ -8,6 +8,7 @@ class AdditionalInfosMovement {
   final String? clientIban;
   final String? issuerName;
   final String? endToEndId;
+  String? externalAlias;
 
   AdditionalInfosMovement({
     this.clientName,
@@ -19,6 +20,7 @@ class AdditionalInfosMovement {
     this.clientIban,
     this.issuerName,
     this.endToEndId,
+    this.externalAlias,
   });
 
   factory AdditionalInfosMovement.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class AdditionalInfosMovement {
       clientIban: json['clientIban'] as String?,
       issuerName: json['issuerName'] as String?,
       endToEndId: json['endToEndId'] as String?,
+      externalAlias: json['externalAlias'] as String?,
     );
   }
 
@@ -46,6 +49,7 @@ class AdditionalInfosMovement {
       'clientIban': clientIban,
       'issuerName': issuerName,
       'endToEndId': endToEndId,
+      'externalAlias': externalAlias,
     };
   }
 }

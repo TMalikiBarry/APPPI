@@ -27,12 +27,21 @@ extension MovementDetailsMapper on MovementDetailsDTO {
       motif: message ?? '',
       canal: serviceTypeCode,
       // on stocke serviceTypeCode dans canal
-      clientNom: issuerAccountLabel ?? '---',
+      clientNom: issuerAccountLabel ?? additionalInformations?.issuerName
+        ?? additionalInformations?.clientName
+        ?? additionalInformations?.otherClient
+        ?? additionalInformations?.externalAlias
+        ?? '---',
       clientPays: countryISOCode ?? '',
       clientPSP: clientPSP,
       clientPSPNom: null,
       clientPhoto: null,
-      clientCompte: issuerAccount ?? clientCompte ?? '---',
+      clientCompte: issuerAccount ?? clientCompte
+          ??  additionalInformations?.issuerName
+          ?? additionalInformations?.clientName
+          ?? additionalInformations?.otherClient
+          ?? additionalInformations?.externalAlias
+          ?? '---',
       // on stocke ici l’issuerAccount
       clientAlias: clientAlias,
       endToEndId: endToEndId ?? "",

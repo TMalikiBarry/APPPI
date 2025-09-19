@@ -39,7 +39,7 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
   @override
   void initState() {
     super.initState();
-    print("tx : ${widget.tx.sens}");
+    // print("tx : ${widget.tx.dateOperation}");
     transactionRtpBloc = TransactionRtpBloc(
       Di.getTransactionInputPort(),
       Di.getPermissionInputPort(),
@@ -181,18 +181,22 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
         child: Column(
           children: [
             // Pays
-            _detail(
-              context,
-              title: traductions.transactionDetailsPays,
-              subtitle: UEMOACountry.get(tx.clientPays)!.name,
-            ),
+            if (UEMOACountry.get(tx.clientPays)?.name != null) ... [
+              _detail(
+                context,
+                title: traductions.transactionDetailsPays,
+                subtitle: UEMOACountry.get(tx.clientPays)?.name ?? tx.clientPays,
+              ),
+            ],
             const SizedBox(height: 10),
             // Alias
-            _detail(
-              context,
-              title: traductions.transactionDetailsAlias,
-              subtitle: tx.clientAlias!,
-            ),
+            if (tx.clientAlias != null) ... [
+              _detail(
+                context,
+                title: traductions.transactionDetailsAlias,
+                subtitle: tx.clientAlias!,
+              ),
+            ],
           ],
         ),
       ),
@@ -231,11 +235,13 @@ class _TransactionRtpPageState extends State<TransactionRtpPage> {
             ],*/
 
             // date demande
-            _detail(
-              context,
-              title: traductions.aliasClaimDetailsDateDemande,
-              subtitle: DateFormat('d MMM, HH:mm').format(tx.dateOperation!),
-            ),
+            if (tx.dateOperation != null) ... [
+              _detail(
+                context,
+                title: traductions.aliasClaimDetailsDateDemande,
+                subtitle: DateFormat('d MMM, HH:mm').format(tx.dateOperation!),
+              ),
+            ],
             const SizedBox(height: 10),
 
             // statut

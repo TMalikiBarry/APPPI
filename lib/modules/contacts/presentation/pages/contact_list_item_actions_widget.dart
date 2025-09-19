@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
@@ -39,8 +40,10 @@ class ContactListItemActionsWidget extends StatelessWidget {
       );
     }
     // On peut plus tard lui proposer de choisir un s'il y'en a plusieurs
-    String phoneNumber = contact.phones[0].normalizedNumber;
-
+    String phoneNumber = contact.phones[0].normalizedNumber.isNotEmpty ?
+    contact.phones[0].normalizedNumber : contact.phones[0].number.replaceAll(' ', '');
+    logger.i("phoneNumber normalizedNumber");
+    logger.i(phoneNumber);
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxHeight: screenHeight * 0.4, // Set max height as 40% of screen height

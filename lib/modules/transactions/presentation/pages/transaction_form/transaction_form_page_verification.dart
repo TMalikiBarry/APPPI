@@ -258,8 +258,8 @@ class TransactionVerificationPage extends StatelessWidget {
                 ),
               ),
             ),
-            bottomNavigationBar: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            bottomNavigationBar: SafeArea(
+              minimum: const EdgeInsets.all(16),
               child: TransactionFormBtnConfirm(
                 command: command,
                 transaction: transaction,

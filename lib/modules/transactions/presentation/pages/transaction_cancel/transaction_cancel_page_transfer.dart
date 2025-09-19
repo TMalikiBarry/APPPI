@@ -240,12 +240,14 @@ class TransactionCancelPageTransfer extends StatelessWidget {
         child: Column(
           children: [
             // Recu de
-            _detail(
-              context,
-              title: traductions.transactionDetailsDateLabel,
-              subtitle: DateFormat('d MMM, HH:mm').format(tx.dateOperation!),
-            ),
-            const SizedBox(height: 10),
+            if (tx.dateOperation != null) ... [
+              _detail(
+                context,
+                title: traductions.transactionDetailsDateLabel,
+                subtitle: DateFormat('d MMM, HH:mm').format(tx.dateOperation!),
+              ),
+              const SizedBox(height: 10),
+            ],
 
             // Recu de
             _detail(
@@ -256,11 +258,13 @@ class TransactionCancelPageTransfer extends StatelessWidget {
             const SizedBox(height: 10),
 
             // Pays
-            _detail(
-              context,
-              title: traductions.transactionDetailsPays,
-              subtitle: UEMOACountry.get(tx.clientPays)?.name ?? "",
-            ),
+            if (UEMOACountry.get(tx.clientPays)?.name != null) ... [
+              _detail(
+                context,
+                title: traductions.transactionDetailsPays,
+                subtitle: UEMOACountry.get(tx.clientPays)?.name ?? "",
+              ),
+            ],
             const SizedBox(height: 10),
           ],
         ),
@@ -283,11 +287,13 @@ class TransactionCancelPageTransfer extends StatelessWidget {
         child: Column(
           children: [
             // date demande
-            _detail(
-              context,
-              title: traductions.aliasClaimDetailsDateDemande,
-              subtitle: DateFormat('d MMM, HH:mm').format(tx.annulationDate!),
-            ),
+            if (tx.annulationDate != null) ... [
+              _detail(
+                context,
+                title: traductions.aliasClaimDetailsDateDemande,
+                subtitle: DateFormat('d MMM, HH:mm').format(tx.annulationDate!),
+              ),
+            ],
 
             const SizedBox(height: 10),
 
@@ -295,10 +301,10 @@ class TransactionCancelPageTransfer extends StatelessWidget {
             _detail(
               context,
               title: traductions.transactionDetailsCancelReasonLabel,
-              subtitle: TransactionCancelReasonText.label(
+              subtitle: tx.annulationRaison != null ? TransactionCancelReasonText.label(
                 tx.annulationRaison!,
                 traductions,
-              ),
+              ) : tx.motif!,
             ),
             const SizedBox(height: 10),
 

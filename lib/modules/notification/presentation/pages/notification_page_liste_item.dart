@@ -233,15 +233,18 @@ class NotificationPageListeItem extends StatelessWidget {
         clientPays: notification.details?["clientCountry"] ?? "Pays inconnu",
         endToEndId: notification.details?["guID"] ?? "",
         guID: notification.idObject,
-        dateOperation: DateTime.parse(notification.details!['impactDate']).toLocal(),
-        annulationDate: DateFormat("dd/MM/yyyy HH:mm:ss").parse(notification.details?['date']),
+        annulationDate:  _parseImpactDate(notification.details?['impactDate']),
+        dateOperation: _parseImpactDate(notification.details!['impactDate']),
         annulationRaison: TransactionCancelReasonX.fromCode(
           notification.details?['raison'],
         ),
+        codeMembreParticipantPayeur: notification.details?['codeMembreParticipantPayeur'],
+        motif: notification.details?['raison'],
         //annulationStatut: TransactionStatut.initie
         annulationStatut: TransactionStatutX.fromCode(
           notification.details?['status'],
         ) ?? TransactionStatut.initie,
+        clientId: notification.details?['clientId']
       );
       //logger.i("transaction : ${{"tx": transaction}}");
     } else if (notification.type == NotificationType.rtpInitiee ||
@@ -254,13 +257,15 @@ class NotificationPageListeItem extends StatelessWidget {
         clientPays: notification.details?["country"] ?? "Pays inconnu",
         endToEndId: notification.details?["endToEndId"] ?? "",
         guID: notification.idObject,
-        dateOperation: DateFormat("dd/MM/yyyy HH:mm:ss").parse(notification.details?['date']),
+        dateOperation: _parseImpactDate(notification.details?['date']),
         acquirerAccountLabel: notification.details?["nomClient"] ?? "",
         motif: notification.details?["note"],
         statut: TransactionStatutX.fromCode(
           notification.details?['status'],
         ) ?? TransactionStatut.initie,
-        sens: TransactionSens.debit
+        sens: TransactionSens.debit,
+        clientId: notification.details?['clientId'],
+        codeMembreParticipantPayer: notification.details?['codeMembreParticipantPayer'],
       );
       route = "/transaction/receive_now-rtp";
     } else {
@@ -291,12 +296,29 @@ double? extractAmountFromBody(String? body) {
   return null;
 }
 
+DateTime? _parseImpactDate(String? raw) {
+  if (raw == null) return null;
+
+  try {
+    // Tronquer les fractions de secondes à max 6 digits
+    final regex = RegExp(r'(\.\d{6})\d+Z$');
+    final fixed = raw.replaceAllMapped(regex, (m) => '${m[1]}Z');
+    return DateTime.parse(fixed).toLocal();
+  } catch (e) {
+    print("Erreur parsing impactDate: $raw");
+    return null;
+  }
+}
+
+
 extension TransactionCancelReasonX on TransactionCancelReason {
   static TransactionCancelReason? fromCode(String? code) {
     if (code == null) return null;
-    return TransactionCancelReason.values.firstWhere(
-          (e) => e.code == code,
-    );
+    try {
+      return TransactionCancelReason.values.firstWhere((e) => e.code == code);
+    } catch (_) {
+      return null;
+    }
   }
 }
 

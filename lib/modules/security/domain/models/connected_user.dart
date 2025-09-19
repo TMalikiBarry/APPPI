@@ -88,4 +88,33 @@ class ConnectedUser {
       'shid': instance.shid,
     };
   }
+
+  /// copyWith pour créer une nouvelle instance avec certains champs modifiés
+  ConnectedUser copyWith({
+    String? id,
+    String? username,
+    String? firstName,
+    String? lastName,
+    String? country,
+    String? address,
+    String? telephone,
+    String? email,
+    String? avatar,
+    String? alias,
+    String? shid,
+  }) {
+    return ConnectedUser(
+      id: id ?? this.id,
+      username: username ?? this.username,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      country: country ?? this.country,
+      address: address ?? this.address,
+      telephone: telephone ?? this.telephone,
+      email: email ?? this.email,
+      avatar: avatar ?? this.avatar,
+      alias: alias ?? this.alias,
+      shid: shid ?? this.shid,
+    );
+  }
 }

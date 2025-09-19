@@ -1,6 +1,7 @@
 import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:pi_mobile_app/core/notifications.dart';
 
@@ -59,7 +60,7 @@ class TransactionDetailsPage extends StatelessWidget {
           if (state is! TransactionDetailsCancelLoadingState && state is! TransactionReturnLoadingState){
             CustomLoadingDialog.hide(context);
           }
-          if (Navigator.of(context).canPop()) {
+          if (context.canPop()) {
             AppRouter.pop(context); // close form
           }
           // Retour de fonds

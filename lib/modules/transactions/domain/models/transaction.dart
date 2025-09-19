@@ -80,6 +80,8 @@ class Transaction {
     this.transactionVerificationResultIban,
     this.transactionVerificationResultOthr,
     this.additionalInformations,
+    this.codeMembreParticipantPayeur,
+    this.codeMembreParticipantPayer,
   });
 
   /// Compte du client
@@ -189,6 +191,9 @@ class Transaction {
   TransactionVerificationResultOthr? transactionVerificationResultOthr;
 
   final AdditionalInfosMovement? additionalInformations;
+
+  final String? codeMembreParticipantPayeur;
+  final String? codeMembreParticipantPayer;
 
   /// Est ce que c'est une demande de paiement
   bool isRTP() {
@@ -379,7 +384,9 @@ class Transaction {
       differeMontant: json['differeMontant'] != null
           ? double.parse(json['differeMontant'].toString())
           : null,
-      additionalInformations: additionalInformations
+      additionalInformations: additionalInformations,
+      codeMembreParticipantPayeur: json['codeMembreParticipantPayeur'] as String?,
+      codeMembreParticipantPayer: json['codeMembreParticipantPayer'] as String?,
     );
   }
 
@@ -766,6 +773,156 @@ class Transaction {
           : null,
       annulationStatut: _getStatut(json['annulationStatut']),
       annulationStatutRaison: json['annulationStatutRaison'] as String?,
+      codeMembreParticipantPayeur: json['codeMembreParticipantPayeur'] as String?,
+      codeMembreParticipantPayer: json['codeMembreParticipantPayer'] as String?,
+    );
+  }
+}
+
+
+extension TransactionCopyWith on Transaction {
+  Transaction copyWith({
+    String? compte,
+    String? acquirerPhoneNumber,
+    String? alias,
+    double? montant,
+    double? montantFrais,
+    TransactionSens? sens,
+    String? motif,
+    String? canal,
+    String? clientNom,
+    String? acquirerAccountLabel,
+    String? clientPays,
+    String? clientPSP,
+    String? clientPSPNom,
+    String? clientCompte,
+    String? clientAlias,
+    String? endToEndId,
+    String? clientPhoto,
+    String? bankCode,
+    String? productCode,
+    String? clientId,
+    double? globalCommission,
+    String? legalEntityCode,
+    String? partnerDistId,
+    String? partnerID,
+    String? slipNumber,
+    String? userLogin,
+    String? guID,
+    String? clientPhoneNumber,
+    String? serviceCode,
+    String? acquirerAccount,
+    DateTime? dateOperation,
+    TransactionStatut? statut,
+    String? statutRaison,
+    String? issuerPhoneNumber,
+    DateTime? dateDebut,
+    DateTime? dateFin,
+    Frequence? frequence,
+    int? periodicite,
+    String? categorie,
+    String? facture,
+    DateTime? dateExpiration,
+    String? txId,
+    String? subscriptionId,
+    DateTime? retourDate,
+    TransactionStatut? retourStatut,
+    String? retourStatutRaison,
+    DateTime? annulationDate,
+    TransactionStatut? annulationStatut,
+    String? annulationStatutRaison,
+    TransactionCancelReason? annulationRaison,
+    DateTime? dateDemande,
+    DateTime? dateReponse,
+    double? remise,
+    double? retraitAchat,
+    double? retraitMontant,
+    double? retraitFrais,
+    bool? differe,
+    Frequence? differeFrequence,
+    int? differeOccurence,
+    double? differeMontant,
+    TransactionVerificationResultAlias? transactionVerificationResultAlias,
+    TransactionVerificationResultOthr? transactionVerificationResultIban,
+    TransactionVerificationResultOthr? transactionVerificationResultOthr,
+    AdditionalInfosMovement? additionalInformations,
+    String? codeMembreParticipantPayeur,
+    String? codeMembreParticipantPayer,
+  }) {
+    return Transaction(
+      compte: compte ?? this.compte,
+      acquirerPhoneNumber: acquirerPhoneNumber ?? this.acquirerPhoneNumber,
+      alias: alias ?? this.alias,
+      montant: montant ?? this.montant,
+      montantFrais: montantFrais ?? this.montantFrais,
+      sens: sens ?? this.sens,
+      motif: motif ?? this.motif,
+      canal: canal ?? this.canal,
+      clientNom: clientNom ?? this.clientNom,
+      acquirerAccountLabel: acquirerAccountLabel ?? this.acquirerAccountLabel,
+      clientPays: clientPays ?? this.clientPays,
+      clientPSP: clientPSP ?? this.clientPSP,
+      clientPSPNom: clientPSPNom ?? this.clientPSPNom,
+      clientCompte: clientCompte ?? this.clientCompte,
+      clientAlias: clientAlias ?? this.clientAlias,
+      endToEndId: endToEndId ?? this.endToEndId,
+      clientPhoto: clientPhoto ?? this.clientPhoto,
+      bankCode: bankCode ?? this.bankCode,
+      productCode: productCode ?? this.productCode,
+      clientId: clientId ?? this.clientId,
+      globalCommission: globalCommission ?? this.globalCommission,
+      legalEntityCode: legalEntityCode ?? this.legalEntityCode,
+      partnerDistId: partnerDistId ?? this.partnerDistId,
+      partnerID: partnerID ?? this.partnerID,
+      slipNumber: slipNumber ?? this.slipNumber,
+      userLogin: userLogin ?? this.userLogin,
+      guID: guID ?? this.guID,
+      clientPhoneNumber: clientPhoneNumber ?? this.clientPhoneNumber,
+      serviceCode: serviceCode ?? this.serviceCode,
+      acquirerAccount: acquirerAccount ?? this.acquirerAccount,
+      dateOperation: dateOperation ?? this.dateOperation,
+      statut: statut ?? this.statut,
+      statutRaison: statutRaison ?? this.statutRaison,
+      issuerPhoneNumber: issuerPhoneNumber ?? this.issuerPhoneNumber,
+      dateDebut: dateDebut ?? this.dateDebut,
+      dateFin: dateFin ?? this.dateFin,
+      frequence: frequence ?? this.frequence,
+      periodicite: periodicite ?? this.periodicite,
+      categorie: categorie ?? this.categorie,
+      facture: facture ?? this.facture,
+      dateExpiration: dateExpiration ?? this.dateExpiration,
+      txId: txId ?? this.txId,
+      subscriptionId: subscriptionId ?? this.subscriptionId,
+      retourDate: retourDate ?? this.retourDate,
+      retourStatut: retourStatut ?? this.retourStatut,
+      retourStatutRaison: retourStatutRaison ?? this.retourStatutRaison,
+      annulationDate: annulationDate ?? this.annulationDate,
+      annulationStatut: annulationStatut ?? this.annulationStatut,
+      annulationStatutRaison:
+      annulationStatutRaison ?? this.annulationStatutRaison,
+      annulationRaison: annulationRaison ?? this.annulationRaison,
+      dateDemande: dateDemande ?? this.dateDemande,
+      dateReponse: dateReponse ?? this.dateReponse,
+      remise: remise ?? this.remise,
+      retraitAchat: retraitAchat ?? this.retraitAchat,
+      retraitMontant: retraitMontant ?? this.retraitMontant,
+      retraitFrais: retraitFrais ?? this.retraitFrais,
+      differe: differe ?? this.differe,
+      differeFrequence: differeFrequence ?? this.differeFrequence,
+      differeOccurence: differeOccurence ?? this.differeOccurence,
+      differeMontant: differeMontant ?? this.differeMontant,
+      transactionVerificationResultAlias: transactionVerificationResultAlias ??
+          this.transactionVerificationResultAlias,
+      transactionVerificationResultIban:
+      transactionVerificationResultIban ?? this.transactionVerificationResultIban,
+      transactionVerificationResultOthr:
+      transactionVerificationResultOthr ?? this.transactionVerificationResultOthr,
+      additionalInformations:
+      additionalInformations ?? this.additionalInformations,
+      codeMembreParticipantPayeur:
+      codeMembreParticipantPayeur ?? this.codeMembreParticipantPayeur,
+      codeMembreParticipantPayer :
+        codeMembreParticipantPayer ?? this.codeMembreParticipantPayer,
     );
   }
 }

@@ -48,9 +48,16 @@ class TransactionListItemWidget extends StatelessWidget {
 
     var userName = transaction.sens == TransactionSens.debit
         ? transaction.acquirerAccountLabel!
-        : transaction.clientNom;
+        : transaction.clientNom.isNotEmpty
+        && !transaction.clientNom.contains('---')
+        ? transaction.clientNom
+        : transaction.additionalInformations?.issuerName
+          ?? transaction.additionalInformations?.clientName
+          ?? transaction.additionalInformations?.otherClient
+          ?? transaction.additionalInformations?.externalAlias
+          ?? traductions.externalCustomer;
 
-    if(userName.contains('---')){
+    if(userName.isEmpty || userName.contains('---')){
       userName = traductions.externalCustomer;
     }
 

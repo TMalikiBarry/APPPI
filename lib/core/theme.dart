@@ -150,7 +150,7 @@ class Themer {
     secondaryHeaderColor: primaryLight,
     cardColor: const Color(0xFFF6F8FB),
     scaffoldBackgroundColor: whiteColor,
-    dialogTheme: const DialogTheme(
+    dialogTheme: const DialogThemeData(
       surfaceTintColor: whiteColor,
     ),
     colorScheme: const ColorScheme(
@@ -259,7 +259,7 @@ class Themer {
         fontWeight: FontWeight.w600,
       ),
     ),
-    cardTheme: const CardTheme(
+    cardTheme: const CardThemeData(
       color: Color(0xFFF6F8FB),
       elevation: 0.0,
       shape: RoundedRectangleBorder(
@@ -488,7 +488,7 @@ class Themer {
     secondaryHeaderColor: primaryStroke,
     cardColor: const Color(0xFF23211D),
     scaffoldBackgroundColor: const Color(0xFF2E2B26),
-    dialogTheme: const DialogTheme(
+    dialogTheme: const DialogThemeData(
       surfaceTintColor: Color(0xFF2E2B26),
     ),
     colorScheme: const ColorScheme(
@@ -597,8 +597,8 @@ class Themer {
         fontWeight: FontWeight.w600,
       ),
     ),
-    cardTheme: const CardTheme(
-      color: Color(0xFF23211D),
+    cardTheme: const CardThemeData(
+      color: Color(0xFFF6F8FB),
       elevation: 0.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -825,7 +825,7 @@ class Themer {
     secondaryHeaderColor: Color(0xFFF3DC88),
     cardColor: const Color(0xFFF6F8FB),
     scaffoldBackgroundColor: whiteColor,
-    dialogTheme: const DialogTheme(
+    dialogTheme: const DialogThemeData(
       surfaceTintColor: whiteColor,
     ),
     colorScheme: const ColorScheme(
@@ -934,7 +934,7 @@ class Themer {
         fontWeight: FontWeight.w600,
       ),
     ),
-    cardTheme: const CardTheme(
+    cardTheme: const CardThemeData(
       color: Color(0xFFF6F8FB),
       elevation: 0.0,
       shape: RoundedRectangleBorder(
@@ -1163,7 +1163,7 @@ class Themer {
     secondaryHeaderColor: secondaryColor,
     cardColor: const Color(0xFFF6F8FB),
     scaffoldBackgroundColor: whiteColor,
-    dialogTheme: const DialogTheme(
+    dialogTheme: const DialogThemeData(
       surfaceTintColor: whiteColor,
     ),
     colorScheme: const ColorScheme(
@@ -1272,7 +1272,7 @@ class Themer {
         fontWeight: FontWeight.w600,
       ),
     ),
-    cardTheme: const CardTheme(
+    cardTheme: const CardThemeData(
       color: Color(0xFFF6F8FB),
       elevation: 0.0,
       shape: RoundedRectangleBorder(
@@ -1501,7 +1501,7 @@ class Themer {
     secondaryHeaderColor: const Color(0xFF9FF796),
     cardColor: const Color(0xFFF6F8FB),
     scaffoldBackgroundColor: whiteColor,
-    dialogTheme: const DialogTheme(
+    dialogTheme: const DialogThemeData(
       surfaceTintColor: whiteColor,
     ),
     colorScheme: const ColorScheme(
@@ -1610,7 +1610,7 @@ class Themer {
         fontWeight: FontWeight.w600,
       ),
     ),
-    cardTheme: const CardTheme(
+    cardTheme: const CardThemeData(
       color: Color(0xFFF6F8FB),
       elevation: 0.0,
       shape: RoundedRectangleBorder(

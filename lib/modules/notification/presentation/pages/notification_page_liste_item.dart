@@ -226,6 +226,7 @@ class NotificationPageListeItem extends StatelessWidget {
       route = "/alias/revendications/${notification.idObject}";
     } else if (notification.type == NotificationType.annulationDemandee) {
       route = "/transaction/cancel-transfer";
+      logger.i("notification :: ${notification.toJson()}");
       transaction = Transaction(
         compte: '',
         montant:  notification.details?['amount'] != null ? double.parse(notification.details?['amount']) : 0.0,
@@ -247,8 +248,7 @@ class NotificationPageListeItem extends StatelessWidget {
         clientId: notification.details?['clientId']
       );
       //logger.i("transaction : ${{"tx": transaction}}");
-    } else if (notification.type == NotificationType.rtpInitiee ||
-        notification.type == NotificationType.rtpRecue) {
+    } else if (notification.type == NotificationType.rtpInitiee) {
       transaction = Transaction(
         compte: '',
         clientAlias: notification.details?["alias"] ?? "",
@@ -273,8 +273,7 @@ class NotificationPageListeItem extends StatelessWidget {
     }
     logger.i("route : $route");
     if (notification.type == NotificationType.annulationDemandee ||
-        notification.type == NotificationType.rtpInitiee ||
-        notification.type == NotificationType.rtpRecue) {
+        notification.type == NotificationType.rtpInitiee) {
       AppRouter.push(context, route, params: {"tx": transaction});
     } else if (route == "/transaction/details-notification") {
       AppRouter.push(context, route, params: {"notification": notification});

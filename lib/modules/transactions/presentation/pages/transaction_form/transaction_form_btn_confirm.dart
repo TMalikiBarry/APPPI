@@ -56,7 +56,10 @@ class _TransactionFormBtnConfirmState extends State<TransactionFormBtnConfirm> {
         children: [
           // schedule
           if (widget.command.action !=
-              TransactionSendCommand.actionSendSchedule && isTran) ...[
+              TransactionSendCommand.actionSendSchedule && isTran &&
+              widget.command.action !=
+                  TransactionSendCommand.actionReceiveNow
+          ) ...[
             FloatingActionButton(
               onPressed: () {
                 _scheduleTransaction(context);
@@ -83,7 +86,8 @@ class _TransactionFormBtnConfirmState extends State<TransactionFormBtnConfirm> {
               },
               child: Text(
                 widget.traductions.transactionFormVerificationBtnReject,
-                style: isTran ? const TextStyle(
+                style: (isTran || widget.command.action ==
+                    TransactionSendCommand.actionReceiveNow) ? const TextStyle(
                   fontSize: 14,
                 ) : null,
               ),
@@ -110,7 +114,8 @@ class _TransactionFormBtnConfirmState extends State<TransactionFormBtnConfirm> {
                 child:
                 Text(
                   widget.traductions.transactionFormVerificationBtnConfirm,
-                  style: isTran ? const TextStyle(
+                  style: (isTran || widget.command.action ==
+                      TransactionSendCommand.actionReceiveNow) ? const TextStyle(
                     fontSize: 14,
                   ) : null,
                 ),

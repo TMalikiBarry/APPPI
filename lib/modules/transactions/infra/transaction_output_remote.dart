@@ -326,10 +326,12 @@ class TransactionOutputRemote {
         datas.addAll({
           "planificationType": "SIMPLE",
           "planificationStatus": "CREATED",
+          "email": "mytpsupport@intouchgroup.net",
         });
       } else {
         datas.addAll({
           "planificationType": "RECURRENT",
+          "email": "mytpsupport@intouchgroup.net",
           "planificationStatus": "CREATED",
         });
       }

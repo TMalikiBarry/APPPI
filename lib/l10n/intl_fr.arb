@@ -358,7 +358,7 @@
   "transactionFormAmountHint": "Montant",
   "transactionFormAmountEmpty": "Obligatoire",
   "transactionFormAmountInvalid": "Solde insuffisant",
-  "transactionFormAmountLow": "Montant minimum 5 frcs",
+  "transactionFormAmountLow": "Montant minimum 1 frcs",
   "transactionFormMotifHint": "Ajouter une note",
   "transactionFormMotifLabel": "Note",
   "transactionFormFactureLabel": "Facture",

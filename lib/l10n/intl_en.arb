@@ -351,7 +351,7 @@
   "transactionFormAmountHint": "Amount",
   "transactionFormAmountEmpty": "Mandatory",
   "transactionFormAmountInvalid": "Insufficient balance",
-  "transactionFormAmountLow": "Minimum amount 5 XOF",
+  "transactionFormAmountLow": "Minimum amount 1 XOF",
   "transactionFormMotifHint": "Add note",
   "transactionFormMotifLabel": "Note",
   "transactionFormMotifInvalid": "No more than 104 characters",
@@ -877,6 +877,6 @@
   "contact_us_phone_title": "Call customer service",
   "contact_us_phone_desc": "Contact our agents from 7 a.m. to 11 p.m.",
   "contact_service_client": "Contact customer service",
-  "contact_us_default_message": "Tell us about your request and our team will contact you shortly.",
+  "contact_us_default_message": "Tell us about your request and our team will contact you shortly."
 
 }

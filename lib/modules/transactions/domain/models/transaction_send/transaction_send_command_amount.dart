@@ -14,8 +14,8 @@ class TransactionSendCommandAmount {
     // Si le solde est insuffisant
     else if (solde != null && value! > solde!) {
       error = TransactionSendCommandAmountError.invalid;
-    } else if (value! < 5) {
-      // min transfert 5 frcs
+    } else if (value! < 1) {
+      // min transfert 1 frcs
       error = TransactionSendCommandAmountError.low;
     }
     // lorsque l'identifiant est valide

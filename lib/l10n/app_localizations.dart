@@ -1522,7 +1522,7 @@ abstract class AppLocalizations {
   /// No description provided for @transactionFormAmountLow.
   ///
   /// In en, this message translates to:
-  /// **'Minimum amount 5 XOF'**
+  /// **'Minimum amount 1 XOF'**
   String get transactionFormAmountLow;
 
   /// No description provided for @transactionFormMotifHint.
@@ -3328,49 +3328,43 @@ abstract class AppLocalizations {
   /// No description provided for @contact_us_whatsapp.
   ///
   /// In en, this message translates to:
-  /// **'Nous contacter par Whatsapp'**
+  /// **'Contact us by whatsapp'**
   String get contact_us_whatsapp;
 
   /// No description provided for @contact_us_whatsapp_desc.
   ///
   /// In en, this message translates to:
-  /// **'Appelez ou envoyez des messages'**
+  /// **'Call or send messages.'**
   String get contact_us_whatsapp_desc;
 
   /// No description provided for @contact_us_phone.
   ///
   /// In en, this message translates to:
-  /// **'Nous appeler'**
+  /// **'Call us'**
   String get contact_us_phone;
 
   /// No description provided for @contact_us_phone_title.
   ///
   /// In en, this message translates to:
-  /// **'Appelez le service client'**
+  /// **'Call customer service'**
   String get contact_us_phone_title;
 
   /// No description provided for @contact_us_phone_desc.
   ///
   /// In en, this message translates to:
-  /// **'Contactez nos agents de 07h à 23h'**
+  /// **'Contact our agents from 7 a.m. to 11 p.m.'**
   String get contact_us_phone_desc;
 
   /// No description provided for @contact_service_client.
   ///
   /// In en, this message translates to:
-  /// **'Contacter le service client'**
+  /// **'Contact customer service'**
   String get contact_service_client;
-
-  /// No description provided for @contact_us_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.'**
-  String get contact_us_description;
 
   /// No description provided for @contact_us_default_message.
   ///
   /// In en, this message translates to:
-  /// **'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.'**
+  /// **'Tell us about your request and our team will contact you shortly.'**
   String get contact_us_default_message;
 }
 

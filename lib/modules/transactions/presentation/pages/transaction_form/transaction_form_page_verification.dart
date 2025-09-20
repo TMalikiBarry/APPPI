@@ -258,11 +258,14 @@ class TransactionVerificationPage extends StatelessWidget {
                 ),
               ),
             ),
-            bottomNavigationBar: TransactionFormBtnConfirm(
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+              child: TransactionFormBtnConfirm(
                 command: command,
                 transaction: transaction,
                 traductions: traductions,
               ),
+            ),
           );
         } else {
           return const Scaffold(

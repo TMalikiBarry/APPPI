@@ -12,6 +12,7 @@ import '../../../../../shared/widgets/amount_widget.dart';
 import '../../../domain/models/transaction.dart';
 import '../../../domain/models/transaction_liste.dart';
 import '../../../domain/models/transaction_send/transaction_send_command.dart';
+import '../../../domain/models/transaction_send/transaction_send_method.dart';
 import '../../bloc/transaction_send/transaction_send_bloc.dart';
 import '../../bloc/transaction_send/transaction_send_event.dart';
 import '../transaction_list_loading_widget.dart';
@@ -205,6 +206,9 @@ class TransactionSendPageRecentsItem extends StatelessWidget {
     command.canal = action == TransactionSendCommand.actionReceiveNow
         ? TransactionCanal.transfertParRequestToPay.code
         : TransactionCanal.defaultCanal.code;
+    command.method = action == TransactionSendCommand.actionReceiveNow
+        ? TransactionSendMethod.aliasRtb
+        : command.method;
     context
         .read<TransactionSendBloc>()
         .add(TransactionSendDisplayFormEvent(command));

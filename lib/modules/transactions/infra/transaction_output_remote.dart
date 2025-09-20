@@ -318,7 +318,7 @@ class TransactionOutputRemote {
           'requestSenderAlias': aliasFrom,
           'requestReceiverAlias': confirmCommand
               .transactionVerificationResultAlias!.toJson(),
-          'reason': confirmCommand.motif ?? 'PI_REQUEST_TO_PAY'
+          'reason': confirmCommand.motif
         });
       }
 
@@ -394,7 +394,7 @@ class TransactionOutputRemote {
       request.addAll({
         'requestSenderAlias': aliasFrom,
         'requestReceiverAlias': command.transactionVerificationResultAlias!.toJson(),
-        'reason': command.motif ?? 'PI_REQUEST_TO_PAY'
+        'reason': command.motif
       });
     }
       else if (command.confirmationMethode == TransactionSendMethod.iban){

@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/router.dart';
 import '../../../../../l10n/app_localizations.dart';
 import '../../../../../shared/models/frequence_command.dart';
+import '../../../../alias/domain/models/alias.dart';
+import '../../../../alias/presentation/bloc/alias_bloc.dart';
+import '../../../../alias/presentation/bloc/alias_state.dart';
 import '../../../../security/presentation/bloc/identification/identification_bloc.dart';
 import '../../../../security/presentation/bloc/identification/identification_event.dart';
 import '../../../../security/presentation/bloc/identification/identification_state.dart';
@@ -14,7 +17,7 @@ import '../../../domain/models/transaction_send/transaction_send_command_schedul
 import '../../bloc/transaction_send/transaction_send_bloc.dart';
 import '../../bloc/transaction_send/transaction_send_event.dart';
 
-class TransactionFormBtnConfirm extends StatelessWidget {
+class TransactionFormBtnConfirm extends StatefulWidget {
   ///
   const TransactionFormBtnConfirm({
     super.key,
@@ -28,6 +31,22 @@ class TransactionFormBtnConfirm extends StatelessWidget {
   final AppLocalizations traductions;
 
   @override
+  State<TransactionFormBtnConfirm> createState() => _TransactionFormBtnConfirmState();
+}
+
+class _TransactionFormBtnConfirmState extends State<TransactionFormBtnConfirm> {
+  bool isTran = false;
+
+  @override
+  initState () {
+    Alias alias = (context.read<AliasBloc>().state as AliasExistState).alias;
+    if (alias.accountType == "TRAN") {
+      isTran = true;  // indices des onglets à griser
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 56,
@@ -36,8 +55,8 @@ class TransactionFormBtnConfirm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // schedule
-          if (command.action !=
-              TransactionSendCommand.actionSendSchedule) ...[
+          if (widget.command.action !=
+              TransactionSendCommand.actionSendSchedule && isTran) ...[
             FloatingActionButton(
               onPressed: () {
                 _scheduleTransaction(context);
@@ -60,9 +79,14 @@ class TransactionFormBtnConfirm extends StatelessWidget {
                 // reject
                 context
                     .read<TransactionSendBloc>()
-                    .add(TransactionSendRejectEvent(command));
+                    .add(TransactionSendRejectEvent(widget.command));
               },
-              child: Text(traductions.transactionFormVerificationBtnReject),
+              child: Text(
+                widget.traductions.transactionFormVerificationBtnReject,
+                style: isTran ? const TextStyle(
+                  fontSize: 14,
+                ) : null,
+              ),
             ),
           ),
 
@@ -70,7 +94,7 @@ class TransactionFormBtnConfirm extends StatelessWidget {
           const SizedBox(width: 16),
 
           // Confirm
-          if (command.action !=
+          if (widget.command.action !=
               TransactionSendCommand.actionSendSchedule) ...[
             Expanded(
               child: ElevatedButton(
@@ -78,26 +102,31 @@ class TransactionFormBtnConfirm extends StatelessWidget {
                   context
                       .read<TransactionSendBloc>() //
                       .add(TransactionSendConfirmEvent(
-                    command,
-                    transaction,
-                    command.method,
+                    widget.command,
+                    widget.transaction,
+                    widget.command.method,
                   ));
                 },
                 child:
-                Text(traductions.transactionFormVerificationBtnConfirm),
+                Text(
+                  widget.traductions.transactionFormVerificationBtnConfirm,
+                  style: isTran ? const TextStyle(
+                    fontSize: 14,
+                  ) : null,
+                ),
               ),
             ),
           ],
 
           // Programmer
-          if (command.action ==
+          if (widget.command.action ==
               TransactionSendCommand.actionSendSchedule) ...[
             Expanded(
               child: ElevatedButton(
                 onPressed: () async {
                   _scheduleTransaction(context);
                 },
-                child: Text(traductions.transactionFormScheduleTitle),
+                child: Text(widget.traductions.transactionFormScheduleTitle),
               ),
             ),
           ],
@@ -206,14 +235,14 @@ class TransactionFormBtnConfirm extends StatelessWidget {
 
   void _scheduleTransaction(BuildContext context) {
     // Init
-    command.schedule = TransactionSendCommandSchedule(
+    widget.command.schedule = TransactionSendCommandSchedule(
       frequence: FrequenceCommand(),
     );
     // Send Schedule
     context.read<TransactionSendBloc>().add(
           TransactionSendScheduleEvent(
-            command,
-            transaction,
+            widget.command,
+            widget.transaction,
           ),
         );
     AppRouter.pushReplacement(context, AppRouter.transactionFormSchedule);

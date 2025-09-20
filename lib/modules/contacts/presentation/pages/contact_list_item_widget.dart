@@ -27,7 +27,7 @@ class ContactListItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     //
     String? alias = _getAliasValue(contact);
-    logger.i("alias $alias");
+    //logger.i("alias $alias");
     if (showCheckbox != null && showCheckbox == true) {
       return CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,

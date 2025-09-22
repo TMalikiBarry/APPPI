@@ -37,10 +37,14 @@ class TransactionSendCommandSchedule {
       "year": dateDebut!.year,
       "month": dateDebut!.month,
       "dayOfMonth": dateDebut!.day,
+      "planificationType": "SIMPLE",
+      "planificationStatus": "CREATED",
+      "email": "mytpsupport@intouchgroup.net",
     };
 
     if (frequence != null && frequence!.value != null) {
       json["frequence"] = frequence!.value!.code;
+      json["planificationType"] = "RECURRENT";
     }
     if (frequence != null && frequence!.periodicite != null) {
       json["periodicite"] = frequence!.periodicite!;

@@ -288,21 +288,38 @@ class TransactionOutputRemote {
         aliasFrom = pref.getString("phone_number");
       }
       var userLogin = pref.getString('phoneNumber');
+      var url = "/movement/schedule";
 
-      var datas = command.toJson();
+      Map<String, dynamic> datas = command.toJson();
+      if (command.frequence?.value == null) {
+        datas.addAll({
+          "planificationType": "SIMPLE",
+          "planificationStatus": "CREATED",
+          "email": "mytpsupport@intouchgroup.net",
+        });
+      } else {
+        datas.addAll({
+          "planificationType": "RECURRENT",
+          "email": "mytpsupport@intouchgroup.net",
+          "planificationStatus": "CREATED",
+        });
+      }
 
       datas['movement'] = {
-        'aliasFrom': aliasFrom,
-        'amount': confirmCommand.amount,
         'clientId': aliasFrom,
+        'aliasFrom': aliasFrom,
         'userLogin': userLogin,
-        'alias': confirmCommand.transactionVerificationResultAlias?.alias
       };
-      datas['movement'].addAll(confirmCommand.toJson());
+      logger.i("data schedule 1 : $datas");
+      datas['movement'] = {
+        ...?datas['movement'] as Map<String, dynamic>?,
+        ...confirmCommand.toJson(),
+      };
 
+      //logger.i("data schedule 2 : $datas");
       if (
-      confirmCommand.confirmationMethode == TransactionSendMethod.alias ||
-          confirmCommand.confirmationMethode == TransactionSendMethod.qrcode
+        confirmCommand.confirmationMethode == TransactionSendMethod.alias ||
+        confirmCommand.confirmationMethode == TransactionSendMethod.qrcode
       ) {
         if (confirmCommand.confirmationMethode ==
             TransactionSendMethod.qrcode) {
@@ -320,31 +337,33 @@ class TransactionOutputRemote {
               .transactionVerificationResultAlias!.toJson(),
           'reason': confirmCommand.motif
         });
-      }
-
-      if (command.frequence?.value == null) {
-        datas.addAll({
-          "planificationType": "SIMPLE",
-          "planificationStatus": "CREATED",
-          "email": "mytpsupport@intouchgroup.net",
-        });
-      } else {
-        datas.addAll({
-          "planificationType": "RECURRENT",
-          "email": "mytpsupport@intouchgroup.net",
-          "planificationStatus": "CREATED",
-        });
+      } else if (confirmCommand.confirmationMethode == TransactionSendMethod.iban){
+        url = '/movement/schedule?transferType=IBAN';
+      } else if (confirmCommand.confirmationMethode == TransactionSendMethod.othr) {
+        url = '/movement/schedule?transferType=ACCOUNT';
       }
 
       //logger.i("data schedule 2 : $datas");
-      response = await Api.post("/movement/schedule", data: datas);
+      response = await Api.post(url, data: datas);
 
       return Transaction.fromJsonTransfer({
-        "aliasClientPayeur" : confirmCommand.transactionVerificationResultAlias!.alias,
+        "aliasClientPayeur" :
+          confirmCommand.transactionVerificationResultAlias?.alias ??
+          confirmCommand.transactionVerificationResultIban?.ibanClient ??
+          confirmCommand.transactionVerificationResultOthr?.otherClient ?? '---',
         "montant" : "${confirmCommand.amount?.value!.toInt()}",
-        "nomClientPayeur" : confirmCommand.transactionVerificationResultAlias!.clientName,
-        "paysClientPayeur" : confirmCommand.transactionVerificationResultAlias!.clientResidenceCountry,
-        "endToEndId" : confirmCommand.transactionVerificationResultAlias!.endToEndId,
+        "nomClientPayeur" :
+          confirmCommand.transactionVerificationResultAlias?.clientName ??
+          confirmCommand.transactionVerificationResultIban?.nomClient ??
+          confirmCommand.transactionVerificationResultOthr?.nomClient ?? "---",
+        "paysClientPayeur" :
+          confirmCommand.transactionVerificationResultAlias?.clientResidenceCountry ??
+          confirmCommand.transactionVerificationResultIban?.paysResidence ??
+          confirmCommand.transactionVerificationResultOthr?.paysResidence ?? "SN",
+        "endToEndId" :
+          confirmCommand.transactionVerificationResultAlias?.endToEndId ??
+          confirmCommand.transactionVerificationResultIban?.endToEndId ??
+          confirmCommand.transactionVerificationResultOthr?.endToEndId ?? "---",
         "dateDebut" : command.dateDebut
       }, isRtpOrSchedule: true);
     }

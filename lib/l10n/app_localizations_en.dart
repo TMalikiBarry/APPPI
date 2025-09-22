@@ -1695,26 +1695,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bottom_bar_transaction => 'Transactions';
 
   @override
-  String get contact_us_whatsapp => 'Nous contacter par Whatsapp';
+  String get contact_us_whatsapp => 'Contact us by whatsapp';
 
   @override
-  String get contact_us_whatsapp_desc => 'Appelez ou envoyez des messages';
+  String get contact_us_whatsapp_desc => 'Call or send messages.';
 
   @override
-  String get contact_us_phone => 'Nous appeler';
+  String get contact_us_phone => 'Call us';
 
   @override
-  String get contact_us_phone_title => 'Appelez le service client';
+  String get contact_us_phone_title => 'Call customer service';
 
   @override
-  String get contact_us_phone_desc => 'Contactez nos agents de 07h à 23h';
+  String get contact_us_phone_desc => 'Contact our agents from 7 a.m. to 11 p.m.';
 
   @override
-  String get contact_service_client => 'Contacter le service client';
+  String get contact_service_client => 'Contact customer service';
 
   @override
-  String get contact_us_description => 'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.';
-
-  @override
-  String get contact_us_default_message => 'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.';
+  String get contact_us_default_message => 'Tell us about your request and our team will contact you shortly.';
 }

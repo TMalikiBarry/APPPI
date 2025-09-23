@@ -51,6 +51,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get btnTextCancel => 'Annuler';
 
   @override
+  String get btnTextClose => 'Fermer';
+
+  @override
   String get btnTextYes => 'Oui';
 
   @override
@@ -1714,4 +1717,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get contact_us_default_message => 'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.';
+
+  @override
+  String get userNotExistInContactsList => 'Cet utilisateur ne fait pas partie de vos contacts';
 }

@@ -51,6 +51,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnTextCancel => 'Cancel';
 
   @override
+  String get btnTextClose => 'Close';
+
+  @override
   String get btnTextYes => 'Yes';
 
   @override
@@ -1714,4 +1717,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contact_us_default_message => 'Tell us about your request and our team will contact you shortly.';
+
+  @override
+  String get userNotExistInContactsList => 'This user is not part of your contacts.';
 }

@@ -19,6 +19,7 @@
   "btnTextAccept": "Accepter",
   "btnTextConfirm": "Confirmer",
   "btnTextCancel": "Annuler",
+  "btnTextClose": "Fermer",
   "btnTextYes": "Oui",
   "btnTextNo": "Non",
   "btnTextContinue": "Continuer",
@@ -876,5 +877,6 @@
   "contact_us_phone_desc": "Contactez nos agents de 07h à 23h",
   "contact_service_client": "Contacter le service client",
   "contact_us_description": "Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.",
-  "contact_us_default_message": "Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais."
+  "contact_us_default_message": "Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.",
+  "userNotExistInContactsList": "Cet utilisateur ne fait pas partie de vos contacts, vous devez l'ajouter pour pouvoir valider la demande."
 }

@@ -247,29 +247,6 @@ List<NotificationGroup> groupNotifications(
   for (var n in notifications) {
     final key = _dayKey(n);
 
-    /*
-    // 👉 Vérifie condition spéciale
-    if (n.type == notifType.NotificationType.rtpInitiee &&
-        n.details?['channel'] == "631") {
-
-      final alias = n.details?['alias'] ?? "";
-      final aliasDigits = alias.replaceAll(RegExp(r'\D'), '');
-
-      final hasMatch = contacts.any((c) =>
-          c.phones.any((p) {
-            final phoneDigits = p.number.replaceAll(RegExp(r'\D'), '');
-            return phoneDigits.isNotEmpty &&
-                aliasDigits.endsWith(phoneDigits);
-          })
-      );
-
-      if (!hasMatch) {
-        logger.i("⛔ Notification ignorée (alias $alias introuvable dans contacts)");
-        continue; // skip cette notification
-      }
-
-      logger.i("✅ Notification retenue (alias $alias trouvé dans contacts)");
-    }*/
     // Ajoute la notification si elle passe le filtre
     grouped.putIfAbsent(key, () => []).add(n);
   }

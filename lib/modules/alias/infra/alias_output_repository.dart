@@ -47,6 +47,7 @@ class AliasOutputRepository implements AliasOutputPort {
       logger.w("Erreur AliasRetrieveException depuis le serveur", error: e);
 
       try {
+        logger.d("compte : $compte");
         // Tentative de récupération depuis le local en fallback
         final aliasLocal = await repoLocal.recuperer(compte);
 

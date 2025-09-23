@@ -26,15 +26,20 @@ class Alias {
 
   /// Convertit du JSON en objet Alias
   factory Alias.fromJson(Map<dynamic, dynamic> json) {
-    logger.i("json alias : $json");
+    /*logger.i("json alias : $json");
+    json.forEach((key, value) {
+      logger.i("$key: $value  (type: ${value.runtimeType})");
+    });*/
+
+    final String? typeCode = json['aliasType'] ?? json['type'];
+
     return Alias(
-      cle: json['alias'] as String,
+      cle: (json['alias'] ?? json['cle']) as String,
       shid: json['shid'] as String?,
-      compte: json['clientPhoneNumber'] as String,
-      pays: json['clientResidenceCountry'] as String,
-      participant: json['participant'] as String,
-      type: AliasType.values
-          .firstWhere((element) => element.code == json['aliasType'] as String),
+      compte: (json['clientPhoneNumber'] ?? json['compte']) as String,
+      pays: (json['clientResidenceCountry'] ?? json['pays']) as String,
+      participant: json['participant'] as String?,
+      type: AliasTypeExtension.fromCode(typeCode.toString()),
       accountType: json['accountType'] as String?,
     );
   }
@@ -48,7 +53,19 @@ class Alias {
       'pays': pays,
       'participant': participant,
       'shid': shid ?? ConnectedUser.current!.shid,
-      //'accountType' : accountType
+      'accountType' : accountType
     };
+  }
+}
+
+extension AliasTypeExtension on AliasType {
+  static AliasType fromCode(String code) {
+    return AliasType.values.firstWhere(
+          (e) => e.code == code,
+      orElse: () {
+        logger.e("AliasType inconnu: $code");
+        return AliasType.values.first;
+      },
+    );
   }
 }

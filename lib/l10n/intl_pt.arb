@@ -19,6 +19,7 @@
   "btnTextAccept": "Aceitar",
   "btnTextConfirm": "Confirmar",
   "btnTextCancel": "Cancelar",
+  "btnTextClose": "Fechar",
   "btnTextYes": "Sim",
   "btnTextNo": "Não",
   "btnTextContinue": "Continuar",
@@ -877,5 +878,6 @@
   "contact_us_phone_title": "Ligue para o atendimento ao cliente",
   "contact_us_phone_desc": "Contate nossos agentes das 7h às 23h.",
   "contact_service_client": "Contatar o atendimento ao cliente",
-  "contact_us_default_message": "Fale-nos sobre a sua solicitação e nossa equipe entrará em contato em breve."
+  "contact_us_default_message": "Fale-nos sobre a sua solicitação e nossa equipe entrará em contato em breve.",
+  "userNotExistInContactsList": "Este utilizador não faz parte dos seus contactos, deve adicioná-lo para poder validar o pedido."
 }

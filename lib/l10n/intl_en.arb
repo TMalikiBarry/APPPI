@@ -19,6 +19,7 @@
   "btnTextAccept": "Accept",
   "btnTextConfirm": "Confirm",
   "btnTextCancel": "Cancel",
+  "btnTextClose": "Close",
   "btnTextYes": "Yes",
   "btnTextNo": "No",
   "btnTextContinue": "Continue",
@@ -877,6 +878,6 @@
   "contact_us_phone_title": "Call customer service",
   "contact_us_phone_desc": "Contact our agents from 7 a.m. to 11 p.m.",
   "contact_service_client": "Contact customer service",
-  "contact_us_default_message": "Tell us about your request and our team will contact you shortly."
-
+  "contact_us_default_message": "Tell us about your request and our team will contact you shortly.",
+  "userNotExistInContactsList": "This user is not one of your contacts. You must add them in order to approve the request."
 }

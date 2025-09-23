@@ -370,7 +370,15 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
         const SizedBox(height: 10,),*/
 
         // identifiant de l' Emetteur
-        if (transaction.clientId != null) ... [
+        if (transaction.additionalInformations != null
+            && transaction.additionalInformations?.externalAlias != null) ... [
+          _recuItem(
+              context,traductions.transactionDetailsRecuInfoPayeurID,
+              data : transaction.additionalInformations!.externalAlias!,
+              rapportSmallTitle: rapportSmallTitle,
+              rapportSubTitle: rapportSubTitle
+          ),
+        ] else if (transaction.clientId != null) ... [
           _recuItem(
               context,traductions.transactionDetailsRecuInfoPayeurID,
               data : transaction.clientId!,

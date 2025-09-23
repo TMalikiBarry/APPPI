@@ -226,7 +226,6 @@ class NotificationPageListeItem extends StatelessWidget {
       route = "/alias/revendications/${notification.idObject}";
     } else if (notification.type == NotificationType.annulationDemandee) {
       route = "/transaction/cancel-transfer";
-      logger.i("notification :: ${notification.toJson()}");
       transaction = Transaction(
         compte: '',
         montant:  notification.details?['amount'] != null ? double.parse(notification.details?['amount']) : 0.0,

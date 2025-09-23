@@ -103,6 +103,8 @@ class TransactionRtpBloc
         amount: TransactionSendCommandAmount(value: tx.montant),
         guID: tx.guID,
         codeMembreParticipantPayer: tx.codeMembreParticipantPayer,
+        clientName: tx.clientNom,
+        country: tx.clientPays
       );
       Stream<Transaction> stream = await transactionInputPort.confirm(command);
 

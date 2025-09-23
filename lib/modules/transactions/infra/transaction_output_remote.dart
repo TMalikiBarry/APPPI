@@ -417,7 +417,7 @@ class TransactionOutputRemote {
       });
     }
       else if (command.confirmationMethode == TransactionSendMethod.iban){
-      logger.i("On est la");
+      request['channel'] = "633";
       url = '/transfer/eme/external?transferType=IBAN';
     } else if (command.confirmationMethode == TransactionSendMethod.othr) {
       url = '/transfer/eme/external?transferType=ACCOUNT';
@@ -439,6 +439,8 @@ class TransactionOutputRemote {
         "guID": command.guID,
         "longitude": command.longitude,
         "lattitude": command.latitude,
+        "clientName": command.clientName,
+        "country": command.country,
         "codeMembreParticipantPayer" : command.codeMembreParticipantPayer
       };
     }

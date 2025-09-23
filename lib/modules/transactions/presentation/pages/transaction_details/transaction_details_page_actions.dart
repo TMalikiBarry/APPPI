@@ -7,9 +7,13 @@ import '../../../../../core/router.dart';
 import '../../../../../l10n/app_localizations.dart';
 import '../../../../../shared/models/frequence_command.dart';
 import '../../../../../shared/widgets/cta_widget.dart';
+import '../../../../alias/domain/models/alias.dart';
+import '../../../../alias/presentation/bloc/alias_bloc.dart';
+import '../../../../alias/presentation/bloc/alias_state.dart';
 import '../../../domain/models/transaction.dart';
 import '../../../domain/models/transaction_canal.dart';
 import '../../../domain/models/transaction_send/transaction_send_command.dart';
+import '../../../domain/models/transaction_send/transaction_send_command_alias.dart';
 import '../../../domain/models/transaction_send/transaction_send_command_schedule.dart';
 import '../../bloc/transaction_details/transaction_details_bloc.dart';
 import '../../bloc/transaction_send/transaction_send_bloc.dart';
@@ -17,7 +21,7 @@ import '../../bloc/transaction_send/transaction_send_event.dart';
 import 'transaction_details_page_actions_cancel.dart';
 import 'transaction_details_page_actions_return.dart';
 
-class TransactionDetailsPageActions extends StatelessWidget {
+class TransactionDetailsPageActions extends StatefulWidget {
   ///
   const TransactionDetailsPageActions({
     super.key,
@@ -25,6 +29,22 @@ class TransactionDetailsPageActions extends StatelessWidget {
   });
 
   final Transaction transaction;
+
+  @override
+  State<TransactionDetailsPageActions> createState() => _TransactionDetailsPageActionsState();
+}
+
+class _TransactionDetailsPageActionsState extends State<TransactionDetailsPageActions> {
+  bool isTran = false;
+
+  @override
+  initState () {
+    Alias alias = (context.read<AliasBloc>().state as AliasExistState).alias;
+    if (alias.accountType == "TRAN") {
+      isTran = true;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,70 +63,75 @@ class TransactionDetailsPageActions extends StatelessWidget {
             CtaWidget(
               image: Images.iconMoneySendHeaderHP,
               label: traductions.homeActionSend,
-              action: () => _actionSend(context, transaction),
+              action: () => _actionSend(context, widget.transaction),
               //action: null,
               //disabled: true,
             ),
             // Transfert émis
-            if (transaction.sens?.name == TransactionSens.debit.name) ...[
+            if (widget.transaction.sens?.name == TransactionSens.debit.name) ...[
               // Demander l'annulation
               CtaWidget(
                 image: Images.transactionCancel,
                 label: traductions.transactionDetailsAnnuler,
                 //disabled: true,
                 action: () => _actionCancel(
-                  transaction,
+                  widget.transaction,
                   context,
                   transactionDetailsBloc,
                 ),
               ),
             ],
             // Transfert reçu
-            if (transaction.sens?.name == TransactionSens.credit.name) ...[
+            if (widget.transaction.sens?.name == TransactionSens.credit.name) ...[
               // Demander le paiement
-              CtaWidget(
-                image: Images.iconMoneyReceiveHeaderHP,
-                label: traductions.transactionDetailsRecevoir,
-                //disabled: transaction.clientAlias == null,
-                disabled: true,
-                //action: transaction.clientAlias != null
-                //    ? () => _actionRtp(context, transaction)
-                //    : null,
-                action: null,
-              ),
+              if (isTran)
+                CtaWidget(
+                  image: Images.iconMoneyReceiveHeaderHP,
+                  label: traductions.transactionDetailsRecevoir,
+                  /*disabled: (
+                    widget.transaction.clientAlias == null &&
+                    widget.transaction.additionalInformations?.otherClient == null
+                  ),*/
+                  disabled: true,
+                  action: (widget.transaction.clientAlias != null || widget.transaction.additionalInformations?.otherClient != null)
+                      ? () => _actionRtp(context, widget.transaction)
+                      : null,
+                  //action: null,
+                ),
               // Retour de fonds
               CtaWidget(
                 image: Images.transactionCancel,
                 label: traductions.transactionDetailsRetourner,
-                disabled: transaction.retourDate != null,
+                disabled: widget.transaction.retourDate != null,
                 //disabled: true,
                 action: () => _actionReturn(
-                  transaction,
+                  widget.transaction,
                   context,
                   transactionDetailsBloc,
                 ),
               ),
             ],
             // Split payments: Plusieurs demandes de paiement
-            CtaWidget(
-              image: Images.transactionPartager,
-              label: traductions.transactionDetailsPartager,
-              //disabled: transaction.sens?.name == TransactionSens.credit.name,
-              disabled: true,
-              action: transaction.sens?.name == TransactionSens.debit.name
-                  ? () => _actionSplit(context, transaction)
-                  : null,
-            ),
+            if (isTran)
+              CtaWidget(
+                image: Images.transactionPartager,
+                label: traductions.transactionDetailsPartager,
+                //disabled: transaction.sens?.name == TransactionSens.credit.name,
+                disabled: true,
+                action: widget.transaction.sens?.name == TransactionSens.debit.name
+                    ? () => _actionSplit(context, widget.transaction)
+                    : null,
+              ),
 
             // Programmer le paiement
-            if (transaction.sens?.name == TransactionSens.debit.name) ...[
+            if (widget.transaction.sens?.name == TransactionSens.debit.name && isTran) ...[
               CtaWidget(
                 image: Images.transactionPlanifier,
                 label: traductions.transactionDetailsPlanifier,
                 // disabled: transaction.subscriptionId != null,
                 disabled: true,
-                action: transaction.subscriptionId == null
-                    ? () => _actionSchedule(context, transaction)
+                action: widget.transaction.subscriptionId == null
+                    ? () => _actionSchedule(context, widget.transaction)
                     : null,
               ),
             ],
@@ -152,17 +177,9 @@ class TransactionDetailsPageActions extends StatelessWidget {
 
   /// Renvoyer la transaction
   void _actionSend(BuildContext context, Transaction transaction) {
-    //logger.i("_actionSend");
-    //logger.i(transaction.toJson());
-    // Passer le type de formulaire à afficher
     TransactionSendCommand command =
         TransactionSendCommand.fromTransaction(transaction);
 
-    //logger.i(command.iban);
-    //logger.i(command.pspPays);
-    //logger.i(command.pspCode);
-    //logger.i(command.pspNom);
-    //logger.i(command.method);
     context
         .read<TransactionSendBloc>()
         .add(TransactionSendDisplayFormEvent(command));
@@ -175,6 +192,12 @@ class TransactionDetailsPageActions extends StatelessWidget {
     // Passer le type de formulaire à afficher
     TransactionSendCommand command =
         TransactionSendCommand.fromTransaction(transaction);
+    /*
+    command.alias = widget.transaction.clientAlias != null ?
+      TransactionSendCommandAlias(value: widget.transaction.clientAlias)
+      : command.alias;
+    command.method = TransactionSendMethod.aliasRtb;
+     */
     command.action = TransactionSendCommand.actionReceiveNow;
     command.canal = TransactionCanal.transfertParRequestToPay.code;
     context

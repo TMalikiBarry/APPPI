@@ -247,6 +247,7 @@ List<NotificationGroup> groupNotifications(
   for (var n in notifications) {
     final key = _dayKey(n);
 
+    /*
     // 👉 Vérifie condition spéciale
     if (n.type == notifType.NotificationType.rtpInitiee &&
         n.details?['channel'] == "631") {
@@ -268,8 +269,7 @@ List<NotificationGroup> groupNotifications(
       }
 
       logger.i("✅ Notification retenue (alias $alias trouvé dans contacts)");
-    }
-
+    }*/
     // Ajoute la notification si elle passe le filtre
     grouped.putIfAbsent(key, () => []).add(n);
   }

@@ -21,7 +21,9 @@ class TransactionConfirmCommand {
     this.channel,
     this.clientAlias,
     this.guID,
-    this.codeMembreParticipantPayer
+    this.codeMembreParticipantPayer,
+    this.clientName,
+    this.country,
   });
 
   // Transfert
@@ -40,6 +42,8 @@ class TransactionConfirmCommand {
   String? clientAlias;
   String? guID;
   String? codeMembreParticipantPayer;
+  String? clientName;
+  String? country;
 
   // Type d'operations transactionnelles possibles
   static const String actionSendNow = "send_now"; // paiement immediat

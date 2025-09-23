@@ -3376,7 +3376,7 @@ abstract class AppLocalizations {
   /// No description provided for @userNotExistInContactsList.
   ///
   /// In en, this message translates to:
-  /// **'This user is not part of your contacts.'**
+  /// **'This user is not one of your contacts. You must add them in order to approve the request.'**
   String get userNotExistInContactsList;
 }
 

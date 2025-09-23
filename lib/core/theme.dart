@@ -108,6 +108,7 @@ class Themer {
   static const backgroundSecondaryColor = Color(0xFFF5F6FF);
   static const backgroundPrimaryColor = Color(0xFFEEF0FF);
   static const backgroundPiProgramme = Color(0xFFE7E9FF);
+  static const homeTab = Color(0xFFDBDFFF);
 
   static const TextStyle _defaultStyleLight = TextStyle(
     color: blackColor,

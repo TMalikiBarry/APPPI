@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/assets.dart';
 import '../../../../core/router.dart';
+import '../../../../core/theme.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/cta_widget.dart';
 import '../../../alias/domain/models/alias.dart';
@@ -53,6 +54,7 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
         children: [
           // Home Page Fixed Design
           Card(
+            //color: Themer.backgroundPiProgramme,
             child: Padding(
               padding: const EdgeInsets.all(0),
               child: SingleChildScrollView(
@@ -64,12 +66,12 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                     //const SoldeWidget(),
                     const SoldeWidgetCard(),
                     // Séparateur
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                     // Principales actions: Envoyer, Recevoir, Plus
                     Padding(
                       //padding: const EdgeInsets.only(right: 70,),
                       //padding: const EdgeInsets.only(right: 86,),
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
                       //padding: const EdgeInsets.all(20),
                       child:
                       Row(
@@ -78,7 +80,7 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                         children: [
                           // Envoyer
                           CtaWidget(
-                            image: Images.iconMoneySendHeaderHP,
+                            image: Images.iconMoneySendHeaderHPHomePage,
                             label: traductions.homeActionSend,
                             action: () => AppRouter.push(
                               context,
@@ -88,7 +90,7 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
 
                           // Recevoir
                           CtaWidget(
-                            image: Images.iconMoneyReceiveHeaderHP,
+                            image: Images.iconMoneyReceiveHeaderHPHomePage,
                             label: traductions.homeActionRequest,
                             disabled: !isTran,
                             action: () => AppRouter.push(
@@ -101,7 +103,7 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                           // Plus
                           CtaWidget(
                             // icon: const Icon(Icons.more_horiz, size: 30),
-                            image: Images.iconMoreActionHeaderHP,
+                            image: Images.iconMoreActionHeaderHPHomePage,
                             label: traductions.homeActionMore,
                             disabled: !isTran,
                             action: () => {
@@ -118,7 +120,7 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 15),
 
                   ],
                 ),

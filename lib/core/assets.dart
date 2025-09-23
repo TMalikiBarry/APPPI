@@ -95,6 +95,9 @@ class Images {
   static const String iconMoneyReceiveHeaderHP = 'assets/images/figma_hp_money_receive.png';
   static const String iconMoneySendHeaderHP = 'assets/images/figma_hp_money_send.png';
   static const String iconMoreActionHeaderHP = 'assets/images/figma_hp_more_actions.png';
+  static const String iconMoneySendHeaderHPHomePage = 'assets/images/envoi_pi.png';
+  static const String iconMoneyReceiveHeaderHPHomePage = 'assets/images/recevoir_pi.png';
+  static const String iconMoreActionHeaderHPHomePage = 'assets/images/plus_pi.png';
 
   // Home page - More menu
   static const String homeMoreFindSubscription =

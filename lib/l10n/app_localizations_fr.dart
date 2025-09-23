@@ -1719,5 +1719,5 @@ class AppLocalizationsFr extends AppLocalizations {
   String get contact_us_default_message => 'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.';
 
   @override
-  String get userNotExistInContactsList => 'Cet utilisateur ne fait pas partie de vos contacts';
+  String get userNotExistInContactsList => 'Cet utilisateur ne fait pas partie de vos contacts, vous devez l\'ajouter pour pouvoir valider la demande.';
 }

@@ -254,7 +254,7 @@ void main() {
           .confirm(TransactionConfirmCommand(
               confirmationDate: "2019-08-24T14:15:22.999Z",
               endToendId: "E2E123",
-              confirmationMethode: "ok",
+              confirmationMethode: TransactionSendMethod.alias,
               motif: TransactionSendCommandMotif(value: "aide famille"),
               amount: TransactionSendCommandAmount(value: 3, solde: 2000)))
           .then((value) => () {
@@ -331,7 +331,17 @@ void main() {
           frequence: frequence,
           error: TransactionSendCommandScheduleError.debutEmpty);
 
-      var result = await service.schedule("E2E123", transacationSchedule);
+      var result = await service.schedule(
+        "E2E123",
+        TransactionConfirmCommand(
+          confirmationDate: "2019-08-24T14:15:22.999Z",
+          endToendId: "E2E123",
+          confirmationMethode: TransactionSendMethod.alias,
+          motif: TransactionSendCommandMotif(value: "aide famille"),
+          amount: TransactionSendCommandAmount(value: 3, solde: 2000),
+        ),
+        transacationSchedule,
+      );
 
       expect(result.endToEndId, "E2E123");
     });
@@ -350,7 +360,7 @@ void main() {
           dateOperation: DateTime.now());
 
       var result = await service.reject(
-          transaction, TransactionRejectReason.erreurMontant);
+          transaction, TransactionRejectReason.erreurMontant, true);
 
       expect(result.endToEndId, transaction.endToEndId);
     });

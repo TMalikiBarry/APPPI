@@ -181,6 +181,12 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get btnTextCancel;
 
+  /// No description provided for @btnTextClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get btnTextClose;
+
   /// No description provided for @btnTextYes.
   ///
   /// In en, this message translates to:
@@ -1522,7 +1528,7 @@ abstract class AppLocalizations {
   /// No description provided for @transactionFormAmountLow.
   ///
   /// In en, this message translates to:
-  /// **'Minimum amount 5 XOF'**
+  /// **'Minimum amount 1 XOF'**
   String get transactionFormAmountLow;
 
   /// No description provided for @transactionFormMotifHint.
@@ -3366,6 +3372,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tell us about your request and our team will contact you shortly.'**
   String get contact_us_default_message;
+
+  /// No description provided for @userNotExistInContactsList.
+  ///
+  /// In en, this message translates to:
+  /// **'This user is not one of your contacts. You must add them in order to approve the request.'**
+  String get userNotExistInContactsList;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

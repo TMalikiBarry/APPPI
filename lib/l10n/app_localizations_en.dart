@@ -51,6 +51,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnTextCancel => 'Cancel';
 
   @override
+  String get btnTextClose => 'Close';
+
+  @override
   String get btnTextYes => 'Yes';
 
   @override
@@ -744,7 +747,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transactionFormAmountInvalid => 'Insufficient balance';
 
   @override
-  String get transactionFormAmountLow => 'Minimum amount 5 XOF';
+  String get transactionFormAmountLow => 'Minimum amount 1 XOF';
 
   @override
   String get transactionFormMotifHint => 'Add note';
@@ -1714,4 +1717,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contact_us_default_message => 'Tell us about your request and our team will contact you shortly.';
+
+  @override
+  String get userNotExistInContactsList => 'This user is not one of your contacts. You must add them in order to approve the request.';
 }

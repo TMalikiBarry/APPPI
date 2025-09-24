@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,6 +29,8 @@ class TransactionSendPageContacts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logger.i("action::: $action");
+    logger.i("action::: ${action == TransactionSendCommand.actionReceiveNow}");
     //
     return ContactListWidget(
       hideTitle: hideTitle,
@@ -80,8 +83,10 @@ class TransactionSendPageContacts extends StatelessWidget {
         .add(TransactionSendDisplayFormEvent(TransactionSendCommand(
           action: action,
           method: alias != null
-              ? TransactionSendMethod.alias
-              : TransactionSendMethod.othr,
+            ? action == TransactionSendCommand.actionReceiveNow
+              ? TransactionSendMethod.aliasRtb
+              : TransactionSendMethod.alias
+            : TransactionSendMethod.othr,
           compte: compte,
           canal: action == TransactionSendCommand.actionReceiveNow
               ? TransactionCanal.transfertParRequestToPay.code

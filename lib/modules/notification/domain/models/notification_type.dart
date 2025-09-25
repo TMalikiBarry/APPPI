@@ -2,6 +2,7 @@ enum NotificationType {
   revendicationInitiee("REVENDICATION_INITIEE"),
   annulationDemandee("ANNULATION_DEMANDEE"),
   annulationRejetee("ANNULATION_REJETEE"),
+  annulationAcceptee("ANNULATION_ACCEPTEE"),
   rtpInitiee("RTP_INITIEE"),
   rtpRecue("RTP_RECUE"),
   notifTransaction("TRANSACTION");

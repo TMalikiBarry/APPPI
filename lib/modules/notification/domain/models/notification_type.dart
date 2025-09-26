@@ -5,7 +5,10 @@ enum NotificationType {
   annulationAcceptee("ANNULATION_ACCEPTEE"),
   rtpInitiee("RTP_INITIEE"),
   rtpRecue("RTP_RECUE"),
-  notifTransaction("TRANSACTION");
+  notifTransaction("TRANSACTION"),
+  airtime("AIRTIME"),
+  payment("PAYMENT"),
+  deposit("DEPOSIT");
 
   final String value;
   const NotificationType(this.value);

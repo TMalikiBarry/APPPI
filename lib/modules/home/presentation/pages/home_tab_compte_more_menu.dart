@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pi_mobile_app/core/router.dart';
 import 'package:pi_mobile_app/l10n/app_localizations.dart';
 import 'package:pi_mobile_app/shared/widgets/menu_actions_widget.dart';
 
@@ -17,7 +18,7 @@ class HomeTabCompteMoreMenu extends StatelessWidget {
     AppLocalizations traductions = AppLocalizations.of(context)!;
     //
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.6,
+      height: MediaQuery.of(context).size.height * 0.2,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: Theme.of(context).colorScheme.surface,
@@ -39,11 +40,14 @@ class HomeTabCompteMoreMenu extends StatelessWidget {
                         Images.homeFooterTransfer,
                         traductions.homeActionMoreSheetProgrammerTitle,
                         traductions.homeActionMoreSheetProgrammerSubTitle,
-                        () => "",
+                        () => AppRouter.push(
+                          context,
+                          AppRouter.subscriptionSchedule,
+                        ),
                         iconSize: 20,
                       ),
                       // Trouver un abonnement
-                      MenuActionItem(
+                      /*MenuActionItem(
                         Images.homeMoreFindSubscription,
                         traductions.homeActionMoreSheetAbonnementTitle,
                         traductions.homeActionMoreSheetAbonnementSubTitle,
@@ -81,7 +85,7 @@ class HomeTabCompteMoreMenu extends StatelessWidget {
                         traductions.homeActionMoreSheetAWidgetSubTitle,
                         () => "",
                         iconSize: 20,
-                      ),
+                      ),*/
                     ],
                   ),
                 ],

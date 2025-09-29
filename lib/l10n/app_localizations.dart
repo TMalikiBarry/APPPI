@@ -181,6 +181,12 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get btnTextCancel;
 
+  /// No description provided for @btnTextClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get btnTextClose;
+
   /// No description provided for @btnTextYes.
   ///
   /// In en, this message translates to:
@@ -1489,6 +1495,12 @@ abstract class AppLocalizations {
   /// **'Transaction failed'**
   String get transactionsSendErrorDescription;
 
+  /// No description provided for @transactionsSendErrorALias.
+  ///
+  /// In en, this message translates to:
+  /// **'The recipient\'s alias does not exist in PI.'**
+  String get transactionsSendErrorALias;
+
   /// No description provided for @transactionsSendErrorBtn.
   ///
   /// In en, this message translates to:
@@ -1516,7 +1528,7 @@ abstract class AppLocalizations {
   /// No description provided for @transactionFormAmountLow.
   ///
   /// In en, this message translates to:
-  /// **'Minimum amount 5 XOF'**
+  /// **'Minimum amount 1 XOF'**
   String get transactionFormAmountLow;
 
   /// No description provided for @transactionFormMotifHint.
@@ -1776,6 +1788,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You have scheduled {montant} FCFA for {payee}'**
   String transactionFormScheduleSuccessMessage(String montant, String payee);
+
+  /// No description provided for @transactionFormEditScheduleSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The scheduled {montant} FCFA for {payee} has been successfully edited'**
+  String transactionFormEditScheduleSuccessMessage(String montant, String payee);
 
   /// No description provided for @transactionFormScheduleSuccessBtn.
   ///
@@ -3312,6 +3330,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transactions'**
   String get bottom_bar_transaction;
+
+  /// No description provided for @contact_us_whatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact us by whatsapp'**
+  String get contact_us_whatsapp;
+
+  /// No description provided for @contact_us_whatsapp_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Call or send messages.'**
+  String get contact_us_whatsapp_desc;
+
+  /// No description provided for @contact_us_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Call us'**
+  String get contact_us_phone;
+
+  /// No description provided for @contact_us_phone_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Call customer service'**
+  String get contact_us_phone_title;
+
+  /// No description provided for @contact_us_phone_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact our agents from 7 a.m. to 11 p.m.'**
+  String get contact_us_phone_desc;
+
+  /// No description provided for @contact_service_client.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact customer service'**
+  String get contact_service_client;
+
+  /// No description provided for @contact_us_default_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about your request and our team will contact you shortly.'**
+  String get contact_us_default_message;
+
+  /// No description provided for @userNotExistInContactsList.
+  ///
+  /// In en, this message translates to:
+  /// **'This user is not one of your contacts. You must add them in order to approve the request.'**
+  String get userNotExistInContactsList;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pi_mobile_app/core/notifications.dart';
 
 import '../../../../../core/router.dart';
 import '../../../../../l10n/app_localizations.dart';
@@ -27,6 +28,7 @@ class TransactionFormPageSchedule extends StatelessWidget {
     //
     return BlocConsumer<TransactionSendBloc, TransactionSendState>(
       listenWhen: (previous, current) =>
+          current is TransactionSendLoadingState ||
           current is TransactionSendFormSendingState ||
           current is TransactionSendFormSuccessState ||
           current is TransactionSendFormErrorState,
@@ -37,8 +39,16 @@ class TransactionFormPageSchedule extends StatelessWidget {
         }
         // Envoyé avec succès - Irrevocable
         else if (state is TransactionSendFormSuccessState) {
+
+          // Notification en cas de success
+          AppNotifications.showCustomTransferNotification(
+            title: "Opération réussie",
+            body: "Votre opération a été éffectuée avec succès!",
+          );
+
           // Hide loader
           CustomLoadingDialog.hide(context);
+
           // Show success popup
           bool isBottomSheetClosed = false;
           showModalBottomSheet<void>(
@@ -76,70 +86,77 @@ class TransactionFormPageSchedule extends StatelessWidget {
         }
       },
       buildWhen: (previous, current) =>
-          current is TransactionSendFormScheduleState,
+          current is TransactionSendFormScheduleState ||
+          current is TransactionSendLoadingState,
       builder: (context, state) {
-        if (state is! TransactionSendFormScheduleState) {
-          return const LoadingPage();
-        }
-        TransactionSendCommand command = state.command;
-        Transaction transaction = state.transaction;
-        return Scaffold(
-          // Pour avoir le bouton de retour
-          appBar: AppBar(),
-          // Contenu de la page de connexion
-          body: MyPageContainer(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Titre de la page
-                  Text(
-                    traductions.transactionFormScheduleTitle,
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                  //
-                  const SizedBox(height: 5.0),
-                  // Sous titre de la page
-                  Text(
-                    traductions.transactionFormScheduleSubtitle,
-                    style: Theme.of(context).textTheme.displaySmall,
-                  ),
-                  //
-                  const SizedBox(height: 32),
+        if (state is TransactionSendFormScheduleState) {
+          TransactionSendCommand command = state.command;
+          Transaction transaction = state.transaction;
+          return Scaffold(
+            // Pour avoir le bouton de retour
+            appBar: AppBar(),
+            // Contenu de la page de connexion
+            body: MyPageContainer(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Titre de la page
+                    Text(
+                      traductions.transactionFormScheduleTitle,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    //
+                    const SizedBox(height: 5.0),
+                    // Sous titre de la page
+                    Text(
+                      traductions.transactionFormScheduleSubtitle,
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    //
+                    const SizedBox(height: 32),
 
-                  // Fréquence
-                  FrequenceInputWidget(
-                    command: command.schedule!.frequence!,
-                    onChange: (value) {
-                      command.schedule!.frequence = value;
-                      context.read<TransactionSendBloc>().add(
-                            TransactionSendScheduleEvent(command, transaction),
-                          );
-                    },
-                  ),
-                  // Séparateur
-                  const SizedBox(height: 16),
+                    // Fréquence
+                    FrequenceInputWidget(
+                      command: command.schedule!.frequence!,
+                      onChange: (value) {
+                        command.schedule!.frequence = value;
+                        context.read<TransactionSendBloc>().add(
+                              TransactionSendScheduleEvent(command, transaction),
+                            );
+                      },
+                    ),
+                    // Séparateur
+                    const SizedBox(height: 16),
 
-                  // Date
-                  TransactionSendFormInputDate(
-                    command: command,
-                    transaction: transaction,
-                    traductions: traductions,
-                  ),
+                    // Date
+                    TransactionSendFormInputDate(
+                      command: command,
+                      transaction: transaction,
+                      traductions: traductions,
+                    ),
 
-                  // Espacement de 32 pixels
-                  const SizedBox(height: 32),
-                ],
+                    // Espacement de 32 pixels
+                    const SizedBox(height: 32),
+                  ],
+                ),
               ),
             ),
-          ),
-          bottomNavigationBar: TransactionFormPageScheduleBtn(
-            command: command,
-            transaction: transaction,
-          ),
-        );
-      },
+            bottomNavigationBar: SafeArea(
+              minimum: const EdgeInsets.all(16),
+              child: TransactionFormPageScheduleBtn(
+                command: command,
+                transaction: transaction,
+              ),
+            ),
+          );
+        } else  {
+          return const Scaffold(
+            body: LoadingPage(),
+          );
+        }
+      }
     );
   }
 }

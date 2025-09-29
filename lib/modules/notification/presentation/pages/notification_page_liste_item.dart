@@ -35,7 +35,7 @@ class NotificationPageListeItem extends StatelessWidget {
         leading: _buildIcon(context, notification),
         title: _buildTitle(context, traductions, notification),
         subtitle: _buildSubtitle(context, traductions, notification),
-        onTap: () => _handleNotification(context, notification));
+        onTap: () => _handleNotification(context, notification, traductions));
   }
 
   /// ICON DE LA NOTIFICATION
@@ -204,9 +204,10 @@ class NotificationPageListeItem extends StatelessWidget {
   }
 
   /// Action quand on clique sur Notifications
-  _handleNotification(
-    BuildContext context,
-    my_notif.Notification notification,
+  void _handleNotification(
+      BuildContext context,
+      my_notif.Notification notification,
+      AppLocalizations traductions,
   ) {
     logger.i("notification : ${notification.toJson()}");
 
@@ -228,12 +229,14 @@ class NotificationPageListeItem extends StatelessWidget {
       route = "/transaction/cancel-transfer";
       transaction = Transaction(
         compte: '',
-        montant:  notification.details?['amount'] != null ? double.parse(notification.details?['amount']) : 0.0,
+        montant: notification.details?['amount'] != null
+            ? double.parse(notification.details?['amount'])
+            : 0.0,
         clientNom: notification.details?["clientName"] ?? "",
         clientPays: notification.details?["clientCountry"] ?? "Pays inconnu",
         endToEndId: notification.details?["guID"] ?? "",
         guID: notification.idObject,
-        annulationDate:  _parseImpactDate(notification.details?['impactDate']),
+        annulationDate: _parseImpactDate(notification.details?['impactDate']),
         dateOperation: _parseImpactDate(notification.details!['impactDate']),
         annulationRaison: TransactionCancelReasonX.fromCode(
           notification.details?['raison'],
@@ -247,8 +250,7 @@ class NotificationPageListeItem extends StatelessWidget {
         clientId: notification.details?['clientId']
       );
       //logger.i("transaction : ${{"tx": transaction}}");
-    } else if (notification.type == NotificationType.rtpInitiee ||
-        notification.type == NotificationType.rtpRecue) {
+    } else if (notification.type == NotificationType.rtpInitiee) {
       transaction = Transaction(
         compte: '',
         clientAlias: notification.details?["alias"] ?? "",
@@ -266,6 +268,7 @@ class NotificationPageListeItem extends StatelessWidget {
         sens: TransactionSens.debit,
         clientId: notification.details?['clientId'],
         codeMembreParticipantPayer: notification.details?['codeMembreParticipantPayer'],
+        canal: notification.details?['channel'],
       );
       route = "/transaction/receive_now-rtp";
     } else {
@@ -273,8 +276,7 @@ class NotificationPageListeItem extends StatelessWidget {
     }
     logger.i("route : $route");
     if (notification.type == NotificationType.annulationDemandee ||
-        notification.type == NotificationType.rtpInitiee ||
-        notification.type == NotificationType.rtpRecue) {
+        notification.type == NotificationType.rtpInitiee) {
       AppRouter.push(context, route, params: {"tx": transaction});
     } else if (route == "/transaction/details-notification") {
       AppRouter.push(context, route, params: {"notification": notification});
@@ -300,7 +302,13 @@ DateTime? _parseImpactDate(String? raw) {
   if (raw == null) return null;
 
   try {
-    // Tronquer les fractions de secondes à max 6 digits
+    // Si c'est au format français : "22/09/2025 18:21:46"
+    if (RegExp(r'^\d{2}/\d{2}/\d{4} \d{2}:\d{2}:\d{2}$').hasMatch(raw)) {
+      final format = DateFormat("dd/MM/yyyy HH:mm:ss");
+      return format.parse(raw).toLocal();
+    }
+
+    // Sinon, on tente un parse ISO standard (peut contenir fractions de secondes)
     final regex = RegExp(r'(\.\d{6})\d+Z$');
     final fixed = raw.replaceAllMapped(regex, (m) => '${m[1]}Z');
     return DateTime.parse(fixed).toLocal();

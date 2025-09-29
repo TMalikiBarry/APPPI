@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -5,7 +6,9 @@ import 'package:intl/intl.dart';
 import '../../../../../core/theme.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/notification_dialog.dart';
+import '../../../contacts/presentation/bloc/contact_bloc.dart';
 import '../../domain/models/notification.dart' as notif;
+import '../../domain/models/notification_type.dart' as notifType;
 import '../../domain/models/notification_liste.dart';
 import '../bloc/notification_bloc.dart';
 import '../bloc/notification_event.dart';
@@ -13,6 +16,7 @@ import '../bloc/notification_state.dart';
 import 'notification_page_liste_empty.dart';
 import 'notification_page_liste_item.dart';
 import 'notification_page_liste_loading.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 
 class NotificationPageListe extends StatefulWidget {
   ///
@@ -58,7 +62,7 @@ class _NotificationPageListeState extends State<NotificationPageListe> {
             if (notifications.isNotEmpty) {
               // Liste groupé par jour
               List<NotificationGroup> notificationsGroupList =
-                  groupNotifications(notifications);
+                  groupNotifications(notifications, context);
               return ListView.builder(
                 controller: scrollController,
                 itemCount: notificationsGroupList.length,
@@ -233,10 +237,17 @@ String _dayKey(notif.Notification n) {
   return DateFormat('yyyy-MM-dd').format(dt!);
 }
 
-List<NotificationGroup> groupNotifications(List<notif.Notification> notifications) {
+List<NotificationGroup> groupNotifications(
+    List<notif.Notification> notifications,
+    BuildContext context,
+) {
   final Map<String, List<notif.Notification>> grouped = {};
+  final List<Contact> contacts =
+      (context.read<ContactBloc>().state).contacts ?? [];
   for (var n in notifications) {
     final key = _dayKey(n);
+
+    // Ajoute la notification si elle passe le filtre
     grouped.putIfAbsent(key, () => []).add(n);
   }
   return grouped.entries

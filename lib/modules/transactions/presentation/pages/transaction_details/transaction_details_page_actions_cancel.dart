@@ -57,13 +57,13 @@ class _TransactionDetailsPageActionsCancelState
                       onPressed: () async{
                         Navigator.pop(context);
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.arrow_back_ios_new,
                         size: 28,
                         color: Themer.primaryColor,
                       ),
                     ),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Text(
                       traductions.transactionDetailsCancelTitle,
                       style: Theme.of(context).textTheme.headlineLarge!.copyWith(color: Themer.primaryColor, fontWeight: FontWeight.w700),

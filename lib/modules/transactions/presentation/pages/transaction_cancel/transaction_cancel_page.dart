@@ -293,6 +293,17 @@ class TransactionCancelPage extends StatelessWidget {
           const SizedBox(width: 16),
           // Confirmer
           Expanded(
+            child: ElevatedButton(
+              onPressed: () {
+                transactionCancelBloc.add(
+                  TransactionCancelAcceptEvent(id, tx),
+                );
+              },
+              child: Text(traductions.btnTextAccept),
+            ),
+          ),
+          /*
+          Expanded(
             child: BlocListener<IdentificationBloc, IdentificationState>(
               listener: (context, state) async {
                 // Pour afficher page code pin form
@@ -319,6 +330,7 @@ class TransactionCancelPage extends StatelessWidget {
               ),
             ),
           ),
+          */
         ],
       ),
     );

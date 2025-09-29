@@ -19,6 +19,7 @@
   "btnTextAccept": "Accept",
   "btnTextConfirm": "Confirm",
   "btnTextCancel": "Cancel",
+  "btnTextClose": "Close",
   "btnTextYes": "Yes",
   "btnTextNo": "No",
   "btnTextContinue": "Continue",
@@ -345,12 +346,13 @@
   "transactionsSendSuccessBtnReessayer": "Retry",
   "transactionsSendErrorTitle": "😔 Oooops",
   "transactionsSendErrorDescription": "Transaction failed",
+  "transactionsSendErrorALias": "The recipient's alias does not exist in PI.",
   "transactionsSendErrorBtn": "Continue",
   "@_TRANSACTIONS_FORM_FIELDS": {},
   "transactionFormAmountHint": "Amount",
   "transactionFormAmountEmpty": "Mandatory",
   "transactionFormAmountInvalid": "Insufficient balance",
-  "transactionFormAmountLow": "Minimum amount 5 XOF",
+  "transactionFormAmountLow": "Minimum amount 1 XOF",
   "transactionFormMotifHint": "Add note",
   "transactionFormMotifLabel": "Note",
   "transactionFormMotifInvalid": "No more than 104 characters",
@@ -432,6 +434,17 @@
       }
     }
   },
+  "transactionFormEditScheduleSuccessMessage": "The scheduled {montant} FCFA for {payee} has been successfully edited",
+    "@transactionFormEditScheduleSuccessMessage": {
+      "placeholders": {
+          "montant": {
+            "type": "String"
+          },
+          "payee": {
+            "type": "String"
+          }
+      }
+    },
   "transactionFormScheduleSuccessBtn": "View subscription",
   "transactionsSendSuccessBtnTitle": "You sent money to {payee}",
   "@transactionsSendSuccessBtnTitle": {
@@ -857,5 +870,14 @@
   "coming_soon": "Coming soon ...",
   "alias_copied": "Alias copied !",
   "bottom_bar_home": "Home",
-  "bottom_bar_transaction": "Transactions"
+  "bottom_bar_transaction": "Transactions",
+
+  "contact_us_whatsapp": "Contact us by whatsapp",
+  "contact_us_whatsapp_desc": "Call or send messages.",
+  "contact_us_phone": "Call us",
+  "contact_us_phone_title": "Call customer service",
+  "contact_us_phone_desc": "Contact our agents from 7 a.m. to 11 p.m.",
+  "contact_service_client": "Contact customer service",
+  "contact_us_default_message": "Tell us about your request and our team will contact you shortly.",
+  "userNotExistInContactsList": "This user is not one of your contacts. You must add them in order to approve the request."
 }

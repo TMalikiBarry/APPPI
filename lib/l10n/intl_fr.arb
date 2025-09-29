@@ -19,6 +19,7 @@
   "btnTextAccept": "Accepter",
   "btnTextConfirm": "Confirmer",
   "btnTextCancel": "Annuler",
+  "btnTextClose": "Fermer",
   "btnTextYes": "Oui",
   "btnTextNo": "Non",
   "btnTextContinue": "Continuer",
@@ -352,12 +353,13 @@
   },
   "transactionsSendErrorTitle": "😔 Oooops",
   "transactionsSendErrorDescription": "La transaction a échouée.",
+  "transactionsSendErrorALias": "L’alias du destinataire n’existe pas dans PI",
   "transactionsSendErrorBtn": "Continuer",
   "@_TRANSACTIONS_FORM_FIELDS": {},
   "transactionFormAmountHint": "Montant",
   "transactionFormAmountEmpty": "Obligatoire",
   "transactionFormAmountInvalid": "Solde insuffisant",
-  "transactionFormAmountLow": "Montant minimum 5 frcs",
+  "transactionFormAmountLow": "Montant minimum 1 frcs",
   "transactionFormMotifHint": "Ajouter une note",
   "transactionFormMotifLabel": "Note",
   "transactionFormFactureLabel": "Facture",
@@ -437,6 +439,17 @@
       "payee": {
         "type": "String"
       }
+    }
+  },
+  "transactionFormEditScheduleSuccessMessage": "La programmation de {montant} FCFA pour {payee} est modifié avec succès",
+  "@transactionFormEditScheduleSuccessMessage": {
+    "placeholders": {
+        "montant": {
+          "type": "String"
+        },
+        "payee": {
+          "type": "String"
+        }
     }
   },
   "transactionFormScheduleSuccessBtn": "Voir l'abonnement",
@@ -856,5 +869,14 @@
   "coming_soon": "Disponible bientôt ...",
   "alias_copied": "Alias copié !",
   "bottom_bar_home": "Accueil",
-  "bottom_bar_transaction": "Transactions"
+  "bottom_bar_transaction": "Transactions",
+  "contact_us_whatsapp": "Nous contacter par Whatsapp",
+  "contact_us_whatsapp_desc": "Appelez ou envoyez des messages",
+  "contact_us_phone": "Nous appeler",
+  "contact_us_phone_title": "Appelez le service client",
+  "contact_us_phone_desc": "Contactez nos agents de 07h à 23h",
+  "contact_service_client": "Contacter le service client",
+  "contact_us_description": "Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.",
+  "contact_us_default_message": "Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.",
+  "userNotExistInContactsList": "Cet utilisateur ne fait pas partie de vos contacts, vous devez l'ajouter pour pouvoir valider la demande."
 }

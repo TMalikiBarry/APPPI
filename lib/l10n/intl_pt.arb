@@ -19,6 +19,7 @@
   "btnTextAccept": "Aceitar",
   "btnTextConfirm": "Confirmar",
   "btnTextCancel": "Cancelar",
+  "btnTextClose": "Fechar",
   "btnTextYes": "Sim",
   "btnTextNo": "Não",
   "btnTextContinue": "Continuar",
@@ -352,12 +353,13 @@
   },
   "transactionsSendErrorTitle": "😔 Oooops",
   "transactionsSendErrorDescription": "A transação falhou.",
+  "transactionsSendErrorALias": "O alias do destinatário não existe no PI",
   "transactionsSendErrorBtn": "Continuar",
   "@_TRANSACTIONS_FORM_FIELDS": {},
   "transactionFormAmountHint": "Montante",
   "transactionFormAmountEmpty": "Obrigatório",
   "transactionFormAmountInvalid": "Saldo insuficiente",
-  "transactionFormAmountLow": "Montante mínimo 5 frcs",
+  "transactionFormAmountLow": "Montante mínimo 1 frcs",
   "transactionFormMotifHint": "Adicionar uma nota",
   "transactionFormMotifLabel": "Nota",
   "transactionFormFactureLabel": "Fatura",
@@ -439,6 +441,18 @@
       }
     }
   },
+  "transactionFormEditScheduleSuccessMessage": "O montante previsto de {montant} FCFA para {payee} foi editado com sucesso.",
+      "@transactionFormEditScheduleSuccessMessage": {
+        "placeholders": {
+            "montant": {
+              "type": "String"
+            },
+            "payee": {
+              "type": "String"
+            }
+        }
+      },
+
   "transactionFormScheduleSuccessBtn": "Ver o abonnamento",
   "subscriptionEmptyTitle": "Transações a vir",
   "subscriptionEmptySubTitle": "Gerencie seus assinaturas e pagamentos programados em um só lugar",
@@ -856,5 +870,14 @@
   "coming_soon": "Disponível em breve ...",
   "alias_copied": "Alias copiado !",
   "bottom_bar_home": "Home",
-  "bottom_bar_transaction": "Transactions"
+  "bottom_bar_transaction": "Transactions",
+
+  "contact_us_whatsapp": "Contate-nos pelo WhatsApp",
+  "contact_us_whatsapp_desc": "Ligue ou envie mensagens.",
+  "contact_us_phone": "Ligue para nós",
+  "contact_us_phone_title": "Ligue para o atendimento ao cliente",
+  "contact_us_phone_desc": "Contate nossos agentes das 7h às 23h.",
+  "contact_service_client": "Contatar o atendimento ao cliente",
+  "contact_us_default_message": "Fale-nos sobre a sua solicitação e nossa equipe entrará em contato em breve.",
+  "userNotExistInContactsList": "Este utilizador não faz parte dos seus contactos, deve adicioná-lo para poder validar o pedido."
 }

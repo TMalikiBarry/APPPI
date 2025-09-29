@@ -1,12 +1,16 @@
+import 'package:common_dependencies/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pi_mobile_app/l10n/app_localizations.dart';
 import 'package:pi_mobile_app/modules/config/adapters/ui/bloc/config_bloc.dart';
 import 'package:pi_mobile_app/modules/config/domain/models/config_keys.dart';
-
+import 'package:pi_mobile_app/modules/home/presentation/pages/support_page.dart';
 import '../../../../core/assets.dart';
 import '../../../../core/theme.dart';
+import '../../../alias/domain/models/alias.dart';
+import '../../../alias/presentation/bloc/alias_bloc.dart';
+import '../../../alias/presentation/bloc/alias_state.dart';
 import '../../../config/adapters/ui/bloc/config_event.dart';
 import '../../../contacts/presentation/bloc/contact_bloc.dart';
 import '../../../contacts/presentation/bloc/contact_event.dart';
@@ -33,12 +37,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const disabledTabs = <int>{1, 2};  // indices des onglets à griser
+  var disabledTabs = <int>{ 1, 2 };  // indices des onglets à griser
+
+  @override
+  initState () {
+    Alias alias = (context.read<AliasBloc>().state as AliasExistState).alias;
+    if (alias.accountType == "TRAN") {
+      disabledTabs = <int>{ 2 };  // indices des onglets à griser
+    }
+    super.initState();
+  }
   int selectedIndex = 2;
+  final baseWidth = 375;
+
 
   @override
   Widget build(BuildContext context) {
     final traductions = AppLocalizations.of(context)!;
+
 
     return DefaultTabController(
       length: 3,
@@ -144,9 +160,13 @@ class _HomePageState extends State<HomePage> {
 
   /// Boutons toolbar
   List<Widget> actionsBtns(BuildContext context) {
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+    fem = MediaQuery.of(context).size.width / baseWidth;
+    ffem = fem * 0.97;
     return [
       // Search
-      IconButton(
+/*      IconButton(
         icon: ImageIcon(
           const AssetImage(Images.iconSearchHeaderHP, package: 'common_dependencies'),
           color: Theme.of(context).colorScheme.onSurface,
@@ -155,9 +175,9 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           //
         },
-      ),
+      ),*/
       // Budgets
-      IconButton(
+ /*     IconButton(
         icon: ImageIcon(
           const AssetImage(Images.iconAnalytique, package: 'common_dependencies'),
           color: Theme.of(context).colorScheme.onSurface,
@@ -166,9 +186,41 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           //
         },
-      ),
+      ),*/
       // Notifications
       const NotificationBtnOpenWidget(),
+
+      Padding(
+        padding: const EdgeInsets.only(right: 5),
+        child: IconButton(
+          constraints: const BoxConstraints(),
+          onPressed: () {
+            showSupportBottomSheet(context);
+          },
+          icon: SvgPicture.asset(
+            "assets/images/call_customer_service.svg",
+            package: 'common_dependencies',
+            height: 22 * fem,
+            width: 22 * fem,
+          ),
+        ),
+      ),
     ];
+  }
+  void showSupportBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isDismissible: true,
+      isScrollControlled: true,
+      backgroundColor: whiteColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(35.0),
+        ),
+      ),
+      builder: (BuildContext context) {
+        return const SupportPage(fromTab: true);
+      },
+    );
   }
 }

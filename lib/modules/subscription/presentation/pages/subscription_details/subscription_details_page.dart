@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -69,7 +70,7 @@ class _SubscriptionDetailsPageState extends State<SubscriptionDetailsPage> {
                 current is SubscriptionDetailsDeletedState),
         listener: (context, state) async {
           // Process en cours
-          if (state is SubscriptionDetailsLoadingState) {
+          /*if (state is SubscriptionDetailsLoadingState) {
             CustomLoadingDialog.show(context);
           }
           // Après activation ou desactivation
@@ -77,7 +78,9 @@ class _SubscriptionDetailsPageState extends State<SubscriptionDetailsPage> {
             CustomLoadingDialog.hide(context);
           }
           // Après suppression
-          else if (state is SubscriptionDetailsDeletedState) {
+          else
+           */
+          if (state is SubscriptionDetailsDeletedState) {
             CustomLoadingDialog.hide(context);
             AppRouter.pushReplacement(
               context,
@@ -86,159 +89,170 @@ class _SubscriptionDetailsPageState extends State<SubscriptionDetailsPage> {
             );
           }
         },
+        buildWhen: (previous, current) =>
+          current is SubscriptionDetailsLoadingState ||
+            current is SubscriptionDetailsInitialState,
         builder: (context, state) {
-          Subscription subscription = state.subscription;
-          return MyPageContainer(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    BackButton(
-                      onPressed: () {
-                        AppRouter.pushReplacement(
-                          context,
-                          widget.detailsBackRoute,
-                          params: 1,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: ListView(
-                      children: [
-                        // Header: client details
-                        SubscriptionDetailsPageHeader(
-                          subscription: subscription,
-                        ),
+          if (state is SubscriptionDetailsInitialState) {
+            Subscription subscription = state.subscription;
+            return MyPageContainer(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      BackButton(
+                        onPressed: () {
+                          AppRouter.pushReplacement(
+                            context,
+                            widget.detailsBackRoute,
+                            params: 1,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: ListView(
+                        children: [
+                          // Header: client details
+                          SubscriptionDetailsPageHeader(
+                            subscription: subscription,
+                          ),
 
-                        const SizedBox(height: 16),
+                          const SizedBox(height: 16),
 
-                        // Buttons actions
-                        SubscriptionDetailsPageActions(
-                          subscription: subscription,
-                        ),
+                          // Buttons actions
+                          SubscriptionDetailsPageActions(
+                            subscription: subscription,
+                          ),
 
-                        const SizedBox(height: 10),
+                          const SizedBox(height: 10),
 
-                        // Frequence
-                        Card(
-                          child: Column(
-                            children: [
-                              TransactionDetailsPageDetail(
-                                label: traductions
-                                    .transactionFormScheduleFrequenceLabel,
-                                description: subscription.frequence == null
-                                    ? traductions
-                                        .transactionFormScheduleFrequenceUnefois
-                                    : FrequenceSelectWidget.frequenceText(
-                                        subscription.frequence!, traductions),
-                              ),
-                              // Date de début ou date d'exécution
-                              TransactionDetailsPageDetail(
-                                label: subscription.frequence == null
-                                    ? traductions
-                                        .subscriptionDateScheduledForTitle
-                                    : traductions.subscriptionStartDate,
-                                description:
-                                    formatter.format(subscription.dateDebut!),
-                              ),
-                              // Prochain paiement
-                              if (subscription.frequence != null &&
-                                  subscription.nextPaymentDate != null)
+                          // Frequence
+                          Card(
+                            child: Column(
+                              children: [
                                 TransactionDetailsPageDetail(
                                   label: traductions
-                                      .subscriptionDateNextPaymentTitle,
-                                  description: formatter.format(
-                                    subscription.nextPaymentDate!,
+                                      .transactionFormScheduleFrequenceLabel,
+                                  description: subscription.frequence == null
+                                      ? traductions
+                                          .transactionFormScheduleFrequenceUnefois
+                                      : FrequenceSelectWidget.frequenceText(
+                                          subscription.frequence!, traductions),
+                                ),
+                                // Date de début ou date d'exécution
+                                TransactionDetailsPageDetail(
+                                  label: subscription.frequence == null
+                                      ? traductions
+                                          .subscriptionDateScheduledForTitle
+                                      : traductions.subscriptionStartDate,
+                                  description:
+                                      formatter.format(subscription.dateDebut!),
+                                ),
+                                // Prochain paiement
+                                if (subscription.frequence != null &&
+                                    subscription.nextPaymentDate != null)
+                                  TransactionDetailsPageDetail(
+                                    label: traductions
+                                        .subscriptionDateNextPaymentTitle,
+                                    description: formatter.format(
+                                      subscription.nextPaymentDate!,
+                                    ),
                                   ),
-                                ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
+                          const SizedBox(height: 10),
 
-                        // Details client
-                        Card(
-                          child: Column(
-                            children: [
-                              //  Nom du client
-                              TransactionDetailsPageDetail(
-                                label: traductions.subscriptionPaymentTo,
-                                description: subscription.clientNom,
-                              ),
-
-                              // Pays du client
-                              TransactionDetailsPageDetail(
-                                label: traductions.transactionDetailsPays,
-                                description:
-                                    UEMOACountry.get(subscription.clientPays)!
-                                        .name,
-                              ),
-
-                              // Alias ou compte
-                              if (subscription.clientAlias != null)
+                          // Details client
+                          Card(
+                            child: Column(
+                              children: [
+                                //  Nom du client
                                 TransactionDetailsPageDetail(
-                                  label: traductions.transactionDetailsAlias,
-                                  description: subscription.clientAlias,
+                                  label: traductions.subscriptionPaymentTo,
+                                  description: subscription.clientNom,
                                 ),
 
-                              if (subscription.clientAlias == null) ...[
-                                // Compte
+                                // Pays du client
                                 TransactionDetailsPageDetail(
-                                  label: traductions.transactionDetailsCompte,
-                                  description: subscription.clientCompte,
+                                  label: traductions.transactionDetailsPays,
+                                  description:
+                                      UEMOACountry.get(subscription.clientPays)!
+                                          .name,
                                 ),
-                              ]
-                            ],
+
+                                // Alias ou compte
+                                if (subscription.clientAlias != null)
+                                  TransactionDetailsPageDetail(
+                                    label: traductions.transactionDetailsAlias,
+                                    description: subscription.clientAlias,
+                                  ),
+
+                                if (subscription.clientAlias == null) ...[
+                                  // Compte
+                                  TransactionDetailsPageDetail(
+                                    label: traductions.transactionDetailsCompte,
+                                    description: subscription.clientCompte,
+                                  ),
+                                ]
+                              ],
+                            ),
                           ),
-                        ),
 
-                        const SizedBox(height: 10),
+                          const SizedBox(height: 10),
 
-                        // Note
-                        TransactionDetailsPageDetail(
-                          label: subscription.motif ??
-                              traductions.transactionFormMotifLabel,
-                          actionIcon: const Icon(Icons.edit),
-                          actionText: subscription.motif != null 
-                            ? traductions.subscriptionEditNoteBtn
-                            : traductions.transactionFormMotifHint,
-                          actionFunction: () => showModalBottomSheet<String?>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return SubscriptionDetailsPageNoteSheet(
-                                note: subscription.motif,
-                              );
-                            },
-                            isScrollControlled: true,
-                          ).then((String? value) {
-                            if (value != null) {
-                              subscriptionDetailsBloc.add(
-                                  SubscriptionDetailsNoteUpdateEvent(value));
-                            }
-                          }),
-                        ),
+                          /*
+                          // Note
+                          TransactionDetailsPageDetail(
+                            label: subscription.motif ??
+                                traductions.transactionFormMotifLabel,
+                            actionIcon: const Icon(Icons.edit),
+                            actionText: subscription.motif != null
+                              ? traductions.subscriptionEditNoteBtn
+                              : traductions.transactionFormMotifHint,
+                            actionFunction: () => showModalBottomSheet<String?>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SubscriptionDetailsPageNoteSheet(
+                                  note: subscription.motif,
+                                );
+                              },
+                              isScrollControlled: true,
+                            ).then((String? value) {
+                              if (value != null) {
+                                subscriptionDetailsBloc.add(
+                                    SubscriptionDetailsNoteUpdateEvent(value));
+                              }
+                            }),
+                          ),
 
-                        const SizedBox(height: 10),
+                          const SizedBox(height: 10),
 
-                        // Catégorie
-                        SubscriptionDetailsPageCategorie(
-                          traductions: traductions,
-                          subscription: subscription,
-                          detailsBloc: subscriptionDetailsBloc,
-                        ),
-                      ],
+                          // Catégorie
+                          SubscriptionDetailsPageCategorie(
+                            traductions: traductions,
+                            subscription: subscription,
+                            detailsBloc: subscriptionDetailsBloc,
+                          ),
+                          */
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          );
+                ],
+              ),
+            );
+          } else {
+            return const Scaffold(
+              body: LoadingPage(),
+            );
+          }
         },
       ),
     );

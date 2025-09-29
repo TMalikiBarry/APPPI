@@ -51,6 +51,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnTextCancel => 'Cancel';
 
   @override
+  String get btnTextClose => 'Close';
+
+  @override
   String get btnTextYes => 'Yes';
 
   @override
@@ -729,6 +732,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transactionsSendErrorDescription => 'Transaction failed';
 
   @override
+  String get transactionsSendErrorALias => 'The recipient\'s alias does not exist in PI.';
+
+  @override
   String get transactionsSendErrorBtn => 'Continue';
 
   @override
@@ -741,7 +747,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transactionFormAmountInvalid => 'Insufficient balance';
 
   @override
-  String get transactionFormAmountLow => 'Minimum amount 5 XOF';
+  String get transactionFormAmountLow => 'Minimum amount 1 XOF';
 
   @override
   String get transactionFormMotifHint => 'Add note';
@@ -878,6 +884,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String transactionFormScheduleSuccessMessage(String montant, String payee) {
     return 'You have scheduled $montant FCFA for $payee';
+  }
+
+  @override
+  String transactionFormEditScheduleSuccessMessage(String montant, String payee) {
+    return 'The scheduled $montant FCFA for $payee has been successfully edited';
   }
 
   @override
@@ -1685,4 +1696,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bottom_bar_transaction => 'Transactions';
+
+  @override
+  String get contact_us_whatsapp => 'Contact us by whatsapp';
+
+  @override
+  String get contact_us_whatsapp_desc => 'Call or send messages.';
+
+  @override
+  String get contact_us_phone => 'Call us';
+
+  @override
+  String get contact_us_phone_title => 'Call customer service';
+
+  @override
+  String get contact_us_phone_desc => 'Contact our agents from 7 a.m. to 11 p.m.';
+
+  @override
+  String get contact_service_client => 'Contact customer service';
+
+  @override
+  String get contact_us_default_message => 'Tell us about your request and our team will contact you shortly.';
+
+  @override
+  String get userNotExistInContactsList => 'This user is not one of your contacts. You must add them in order to approve the request.';
 }

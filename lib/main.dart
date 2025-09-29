@@ -22,7 +22,7 @@ Future<void> main() async {
   // so it’s important to make sure that this method
   // is only called once per app execution.
   // https://api.flutter.dev/flutter/widgets/WidgetsFlutterBinding/ensureInitialized.html
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
 
   // Temporairement à cause du certificat autosigné
   // utilisé sur keycloak dans l'env de test

@@ -49,7 +49,8 @@ class SubscriptionDetailsPageActions extends StatelessWidget {
               CtaWidget(
                 icon: const Icon(Icons.cancel_outlined),
                 label: traductions.btnTextDisable,
-                disabled: subscription.isFinished(),
+                //disabled: subscription.isFinished(),
+                disabled: true,
                 action: () => !subscription.hasStarted()
                     ? context.read<SubscriptionDetailsBloc>().add(
                           SubscriptionDetailsDisableEvent(subscription),
@@ -92,6 +93,8 @@ class SubscriptionDetailsPageActions extends StatelessWidget {
     //
     command.action = TransactionSendCommand.actionSendSchedule;
     command.schedule = TransactionSendCommandSchedule(
+      id: int.tryParse(transaction.endToEndId),
+      action: "edit_schedule",
       dateDebut: transaction.dateDebut,
       dateFin: transaction.dateFin,
       frequence: FrequenceCommand(

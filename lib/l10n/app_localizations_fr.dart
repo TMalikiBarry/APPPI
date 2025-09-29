@@ -51,6 +51,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get btnTextCancel => 'Annuler';
 
   @override
+  String get btnTextClose => 'Fermer';
+
+  @override
   String get btnTextYes => 'Oui';
 
   @override
@@ -729,6 +732,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get transactionsSendErrorDescription => 'La transaction a échouée.';
 
   @override
+  String get transactionsSendErrorALias => 'L’alias du destinataire n’existe pas dans PI';
+
+  @override
   String get transactionsSendErrorBtn => 'Continuer';
 
   @override
@@ -741,7 +747,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get transactionFormAmountInvalid => 'Solde insuffisant';
 
   @override
-  String get transactionFormAmountLow => 'Montant minimum 5 frcs';
+  String get transactionFormAmountLow => 'Montant minimum 1 frcs';
 
   @override
   String get transactionFormMotifHint => 'Ajouter une note';
@@ -878,6 +884,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String transactionFormScheduleSuccessMessage(String montant, String payee) {
     return 'Vous avez programmé $montant FCFA pour $payee';
+  }
+
+  @override
+  String transactionFormEditScheduleSuccessMessage(String montant, String payee) {
+    return 'La programmation de $montant FCFA pour $payee est modifié avec succès';
   }
 
   @override
@@ -1685,4 +1696,28 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bottom_bar_transaction => 'Transactions';
+
+  @override
+  String get contact_us_whatsapp => 'Nous contacter par Whatsapp';
+
+  @override
+  String get contact_us_whatsapp_desc => 'Appelez ou envoyez des messages';
+
+  @override
+  String get contact_us_phone => 'Nous appeler';
+
+  @override
+  String get contact_us_phone_title => 'Appelez le service client';
+
+  @override
+  String get contact_us_phone_desc => 'Contactez nos agents de 07h à 23h';
+
+  @override
+  String get contact_service_client => 'Contacter le service client';
+
+  @override
+  String get contact_us_default_message => 'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.';
+
+  @override
+  String get userNotExistInContactsList => 'Cet utilisateur ne fait pas partie de vos contacts, vous devez l\'ajouter pour pouvoir valider la demande.';
 }

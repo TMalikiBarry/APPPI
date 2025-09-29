@@ -1,21 +1,35 @@
+import 'package:common_dependencies/utils/numeric_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 
+import '../../../../../core/theme.dart';
 import '../../../../../l10n/app_localizations.dart';
 import '../../../../../shared/widgets/my_page_container.dart';
+import '../../../domain/models/connected_user.dart';
 import '../../../domain/models/pin_command.dart';
 import '../../bloc/identification/identification_bloc.dart';
 import '../../bloc/identification/identification_event.dart';
 import '../../bloc/identification/identification_state.dart';
+import 'package:pinput/pinput.dart';
+import 'package:common_dependencies/utils/utils.dart';
 
-class IdentificationPinCreatePage extends StatelessWidget {
+class IdentificationPinCreatePage extends StatefulWidget {
   //
   const IdentificationPinCreatePage({super.key});
   static final logger = Logger();
+
+  @override
+  State<IdentificationPinCreatePage> createState() => _IdentificationPinCreatePageState();
+}
+
+class _IdentificationPinCreatePageState extends State<IdentificationPinCreatePage> {
   // Nombre de chiffres du code PIN
   final num pinLength = PinCommand.pinSize;
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +58,7 @@ class IdentificationPinCreatePage extends StatelessWidget {
           appBar: AppBar(
             leading: GestureDetector(
               onTap: () {
-                logger.i('on close');
+                IdentificationPinCreatePage.logger.i('on close');
               },
               child: const Icon(Icons.close),
             ),
@@ -52,64 +66,132 @@ class IdentificationPinCreatePage extends StatelessWidget {
           // Contenu de la page de connexion
           body: MyPageContainer(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Le formulaire
-                //Expanded(
-                //child:
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Titre de la page
-                    Text(
-                      localisation.createCodePinFormTitle,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-
-                    // Séparateur
-                    const SizedBox(height: 5.0),
-
-                    // Sous titre de la page
-                    Text(
-                      localisation.createCodePinFormSubTitle,
-                      style: Theme.of(context).textTheme.displaySmall,
-                    ),
-
-                    // Séparateur
-                    const SizedBox(height: 32),
-
-                    // Code Pin input
-                    Form(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.max,
-                        children: drawPinInputFields(
-                          context,
-                          fieldWidth,
-                          focusNode,
-                          identificationState.pinCode,
-                        ),
-                      ),
-                    ),
-                  ],
+                /*
+                // Titre de la page
+                Text(
+                  localisation.createCodePinFormTitle,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
-                // Keyboard Virtual
-                SizedBox(
-                  height: padHeight,
-                  child: GridView.count(
-                    crossAxisCount: 3,
-                    padding: EdgeInsets.all(padPadding),
-                    children: drawNumberPad(
-                        context,
-                        PinCommand(identificationState.pinCode),
-                        identificationBloc,
-                        focusNode),
+
+                // Séparateur
+                const SizedBox(height: 5.0),
+
+                // Sous titre de la page
+                Text(
+                  localisation.createCodePinFormSubTitle,
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+
+                // Séparateur
+                const SizedBox(height: 32),
+
+                 */
+                // Code Pin input
+                /*Form(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: drawPinInputFields(
+                      context,
+                      fieldWidth,
+                      focusNode,
+                      identificationState.pinCode,
+                    ),
+                  ),
+                ),*/
+
+                Container(
+                  alignment: Alignment.topCenter,
+                  child: SizedBox(
+                    width: 150,
+                    height: 100,
+                    child: Image.asset(
+                      package: 'common_dependencies',
+                      'assets/images/logo_mytouchpoint.png',
+                      width: 130,
+                      height: 130,
+                    ),
                   ),
                 ),
-                // Séparateur
-                const SizedBox(height: 2.0),
+                const SizedBox(
+                  height: 10,
+                ),
+
+                Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 274,
+                  ),
+                  child: Text(
+                    AppLocalizations.of(context)!.welcome,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                ),
+
+                Text(
+                  "${ConnectedUser.current!.firstName} ${ConnectedUser.current!.lastName}",
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  formatPhoneNumberUser(formatPhoneNumberUser(ConnectedUser.current!.telephone, international: true)) ?? '',
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+
+                const SizedBox(
+                  height: 35,
+                ),
+                Text(
+                  localisation.identificationFormLoginMessage,
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Pinput(
+                        controller: _controller,
+                        focusNode: _focusNode,
+                        defaultPinTheme: defaultPinTheme,
+                        focusedPinTheme: focusedPinTheme,
+                        submittedPinTheme: submittedPinTheme,
+                        pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                        // Default => show number pad
+                        keyboardType: TextInputType.none,
+                        // Accepts digits only
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        obscureText: true,
+                        obscuringCharacter: "*",
+                        showCursor: true,
+                        onCompleted: (pin) async {
+                          focusNode.requestFocus();
+                          /*identificationBloc.add(
+                            PinNumberSelectedEvent(
+                              i,
+                              PinCommand(identificationState.pinCode),
+                              4,
+                            )
+                          );
+
+                           */
+                        },
+                      ),
+                      const SizedBox(
+                        height: 45,
+                      ),
+                      NumericKeypad(
+                        controller: _controller,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

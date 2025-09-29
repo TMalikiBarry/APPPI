@@ -55,19 +55,20 @@ class _TransactionRtpPageActionsRejectState
                 ),
                 const SizedBox(height: 12),
 
-                // SubTitle
-                Text(
-                  traductions.transactionRtpRejectSubtitle(
-                      NumberFormat.currency(
-                        locale: Localizations.localeOf(context).toString(),
-                        symbol: '',
-                        decimalDigits: 0,
-                      ).format(tx.montant),
-                      tx.clientNom),
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(height: 20),
-
+                if(tx.montant != null)...[
+                  // SubTitle
+                  Text(
+                    traductions.transactionRtpRejectSubtitle(
+                        NumberFormat.currency(
+                          locale: Localizations.localeOf(context).toString(),
+                          symbol: '',
+                          decimalDigits: 0,
+                        ).format(tx.montant),
+                        tx.clientNom),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 20),
+                ],
                 // Raisons du rejet
                 /*Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,18 +129,16 @@ class _TransactionRtpPageActionsRejectState
                 const SizedBox(height: 10),
                 SizedBox(
                   height: 56,
-                  child: Expanded(
-                    child: ElevatedButton(
-                      onPressed: reason != null
-                          ? () {
-                              AppRouter.pop(context);
-                              bloc.add(
-                                TransactionRtpRejectEvent(tx, reason!, true),
-                              );
-                            }
-                          : null,
-                      child: Text(traductions.btnTextReject),
-                    ),
+                  child: ElevatedButton(
+                    onPressed: reason != null
+                      ? () {
+                          AppRouter.pop(context);
+                          bloc.add(
+                            TransactionRtpRejectEvent(tx, reason!, true),
+                          );
+                        }
+                      : null,
+                    child: Text(traductions.btnTextReject),
                   ),
                 ),
               ],

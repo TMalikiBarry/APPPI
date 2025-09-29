@@ -251,32 +251,9 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
     ));*/
     emit(TransactionSendLoadingState(event.command));
 
-    // Initier
-    /*if (event.command.schedule != null) {
-    // Just schedule
-    try {
-      transaction = await transactionsInputPort.schedule(
-        transaction.endToEndId,
-        event.command.schedule!,
-      );
-      emit(TransactionSendFormSuccessState(
-        event.command,
-        transaction,
-        participants: state.participants,
-      ));
-    } catch (e) {
-      logger.e("Erreur de création de la souscription", error: e);
-      emit(TransactionSendFormErrorState(
-        event.command,
-        TransactionError.unknow.name,
-        participants: state.participants,
-      ));
-    }
-    //}
-    // Send Now
-    else {*/
-    try {
-      Stream<Transaction> stream = await transactionsInputPort.confirm(TransactionConfirmCommand(
+    /*
+    logger.i("TransactionSendLoadingState :");
+    logger.i(TransactionConfirmCommand(
         endToendId: transaction.endToEndId,
         confirmationDate: DateTime.now().toIso8601String(),
         confirmationMethode: event.method,
@@ -287,33 +264,86 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
         transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
         transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
         channel: event.command.canal
-      ));
+    ).toJson());
+    logger.i(event.command.schedule?.toJson());
 
-      stream.listen(
-        (trans) {
-          add(TransactionSendResponseEvent(event.command, trans));
-        },
-        onError: (error) {
-          if (error is TimeoutException) {
-            add(TransactionSendErrorEvent(
-              event.command,
-              transaction,
-              TransactionError.timeOut.toString(),
-            ));
-          } else {
-            add(TransactionSendErrorEvent(event.command, transaction, error));
-          }
-        },
-      );
-    } catch (e) {
-      logger.e("Erreur de création de la souscription", error: e);
-      emit(TransactionSendFormErrorState(
-        event.command,
-        TransactionError.unknow.name,
-        participants: state.participants,
-      ));
+     */
+    // Initier
+    if (event.command.schedule != null) {
+      // Just schedule
+      try {
+        transaction = await transactionsInputPort.schedule(
+          transaction.endToEndId,
+          TransactionConfirmCommand(
+              endToendId: transaction.endToEndId,
+              confirmationDate: DateTime.now().toIso8601String(),
+              confirmationMethode: event.method,
+              latitude: event.command.latitude,
+              longitude: event.command.longitude,
+              amount: event.command.amount,
+              transactionVerificationResultAlias: event.transaction.transactionVerificationResultAlias,
+              transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
+              transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
+              channel: event.command.canal
+          ),
+          event.command.schedule!,
+        );
+
+        emit(TransactionSendFormSuccessState(
+          event.command,
+          transaction,
+          participants: state.participants,
+        ));
+      } catch (e) {
+        logger.e("Erreur de création de la souscription", error: e);
+        emit(TransactionSendFormErrorState(
+          event.command,
+          TransactionError.unknow.name,
+          participants: state.participants,
+        ));
+      }
     }
-    //}
+    // Send Now
+    else {
+      try {
+        Stream<Transaction> stream = await transactionsInputPort.confirm(TransactionConfirmCommand(
+          endToendId: transaction.endToEndId,
+          confirmationDate: DateTime.now().toIso8601String(),
+          confirmationMethode: event.method,
+          latitude: event.command.latitude,
+          longitude: event.command.longitude,
+          amount: event.command.amount,
+          transactionVerificationResultAlias: event.transaction.transactionVerificationResultAlias,
+          transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
+          transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
+          channel: event.command.canal
+        ));
+
+        stream.listen(
+          (trans) {
+            add(TransactionSendResponseEvent(event.command, trans));
+          },
+          onError: (error) {
+            if (error is TimeoutException) {
+              add(TransactionSendErrorEvent(
+                event.command,
+                transaction,
+                TransactionError.timeOut.toString(),
+              ));
+            } else {
+              add(TransactionSendErrorEvent(event.command, transaction, error));
+            }
+          },
+        );
+      } catch (e) {
+        logger.e("Erreur de création de la souscription", error: e);
+        emit(TransactionSendFormErrorState(
+          event.command,
+          TransactionError.unknow.name,
+          participants: state.participants,
+        ));
+      }
+    }
   }
 
   /// Losq'une réponse est reçue aprés envoie d'une transaction
@@ -324,7 +354,7 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
     Transaction transaction = event.transaction;
     if (transaction.statut == TransactionStatut.irrevocable ||
         (event.command.method == TransactionSendMethod.aliasRtb && transaction.statut == TransactionStatut.initie) ||
-        (event.command.method == "RtpAcceptPay" && transaction.statut == TransactionStatut.rejete)
+        (event.command.method == TransactionSendMethod.rtpAcceptPay && transaction.statut == TransactionStatut.rejete)
     ) {
       emit(TransactionSendFormSuccessState(
         event.command,
@@ -601,7 +631,7 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
     } catch (e) {
       logger.i("Erreur lors de la récupération des participants: $e");
       // Émettre un état d'erreur ou état avec liste vide
-      emit(TransactionSearchParticipant(participantName: null));
+      emit(const TransactionSearchParticipant(participantName: null));
     }
   }
 }

@@ -86,9 +86,10 @@ class TransactionService implements TransactionInputPort {
   @override
   Future<Transaction> schedule(
     String endToEndId,
+    TransactionConfirmCommand confirmCommand,
     TransactionSendCommandSchedule command,
   ) async {
-    return await transactionOutputPort.schedule(endToEndId, command);
+    return await transactionOutputPort.schedule(endToEndId, confirmCommand, command);
   }
 
   @override

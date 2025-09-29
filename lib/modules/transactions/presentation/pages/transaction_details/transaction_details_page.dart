@@ -12,6 +12,7 @@ import '../../../../../shared/models/uemoa_countries.dart';
 import '../../../../../shared/widgets/loading_page.dart';
 import '../../../../../shared/widgets/my_page_container.dart';
 import '../../../../../shared/widgets/notification_dialog.dart';
+import '../../../../security/domain/models/connected_user.dart';
 import '../../../domain/models/transaction.dart';
 import '../../bloc/transaction_details/transaction_details_bloc.dart';
 import '../../bloc/transaction_details/transaction_details_event.dart';
@@ -45,8 +46,14 @@ class TransactionDetailsPage extends StatelessWidget {
     );
       //..add(TransactionDetailsFetchEvent(transaction));
     //
+    var user = ConnectedUser.current;
+    var nomClient = transaction.sens ==  TransactionSens.debit ?
+    transaction.acquirerAccountLabel : transaction.clientNom;
     AppLocalizations traductions = AppLocalizations.of(context)!;
-
+    if(nomClient!.isEmpty
+        || (user != null && nomClient.contains(user.nomComplet()))){
+      nomClient = traductions.externalCustomer;
+    }
     //
     return BlocProvider<TransactionDetailsBloc>(
       create: (_) => transactionDetailsBloc,
@@ -233,8 +240,7 @@ class TransactionDetailsPage extends StatelessWidget {
                                 label: transaction.sens == TransactionSens.debit
                                     ? traductions.transactionDetailsPayeLabel
                                     : traductions.transactionDetailsPayeurLabel,
-                                description:transaction.sens ==  TransactionSens.debit ?
-                                  transaction.acquirerAccountLabel : transaction.clientNom,
+                                description: nomClient,
                               ),
 
                               // Pays du client

@@ -119,6 +119,7 @@ class _SubscriptionCreatePageState extends State<SubscriptionCreatePage> {
 
   /// Bouton de confirmation
   _confirmBtn(Transaction transaction) {
+    print("On est la ");
     // Command transaction
     TransactionSendCommand command =
         TransactionSendCommand.fromTransaction(transaction);
@@ -130,6 +131,7 @@ class _SubscriptionCreatePageState extends State<SubscriptionCreatePage> {
     return TransactionFormPageScheduleBtn(
       command: command,
       transaction: transaction,
+      fromSuscriptionPage: true,
     );
   }
 }

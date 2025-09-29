@@ -115,20 +115,22 @@ class _TransactionSearchPageListeState
     final transactions = state.transactions.data;
     final transactionsGroupList = groupTransactions(transactions);
 
-    return ListView.builder(
-      controller: scrollController,
-      itemCount: transactionsGroupList.length + (state.hasMorePages ? 1 : 0),
-      itemBuilder: (context, index) {
-        // Si c'est le dernier élément et qu'il reste des pages
-        if (index >= transactionsGroupList.length) {
-          return _buildLoaderFooter(state);
-        }
+    return Expanded(
+      child: ListView.builder(
+        controller: scrollController,
+        itemCount: transactionsGroupList.length + (state.hasMorePages ? 1 : 0),
+        itemBuilder: (context, index) {
+          // Si c'est le dernier élément et qu'il reste des pages
+          if (index >= transactionsGroupList.length) {
+            return _buildLoaderFooter(state);
+          }
 
-        return _buildTransactionGroupSection(
-          context,
-          transactionsGroupList[index],
-        );
-      },
+          return _buildTransactionGroupSection(
+            context,
+            transactionsGroupList[index],
+          );
+        },
+      ),
     );
   }
 

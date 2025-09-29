@@ -17,9 +17,16 @@ import '../transaction_send/transaction_send_page_succes.dart';
 import 'transaction_form_input_date.dart';
 import 'transaction_form_page_schedule_btn.dart';
 
-class TransactionFormPageSchedule extends StatelessWidget {
+class TransactionFormPageSchedule extends StatefulWidget {
   ///
   const TransactionFormPageSchedule({super.key});
+
+  @override
+  State<TransactionFormPageSchedule> createState() => _TransactionFormPageScheduleState();
+}
+
+class _TransactionFormPageScheduleState extends State<TransactionFormPageSchedule> {
+  Transaction? seletedTransaction;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +38,7 @@ class TransactionFormPageSchedule extends StatelessWidget {
           current is TransactionSendLoadingState ||
           current is TransactionSendFormSendingState ||
           current is TransactionSendFormSuccessState ||
+          current is TransactionSendFormVerificationAskingState ||
           current is TransactionSendFormErrorState,
       listener: (context, state) async {
         // Envoie en cours
@@ -84,6 +92,13 @@ class TransactionFormPageSchedule extends StatelessWidget {
             isScrollControlled: true,
           );
         }
+        // Show verification Page
+        else if (state is TransactionSendFormVerificationAskingState) {
+          CustomLoadingDialog.hide(context);
+          // Replace with verification page (pushReplacement important)
+          seletedTransaction = state.transaction;
+          //
+        }
       },
       buildWhen: (previous, current) =>
           current is TransactionSendFormScheduleState ||
@@ -91,7 +106,7 @@ class TransactionFormPageSchedule extends StatelessWidget {
       builder: (context, state) {
         if (state is TransactionSendFormScheduleState) {
           TransactionSendCommand command = state.command;
-          Transaction transaction = state.transaction;
+          seletedTransaction = state.transaction;
           return Scaffold(
             // Pour avoir le bouton de retour
             appBar: AppBar(),
@@ -123,7 +138,7 @@ class TransactionFormPageSchedule extends StatelessWidget {
                       onChange: (value) {
                         command.schedule!.frequence = value;
                         context.read<TransactionSendBloc>().add(
-                              TransactionSendScheduleEvent(command, transaction),
+                              TransactionSendScheduleEvent(command, seletedTransaction!),
                             );
                       },
                     ),
@@ -133,7 +148,7 @@ class TransactionFormPageSchedule extends StatelessWidget {
                     // Date
                     TransactionSendFormInputDate(
                       command: command,
-                      transaction: transaction,
+                      transaction: seletedTransaction!,
                       traductions: traductions,
                     ),
 
@@ -147,7 +162,7 @@ class TransactionFormPageSchedule extends StatelessWidget {
               minimum: const EdgeInsets.all(16),
               child: TransactionFormPageScheduleBtn(
                 command: command,
-                transaction: transaction,
+                transaction: seletedTransaction!,
               ),
             ),
           );

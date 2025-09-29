@@ -42,14 +42,8 @@ class TransactionFormPageScheduleBtn extends StatelessWidget {
               ),
             );
           } else {
-            context.read<TransactionSendBloc>().add(
-              TransactionSendScheduleEvent(
-                command,
-                transaction,
-              ),
-            );
+            context.read<TransactionSendBloc>().add(TransactionSendInitiateEvent(command));
           }
-          AppRouter.pushReplacement(context, AppRouter.transactionFormSchedule);
         }
         : null,
       child: Text(traductions.transactionFormVerificationBtnConfirm),

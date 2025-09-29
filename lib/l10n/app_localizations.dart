@@ -1927,6 +1927,24 @@ abstract class AppLocalizations {
   /// **'Edit note'**
   String get subscriptionEditNoteBtn;
 
+  /// No description provided for @subscriptionPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'¨Scheduled payment'**
+  String get subscriptionPageTitle;
+
+  /// No description provided for @subscriptionEditSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled payment successfully modified'**
+  String get subscriptionEditSuccessful;
+
+  /// No description provided for @subscriptionDeleteSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled payment successfully deleted'**
+  String get subscriptionDeleteSuccessful;
+
   /// No description provided for @transactionsRtpSuccessBtnTitle.
   ///
   /// In en, this message translates to:

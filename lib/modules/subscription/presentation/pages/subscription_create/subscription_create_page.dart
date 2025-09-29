@@ -9,6 +9,7 @@ import '../../../../transactions/domain/models/transaction.dart';
 import '../../../../transactions/domain/models/transaction_send/transaction_send_command.dart';
 import '../../../../transactions/domain/models/transaction_send/transaction_send_command_schedule.dart';
 import '../../../../transactions/presentation/bloc/transaction_send/transaction_send_bloc.dart';
+import '../../../../transactions/presentation/bloc/transaction_send/transaction_send_event.dart';
 import '../../../../transactions/presentation/bloc/transaction_send/transaction_send_state.dart';
 import '../../../../transactions/presentation/pages/transaction_form/transaction_form_page_schedule_btn.dart';
 import '../../../../transactions/presentation/pages/transaction_send/transaction_send_page_error.dart';
@@ -31,10 +32,14 @@ class _SubscriptionCreatePageState extends State<SubscriptionCreatePage> {
   @override
   Widget build(BuildContext context) {
     //
-    return BlocListener<TransactionSendBloc, TransactionSendState>(
+    return BlocConsumer<TransactionSendBloc, TransactionSendState>(
       listenWhen: (previous, current) =>
           current is TransactionSendFormSendingState ||
           current is TransactionSendFormSuccessState ||
+          current is TransactionSendLoadingState ||
+          current is TransactionSendFormVerificationAskingState ||
+              // UNIQUEMENT rediriger à l'accueil si on sort de VerificationAskingState
+          (previous is TransactionSendFormVerificationAskingState && current is TransactionSendInitialState) ||
           current is TransactionSendFormErrorState,
       listener: (context, state) async {
         // Process en cours
@@ -87,26 +92,37 @@ class _SubscriptionCreatePageState extends State<SubscriptionCreatePage> {
             isScrollControlled: true,
           );
         }
+        // Show verification Page
+        else if (state is TransactionSendFormVerificationAskingState) {
+          // Hide loader
+          CustomLoadingDialog.hide(context);
+          seletedTransaction = state.transaction;
+
+          context.read<TransactionSendBloc>().add(TransactionSendScheduleEvent(
+            state.command,
+            seletedTransaction!,
+          ));
+          AppRouter.push(context, AppRouter.transactionFormSchedule);
+        }
       },
-      child: Scaffold(
-        // Pour avoir le bouton de retour
-        appBar: AppBar(),
-        // Contenu de la page
-        body: MyPageContainer(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Liste des transactions
-              Expanded(
-                child: SubscriptionCreatePageList(
-                    selectTransaction: _selectTransaction),
-              ),
-              // Bouton enregistrer
-              if (seletedTransaction != null) _confirmBtn(seletedTransaction!),
-            ],
-          ),
-        ),
-      ),
+      builder: (context, state) {
+        if (state is TransactionSendLoadingState) {
+          return const Scaffold(
+            body: LoadingPage(),
+          );
+        } else {
+          return Scaffold(
+            // Pour avoir le bouton de retour
+            appBar: AppBar(),
+            // Contenu de la page
+            body: MyPageContainer(
+              child: SubscriptionCreatePageList(
+                  selectTransaction: _selectTransaction),
+            ),
+            bottomNavigationBar: seletedTransaction != null ? _confirmBtn(seletedTransaction!) : null,
+          );
+        }
+      }
     );
   }
 
@@ -119,19 +135,23 @@ class _SubscriptionCreatePageState extends State<SubscriptionCreatePage> {
 
   /// Bouton de confirmation
   _confirmBtn(Transaction transaction) {
-    print("On est la ");
     // Command transaction
     TransactionSendCommand command =
         TransactionSendCommand.fromTransaction(transaction);
     command.action = TransactionSendCommand.actionSendSchedule;
     command.schedule = TransactionSendCommandSchedule(
-      dateDebut: transaction.dateOperation,
+      dateDebut: DateTime.now(),
       frequence: FrequenceCommand(value: Frequence.mensuelle),
     );
-    return TransactionFormPageScheduleBtn(
-      command: command,
-      transaction: transaction,
-      fromSuscriptionPage: true,
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: TransactionFormPageScheduleBtn(
+          command: command,
+          transaction: transaction,
+          fromSuscriptionPage: true,
+        ),
+      ),
     );
   }
 }

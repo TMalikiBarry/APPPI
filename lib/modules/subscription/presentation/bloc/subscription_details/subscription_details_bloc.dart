@@ -91,7 +91,12 @@ class SubscriptionDetailsBloc
     Emitter<SubscriptionDetailsState> emit,
   ) async {
     emit(SubscriptionDetailsLoadingState(event.subscription));
-    await subscriptionInputPort.delete(event.subscription);
-    emit(SubscriptionDetailsDeletedState(event.subscription));
+    try {
+      await subscriptionInputPort.delete(event.subscription);
+      emit(SubcriptionActionState(event.subscription, "success"));
+    } catch (e) {
+      logger.i("Error suppression de la souscription : $e");
+      emit(SubcriptionActionState(event.subscription, "error"));
+    }
   }
 }

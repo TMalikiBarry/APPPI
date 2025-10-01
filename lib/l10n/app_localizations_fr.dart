@@ -966,6 +966,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get subscriptionEditNoteBtn => 'Modifier la note';
 
   @override
+  String get subscriptionPageTitle => '¨Paiement programmé';
+
+  @override
+  String get subscriptionEditSuccessful => 'Paiement programmé modifié avec succès';
+
+  @override
+  String get subscriptionDeleteSuccessful => 'Paiement programmé supprimé avec succès';
+
+  @override
   String transactionsRtpSuccessBtnTitle(String payee) {
     return 'Vous avez envoyé une demande de paiement à $payee';
   }

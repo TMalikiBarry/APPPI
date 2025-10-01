@@ -316,7 +316,7 @@ class TransactionOutputRemote {
         ...confirmCommand.toJson(),
       };
 
-      //logger.i("data schedule 2 : $datas");
+      logger.i("data schedule 2 : $datas");
       if (
         confirmCommand.confirmationMethode == TransactionSendMethod.alias ||
         confirmCommand.confirmationMethode == TransactionSendMethod.qrcode

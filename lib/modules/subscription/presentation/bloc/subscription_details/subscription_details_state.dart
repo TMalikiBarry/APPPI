@@ -16,3 +16,9 @@ class SubscriptionDetailsLoadingState extends SubscriptionDetailsState {
 class SubscriptionDetailsDeletedState extends SubscriptionDetailsState {
   const SubscriptionDetailsDeletedState(super.subscription);
 }
+
+/// Subcription action échouée
+class SubcriptionActionState extends SubscriptionDetailsState {
+  final String action;
+  SubcriptionActionState(super.subscription, this.action);
+}

@@ -495,6 +495,9 @@
   "subscriptionPaymentTo": "Payment to",
   "subscriptionStartDate": "Start date",
   "subscriptionEditNoteBtn": "Edit note",
+  "subscriptionPageTitle": "¨Scheduled payment",
+  "subscriptionEditSuccessful": "Scheduled payment successfully modified",
+  "subscriptionDeleteSuccessful": "Scheduled payment successfully deleted",
   "@_TRANSACTIONS_RTP": {},
   "transactionsRtpSuccessBtnTitle": "You have sent a payment request to {payee}",
   "@transactionsRtpSuccessBtnTitle": {

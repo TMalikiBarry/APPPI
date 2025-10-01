@@ -494,6 +494,9 @@
   "subscriptionPaymentTo": "Paiement à",
   "subscriptionStartDate": "Date de début",
   "subscriptionEditNoteBtn": "Modifier la note",
+  "subscriptionPageTitle": "¨Paiement programmé",
+  "subscriptionEditSuccessful": "Paiement programmé modifié avec succès",
+  "subscriptionDeleteSuccessful": "Paiement programmé supprimé avec succès",
   "@_TRANSACTIONS_RTP": {},
   "transactionsRtpSuccessBtnTitle": "Vous avez envoyé une demande de paiement à {payee}",
   "@transactionsRtpSuccessBtnTitle": {

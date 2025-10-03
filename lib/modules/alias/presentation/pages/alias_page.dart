@@ -49,6 +49,12 @@ class AliasPage extends StatelessWidget {
       //
       if (aliasState is AliasExistState) {
         // Show success popup creation alias
+        if (aliasState.qrCodePi) {
+          if (!context.mounted) return;
+          AppRouter.go(context, AppRouter.qrcodeTransactionSendTp);
+
+        }
+
         if (aliasState.claim == null) {
           showModalBottomSheet<void>(
             context: context,

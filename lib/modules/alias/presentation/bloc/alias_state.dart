@@ -22,11 +22,13 @@ class AliasVerifExistState extends AliasState {
 /// Etat quand on a pu recupérer l'alias
 class AliasExistState extends AliasState {
   //
-  const AliasExistState(this.alias, [this.claim]);
+  const AliasExistState(this.alias, [this.claim,this.qrCodePi=false]);
 
   final Alias alias;
   // revendication sur cet alias
   final AliasRevendication? claim;
+  // revendication sur cet alias
+  final bool qrCodePi;
 }
 
 /// Pendant que l'on recupére l'alias'

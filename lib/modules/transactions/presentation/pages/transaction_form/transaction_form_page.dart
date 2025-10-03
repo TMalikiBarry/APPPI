@@ -22,7 +22,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class TransactionFormPage extends StatelessWidget {
   ///
-  const TransactionFormPage({super.key});
+  const  TransactionFormPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class TransactionFormPage extends StatelessWidget {
         // Envoyé avec erreur
         if (state is TransactionSendFormErrorState) {
           // Hide loader
-          CustomLoadingDialog.hide(context);
+         CustomLoadingDialog.hide(context);
           // Show success popup
           showModalBottomSheet<void>(
             context: context,

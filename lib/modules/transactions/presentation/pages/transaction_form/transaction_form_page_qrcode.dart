@@ -13,16 +13,27 @@ import 'transaction_form_page.dart';
 /// Page tampon logique de redirection après scan d'un QR Code
 class TransactionFormPageQrcode extends StatelessWidget {
   ///
-  const TransactionFormPageQrcode({super.key, required this.command});
+   TransactionFormPageQrcode( {super.key, required this.command,  this.ctx});
 
   final TransactionSendCommand command;
 
+  BuildContext? ctx;
+
+
+
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(ctx ?? context)!.settings.arguments;
+    final route = ModalRoute.of(ctx ?? context)!.settings.name;
+
+    print("✅ Navigation reçue");
+    print("➡️ URL: $route");
+    print("➡️ Arguments: $args");
+
     debugPrint("ACTION => ${command.action}");
     // Bloc de gestion des transactions
     TransactionSendBloc transactionSendBloc =
-        context.read<TransactionSendBloc>();
+    (ctx ?? context).read<TransactionSendBloc>();
 
     // SI le qr code contine ttoutes les infos
     // Alors directement faire la recherche d'alias
@@ -40,10 +51,10 @@ class TransactionFormPageQrcode extends StatelessWidget {
           listener: (context, state) async {
             if (state is TransactionSendFormErrorState) {
               // Hide loader
-              CustomLoadingDialog.hide(context);
+              CustomLoadingDialog.hide(ctx ?? context);
               // Show success popup
               showModalBottomSheet<void>(
-                context: context,
+                context: ctx ?? context,
                 builder: (BuildContext context) {
                   return TransactionSendPageError(error: state.error);
                 },
@@ -53,9 +64,9 @@ class TransactionFormPageQrcode extends StatelessWidget {
             }
             // Show verification Page
             if (state is TransactionSendFormVerificationAskingState) {
-              CustomLoadingDialog.hide(context);
+              CustomLoadingDialog.hide(ctx ?? context);
               AppRouter.push(
-                context,
+                ctx ?? context,
                 AppRouter.transactionFormVerification,
                 params: transactionSendBloc,
               );
@@ -67,7 +78,7 @@ class TransactionFormPageQrcode extends StatelessWidget {
               current is TransactionSendFormVerificationLoadingState ||
               current is TransactionSendFormVerificationAskingState,
           builder: (context, state) {
-            return LoadingPage(bgColor: Theme.of(context).colorScheme.surface);
+            return LoadingPage(bgColor: Theme.of(ctx ?? context).colorScheme.surface);
           },
         ),
       );

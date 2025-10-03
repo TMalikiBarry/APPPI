@@ -129,6 +129,7 @@ class AppRouter {
   static const qrcodeScan = "/qrcode/scan";
   static const qrcodeShow = "/qrcode/show";
   static const qrcodeTransactionSend = "/qrcode/send";
+  static const qrcodeTransactionSendTp = "/qrcode/sendtp";
   static const qrcodeTransactionReceive = "/qrcode/scan/receive";
 
   // Categories
@@ -160,7 +161,7 @@ class AppRouter {
   AppRouter._();
 
   /// Méthode qui retourne la configuration des routes
-  static GoRouter routes(String initial) {
+  static GoRouter routes(String initial, QrcodeData? qrcodeData) {
     //
     logger.i('Route initiale $initial');
     return GoRouter(
@@ -182,7 +183,7 @@ class AppRouter {
         ..._homeRoute(),
 
         // QR Code
-        ..._qrCodeRoutes(),
+        ..._qrCodeRoutes(qrcodeData),
 
         // Transactions
         ..._transactionRoutes(),
@@ -662,7 +663,7 @@ class AppRouter {
   }
 
   ///  QR CODE
-  static List<RouteBase> _qrCodeRoutes() {
+  static List<RouteBase> _qrCodeRoutes(QrcodeData? qrData) {
     return [
       // Scan QR Code
       GoRoute(
@@ -703,6 +704,64 @@ class AppRouter {
               ),
             );
           }),
+      GoRoute(
+        path: qrcodeTransactionSendTp,
+        builder: (context, state) {
+          final QrcodeData qrcodeData = state.extra != null
+              ? state.extra as QrcodeData
+              : qrData as QrcodeData;
+          final String? action = state.uri.queryParameters['action'];
+          logger.i("je suis dans transfert: $qrData");
+          return TransactionFormPageQrcode(
+            command: TransactionSendCommand(
+              compte:ConnectedUser.current?.alias ?? ConnectedUser.current!.shid!,
+              //compte: aliasState.alias.compte,
+              action: action ?? TransactionSendCommand.actionSendNow,
+              method: TransactionSendMethod.qrcode,
+              alias: TransactionSendCommandAlias(value: qrcodeData.alias),
+              canal: action == TransactionSendCommand.actionReceiveNow
+                  ? TransactionCanal.transfertParRequestToPay.code
+                  : qrcodeData.channel,
+              amount: qrcodeData.montant != null
+                  ? TransactionSendCommandAmount(value: qrcodeData.montant!)
+                  : null,
+              txId: qrcodeData.txId,
+            ),
+            ctx: context,
+          );
+        },
+        redirect: (context, state) async {
+          // Vérifier si la problème a un alias ou pas avant
+          AliasBloc aliasBloc = context.read<AliasBloc>();
+          AliasState aliasState;
+          if (aliasBloc.state is AliasExistState) {
+            aliasState = aliasBloc.state;
+          } else {
+            //
+            final loginBloc = context.read<LoginBloc>();
+            ConnectedUser user = loginBloc.getConnectedUser()!;
+            //
+            if(user.paymentAddress() != null) {
+              aliasBloc.add(FetchAliasEvent(user.paymentAddress()!, true));
+            } else {
+              aliasBloc.add(FetchAliasEvent("+${user.reference()}", true));
+            }
+            //
+            final completer = Completer<AliasState>();
+            final listener = aliasBloc.stream.listen((aliasState) {
+              completer.complete(aliasState);
+            });
+            aliasState = await completer.future;
+            await listener.cancel(); // Cancel the listener
+          }
+
+          if (aliasState is! AliasExistState) {
+            return qrcodeTransactionSendTp;
+          } else {
+            return null;
+          }
+        },
+      ),
     ];
   }
 

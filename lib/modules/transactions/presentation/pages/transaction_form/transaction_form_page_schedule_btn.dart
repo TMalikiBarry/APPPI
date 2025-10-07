@@ -14,13 +14,15 @@ import '../../bloc/transaction_send/transaction_send_event.dart';
 
 class TransactionFormPageScheduleBtn extends StatelessWidget {
   ///
-  const TransactionFormPageScheduleBtn({
+  TransactionFormPageScheduleBtn({
     super.key,
     required this.command,
     required this.transaction,
+    this.fromSuscriptionPage = false,
   });
   final TransactionSendCommand command;
   final Transaction transaction;
+  bool fromSuscriptionPage;
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +33,17 @@ class TransactionFormPageScheduleBtn extends StatelessWidget {
       onPressed: command.schedule != null && command.schedule!.isValid()
         ? () async {
           // Authorize
-          context.read<TransactionSendBloc>().add(
-            TransactionSendConfirmEvent(
-              command,
-              transaction,
-              command.method,
-            ),
-          );
+          if (!fromSuscriptionPage) {
+            context.read<TransactionSendBloc>().add(
+              TransactionSendConfirmEvent(
+                command,
+                transaction,
+                command.method,
+              ),
+            );
+          } else {
+            context.read<TransactionSendBloc>().add(TransactionSendInitiateEvent(command));
+          }
         }
         : null,
       child: Text(traductions.transactionFormVerificationBtnConfirm),

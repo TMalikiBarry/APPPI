@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pi_mobile_app/l10n/app_localizations.dart';
+import 'package:pi_mobile_app/modules/security/domain/models/connected_user.dart';
 
 import '../../../../core/router.dart';
 import '../../../../core/theme.dart';
@@ -45,7 +46,7 @@ class TransactionListItemWidget extends StatelessWidget {
 
   Widget _listTile(BuildContext context) {
     AppLocalizations traductions = AppLocalizations.of(context)!;
-
+    var user = ConnectedUser.current;
     var userName = transaction.sens == TransactionSens.debit
         ? transaction.acquirerAccountLabel!
         : transaction.clientNom.isNotEmpty
@@ -57,7 +58,8 @@ class TransactionListItemWidget extends StatelessWidget {
           ?? transaction.additionalInformations?.externalAlias
           ?? traductions.externalCustomer;
 
-    if(userName.isEmpty || userName.contains('---')){
+    if(userName.isEmpty || userName.contains('---')
+        || (user != null && userName.contains(user.nomComplet()))){
       userName = traductions.externalCustomer;
     }
 

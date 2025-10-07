@@ -58,7 +58,7 @@ class TransactionOutputRepository implements TransactionOutputPort {
         repoLocal.patch(tx);
       }
     } catch(e){
-
+      logger.e("ERREUR Future<TransactionListe> search", error: e);
     }
     // Trier les transactions par dateOperation dans l'ordre descendant
     liste.data.sort((a, b) => b.dateOperation!.compareTo(a.dateOperation!));

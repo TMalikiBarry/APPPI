@@ -91,7 +91,8 @@ class _TransactionDetailsPageActionsState extends State<TransactionDetailsPageAc
                   widget.transaction.clientAlias == null &&
                   widget.transaction.additionalInformations?.otherClient == null
                 ),*/
-                disabled: !isTran,
+                //disabled: !isTran,
+                disabled: true,
                 action: (widget.transaction.clientAlias != null || widget.transaction.additionalInformations?.otherClient != null)
                     ? () => _actionRtp(context, widget.transaction)
                     : null,
@@ -115,7 +116,8 @@ class _TransactionDetailsPageActionsState extends State<TransactionDetailsPageAc
               image: Images.transactionPartager,
               label: traductions.transactionDetailsPartager,
               //disabled: transaction.sens?.name == TransactionSens.credit.name,
-              disabled: !isTran,
+              //disabled: !isTran,
+              disabled: true,
               action: widget.transaction.sens?.name == TransactionSens.debit.name
                   ? () => _actionSplit(context, widget.transaction)
                   : null,
@@ -127,7 +129,8 @@ class _TransactionDetailsPageActionsState extends State<TransactionDetailsPageAc
                 image: Images.transactionPlanifier,
                 label: traductions.transactionDetailsPlanifier,
                 // disabled: transaction.subscriptionId != null,
-                disabled: !isTran,
+                // disabled: !isTran,
+                disabled: true,
                 action: widget.transaction.subscriptionId == null
                     ? () => _actionSchedule(context, widget.transaction)
                     : null,

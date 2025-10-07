@@ -2,6 +2,10 @@ import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:pi_mobile_app/core/theme.dart';
+import 'package:pi_mobile_app/modules/transactions/presentation/pages/transaction_send/transaction_send_page_error.dart';
+import 'package:pi_mobile_app/modules/transactions/presentation/pages/transaction_send/transaction_send_page_succes.dart';
+import 'package:pi_mobile_app/shared/widgets/notification_dialog.dart';
 
 import '../../../../../core/di.dart';
 import '../../../../../core/router.dart';
@@ -67,8 +71,10 @@ class _SubscriptionDetailsPageState extends State<SubscriptionDetailsPage> {
             (previous is SubscriptionDetailsLoadingState &&
                 current is SubscriptionDetailsInitialState) ||
             (previous is SubscriptionDetailsLoadingState &&
-                current is SubscriptionDetailsDeletedState),
+                current is SubscriptionDetailsDeletedState) ||
+                current is SubcriptionActionState,
         listener: (context, state) async {
+          AppLocalizations localisation = AppLocalizations.of(context)!;
           // Process en cours
           /*if (state is SubscriptionDetailsLoadingState) {
             CustomLoadingDialog.show(context);
@@ -80,6 +86,47 @@ class _SubscriptionDetailsPageState extends State<SubscriptionDetailsPage> {
           // Après suppression
           else
            */
+          if (state is SubcriptionActionState) {
+            CustomLoadingDialog.hide(context);
+            if (state.action == "success") {
+              showModalBottomSheet<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  return NotificationDialog(
+                    type: NotificationType.success,
+                    description: localisation.subscriptionDeleteSuccessful,
+                    btnText: localisation.btnTextContinue,
+                    btnAction: () => {AppRouter.pushReplacement(context, AppRouter.home)},
+                    btnColor: Theme.of(context).colorScheme.tertiary,
+                  );
+                },
+                backgroundColor: Colors.transparent,
+                isScrollControlled: true,
+              );
+            } else {
+              // Show success popup
+              showModalBottomSheet<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  return NotificationDialog(
+                    type: NotificationType.error,
+                    title: localisation.transactionsSendErrorTitle,
+                    description: localisation.serverErrorSubtitle,
+                    btnColor: Themer.error,
+                    btns:  [
+                      NotificationBtn(
+                        btnText: localisation.transactionsSendErrorBtn,
+                        btnAction: () => {AppRouter.pop(context)},
+                        btnColor: Theme.of(context).colorScheme.tertiary,
+                      ),
+                    ],
+                  );
+                },
+                backgroundColor: Colors.transparent,
+                isScrollControlled: true,
+              );
+            }
+          }
           if (state is SubscriptionDetailsDeletedState) {
             CustomLoadingDialog.hide(context);
             AppRouter.pushReplacement(

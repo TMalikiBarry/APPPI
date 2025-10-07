@@ -38,6 +38,10 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
   String? nomClient;
   String? numClient;
 
+  ConnectedUser? user;
+
+  bool isCredit = false;
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +63,9 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
       });
     }
     ///print("nomClient : $nomClient");
+    user = ConnectedUser.current;
+    isCredit = widget.transaction.sens == TransactionSens.credit;
+
   }
 
   @override
@@ -71,7 +78,6 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
       symbol: 'FCFA ',
       decimalDigits: 0,
     );
-
     final rapportSmallTitle = Theme.of(context).textTheme.headlineSmall!
       .copyWith(
       fontWeight: FontWeight.w500,
@@ -329,7 +335,8 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
         ] else ... [
           _recuItem(
               context, traductions.transactionDetailsRecuInfoPayeurLabel,
-              data : transaction.clientNom,
+              data : user != null && transaction.clientNom.contains(user!.nomComplet()) ?
+                traductions.externalCustomer : transaction.clientNom ,
               rapportSmallTitle: rapportSmallTitle,
               rapportSubTitle: rapportSubTitle
           ),
@@ -374,21 +381,24 @@ class _TransactionDetailsPageRecuState extends State<TransactionDetailsPageRecu>
             && transaction.additionalInformations?.externalAlias != null) ... [
           _recuItem(
               context,traductions.transactionDetailsRecuInfoPayeurID,
-              data : transaction.additionalInformations!.externalAlias!,
+              data : user != null && transaction.clientNom.contains(user!.nomComplet()) && isCredit ?
+              "---" : transaction.additionalInformations!.externalAlias!,
               rapportSmallTitle: rapportSmallTitle,
               rapportSubTitle: rapportSubTitle
           ),
         ] else if (transaction.clientId != null) ... [
           _recuItem(
               context,traductions.transactionDetailsRecuInfoPayeurID,
-              data : transaction.clientId!,
+              data : user != null && transaction.clientNom.contains(user!.nomComplet()) && isCredit ?
+              "---" : transaction.clientId!,
               rapportSmallTitle: rapportSmallTitle,
               rapportSubTitle: rapportSubTitle
           ),
         ] else if (transaction.clientCompte != null) ... [
           _recuItem(
               context,traductions.transactionDetailsRecuInfoPayeurID,
-              data : transaction.clientCompte!,
+              data : user != null && transaction.clientNom.contains(user!.nomComplet()) && isCredit ?
+              "---" : transaction.clientCompte!,
               rapportSmallTitle: rapportSmallTitle,
               rapportSubTitle: rapportSubTitle
           ),

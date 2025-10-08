@@ -518,6 +518,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aliasFormInvalid => 'Must be a 36-character payment address or a phone number with the country code (+22x)';
 
   @override
+  String get aliasFormInvalidOnlySHID => 'Must be a 36-character payment address';
+
+  @override
   String get aliasFormNotFound => 'The beneficiary\'s alias does not exist in PI';
 
   @override

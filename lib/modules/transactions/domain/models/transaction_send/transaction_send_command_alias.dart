@@ -28,6 +28,22 @@ class TransactionSendCommandAlias {
     }
     return error == null;
   }
+
+  bool isValidRtp() {
+    // lorsque l'identifiant n'est pas renseigné
+    if (value == null || value!.isEmpty) {
+      error = TransactionSendCommandAliasError.empty;
+    }
+    // L'alias est un numéro de téléphone ou SHID
+    else if (!(RegExp(patternSHID).hasMatch(value!))) {
+      error = TransactionSendCommandAliasError.invalidOnlySHID;
+    }
+    // lorsque l'identifiant est valide
+    else {
+      error = null;
+    }
+    return error == null;
+  }
 }
 
 /// Types d'erreurs possibles sur le champ alias
@@ -35,6 +51,7 @@ enum TransactionSendCommandAliasError {
   //
   empty("TransactionSendCommandAliasErrorEmpty"),
   invalid("TransactionSendCommandAliasErrorInvalid"),
+  invalidOnlySHID("TransactionSendCommandAliasErrorInvalidOnlySHID"),
   notFound("TransactionSendCommandAliasErrorNotFound");
 
   // Codification du paramètre

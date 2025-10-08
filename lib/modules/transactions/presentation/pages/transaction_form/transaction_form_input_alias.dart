@@ -108,6 +108,10 @@ class _TransactionFormInputAliasState
     else if (error == TransactionSendCommandAliasError.invalid) {
       return widget.traductions.aliasFormInvalid;
     }
+    // Invalid shid
+    else if (error == TransactionSendCommandAliasError.invalidOnlySHID) {
+      return widget.traductions.aliasFormInvalidOnlySHID;
+    }
     // notFound alias
     else if (error == TransactionSendCommandAliasError.notFound) {
       return widget.traductions.aliasFormNotFound;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/router.dart';
+import '../../../../core/theme.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/custom_alert_dialog.dart';
 import '../../../../shared/widgets/loading_page.dart';
@@ -66,7 +67,7 @@ class AliasDeleteBtnWidget extends StatelessWidget {
           ).then((value) => {});
         }
       },
-      child: Padding(
+      /*child: Padding(
         padding: const EdgeInsets.only(bottom: 20),
         child: MyPageContainer(
           child: ElevatedButton(
@@ -84,13 +85,55 @@ class AliasDeleteBtnWidget extends StatelessWidget {
             child: Text(traductions.compteDetailsPageBtnSupprimer),
           ),
         ),
+      ),*/
+      child:  Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 8,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: SafeArea(
+          top: false,
+          child: SizedBox(
+            width: double.infinity,
+            height: 48,
+            child: ElevatedButton(
+              onPressed: () => _askConfirmationBeforeDelete(
+                context,
+                aliasBloc,
+                alias,
+                traductions,
+              ),
+              style: ElevatedButton.styleFrom(
+                side: const BorderSide(color: Color(0xFFF93832), width: 2),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                minimumSize: const Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+              ),
+              child: Text(
+                  traductions.compteDetailsPageBtnSupprimer,
+                style: TextStyle(color: Color(0xFFF93832)),
+              ),
+            ),
+          ),
+        ),
       ),
+
     );
   }
 
   /// Confirmation demandée avant de supprimer alias
 
-  void _askConfirmationBeforeDelete(
+  /*void _askConfirmationBeforeDelete(
       BuildContext context,
       AliasBloc aliasBloc,
       Alias alias,
@@ -117,9 +160,9 @@ class AliasDeleteBtnWidget extends StatelessWidget {
         cancelBtnAction: () => Navigator.of(context).pop(),
       ),
     );
-  }
+  }*/
 
-/*  void _askConfirmationBeforeDelete(
+ void _askConfirmationBeforeDelete(
     context,
     AliasBloc aliasBloc,
     Alias alias,
@@ -142,5 +185,5 @@ class AliasDeleteBtnWidget extends StatelessWidget {
         );
       },
     );
-  }*/
+  }
 }

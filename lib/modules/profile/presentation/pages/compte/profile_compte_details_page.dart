@@ -19,7 +19,7 @@ class ProfileCompteDetailsPage extends StatelessWidget {
       ),
 
       // Boutton supprimer alias
-      //bottomNavigationBar: const AliasDeleteBtnWidget(),
+      bottomNavigationBar: const AliasDeleteBtnWidget(),
     );
   }
 }

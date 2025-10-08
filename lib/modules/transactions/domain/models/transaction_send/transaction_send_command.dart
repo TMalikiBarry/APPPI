@@ -1,3 +1,5 @@
+import 'package:common_dependencies/utils/utils.dart';
+
 import '../transaction.dart';
 import '../transaction_canal.dart';
 import 'transaction_send_command_alias.dart';
@@ -153,6 +155,9 @@ class TransactionSendCommand {
   }
 
   factory TransactionSendCommand.fromTransaction(Transaction transaction) {
+    logger.i("transaction.sens");
+    logger.i(transaction.sens);
+
     return TransactionSendCommand(
       action: TransactionSendCommand.actionSendNow,
       method: transaction.clientAlias != null
@@ -165,9 +170,9 @@ class TransactionSendCommand {
       iban: transaction.additionalInformations != null && transaction.additionalInformations!.movementType == TransactionSendMethod.iban.code
           ? TransactionSendCommandIban(value: transaction.additionalInformations!.clientIban)
           : null,
-      alias: transaction.clientAlias != null
-          ? TransactionSendCommandAlias(value: transaction.clientAlias)
-          : null,
+      alias: transaction.sens == TransactionSens.credit ? TransactionSendCommandAlias(value : transaction.clientId )
+          : transaction.clientAlias != null ? TransactionSendCommandAlias(value: transaction.clientAlias)
+          : TransactionSendCommandAlias(value: transaction.additionalInformations?.payeAlias),
       othr: transaction.clientAlias == null && transaction.userLogin != null
           ? TransactionSendCommandOthr(value: transaction.userLogin)
           : (transaction.clientCompte != null ? TransactionSendCommandOthr(value: transaction.clientCompte): null),

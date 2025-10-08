@@ -255,6 +255,7 @@
   "aliasFormHint": "Adresse de paiement ou n° de téléphone",
   "aliasFormEmpty": "Obligatoire",
   "aliasFormInvalid": "Doit être une adresse de paiement de 36 caractères ou un numéro de téléphone avec l'indicatif (+22x)",
+  "aliasFormInvalidOnlySHID": "Doit être une adresse de paiement de 36 caractères",
   "aliasFormNotFound": "L’alias du bénéficiaire n’existe pas dans PI",
   "@_CONTACT": {},
   "contactActionsTitle": "Contact",

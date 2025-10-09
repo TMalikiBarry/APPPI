@@ -143,7 +143,7 @@ class AliasDeleteBtnWidget extends StatelessWidget {
     showDialog(
       context: context,
       builder: (_) => CustomAlertDialog(
-        title: traductions.compteDetailsPagePopupDeleteAliasTitle,
+        title: traductions.compteDetailsPagePopupDeleteAliasTitle, é
         description: traductions.compteDetailsPagePopupDeleteAliasSubTitle,
         confirmBtnText: traductions.compteDetailsPagePopupDeleteAliasBtnConfirmer,
         confirmBtnAction: () {
@@ -168,6 +168,7 @@ class AliasDeleteBtnWidget extends StatelessWidget {
     Alias alias,
     AppLocalizations traductions,
   ) {
+  bool alreadyTapped = false;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -177,6 +178,9 @@ class AliasDeleteBtnWidget extends StatelessWidget {
           confirmBtnText:
               traductions.compteDetailsPagePopupDeleteAliasBtnConfirmer,
           confirmBtnAction: () {
+           if (alreadyTapped) return;
+
+          alreadyTapped = true;
             aliasBloc.add(AliasDeleteEvent(alias.cle));
           },
           cancelBtnText:

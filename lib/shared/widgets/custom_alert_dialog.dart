@@ -27,8 +27,9 @@ class CustomAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
+      backgroundColor: Colors.white,
       contentPadding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 15.0),
-      insetPadding: const EdgeInsets.fromLTRB(55.0, 0.0, 55.0, 00.0),
+      insetPadding: const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 00.0),
       alignment: Alignment.center,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -58,45 +59,50 @@ class CustomAlertDialog extends StatelessWidget {
                   copyWith(color: Theme.of(context).colorScheme.onSurface),
             ),
 
-            const Divider(),
-
+            //const Divider(),
+            const SizedBox(height: 15),
             // Confirm btn
-            TextButton(
+            ElevatedButton(
               onPressed: confirmBtnAction,
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 4.0),
+              style: ElevatedButton.styleFrom(
+                side: const BorderSide(color: Color(0xFFF93832), width: 2),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                minimumSize: const Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
               ),
               child: Text(
                 confirmBtnText,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall
-                    ?. //
-                    copyWith(
-                      color: Themer.systemErrorColor,
-                    ),
+                style: TextStyle(color: Color(0xFFF93832)),
+              ),
+            ),
+            SizedBox(height: 10),
+
+            if (cancelBtnText != null)
+            // Cancel btn
+            ElevatedButton(
+              onPressed: cancelBtnAction ??
+                      () {
+                    AppRouter.pop(context);
+                  },
+              style: ElevatedButton.styleFrom(
+                side: const BorderSide(color: Color(0xFFD0D5DD), width: 2),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                minimumSize: const Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+              ),
+              child: Text(
+                cancelBtnText!,
+                style: TextStyle(color: Color(0xFF344054)),
               ),
             ),
 
-            if (cancelBtnText != null) const Divider(),
-
-            if (cancelBtnText != null)
-              // Cancel btn
-              TextButton(
-                onPressed: cancelBtnAction ??
-                    () {
-                      AppRouter.pop(context);
-                    },
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 4.0),
-                ),
-                child: Text(
-                  cancelBtnText!,
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        color: Themer.systemBlueColor,
-                      ),
-                ),
-              ),
+           // if (cancelBtnText != null) const Divider(),
           ],
         ),
       ],

@@ -178,10 +178,12 @@ class AliasDeleteBtnWidget extends StatelessWidget {
           confirmBtnText:
               traductions.compteDetailsPagePopupDeleteAliasBtnConfirmer,
           confirmBtnAction: () {
-           if (alreadyTapped) return;
+            if (alreadyTapped) return;
+            alreadyTapped = true;
 
-          alreadyTapped = true;
             aliasBloc.add(AliasDeleteEvent(alias.cle));
+            //Navigator.of(context).pop();
+            Navigator.of(context).maybePop();
           },
           cancelBtnText:
               traductions.compteDetailsPagePopupDeleteAliasBtnAnnuler,

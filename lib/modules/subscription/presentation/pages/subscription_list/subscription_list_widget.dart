@@ -68,12 +68,12 @@ class _SubscriptionListWidgetState extends State<SubscriptionListWidget> {
               List<Subscription> withFrequence =
                   transactions.where((t) => (t.frequence != null && t.montant != 0)
                 ).toList()
-              ..sort((a, b) => b.dateDebut!.compareTo(a.dateDebut!));
+              ..sort((a, b) => b.dateDebut != null && a.dateDebut != null ? b.dateDebut!.compareTo(a.dateDebut!) : 0);
               // TODO sort prochain nextPaymentDate plus recent
               List<Subscription> withoutFrequence =
                   transactions.where((t) => (t.frequence == null && t.montant != 0)
                   ).toList()
-                    ..sort((a, b) => b.dateDebut!.compareTo(a.dateDebut!));
+                    ..sort((a, b) => b.dateDebut != null && a.dateDebut != null ? b.dateDebut!.compareTo(a.dateDebut!) : 0);
 
               return SingleChildScrollView(
                 child: Column(

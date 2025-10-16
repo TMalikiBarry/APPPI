@@ -42,9 +42,11 @@ class SubscriptionOutputRemote {
         '/movement/schedule/history',
         queryParameters: qs,
       );
-      return (response.data['response'] as List<dynamic>)
+      List<Subscription> subscriptions = (response.data['response'] as List<dynamic>)
           .map((e) => Subscription.fromJson(e as Map<String, dynamic>))
           .toList();
+
+      return subscriptions;
     }
     on ApiException catch (e) {
       logger.i("${e.statusCode} ${e.message} ${e.name} ${e.error} ${e.problem}");

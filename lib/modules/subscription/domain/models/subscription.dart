@@ -118,7 +118,7 @@ class Subscription extends Transaction {
   ) {
     if (subs.frequence == null) return subs.dateDebut;
     // Pas encore commencé
-    if (fromDate.isBefore(subs.dateDebut!)) return subs.dateDebut;
+    if (subs.dateDebut != null && fromDate.isBefore(subs.dateDebut!)) return subs.dateDebut;
     // Terminé
     if (subs.dateFin != null && fromDate.isAfter(subs.dateFin!)) return null;
     // Utilise la périodicité renseignée ou 1 par défaut

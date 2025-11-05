@@ -779,6 +779,18 @@ class Transaction {
   }
 
   static Transaction fromJsonSupcription(Map<dynamic, dynamic> json) {
+    String dateDebutSchedul = "";
+    if (json['nextExecutionTime'] != null){
+      dateDebutSchedul=json['nextExecutionTime'];
+    }
+    else {
+      if (int.parse(json['month'] as String) <10) {
+        dateDebutSchedul="${json['year']}-0${json['month']}-${json['dayOfMonth']}T00:00:00";
+      }
+      else {
+        dateDebutSchedul="${json['year']}-${json['month']}-${json['dayOfMonth']}T00:00:00";
+      }
+    }
     return Transaction(
       // Champs directs
       compte: json['id'].toString(),
@@ -788,7 +800,7 @@ class Transaction {
       endToEndId: json['id'].toString(),
       acquirerAccountLabel: json['clientName'] as String? ?? '',
       statut: TransactionStatut.initie,
-      dateDebut: DateTime.parse(json['nextExecutionTime'] as String),
+      dateDebut: DateTime.parse(dateDebutSchedul),
       frequence:  json['frequence'] != null
           ? Frequence.values.firstWhere(
               (element) => element.code == json['frequence'] as String)

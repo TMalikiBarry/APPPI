@@ -30,7 +30,9 @@ class NotificationOutputRemote {
     logger.i('← notifications() status=/notification/$alias?type=ALIAS');
 
     // 2. Appel API sans queryParameters
-    final resp = await Api.get('/notification/$alias?type=ALIAS');
+    final resp = ConnectedUser.current?.shid != null
+        ? await Api.get('/notification/$alias?type=ALIAS&shid=${ConnectedUser.current?.shid}')
+        : await Api.get('/notification/$alias?type=ALIAS');
     logger.i('← notifications() status=${resp.statusCode}');
 
     // 3. Extraction du tableau JSON
@@ -86,10 +88,13 @@ class NotificationOutputRemote {
     } else {
       alias = phone_number;
     }
-    logger.i('← notifications() status=/notification/$alias?type=ALIAS');
+    var url = ConnectedUser.current?.shid != null
+      ? '/notification/$alias?type=ALIAS&shid=${ConnectedUser.current?.shid}'
+      : '/notification/$alias?type=ALIAS';
+    logger.i('← notifications() url : $url');
 
     final ApiResponse response = await Api.get(
-      '/notification/$alias?type=ALIAS',
+      url,
       queryParameters: queryParameters,
     );
 

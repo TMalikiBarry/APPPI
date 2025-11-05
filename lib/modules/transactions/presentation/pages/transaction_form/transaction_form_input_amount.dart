@@ -6,6 +6,7 @@ import '../../../domain/models/transaction_send/transaction_send_command.dart';
 import '../../../domain/models/transaction_send/transaction_send_command_amount.dart';
 import '../../bloc/transaction_send/transaction_send_bloc.dart';
 import '../../bloc/transaction_send/transaction_send_event.dart';
+import 'package:intl/intl.dart';
 
 class TransactionFormInputAmount extends StatefulWidget {
   ///
@@ -46,6 +47,7 @@ class _TransactionFormInputAmountState
 
   @override
   Widget build(BuildContext context) {
+    var formatter = NumberFormat('#,##0', 'fr_SN');
     //
     return InputAmount(
       //
@@ -58,6 +60,29 @@ class _TransactionFormInputAmountState
           : "",
       // Quand le texte change
       onChange: (value) {
+        /// 🔹 Formatage dynamique pendant la saisie
+        // Supprime les espaces ou séparateurs existants
+        String numericString = value.replaceAll(RegExp(r'\D'), '');
+
+        if (numericString.isEmpty) {
+          ctrl.clear();
+          return;
+        }
+
+        // Convertit en nombre
+        final number = double.tryParse(numericString) ?? 0;
+
+        // Formate en ajoutant des espaces
+        final formatted =
+        formatter.format(number).replaceAll(',', ' ');
+
+        // Mets à jour le texte formaté
+        ctrl.value = TextEditingValue(
+          text: formatted,
+          selection: TextSelection.collapsed(
+            offset: formatted.length,
+          ),
+        );
         widget.command.amount = TransactionSendCommandAmount(
           value: value.isNotEmpty ? double.parse(value) : 0.0,
           solde: widget.command.solde,

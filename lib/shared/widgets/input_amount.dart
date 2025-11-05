@@ -54,7 +54,7 @@ class InputAmountState extends State<InputAmount> {
   final FocusNode _focusNode = FocusNode();
 
   Color? _borderColor;
-  var formatter = NumberFormat('#,##0', 'en_US');
+  var formatter = NumberFormat('#,##0', 'fr_SN');
 
   @override
   void initState() {

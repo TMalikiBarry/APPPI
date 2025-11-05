@@ -16,6 +16,7 @@ import '../../bloc/transaction_send/transaction_send_state.dart';
 import '../transaction_send/transaction_send_page_error.dart';
 import '../transaction_send/transaction_send_page_succes.dart';
 import 'transaction_form_btn_confirm.dart';
+import 'package:intl/intl.dart';
 
 class TransactionVerificationPage extends StatelessWidget {
   ///
@@ -23,6 +24,7 @@ class TransactionVerificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatMontant = NumberFormat("#,##0.##", "fr_FR");
     ///
     AppLocalizations traductions = AppLocalizations.of(context)!;
     //
@@ -94,6 +96,10 @@ class TransactionVerificationPage extends StatelessWidget {
         if (state is TransactionSendFormVerificationAskingState) {
           TransactionSendCommand command = state.command;
           Transaction transaction = state.transaction;
+          final montantValue = command.amount!.value;
+          final montantNumerique = montantValue is num
+              ? montantValue
+              : double.tryParse(montantValue.toString()) ?? 0;
           return Scaffold(
             // Pour avoir le bouton de retour
             appBar: AppBar(),
@@ -233,7 +239,8 @@ class TransactionVerificationPage extends StatelessWidget {
                     CustomTextInput(
                       labelText: traductions.transactionFormAmountHint,
                       controller: TextEditingController(
-                          text: command.amount!.value.toString()),
+                        text: formatMontant.format(montantNumerique),
+                      ),
                       readOnly: true,
                     ),
 

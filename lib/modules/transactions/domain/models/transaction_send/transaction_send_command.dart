@@ -78,13 +78,19 @@ class TransactionSendCommand {
   static const String actionReceiveNow = "receive_now";
 
   bool isValid() {
-    if (alias != null) alias!.isValid();
+    if (alias != null && action == actionReceiveNow) {
+      alias!.isValidRtp();
+    } else if (alias != null) {
+      alias!.isValid();
+    }
     if (amount != null) amount!.isValid();
     if (motif != null) motif!.isValid();
     if (iban != null) iban!.isValid();
     if (othr != null) othr!.isValid();
     if (schedule != null) schedule!.isValid();
-    return ((alias != null && alias!.isValid()) ||
+    return (
+        (alias != null && action == actionReceiveNow && alias!.isValidRtp()) ||
+        (alias != null && action != actionReceiveNow && alias!.isValid()) ||
             (iban != null && iban!.isValid() &&
                 pspNom != null) ||
             (othr != null && othr!.isValid())) &&

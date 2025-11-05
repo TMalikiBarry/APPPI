@@ -66,6 +66,7 @@ import '../modules/transactions/presentation/pages/transaction_search/transactio
 import '../modules/transactions/presentation/pages/transaction_search/transaction_search_page_filters.dart';
 import '../modules/transactions/presentation/pages/transaction_send/transaction_send_page.dart';
 import 'package:pi_mobile_app/modules/notification/domain/models/notification.dart' as my_notif;
+import 'package:common_dependencies/components/fireBaseApi.dart';
 
 /// Définit la logique de routage / navigation entre les différentes pages de l'application
 class AppRouter {
@@ -307,6 +308,7 @@ class AppRouter {
             //
             final loginBloc = context.read<LoginBloc>();
             ConnectedUser user = loginBloc.getConnectedUser()!;
+            FirebaseApi.addNotifForMe();
             //
             if(user.paymentAddress() != null) {
               aliasBloc.add(FetchAliasEvent(user.paymentAddress()!));

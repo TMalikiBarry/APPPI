@@ -518,6 +518,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get aliasFormInvalid => 'Deve ser um endereço de pagamento de 36 caracteres ou um número de telefone com o indicativo';
 
   @override
+  String get aliasFormInvalidOnlySHID => 'Deve ser um endereço de pagamento de 36 caracteres';
+
+  @override
   String get aliasFormNotFound => 'O alias do beneficiário não existe em PI';
 
   @override

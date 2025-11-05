@@ -256,6 +256,7 @@
   "aliasFormHint": "Payment address or phone number",
   "aliasFormEmpty": "Required",
   "aliasFormInvalid": "Must be a 36-character payment address or a phone number with the country code (+22x)",
+  "aliasFormInvalidOnlySHID": "Must be a 36-character payment address",
   "aliasFormNotFound": "The beneficiary's alias does not exist in PI",
   "@_CONTACT": {},
   "contactActionsTitle": "Contact",

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
 import 'package:pi_mobile_app/modules/transactions/domain/models/transaction_send/transaction_send_method.dart';
+import 'package:wallet_tfs_app/repositories/transaction_repository.dart';
 
 import '../../../../../core/api.dart';
 import '../../../../compte/ports/input/compte_input_port.dart';

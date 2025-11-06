@@ -24,6 +24,7 @@ import '../modules/config/domain/models/config_keys.dart';
 import '../modules/contacts/presentation/bloc/contact_bloc.dart';
 import '../modules/pi_app_events.dart';
 import '../modules/profile/presentation/bloc/hide_amount/hide_amount_bloc.dart';
+import '../modules/qrcode/domain/models/qrcode_data.dart';
 import '../modules/security/domain/models/connected_user.dart';
 import '../modules/security/infra/connexion_output_authpkce.dart';
 import '../modules/security/ports/input/connexion_input_port.dart';
@@ -43,9 +44,10 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 /// Premier widget Application lancée par le main
 class App extends StatefulWidget {
+  final QrcodeData? qrCodeData;
   //
   /// Constructeur de l'app
-  App({super.key});
+  App({super.key, this.qrCodeData});
 
   @override
   State<App> createState() => _AppState();
@@ -287,13 +289,15 @@ class _AppState extends State<App> {
         && isFirstTime
     )
         ? AppRouter.introduction
-        : AppRouter.home;
+        : widget.qrCodeData != null
+          ? AppRouter.qrcodeTransactionSendTp
+          : AppRouter.home;
 
     // Passer également la configuration pour le routage dans l'Application
     return MaterialApp.router(
       theme: theme,
       locale: language,
-      routerConfig: AppRouter.routes(pageInitiale),
+      routerConfig: AppRouter.routes(pageInitiale, widget.qrCodeData),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         // provides localized strings and other values

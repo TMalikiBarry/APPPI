@@ -6,6 +6,9 @@ enum ConfigKey {
   // l'utilisateur a passé l'introduction
   introductionPassed("INTRODUCTION_PASSED"),
 
+  // l'utilisateur a passé l'introduction
+  piQrcode("PI_QRCODE"),
+
   // theme de l'utilisateur
   preferedTheme("PREFERED_THEME"),
   // Langue préférée

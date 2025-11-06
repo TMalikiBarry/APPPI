@@ -41,7 +41,7 @@ class TransactionVerificationPage extends StatelessWidget {
         // Envoyé avec succès - Irrevocable
         else if (state is TransactionSendFormSuccessState) {
           // Hide loader
-          CustomLoadingDialog.hide(context);
+          //CustomLoadingDialog.hide(context);
 
           // Notification en cas de success
           AppNotifications.showCustomTransferNotification(

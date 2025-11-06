@@ -10,8 +10,9 @@ abstract class AliasEvent {
 /// Quand on shouaite recupérer l'alias de compte
 class FetchAliasEvent extends AliasEvent {
   final String compte;
+  final bool qrCodePi;
 
-  FetchAliasEvent(this.compte);
+  FetchAliasEvent(this.compte, [this.qrCodePi=false]);
 }
 
 /// ---------------------

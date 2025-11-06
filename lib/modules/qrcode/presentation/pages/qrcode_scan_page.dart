@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -71,6 +72,7 @@ class _QrcodeScanPageState extends State<QrcodeScanPage> {
                   context,
                   traductions,
                 )),
+                backgroundColor: primaryColor,
               ),
             );
             controller.start();

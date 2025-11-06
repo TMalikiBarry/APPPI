@@ -59,7 +59,7 @@ class AmountWidget extends StatelessWidget {
 
         return Text(
           "${prefixText ?? ''} ${sign ?? ''} "
-          "${currency.format(montant ?? 0)} ${surfixText ?? ''}F",
+          "${currency.format(montant?.floor() ?? 0)} ${surfixText ?? ''}F",
           style: displayAmount ? style : getHidedStyle(style),
         );
       },

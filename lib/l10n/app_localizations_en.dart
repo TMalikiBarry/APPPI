@@ -1732,4 +1732,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get userNotExistInContactsList => 'This user is not one of your contacts. You must add them in order to approve the request.';
+
+  @override
+  String get upgrade_kyc => 'Upgrade kyc';
+
+  @override
+  String get plafon_actuel => 'Current limit';
+
+  @override
+  String get augmenter_palfond => 'Increase your monthly limit!';
+
+  @override
+  String get description_plafon => 'Take a photo of your ID card or upload it to access a limit of up to';
+
+  @override
+  String get description_simple => 'It’s simple, fast and secure . ';
+
+  @override
+  String get exemple_prix => '10 000 000 F';
 }

@@ -3402,6 +3402,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This user is not one of your contacts. You must add them in order to approve the request.'**
   String get userNotExistInContactsList;
+
+  /// No description provided for @upgrade_kyc.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade kyc'**
+  String get upgrade_kyc;
+
+  /// No description provided for @plafon_actuel.
+  ///
+  /// In en, this message translates to:
+  /// **'Current limit'**
+  String get plafon_actuel;
+
+  /// No description provided for @augmenter_palfond.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase your monthly limit!'**
+  String get augmenter_palfond;
+
+  /// No description provided for @description_plafon.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo of your ID card or upload it to access a limit of up to'**
+  String get description_plafon;
+
+  /// No description provided for @description_simple.
+  ///
+  /// In en, this message translates to:
+  /// **'It’s simple, fast and secure . '**
+  String get description_simple;
+
+  /// No description provided for @exemple_prix.
+  ///
+  /// In en, this message translates to:
+  /// **'10 000 000 F'**
+  String get exemple_prix;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

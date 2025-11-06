@@ -1732,4 +1732,22 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get userNotExistInContactsList => 'Este utilizador não faz parte dos seus contactos, deve adicioná-lo para poder validar o pedido.';
+
+  @override
+  String get upgrade_kyc => 'Destravar';
+
+  @override
+  String get plafon_actuel => 'limite máximo actual';
+
+  @override
+  String get augmenter_palfond => 'Aumente o seu limite mensal !';
+
+  @override
+  String get description_plafon => 'Tire uma foto do seu cartão de identificação ou faça o upload para ter acesso a um teto ';
+
+  @override
+  String get description_simple => 'É simples, rápido e seguro. ';
+
+  @override
+  String get exemple_prix => '10 000 000 F';
 }

@@ -1732,4 +1732,22 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get userNotExistInContactsList => 'Cet utilisateur ne fait pas partie de vos contacts, vous devez l\'ajouter pour pouvoir valider la demande.';
+
+  @override
+  String get upgrade_kyc => 'Déplafonner';
+
+  @override
+  String get plafon_actuel => 'Plafond actuel';
+
+  @override
+  String get augmenter_palfond => 'Augmentez votre plafond mensuel !';
+
+  @override
+  String get description_plafon => 'Prenez une photo de votre carte d’identité ou téléchargez-la pour accéder à un plafond jusqu’à';
+
+  @override
+  String get description_simple => 'C’est simple, rapide et sécurisé. ';
+
+  @override
+  String get exemple_prix => '10 000 000 F';
 }

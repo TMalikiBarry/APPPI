@@ -883,5 +883,11 @@
   "contact_us_phone_desc": "Contact our agents from 7 a.m. to 11 p.m.",
   "contact_service_client": "Contact customer service",
   "contact_us_default_message": "Tell us about your request and our team will contact you shortly.",
-  "userNotExistInContactsList": "This user is not one of your contacts. You must add them in order to approve the request."
+  "userNotExistInContactsList": "This user is not one of your contacts. You must add them in order to approve the request.",
+  "upgrade_kyc" : "Upgrade kyc",
+  "plafon_actuel" : "Current limit",
+  "augmenter_palfond":"Increase your monthly limit!",
+  "description_plafon":"Take a photo of your ID card or upload it to access a limit of up to",
+  "description_simple" : "It’s simple, fast and secure . ",
+  "exemple_prix" :"10 000 000 F"
 }

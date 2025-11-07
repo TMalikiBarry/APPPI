@@ -716,7 +716,7 @@ class AppRouter {
           logger.i("je suis dans transfert: $qrData");
           return TransactionFormPageQrcode(
             command: TransactionSendCommand(
-              compte:ConnectedUser.current?.alias ?? ConnectedUser.current!.shid!,
+              compte:ConnectedUser.current?.alias ?? ConnectedUser.current!.shid ?? "",
               //compte: aliasState.alias.compte,
               action: action ?? TransactionSendCommand.actionSendNow,
               method: TransactionSendMethod.qrcode,

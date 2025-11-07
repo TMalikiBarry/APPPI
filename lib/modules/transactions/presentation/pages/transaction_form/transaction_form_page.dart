@@ -50,6 +50,7 @@ class TransactionFormPage extends StatelessWidget {
           // FIX: Ajouter cette condition pour gérer le retour depuis l'erreur
           (previous is TransactionSendFormErrorState && current is TransactionSendFormInputState),
       listener: (context, state) async {
+        logger.i("state : listener transaction_page $state");
         // FIX: Afficher le loader
         if (state is TransactionSendFormVerificationLoadingState) {
           CustomLoadingDialog.show(context);
@@ -119,6 +120,7 @@ class TransactionFormPage extends StatelessWidget {
       buildWhen: (previous, current) => current is TransactionSendFormInputState || current is TransactionSendFormVerificationLoadingState || current is TransactionSendLoadingState,
       builder: (context, state) {
         final bool isLoading = state is TransactionSendLoadingState;
+        logger.i("state : builder transaction_page $state");
         if (state is TransactionSendFormInputState) {
           return Scaffold(
             // Pour avoir le bouton de retour

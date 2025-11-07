@@ -1,3 +1,4 @@
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,6 +50,7 @@ class TransactionFormPageQrcode extends StatelessWidget {
               current is TransactionSendFormVerificationLoadingState ||
               current is TransactionSendFormErrorState,
           listener: (context, state) async {
+            logger.i("state : listener transaction_page_qrcode $state");
             if (state is TransactionSendFormErrorState) {
               // Hide loader
               CustomLoadingDialog.hide(ctx ?? context);
@@ -78,6 +80,7 @@ class TransactionFormPageQrcode extends StatelessWidget {
               current is TransactionSendFormVerificationLoadingState ||
               current is TransactionSendFormVerificationAskingState,
           builder: (context, state) {
+            logger.i("state : builder transaction_page_qrcode $state");
             return LoadingPage(bgColor: Theme.of(ctx ?? context).colorScheme.surface);
           },
         ),

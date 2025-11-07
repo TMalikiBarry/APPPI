@@ -337,7 +337,7 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
           },
         );
       } catch (e) {
-        logger.e("Erreur de création de la souscription", error: e);
+        //logger.e("Erreur de création de la souscription", error: e);
         emit(TransactionSendFormErrorState(
           event.command,
           TransactionError.unknow.name,

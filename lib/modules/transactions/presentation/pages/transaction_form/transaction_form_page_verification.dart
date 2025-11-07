@@ -34,6 +34,7 @@ class TransactionVerificationPage extends StatelessWidget {
           current is TransactionSendFormSuccessState ||
           current is TransactionSendFormErrorState,
       listener: (context, state) async {
+        logger.i("state : listener transaction_page_verification $state");
         // Envoie en cours
         if (state is TransactionSendFormSendingState) {
           CustomLoadingDialog.show(context);
@@ -41,7 +42,12 @@ class TransactionVerificationPage extends StatelessWidget {
         // Envoyé avec succès - Irrevocable
         else if (state is TransactionSendFormSuccessState) {
           // Hide loader
-          //CustomLoadingDialog.hide(context);
+          bool fromScan = false;
+          if (Navigator.of(context).canPop()) {
+            CustomLoadingDialog.hide(context);
+          } else {
+            fromScan = true;
+          }
 
           // Notification en cas de success
           AppNotifications.showCustomTransferNotification(
@@ -63,17 +69,25 @@ class TransactionVerificationPage extends StatelessWidget {
             isScrollControlled: true,
           );
           // Fermer le bottom sheet après 3 secondes
-          Future.delayed(const Duration(seconds: 3), () {
-            if (context.mounted && !isBottomSheetClosed) {
-              AppRouter.pop(context);
-              AppRouter.pushReplacement(context, AppRouter.home);
-            }
-          });
+          if (fromScan) {
+            Future.delayed(const Duration(seconds: 3), () {
+              if (context.mounted && !isBottomSheetClosed) {
+                AppRouter.pop(context);
+                AppRouter.pushReplacement(context, AppRouter.home);
+              }
+            });
+          }
         }
         // Envoyé avec erreur -  Rejete
         else if (state is TransactionSendFormErrorState) {
+          bool fromScan = false;
           // Hide loader
-          CustomLoadingDialog.hide(context);
+          //CustomLoadingDialog.hide(context);
+          if (Navigator.of(context).canPop()) {
+            CustomLoadingDialog.hide(context);
+          } else {
+            fromScan = true;
+          }
           // Show success popup
           showModalBottomSheet<void>(
             context: context,
@@ -83,13 +97,20 @@ class TransactionVerificationPage extends StatelessWidget {
             backgroundColor: Colors.transparent,
             isScrollControlled: true,
           );
+
+          if (fromScan) {
+            // Rediriger sur la page d'accueil après 3 secondes
+            Future.delayed(const Duration(seconds: 1), () {
+              AppRouter.go(context, AppRouter.home);
+            });
+          }
         }
       },
       buildWhen: (previous, current) =>
           current is TransactionSendFormVerificationAskingState ||
           current is TransactionSendLoadingState,
       builder: (context, state) {
-        logger.i("transaction_form_page_verification state : $state");
+        logger.i("state : builder transaction_page_verification $state");
         /*if (state is! TransactionSendFormVerificationAskingState) {
           return const LoadingPage();
         }*/

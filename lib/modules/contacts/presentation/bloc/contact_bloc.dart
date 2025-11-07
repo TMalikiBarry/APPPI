@@ -86,7 +86,20 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
   ) async {
     // en fonction de là ou on se trouves
     List<Contact> contactsAll = state.contactsAll!;
+    // logger.i("contactsAll $contactsAll");
+    if (state.contactsAll!.isEmpty) {
+      // logger.i("contactsAll isEmpty $contactsAll");
+      contactsAll = await FlutterContacts.getContacts(
+        withProperties: true,
+        withThumbnail: true,
+        withAccounts: false,
+        sorted: true,
+        deduplicateProperties: false,
+      );
+    }
+    //logger.i("contactsAll2 $contactsAll");
     if (event.keyword != null && event.keyword!.isNotEmpty) {
+      //logger.i("contactsAll event.keyword ${event.keyword}");
       List<Contact> contacts = contactsAll.where((element) {
         final name = element.displayName.toLowerCase();
         final keyword = event.keyword!.toLowerCase();

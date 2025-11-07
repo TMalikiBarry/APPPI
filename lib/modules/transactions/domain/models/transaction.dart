@@ -779,18 +779,20 @@ class Transaction {
   }
 
   static Transaction fromJsonSupcription(Map<dynamic, dynamic> json) {
-    String dateDebutSchedul = "";
+    String dateDebutSchedul;
     if (json['nextExecutionTime'] != null){
       dateDebutSchedul=json['nextExecutionTime'];
+    } else {
+      int parseInt(dynamic value) => value is int ? value : int.tryParse(value.toString()) ?? 0;
+
+      final day = parseInt(json['dayOfMonth']).toString().padLeft(2, '0');
+      final month = parseInt(json['month']).toString().padLeft(2, '0');
+      final year = parseInt(json['year']);
+
+      dateDebutSchedul = "$year-$month-${day}T00:00:00";
     }
-    else {
-      if (int.parse(json['month'] as String) <10) {
-        dateDebutSchedul="${json['year']}-0${json['month']}-${json['dayOfMonth']}T00:00:00";
-      }
-      else {
-        dateDebutSchedul="${json['year']}-${json['month']}-${json['dayOfMonth']}T00:00:00";
-      }
-    }
+    logger.i("dateDebutSchedul");
+    logger.i(dateDebutSchedul);
     return Transaction(
       // Champs directs
       compte: json['id'].toString(),

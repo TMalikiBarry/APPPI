@@ -115,7 +115,7 @@ class CtaWidget extends StatelessWidget {
                         package: "common_dependencies",
                       )),
                   Container(
-                      margin: EdgeInsets.only(left: 25),
+                      margin: const EdgeInsets.only(left: 25),
                       child:Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

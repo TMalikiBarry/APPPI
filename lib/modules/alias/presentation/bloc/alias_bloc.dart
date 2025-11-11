@@ -70,7 +70,7 @@ class AliasBloc extends Bloc<AliasEvent, AliasState> {
     try {
       emit(AliasLoadingState());
       Alias? alias = await aliasInputPort.recuperer(event.compte);
-      emit(alias != null && alias.participant != null && alias.participant == "SNC004"
+      emit(alias != null && alias.participant != null && (alias.participant == "SNC004" || alias.participant == "CIE001")
           ? AliasExistState(alias, null, event.qrCodePi)
           : AliasNotExistState());
     } on AliasRetrieveException catch (e) {

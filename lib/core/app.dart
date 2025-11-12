@@ -83,8 +83,8 @@ class _AppState extends State<App> {
     ConnectedUser.current = ConnectedUser(
       id: json["sub"],
       username: json["preferred_username"],
-      firstName: json["given_name"],
-      lastName: json["family_name"],
+      firstName: json.containsKey("given_name") ? json["given_name"] : "",
+      lastName: json.containsKey("family_name") ? json["family_name"] : "",
       country: json["address"]?["country"] ?? "SN",
       address: json["address"]?["locality"] ?? "DK",
       telephone: json["phone_number"],

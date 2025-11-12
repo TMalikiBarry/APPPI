@@ -188,6 +188,11 @@ class _IdentificationPinCreatePageState extends State<IdentificationPinCreatePag
                       ),
                       NumericKeypad(
                         controller: _controller,
+                        onNumberPressed: (value) {
+                          if (value == '⌫') {
+                            _controller.text = value.substring(0, value.length - 1);
+                          }
+                        },
                       ),
                     ],
                   ),

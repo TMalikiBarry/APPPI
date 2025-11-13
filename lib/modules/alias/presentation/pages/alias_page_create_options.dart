@@ -21,6 +21,7 @@ class AliasPageCreateOptions extends StatelessWidget {
     AliasBloc aliasBloc = context.read<AliasBloc>();
     //
     String compte = context.read<LoginBloc>().getConnectedUser()!.reference();
+    String phoneNumber = context.read<LoginBloc>().getConnectedUser()!.reference();
     return MyPageContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,7 +74,7 @@ class AliasPageCreateOptions extends StatelessWidget {
                         traductions.aliasCreateMBNOTitle,
                         traductions.aliasCreateMBNOSubTitle,
                             () => {
-                          aliasBloc.add(CreateAliasMBNOEvent(compte)),
+                          aliasBloc.add(CreateAliasMBNOEvent(compte, )),
                         },
                         iconSize: 20,
                       ),

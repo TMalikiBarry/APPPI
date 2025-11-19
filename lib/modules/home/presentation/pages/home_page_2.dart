@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pi_mobile_app/l10n/app_localizations.dart';
 import 'package:pi_mobile_app/modules/config/adapters/ui/bloc/config_bloc.dart';
 import 'package:pi_mobile_app/modules/config/domain/models/config_keys.dart';
-import 'package:pi_mobile_app/modules/home/presentation/pages/support_page.dart';
+import 'package:wallet_tfs_app/app/presenter/support.dart';
 import '../../../../core/assets.dart';
 import '../../../../core/theme.dart';
 import '../../../alias/domain/models/alias.dart';

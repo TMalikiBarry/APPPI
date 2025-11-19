@@ -1,4 +1,4 @@
-import 'dart:io';
+/*import 'dart:io';
 import 'package:common_dependencies/utils/colors.dart';
 import 'package:common_dependencies/utils/constants.dart';
 import 'package:common_dependencies/utils/enum.dart';
@@ -194,7 +194,7 @@ class _SupportPageState extends State<SupportPage> {
                           }
                         }),*/
                             SizedBox(height: 8 * fem),
-                            GestureDetector(
+                            /*GestureDetector(
                               onTap: () async {
                                 Uri uri = Uri(
                                     scheme: 'tel', path: phoneNumberSupport);
@@ -202,7 +202,8 @@ class _SupportPageState extends State<SupportPage> {
                                   throw 'Could not launch ${uri.path}';
                                 }
                               },
-                              child: ListTile(
+                              child:*/
+                              ListTile(
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                                 leading: Container(
                                   width: 38 * fem,
@@ -248,7 +249,7 @@ class _SupportPageState extends State<SupportPage> {
                                   icon: Icon(Icons.arrow_forward_ios_sharp),
                                 ),
                               ),
-                            ),
+                            //),
                             /*customTextButton(
                             const Icon(Icons.call_outlined,
                                 size: 20, color: primaryColor),
@@ -294,3 +295,5 @@ class _SupportPageState extends State<SupportPage> {
             })));
   }
 }
+
+ */

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:pi_mobile_app/modules/security/domain/models/connected_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/api.dart';
 import '../../domain/exceptions/alias_retrieve_exception.dart';
@@ -70,7 +71,13 @@ class AliasBloc extends Bloc<AliasEvent, AliasState> {
     try {
       emit(AliasLoadingState());
       Alias? alias = await aliasInputPort.recuperer(event.compte);
-      emit(alias != null && alias.participant != null && (alias.participant == "SNC004" || alias.participant == "CIE001")
+      final pref = await SharedPreferences.getInstance();
+      String countryCode = pref.getString("countryCode") ?? "SN";
+      emit(alias != null && alias.participant != null && (
+        alias.participant == "SNC004" || alias.participant == "CIE001"
+        //(alias.participant == "SNC004" && countryCode == "SN") ||
+        //(alias.participant == "CIE001" && countryCode == "CI")
+      )
           ? AliasExistState(alias, null, event.qrCodePi)
           : AliasNotExistState());
     } on AliasRetrieveException catch (e) {

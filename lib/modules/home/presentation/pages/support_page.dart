@@ -1,4 +1,4 @@
-/*import 'dart:io';
+import 'dart:io';
 import 'package:common_dependencies/utils/colors.dart';
 import 'package:common_dependencies/utils/constants.dart';
 import 'package:common_dependencies/utils/enum.dart';
@@ -74,127 +74,119 @@ class _SupportPageState extends State<SupportPage> {
                                 style: CustomTextStyle.titleBottomSheetSupportTextStyle,
                               ),
                             ),
-                            GestureDetector(
+                            ListTile(
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                              leading: Container(
+                                width: 38 * fem,
+                                height: 38 * fem,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFFF5F6FF),
+                                  shape: BoxShape.circle,
+                                ),
+                                padding: EdgeInsets.all(8 * fem),
+                                child: Image.asset(
+                                  "assets/images/whatsapp.png",
+                                  package: "common_dependencies",
+                                  height: 20,
+                                  width: 20,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              title: isLoading
+                                  ? LoadingAnimationWidget.flickr(
+                                leftDotColor: primaryColor,
+                                rightDotColor: secondaryColor,
+                                size: 25,
+                              )
+                                  : Text(
+                                whatsappPhone != null
+                                    ? formatPhoneNumberUser("+$whatsappPhone", international: true)
+                                    : AppLocalizations.of(context)!.contact_us_whatsapp,
+                                style: CustomTextStyle.titleSupportTextStyle,
+                              ),
+                              subtitle: Text(
+                                AppLocalizations.of(context)!.contact_us_whatsapp_desc,
+                                style: CustomTextStyle.subTitleSupportTextStyle,
+                              ),
+                              trailing: const Icon(Icons.arrow_forward_ios_sharp),
                               onTap: () async {
-                                /*whatsappPhone = supportInfo != null && supportInfo!.phoneSupport != null && supportInfo!.phoneSupport!.length > 1 ? supportInfo?.phoneSupport!.split("|")[1] : "";
+                                //print("=== ListTile tapped ===");
+                                //print("whatsappPhone: $whatsappPhone");
 
-                            final whatsappUrl = Uri.parse("whatsapp://send?phone=$whatsappPhone");
-
-                            if (await canLaunchUrl(whatsappUrl)) {
-                              await launchUrl(whatsappUrl);
-                            } else {
-                              // fallback vers web
-                              final webUrl = Uri.parse("https://api.whatsapp.com/send?phone=$whatsappPhone");
-                              if (await canLaunchUrl(webUrl)) {
-                                await launchUrl(webUrl, mode: LaunchMode.externalApplication);
-                              } else {
-                                print("WhatsApp not installed");
-                              }
-                            }
-                             */
-                                final whatsappUrl = Uri.parse("whatsapp://send?phone=$whatsappPhone");
-                                if (await canLaunchUrl(whatsappUrl)) {
-                                  await launchUrl(whatsappUrl);
-                                } else {
-                                  // fallback vers web
-                                  final webUrl = Uri.parse("https://api.whatsapp.com/send?phone=$whatsappPhone");
-                                  if (await canLaunchUrl(webUrl)) {
-                                    await launchUrl(webUrl, mode: LaunchMode.externalApplication);
-                                  } else {
-                                  }
+                                if (whatsappPhone == null) {
+                                  //print("ERROR: whatsappPhone is null or empty");
+                                  return;
                                 }
-                              },
-                              child: ListTile(
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                                leading: Container(
-                                  width: 38 * fem,
-                                  height: 38 * fem,
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFFF5F6FF),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  padding: EdgeInsets.all(8 * fem),
-                                  child: Image.asset(
-                                    "assets/images/whatsapp.png",
-                                    package: "common_dependencies",
-                                    height: 20,
-                                    width: 20,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                                title: isLoading
-                                    ? LoadingAnimationWidget.flickr(
-                                  leftDotColor: primaryColor,
-                                  rightDotColor: secondaryColor,
-                                  size: 25,
-                                ) : Text(
-                                  whatsappPhone != null
-                                      ? formatPhoneNumberUser("+$whatsappPhone", international: true)
-                                      : AppLocalizations.of(context)!.contact_us_whatsapp,
-                                  style: CustomTextStyle.titleSupportTextStyle,
-                                ),
-                                subtitle: Text(
-                                  AppLocalizations.of(context)!.contact_us_whatsapp_desc,
-                                  style: CustomTextStyle.subTitleSupportTextStyle,
-                                ),
-                                trailing: IconButton(
-                                  onPressed: () async {
-                                    String message = AppLocalizations.of(context)!
-                                        .contact_us_default_message;
-                                    String url = Platform.isAndroid
-                                        ? "https://wa.me/${supportInfo?.phoneSupport!.split("|")[1]}"
-                                        : "https://api.whatsapp.com/send?phone=${supportInfo?.phoneSupport!.split("|")[1]}";
-                                    if (!await launch(url)) {
-                                      throw 'Could not launch whatsapp  $url';
-                                    }
-                                  },
-                                  icon: const Icon(Icons.arrow_forward_ios_sharp),
-                                ),
-                                onTap: () async {
 
-                                  /*String message = AppLocalizations.of(context)!
-                                  .contact_us_default_message;
-                              String url = Platform.isAndroid
-                                  ? "https://wa.me/${supportInfo?.phoneSupport!.split("|")[1]}"
-                                  : "https://api.whatsapp.com/send?phone=${supportInfo?.phoneSupport!.split("|")[1]}";
-                              if (!await launch(url)) {
-                                throw 'Could not launch whatsapp  $url';
-                              }*/
+                                try {
+                                  // Nettoyer le numéro (enlever espaces, tirets, etc.)
+                                  String cleanPhone = whatsappPhone!.replaceAll(RegExp(r'[^\d+]'), '');
+                                  //print("Clean phone: $cleanPhone");
 
-                                  final whatsappUrl = Uri.parse("whatsapp://send?phone=$whatsappPhone");
+                                  String url = Platform.isAndroid
+                                      ? "https://wa.me/$cleanPhone"
+                                      : "https://api.whatsapp.com/send?phone=$cleanPhone";
+                                  if (!await launch(url)) {
+                                    throw 'Could not launch whatsapp  $url';
+                                  }
+
+                                  final whatsappUrl = Platform.isAndroid
+                                      ? Uri.parse("https://wa.me/$cleanPhone")
+                                      :  Uri.parse("https://api.whatsapp.com/send?phone=$cleanPhone");
+
+                                  if (Platform.isAndroid && !await launch("https://wa.me/$cleanPhone")) {
+                                  }
+                                  //print("Trying URL: $whatsappUrl");
 
                                   if (await canLaunchUrl(whatsappUrl)) {
+                                    //print("Can launch whatsapp:// URL");
                                     await launchUrl(whatsappUrl);
                                   } else {
-                                    // fallback vers web
-                                    final webUrl = Uri.parse("https://api.whatsapp.com/send?phone=$whatsappPhone");
+                                    //print("Cannot launch whatsapp://, trying web fallback");
+                                    final webUrl = Uri.parse("https://api.whatsapp.com/send?phone=$cleanPhone");
+                                    //print("Trying web URL: $webUrl");
+
                                     if (await canLaunchUrl(webUrl)) {
+                                      //print("Can launch web URL");
                                       await launchUrl(webUrl, mode: LaunchMode.externalApplication);
+                                    } else {
+                                      //print("ERROR: Cannot launch any WhatsApp URL");
                                     }
                                   }
-
-                                },
-                              ),
+                                } catch (e) {
+                                  //print("ERROR launching WhatsApp: $e");
+                                }
+                              },
                             ),
-                            /*customTextButton(
-                            Image.asset("assets/images/whatsapp.png",
-                                package: "common_dependencies",
-                                height: 20,
-                                width: 20),
-                            AppLocalizations.of(context)!.contact_us_whatsapp,
-                            () async {
-                          print("Contact us by whatsappp");
-                          String message = AppLocalizations.of(context)!
-                              .contact_us_default_message;
-                          String url = Platform.isAndroid
-                              ? "https://wa.me/${supportInfo?.phoneSupport!.split("|")[1]}"
-                              : "https://api.whatsapp.com/send?phone=${supportInfo?.phoneSupport!.split("|")[1]}";
-                          if (!await launch(url)) {
-                            throw 'Could not launch whatsapp  $url';
-                          }
-                        }),*/
                             SizedBox(height: 8 * fem),
-                            /*GestureDetector(
+                            ListTile(
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                              leading: Container(
+                                width: 38 * fem,
+                                height: 38 * fem,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFFF5F6FF),
+                                  shape: BoxShape.circle,
+                                ),
+                                padding: EdgeInsets.all(8 * fem),
+                                child: const Icon(Icons.call_outlined,size: 20, color: primaryColor),
+                              ),
+                              title: isLoading
+                                  ? LoadingAnimationWidget.flickr(
+                                leftDotColor: primaryColor,
+                                rightDotColor: secondaryColor,
+                                size: 25,
+                              ) : Text(
+                                phoneNumberSupport != null
+                                    ? formatPhoneNumberUser(phoneNumberSupport!)
+                                    : AppLocalizations.of(context)!.contact_us_phone_title,
+                                style: CustomTextStyle.titleSupportTextStyle,
+                              ),
+                              subtitle: Text(
+                                AppLocalizations.of(context)!.contact_us_phone_desc,
+                                style: CustomTextStyle.subTitleSupportTextStyle,
+                              ),
+                              //trailing: trailing,
                               onTap: () async {
                                 Uri uri = Uri(
                                     scheme: 'tel', path: phoneNumberSupport);
@@ -202,98 +194,25 @@ class _SupportPageState extends State<SupportPage> {
                                   throw 'Could not launch ${uri.path}';
                                 }
                               },
-                              child:*/
-                              ListTile(
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                                leading: Container(
-                                  width: 38 * fem,
-                                  height: 38 * fem,
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFFF5F6FF),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  padding: EdgeInsets.all(8 * fem),
-                                  child: Icon(Icons.call_outlined,size: 20, color: primaryColor),
-                                ),
-                                title: isLoading
-                                    ? LoadingAnimationWidget.flickr(
-                                  leftDotColor: primaryColor,
-                                  rightDotColor: secondaryColor,
-                                  size: 25,
-                                ) : Text(
-                                  phoneNumberSupport != null
-                                      ? formatPhoneNumberUser(phoneNumberSupport!)
-                                      : AppLocalizations.of(context)!.contact_us_phone_title,
-                                  style: CustomTextStyle.titleSupportTextStyle,
-                                ),
-                                subtitle: Text(
-                                  AppLocalizations.of(context)!.contact_us_phone_desc,
-                                  style: CustomTextStyle.subTitleSupportTextStyle,
-                                ),
-                                //trailing: trailing,
-                                onTap: () async {
+                              trailing: IconButton(
+                                onPressed: () async {
                                   Uri uri = Uri(
                                       scheme: 'tel', path: phoneNumberSupport);
                                   if (!await launchUrl(uri)) {
                                     throw 'Could not launch ${uri.path}';
                                   }
                                 },
-                                trailing: IconButton(
-                                  onPressed: () async {
-                                    Uri uri = Uri(
-                                        scheme: 'tel', path: phoneNumberSupport);
-                                    if (!await launchUrl(uri)) {
-                                      throw 'Could not launch ${uri.path}';
-                                    }
-                                  },
-                                  icon: Icon(Icons.arrow_forward_ios_sharp),
-                                ),
+                                icon: const Icon(Icons.arrow_forward_ios_sharp),
                               ),
-                            //),
-                            /*customTextButton(
-                            const Icon(Icons.call_outlined,
-                                size: 20, color: primaryColor),
-                            AppLocalizations.of(context)!.contact_us_phone,
-                            () async {
-                          Uri uri = Uri(
-                              scheme: 'tel', path: supportInfo?.phoneSupport!.split("|")[0]);
-                          print("Contact us by phone ${uri.toString()}");
-                          if (!await launchUrl(uri)) {
-                            throw 'Could not launch ${uri.path}';
-                          }
-                        }),*/
-                            /*SizedBox(height: 8 * fem),
-                        customTextButton(
-                            const Icon(Icons.mail_outline,
-                                size: 20, color: secondaryColor),
-                            AppLocalizations.of(context)!.contact_us_mail,
-                            () async {
-                          Uri uri = Uri(
-                              scheme: 'mailto',
-                              path: supportInfo?.emailSupport);
-                          if (!await launchUrl(uri)) {
-                            throw 'Could not launch mail ${uri.path}';
-                          }
-                        }),
-                        SizedBox(height: 8 * fem),
-                        customTextButton(
-                            const Icon(Icons.sms_outlined,
-                                size: 20, color: dodgerBlue),
-                            AppLocalizations.of(context)!.contact_us_sms,
-                            () async {
-                          String message = AppLocalizations.of(context)!
-                              .contact_us_default_message;
-                          String path =
-                              "${supportInfo?.phoneSupport!.split("\\|")[0]}?body=$message";
-                          Uri uri = Uri(scheme: 'sms', path: path);
-                          print("Contact us by sms ${uri.toString()}");
-                          if (!await launchUrl(uri)) {
-                            throw 'Could not launch sms ${uri.path}';
-                          }
-                        }),*/
-                          ])));
-            })));
+                            ),
+                          ],
+                      ),
+                  ),
+              );
+            },
+        ),
+      ),
+    );
   }
 }
 
- */

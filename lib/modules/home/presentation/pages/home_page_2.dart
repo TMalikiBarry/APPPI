@@ -1,7 +1,10 @@
 import 'package:common_dependencies/utils/colors.dart';
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:micro_core/services/routing/routes.dart';
+import 'package:micro_core/services/routing/routing.dart';
 import 'package:pi_mobile_app/l10n/app_localizations.dart';
 import 'package:pi_mobile_app/modules/config/adapters/ui/bloc/config_bloc.dart';
 import 'package:pi_mobile_app/modules/config/domain/models/config_keys.dart';
@@ -26,6 +29,9 @@ import 'home_bottom_navigation_bar_2.dart';
 import 'home_bottom_widget.dart';
 import 'home_tab_compte.dart';
 import 'home_toolbar_leading.dart';
+import 'package:pi_mobile_app/shared/widgets/modal_bottomsheet_pi.dart';
+
+import 'package:nb_utils/nb_utils.dart';
 
 class HomePage extends StatefulWidget {
   //
@@ -76,15 +82,19 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
 
-              onTap: (index) {
+              onTap: (index) async {
                 if (disabledTabs.contains(index)) {
+                  await Future.delayed(Duration(milliseconds: 50));
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    showBottomSheetDpl(innerContext);
+                  });
                   // Empêche la navigation et affiche un message
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  /*ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(traductions.coming_soon, style: TextStyle(color: Themer.whiteColor),),
                       backgroundColor: Themer.primaryColor,
                     ),
-                  );
+                  );*/
                   // Remet le TabController sur l’onglet courant
                   tabController.animateTo(tabController.previousIndex);
                 }
@@ -212,7 +222,7 @@ class _HomePageState extends State<HomePage> {
       context: context,
       isDismissible: true,
       isScrollControlled: true,
-      backgroundColor: whiteColor,
+      backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(35.0),
@@ -223,4 +233,5 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
+
 }

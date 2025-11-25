@@ -18,7 +18,7 @@ Future showBottomSheetDpl(ctext) {
       builder: (ctext) {
         return SafeArea(child: Container(
           margin: const EdgeInsets.all(16),
-          height: MediaQuery.of(ctext).copyWith().size.height * 0.60,
+          height: MediaQuery.of(ctext).copyWith().size.height * 0.40,
           child: Expanded(child:Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -121,10 +121,6 @@ Future showBottomSheetDpl(ctext) {
                       child: Text(AppLocalizations.of(ctext)!.btnTextClose, style: safeGoogleFont('Lato', color: primaryColor, fontSize: 16, fontWeight: FontWeight.w500)),
                       onPressed: () {
                         Navigator.of(ctext).pop();
-                        Routing.pushNamed(
-                          Routes.deplafonnerWalletTFS,
-                          arguments: RouteEvents.walletTFSEvents.userWalletTFSLoggedInEvent("Wallet TFS"),
-                        );
                       }
                   ),
                 )

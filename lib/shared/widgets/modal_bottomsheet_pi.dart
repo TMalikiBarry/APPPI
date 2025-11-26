@@ -9,6 +9,7 @@ import '../../l10n/app_localizations.dart';
 
 Future showBottomSheetDpl(ctext) {
   return showModalBottomSheet(
+      backgroundColor: Colors.white,
       context: ctext,
       isScrollControlled: true,
       transitionAnimationController: AnimationController(
@@ -17,6 +18,7 @@ Future showBottomSheetDpl(ctext) {
       ),
       builder: (ctext) {
         return SafeArea(child: Container(
+          color:  Colors.white,
           margin: const EdgeInsets.all(16),
           height: MediaQuery.of(ctext).copyWith().size.height * 0.40,
           child: Expanded(child:Column(

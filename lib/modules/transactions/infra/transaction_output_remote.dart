@@ -404,6 +404,7 @@ class TransactionOutputRemote {
     ){
       if (command.confirmationMethode == TransactionSendMethod.qrcode) {
         request['channel'] = command.channel;
+        request['qrTRansactionId'] = command.txId;
       }
       request['alias'] = command.transactionVerificationResultAlias!.alias;
     } else if (command.confirmationMethode == TransactionSendMethod.aliasRtb) {

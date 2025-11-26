@@ -1,3 +1,5 @@
+import 'package:common_dependencies/utils/colors.dart';
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/assets.dart';
@@ -12,7 +14,7 @@ import '../../../compte/presentation/pages/solde_widget_card.dart';
 import '../../../transactions/presentation/pages/transaction_recents/transaction_recents_widget.dart';
 import 'home_tab_compte_more_menu.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:nb_utils/nb_utils.dart';
 class HomeTabCompte extends StatefulWidget {
   const HomeTabCompte({super.key});
 
@@ -24,13 +26,14 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
   // Clé unique pour forcer le rebuilt des enfants
   UniqueKey _refreshKey = UniqueKey();
   bool isTran = false;
-
+  String kyc="";
   @override
   initState () {
     Alias alias = (context.read<AliasBloc>().state as AliasExistState).alias;
     if (alias.accountType == "TRAN") {
       isTran = true;  // indices des onglets à griser
     }
+    getKYC();
     super.initState();
   }
 
@@ -40,11 +43,13 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
       _refreshKey = UniqueKey(); // Nouvelle clé => rebuilt forcé
     });
   }
-
+getKYC () async {
+  var pref = await SharedPreferences.getInstance();
+  kyc=pref.getString('kycStatus')!;
+}
   @override
   Widget build(BuildContext context) {
     AppLocalizations traductions = AppLocalizations.of(context)!;
-    //
     return RefreshIndicator(
       color: Colors.white,
       backgroundColor: const Color(0xFF282C5D),
@@ -92,32 +97,28 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
                           CtaWidget(
                             image: Images.iconMoneyReceiveHeaderHPHomePage,
                             label: traductions.homeActionRequest,
-                            disabled: !isTran,
-                            action: () => AppRouter.push(
+                            disabled: kyc=="VERIFIED",
+                            action: () =>
+                             AppRouter.push(
                               context,
                               AppRouter.transactionReceive,
                             ),
-                            message: "Veuillez déplafonner votre compte pour accéder à cette fonctionnalité.",
                           ),
-
                           // Plus
                           CtaWidget(
                             // icon: const Icon(Icons.more_horiz, size: 30),
                             image: Images.iconMoreActionHeaderHPHomePage,
                             label: traductions.homeActionMore,
-                            disabled: !isTran,
-                            action: () => {
-                              showModalBottomSheet<void>(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return const HomeTabCompteMoreMenu();
-                                },
-                                isScrollControlled: true,
-                              )
-                            },
-                            message: "Veuillez déplafonner votre compte pour accéder à cette fonctionnalité.",
+                            disabled: kyc=="VERIFIED",
+                              action: ()=> showModalBottomSheet<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const HomeTabCompteMoreMenu();
+                                    },
+                                    isScrollControlled: true,
+                                  ),
                           ),
-                        ],
+                          ]
                       ),
                     ),
                     const SizedBox(height: 15),
@@ -139,4 +140,5 @@ class _HomeTabCompteState extends State<HomeTabCompte> {
       ),
     );
   }
+
 }

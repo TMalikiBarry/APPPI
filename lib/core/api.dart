@@ -406,6 +406,7 @@ class LoggingInterceptor extends Interceptor {
     response.headers.forEach((k, v) => logger.i('$k: $v'));
     logger.i('''Response:  ${response.statusCode} 
         ${response.requestOptions.path} ${response.data}''');
+    debugPrint('Abonement:${response.data}', wrapWidth: 1024);
     return super.onResponse(response, handler);
   }
 }

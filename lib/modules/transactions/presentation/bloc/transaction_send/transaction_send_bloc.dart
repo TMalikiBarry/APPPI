@@ -264,7 +264,8 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
         transactionVerificationResultAlias: event.transaction.transactionVerificationResultAlias,
         transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
         transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
-        channel: event.command.canal
+        channel: event.command.canal,
+        txId: event.command.txId,
     ).toJson());
     logger.i(event.command.schedule?.toJson());
 
@@ -285,7 +286,8 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
               transactionVerificationResultAlias: event.transaction.transactionVerificationResultAlias,
               transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
               transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
-              channel: event.command.canal
+              channel: event.command.canal,
+              txId: event.command.txId,
           ),
           event.command.schedule!,
         );
@@ -317,7 +319,8 @@ class TransactionSendBloc extends Bloc<TransactionSendEvent, TransactionSendStat
           transactionVerificationResultAlias: event.transaction.transactionVerificationResultAlias,
           transactionVerificationResultIban: event.transaction.transactionVerificationResultIban,
           transactionVerificationResultOthr: event.transaction.transactionVerificationResultOthr,
-          channel: event.command.canal
+          channel: event.command.canal,
+          txId: event.command.txId,
         ));
 
         stream.listen(

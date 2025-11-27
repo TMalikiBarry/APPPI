@@ -32,6 +32,7 @@ class TransactionFormPageQrcode extends StatelessWidget {
     print("➡️ Arguments: $args");
 
     debugPrint("ACTION => ${command.action}");
+    debugPrint("txId => ${command.txId}");
     // Bloc de gestion des transactions
     TransactionSendBloc transactionSendBloc =
     (ctx ?? context).read<TransactionSendBloc>();

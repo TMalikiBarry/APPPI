@@ -7,11 +7,13 @@ class AliasCreateCommand {
     required this.type,
     required this.compte,
     this.phoneNumber,
+    this.kycUpgraded = false,
   });
 
   String compte;
   AliasType type;
   AliasCreateCommandPhoneNumber? phoneNumber;
+  bool kycUpgraded;
 
   bool isValid() {
     return (type == AliasType.shid && phoneNumber == null) ||
@@ -28,6 +30,7 @@ class AliasCreateCommand {
           : null,
       'aliasType': type.code,
       'compte': compte,
+      'kycUpgraded': kycUpgraded
     };
   }
 }

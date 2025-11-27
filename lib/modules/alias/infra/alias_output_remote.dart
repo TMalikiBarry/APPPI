@@ -8,6 +8,7 @@ import '../domain/exceptions/not_available_exception.dart';
 import '../domain/models/alias.dart';
 import '../domain/models/alias_create_command.dart';
 import '../domain/models/alias_revendication.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AliasOutputRemote {
   //
@@ -56,7 +57,13 @@ class AliasOutputRemote {
 
   Future<Alias> creer(AliasCreateCommand alias) async {
     Map<String, dynamic> request = alias.toJson();
-    request.addAll({"clientPhoneNumber": "+${alias.compte}"});
+    const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+    String? kycStatus = await _secureStorage.read(key: "kycStatus");
+    bool kycUpgraded = false;
+    if (kycStatus == "VERIFIED") {
+      kycUpgraded = true;
+    }
+    request.addAll({"clientPhoneNumber": "+${alias.compte}", "kycUpgraded": kycUpgraded});
     final ApiResponse response = await Api.post('/alias/create', data: request);
     return Alias.fromJson(response.data["response"]);
   }
@@ -67,10 +74,16 @@ class AliasOutputRemote {
 
   Future<Alias> confirmer(AliasCreateCommand alias, String otp, String? channel) async {
     try {
+      const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+      String? kycStatus = await _secureStorage.read(key: "kycStatus");
+      bool kycUpgraded = false;
+      if (kycStatus == "VERIFIED") {
+        kycUpgraded = true;
+      }
       Map<String, dynamic> request = alias.toJson();
       request.addAll({"otpCode": otp});
       if (channel != null){
-        request.addAll({"channel": channel});
+        request.addAll({"channel": channel, "kycUpgraded": kycUpgraded});
       }
       final ApiResponse response = await Api.post(
         '/alias/create',

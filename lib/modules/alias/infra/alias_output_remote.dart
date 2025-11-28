@@ -60,6 +60,8 @@ class AliasOutputRemote {
     const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
     String? kycStatus = await _secureStorage.read(key: "kycStatus");
     bool kycUpgraded = false;
+    logger.i("kycStatus");
+    logger.i(kycStatus);
     if (kycStatus == "VERIFIED") {
       kycUpgraded = true;
     }
@@ -77,13 +79,16 @@ class AliasOutputRemote {
       const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
       String? kycStatus = await _secureStorage.read(key: "kycStatus");
       bool kycUpgraded = false;
+      logger.i("kycStatus1");
+      logger.i(kycStatus);
       if (kycStatus == "VERIFIED") {
         kycUpgraded = true;
       }
       Map<String, dynamic> request = alias.toJson();
       request.addAll({"otpCode": otp});
+      request.addAll({"kycUpgraded": kycUpgraded});
       if (channel != null){
-        request.addAll({"channel": channel, "kycUpgraded": kycUpgraded});
+        request.addAll({"channel": channel});
       }
       final ApiResponse response = await Api.post(
         '/alias/create',

@@ -17,11 +17,12 @@ Future showBottomSheetDpl(ctext) {
         duration: const Duration(milliseconds: 120),
       ),
       builder: (ctext) {
-        return SafeArea(child: Container(
-          color:  Colors.white,
-          margin: const EdgeInsets.all(16),
-          height: MediaQuery.of(ctext).copyWith().size.height * 0.40,
-          child: Expanded(child:Column(
+        return SafeArea(
+            child: Padding(
+          padding: const EdgeInsets.all(16),
+         // height: MediaQuery.of(ctext).copyWith().size.height * 0.40,
+          child:Column(
+            mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 10,),
@@ -126,7 +127,7 @@ Future showBottomSheetDpl(ctext) {
                       }
                   ),
                 )
-              ])),
+              ]),
         ));
       }
   );

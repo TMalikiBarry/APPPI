@@ -889,5 +889,6 @@
   "augmenter_palfond" : "Aumente o seu limite mensal !",
   "description_plafon" :"Tire uma foto do seu cartão de identificação ou faça o upload para ter acesso a um teto ",
   "description_simple" :"É simples, rápido e seguro. ",
-  "exemple_prix" : "10 000 000 F"
+  "exemple_prix" : "10 000 000 F",
+  "send_sms":"Enviar uma mensagem"
 }

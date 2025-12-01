@@ -1725,7 +1725,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get contact_us_phone_desc => 'Contactez nos agents de 07h à 23h';
 
   @override
-  String get contact_service_client => 'Contacter le service client';
+  String get contact_service_client => 'Contactez-nous';
 
   @override
   String get contact_us_default_message => 'Faites-nous part de votre demande en ouvrant un ticket et notre équipe vous contactera dans les plus brefs délais.';
@@ -1750,4 +1750,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get exemple_prix => '10 000 000 F';
+
+  @override
+  String get send_sms => 'Envoyez un message';
 }

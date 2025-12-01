@@ -3,19 +3,56 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pi_mobile_app/l10n/app_localizations.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:loading_animation_widget/src/build_loading_animation.dart';
 import '../../../../core/theme.dart';
 import '../../../alias/presentation/bloc/alias_bloc.dart';
 import '../../../alias/presentation/bloc/alias_state.dart';
 import '../../../security/domain/models/connected_user.dart';
 import '../../../security/presentation/bloc/login/login_bloc.dart';
 
-class ProfilePageAvatar extends StatelessWidget {
+class ProfilePageAvatar extends StatefulWidget {
   //
   const ProfilePageAvatar({super.key});
 
+  @override
+  State<ProfilePageAvatar> createState() => _ProfilePageAvatarState();
+}
+
+class _ProfilePageAvatarState extends State<ProfilePageAvatar> {
   ///
   final double avatarDimension = 64;
+  String? whichCountry;
+  bool isLoading = true;
+  var AliasFormated;
+  AliasExistState? aliasState;
+
+  init() async {
+    var pref = await SharedPreferences.getInstance();
+    whichCountry = pref.getString('countryCode');
+
+    // Pour récuperer l'alias
+    final aliasBloc = context.read<AliasBloc>();
+    aliasState = aliasBloc.state as AliasExistState;
+
+    if (aliasState!.alias.cle.contains("+")) {
+      AliasFormated = formatPhoneNumberUser2(aliasState!.alias.cle, whichCountry!, international: true);
+    } else {
+      AliasFormated = aliasState!.alias.cle;
+    }
+
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +63,6 @@ class ProfilePageAvatar extends StatelessWidget {
     final loginBloc = context.read<LoginBloc>();
     final ConnectedUser user = loginBloc.getConnectedUser()!;
 
-    // Pour récuperer l'alias
-    final aliasBloc = context.read<AliasBloc>();
-    final AliasExistState aliasState = aliasBloc.state as AliasExistState;
 
     // Si l'image de l'avatar n'est pas fourni, utiliser les initiales du nom
     ShapeDecoration boxDecoration;
@@ -56,12 +90,6 @@ class ProfilePageAvatar extends StatelessWidget {
       child = Center(child: Text(user.initiales()));
     }
 
-    var AliasFormated;
-    if (aliasState.alias.cle.contains("+")) {
-      AliasFormated = formatPhoneNumberUser(aliasState.alias.cle, international: true);
-    } else {
-      AliasFormated = aliasState.alias.cle;
-    }
     // Retourne l'avatar et le nom
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,7 +115,7 @@ class ProfilePageAvatar extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   Clipboard.setData(
-                    ClipboardData(text: aliasState.alias.cle),
+                    ClipboardData(text: aliasState!.alias.cle),
                   );
 
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -104,14 +132,19 @@ class ProfilePageAvatar extends StatelessWidget {
                     color: Colors.transparent, // <-- couleur de fond souhaitée
                     borderRadius: BorderRadius.circular(6), // facultatif
                   ),
-                  child: Text(
-                    AliasFormated,
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayLarge!
-                        .copyWith(color: Themer.neural03Color),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  child: isLoading
+                    ? LoadingAnimationWidget.flickr(
+                        leftDotColor: Themer.primaryColor,
+                        rightDotColor: Themer.primary,
+                        size: 30,
+                      )
+                    : Text(
+                        AliasFormated,
+                        style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                          color: Themer.neural03Color,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                 ),
               ),
             ],

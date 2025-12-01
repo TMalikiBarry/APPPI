@@ -694,7 +694,9 @@ class AppRouter {
               command: TransactionSendCommand(
                 compte: aliasState.alias.compte,
                 action: action ?? TransactionSendCommand.actionSendNow,
-                method: TransactionSendMethod.qrcode,
+                method: action == "receive_now"
+                  ? TransactionSendMethod.aliasRtb
+                  : TransactionSendMethod.qrcode,
                 alias: TransactionSendCommandAlias(value: qrcodeData.alias),
                 canal: action == TransactionSendCommand.actionReceiveNow
                     ? TransactionCanal.transfertParRequestToPay.code

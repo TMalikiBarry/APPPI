@@ -5,6 +5,7 @@ import 'package:common_dependencies/utils/enum.dart';
 import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wallet_tfs_app/bloc/service_interne/ServiceInterneBloc.dart';
 import 'package:wallet_tfs_app/bloc/service_interne/ServiceInterneEvent.dart';
@@ -16,7 +17,7 @@ import 'package:pi_mobile_app/l10n/app_localizations.dart';
 
 class SupportPage extends StatefulWidget {
   final bool fromTab;
-  const SupportPage({super.key, this.fromTab = false});
+  const SupportPage({super.key, this.fromTab = false,});
   @override
   State<SupportPage> createState() => _SupportPageState();
 }
@@ -27,9 +28,20 @@ class _SupportPageState extends State<SupportPage> {
   String? phoneNumberSupport;
   bool isLoading = true;
   ServiceInterne? serviceTr;
-
+  String? whichCountry;
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+  init()async{
+    var pref = await SharedPreferences.getInstance();
+    whichCountry = pref.getString('countryCode') ?? "SN";
+    debugPrint("**************whichCountry$whichCountry****************");
+  }
   @override
   Widget build(BuildContext context) {
+    debugPrint("**************whichCountry$whichCountry****************");
     double fem = MediaQuery.of(context).size.width / BASEWIDTH;
     return RepositoryProvider<ServiceInterne>(
         create: (context) {
@@ -57,15 +69,16 @@ class _SupportPageState extends State<SupportPage> {
                 isLoading = false;
                 ServiceInterneBloc(serviceTr!).add(BackEventService());
               }
-              return SizedBox(
-                  height: MediaQuery.of(context).copyWith().size.height * 0.35,
+              return SafeArea(child:
+              SizedBox(
+                 // height: MediaQuery.of(context).copyWith().size.height * 0.35,
                   child: Container(
                       padding: EdgeInsets.symmetric(
                           vertical: 30 * fem, horizontal: 10 * fem),
-                      height:
-                      MediaQuery.of(context).copyWith().size.height * 0.3 * fem,
+                     // height: MediaQuery.of(context).copyWith().size.height * 0.3 * fem,
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.all(16.0),
@@ -98,10 +111,7 @@ class _SupportPageState extends State<SupportPage> {
                                 rightDotColor: secondaryColor,
                                 size: 25,
                               )
-                                  : Text(
-                                whatsappPhone != null
-                                    ? formatPhoneNumberUser("+$whatsappPhone", international: true)
-                                    : AppLocalizations.of(context)!.contact_us_whatsapp,
+                                  : Text( AppLocalizations.of(context)!.send_sms,
                                 style: CustomTextStyle.titleSupportTextStyle,
                               ),
                               subtitle: Text(
@@ -158,7 +168,8 @@ class _SupportPageState extends State<SupportPage> {
                                 }
                               },
                             ),
-                            SizedBox(height: 8 * fem),
+                            if(whichCountry=="SN")...[
+                              SizedBox(height: 8 * fem),
                             ListTile(
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                               leading: Container(
@@ -176,10 +187,7 @@ class _SupportPageState extends State<SupportPage> {
                                 leftDotColor: primaryColor,
                                 rightDotColor: secondaryColor,
                                 size: 25,
-                              ) : Text(
-                                phoneNumberSupport != null
-                                    ? formatPhoneNumberUser(phoneNumberSupport!)
-                                    : AppLocalizations.of(context)!.contact_us_phone_title,
+                              ) : Text(AppLocalizations.of(context)!.contact_us_phone_title,
                                 style: CustomTextStyle.titleSupportTextStyle,
                               ),
                               subtitle: Text(
@@ -205,10 +213,11 @@ class _SupportPageState extends State<SupportPage> {
                                 icon: const Icon(Icons.arrow_forward_ios_sharp),
                               ),
                             ),
+                            ]
                           ],
                       ),
                   ),
-              );
+              ));
             },
         ),
       ),

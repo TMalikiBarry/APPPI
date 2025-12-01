@@ -3421,6 +3421,8 @@ abstract class AppLocalizations {
   /// **'Increase your monthly limit!'**
   String get augmenter_palfond;
 
+  String get send_sms;
+
   /// No description provided for @description_plafon.
   ///
   /// In en, this message translates to:

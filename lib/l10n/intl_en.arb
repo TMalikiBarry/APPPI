@@ -889,5 +889,6 @@
   "augmenter_palfond":"Increase your monthly limit!",
   "description_plafon":"Take a photo of your ID card or upload it to access a limit of up to",
   "description_simple" : "It’s simple, fast and secure . ",
-  "exemple_prix" :"10 000 000 F"
+  "exemple_prix" :"10 000 000 F",
+  "send_sms":"Send a message"
 }

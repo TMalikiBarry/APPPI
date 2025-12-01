@@ -888,6 +888,6 @@
   "augmenter_palfond" : "Augmentez votre plafond mensuel !",
   "description_plafon" :"Prenez une photo de votre carte d’identité ou téléchargez-la pour accéder à un plafond jusqu’à",
   "description_simple" : "C’est simple, rapide et sécurisé. ",
-  "exemple_prix" : "10 000 000 F"
-
+  "exemple_prix" : "10 000 000 F",
+  "send_sms":"Envoyez un message"
 }

@@ -75,7 +75,6 @@ class TransactionRtpPageActions extends StatelessWidget {
               child: BlocListener<ContactBloc, ContactState>(
                 listenWhen: (previous, current) => previous.contacts != current.contacts,
                 listener: (context, state) {
-                  //logger.i("contact state : $state");
                   if (state.contacts!.isNotEmpty) {
                     bloc.add(TransactionRtpAcceptPayEvent(tx, TransactionSendMethod.rtpAcceptPay));
                   } else {
@@ -85,9 +84,19 @@ class TransactionRtpPageActions extends StatelessWidget {
                 child: Builder(builder: (context) {
                   final state = context.watch<ContactBloc>().state;
                   return ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      final contactBloc = context.read<ContactBloc>();
+
+                      // Charger les contacts si nécessaire
+                      if (contactBloc.state.contactsAll?.isEmpty ?? true) {
+                        contactBloc.add(const ContactListEvent(null));
+                        // Attendre que les contacts soient chargés
+                        await Future.delayed(const Duration(milliseconds: 500));
+                      }
+
+                      // Puis effectuer la recherche
                       final aliasNormalise = normalizeAlias(tx.clientAlias!);
-                      context.read<ContactBloc>().add(ContactSearchEvent(aliasNormalise));
+                      contactBloc.add(ContactSearchEvent(aliasNormalise));
                     },
                     child: Text(traductions.btnTextPay),
                   );

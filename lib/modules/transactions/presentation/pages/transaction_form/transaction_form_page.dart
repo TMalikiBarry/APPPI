@@ -127,8 +127,8 @@ class TransactionFormPage extends StatelessWidget {
             appBar: AppBar(),
             // Contenu de la page
             body: MyPageContainer(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              child:SafeArea(child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
                     child: SingleChildScrollView(
@@ -157,41 +157,18 @@ class TransactionFormPage extends StatelessWidget {
                           : Text(traductions.transactionFormContinueBtn),
                     ),
                   ),
-
-
                 ],
-              ),
+              )),
             ),
-            /*bottomNavigationBar: SafeArea(
-              minimum: const EdgeInsets.all(16),
-              child: ElevatedButton(
-                onPressed: isLoading
-                    ? null
-                    : state.command.isValid()
-                    ? () {
-                  print("demande de paiement: $state.command");
-                  logger.i("#### RTP CONFIRM pressed for command=${state.command.toJson()}");
-                  // initiate
-                  context.read<TransactionSendBloc>().add(TransactionSendInitiateEvent(state.command));
-                }
-                    : null,
-                child: isLoading
-                    ? LoadingAnimationWidget.flickr(
-                  leftDotColor: primaryColor,
-                  rightDotColor: secondaryColor,
-                  size: 25,
-                )
-                    : Text(traductions.transactionFormContinueBtn),
-              ),
-            ),*/
           );
         } else if (state is TransactionSendFormVerificationLoadingState) {
           // Afficher le formulaire avec le loader par-dessus
           return Scaffold(
             appBar: AppBar(),
-            body: MyPageContainer(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+            body: SafeArea(child:MyPageContainer(
+              child:
+              Column(
+                //crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
                     child: SingleChildScrollView(
@@ -210,17 +187,7 @@ class TransactionFormPage extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-           /* bottomNavigationBar: Padding(
-              padding: const EdgeInsets.all(16),
-              child: ElevatedButton(
-                onPressed: () {
-                  //print("demande de paiement: $state.command");
-                }, // Désactivé pendant le chargement
-
-                child: Text(traductions.transactionFormContinueBtn),
-              ),
-            ),*/
+            )),
           );
         } else if (state is TransactionSendLoadingState) {
           return const Scaffold(

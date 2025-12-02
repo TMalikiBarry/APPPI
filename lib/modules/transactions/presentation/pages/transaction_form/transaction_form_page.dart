@@ -1,4 +1,5 @@
 import 'package:common_dependencies/utils/colors.dart';
+import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
@@ -21,11 +22,13 @@ import 'transaction_form_page_othr.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class TransactionFormPage extends StatelessWidget {
+  bool fromScanTouchPoint;
   ///
-  const  TransactionFormPage({super.key});
+  TransactionFormPage({super.key, this.fromScanTouchPoint = false});
 
   @override
   Widget build(BuildContext context) {
+    print("fromScanTouchPoint form page $fromScanTouchPoint");
     AppLocalizations traductions = AppLocalizations.of(context)!;
     final logger = Logger();
 
@@ -62,13 +65,19 @@ class TransactionFormPage extends StatelessWidget {
         // Show verification Page
         if (state is TransactionSendFormVerificationAskingState) {
 
-          //CustomLoadingDialog.hide(context);
-          // Replace with verification page (pushReplacement important)
-          AppRouter.pushReplacement(
-            context,
-            AppRouter.transactionFormVerification,
-            params: context.read<TransactionSendBloc>(),
-          );
+          if (fromScanTouchPoint) {
+            AppRouter.pushReplacement(
+              context,
+              AppRouter.transactionFormVerificationFromScan,
+              params: context.read<TransactionSendBloc>(),
+            );
+          } else {
+            AppRouter.pushReplacement(
+              context,
+              AppRouter.transactionFormVerification,
+              params: context.read<TransactionSendBloc>(),
+            );
+          }
           //
         }
         // Envoyé avec erreur

@@ -1,6 +1,7 @@
 import 'package:common_dependencies/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pi_mobile_app/core/app.dart';
 
 import '../../../../../core/router.dart';
 import '../../../../../shared/widgets/loading_page.dart';
@@ -39,7 +40,7 @@ class TransactionFormPageQrcode extends StatelessWidget {
 
     // SI le qr code contine ttoutes les infos
     // Alors directement faire la recherche d'alias
-    if (command.amount?.value != null) {
+    if (command.amount?.value != null && route != AppRouter.qrcodeTransactionSendTp) {
       // Rechercher alias et Afficher page de vérification
       transactionSendBloc.add(TransactionSendInitiateEvent(command));
 
@@ -90,14 +91,19 @@ class TransactionFormPageQrcode extends StatelessWidget {
     // Si le QR Code ne contine tpas de montant
     // Alors affiche le formulaire prérenseigné avec l'alias
     else {
-      // Afficher form pour la saisie du montant
-      transactionSendBloc.add(
-        TransactionSendDisplayFormEvent(command),
-      );
+      logger.i("fromScanTouchPoint qrcode ${route == AppRouter.qrcodeTransactionSendTp}");
+      if (command.amount?.value != null && route == AppRouter.qrcodeTransactionSendTp) {
+        transactionSendBloc.add(TransactionSendInitiateEvent(command));
+      } else {
+        // Afficher form pour la saisie du montant
+        transactionSendBloc.add(
+          TransactionSendDisplayFormEvent(command),
+        );
+      }
       // Naviguer sur le formulaire de transaction
       return BlocProvider<TransactionSendBloc>.value(
         value: transactionSendBloc,
-        child: const TransactionFormPage(),
+        child: TransactionFormPage(fromScanTouchPoint: route == AppRouter.qrcodeTransactionSendTp),
       );
     }
   }

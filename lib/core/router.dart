@@ -110,6 +110,7 @@ class AppRouter {
   static const transactionReceiveDetails = "/transaction/receive_now-rtp";
   static const transactionFormPage = "/transaction-form-fields";
   static const transactionFormVerification = "/transaction-form-verification";
+  static const transactionFormVerificationFromScan = "/transaction-form-verification-qr";
   static const transactionFormSchedule = "/transaction-form-schedule";
   static const transactionSearch = "/transaction-search";
   static const transactionSearchFilters = "/transaction-search/filters";
@@ -391,14 +392,21 @@ class AppRouter {
       GoRoute(
         path: transactionFormPage,
         builder: (context, state) {
-          return const TransactionFormPage();
+          return TransactionFormPage();
         },
       ),
       // Transaction - verification
       GoRoute(
         path: transactionFormVerification,
         builder: (context, state) {
-          return const TransactionVerificationPage();
+          return TransactionVerificationPage();
+        },
+      ),
+      // Transaction - verification Scan
+      GoRoute(
+        path: transactionFormVerificationFromScan,
+        builder: (context, state) {
+          return TransactionVerificationPage(fromScanTouchPoint: true);
         },
       ),
       // Transaction - schedule

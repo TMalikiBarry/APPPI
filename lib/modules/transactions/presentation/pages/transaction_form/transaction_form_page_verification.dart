@@ -19,14 +19,16 @@ import 'transaction_form_btn_confirm.dart';
 import 'package:intl/intl.dart';
 
 class TransactionVerificationPage extends StatelessWidget {
+  bool fromScanTouchPoint;
   ///
-  const TransactionVerificationPage({super.key});
+  TransactionVerificationPage({super.key, this.fromScanTouchPoint = false});
 
   @override
   Widget build(BuildContext context) {
     final formatMontant = NumberFormat("#,##0.##", "fr_FR");
     ///
     AppLocalizations traductions = AppLocalizations.of(context)!;
+    logger.i("fromScanTouchPoint verif ${fromScanTouchPoint}");
     //
     return BlocConsumer<TransactionSendBloc, TransactionSendState>(
       listenWhen: (previous, current) =>
@@ -282,6 +284,7 @@ class TransactionVerificationPage extends StatelessWidget {
                         command: command,
                         transaction: transaction,
                         traductions: traductions,
+                        fromScanTouchPoint: fromScanTouchPoint,
                       ),
                     const SizedBox(height: 10),
                   ],

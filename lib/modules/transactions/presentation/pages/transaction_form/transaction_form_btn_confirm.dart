@@ -18,12 +18,14 @@ import '../../bloc/transaction_send/transaction_send_bloc.dart';
 import '../../bloc/transaction_send/transaction_send_event.dart';
 
 class TransactionFormBtnConfirm extends StatefulWidget {
+  bool fromScanTouchPoint;
   ///
-  const TransactionFormBtnConfirm({
+  TransactionFormBtnConfirm({
     super.key,
     required this.command,
     required this.transaction,
     required this.traductions,
+    this.fromScanTouchPoint = false,
   });
 
   final TransactionSendCommand command;
@@ -43,6 +45,7 @@ class _TransactionFormBtnConfirmState extends State<TransactionFormBtnConfirm> {
     if (alias.accountType == "TRAN") {
       isTran = true;  // indices des onglets à griser
     }
+    logger.i("fromScanTouchPoint btn ${widget.fromScanTouchPoint}");
     super.initState();
   }
 
@@ -78,11 +81,15 @@ class _TransactionFormBtnConfirmState extends State<TransactionFormBtnConfirm> {
           Expanded(
             child: FilledButton.tonal(
               onPressed: () {
-                Navigator.pop(context);
-                // reject
-                context
-                    .read<TransactionSendBloc>()
-                    .add(TransactionSendRejectEvent(widget.command));
+                if (widget.fromScanTouchPoint) {
+                  AppRouter.go(context, AppRouter.home);
+                } else {
+                  Navigator.pop(context);
+                  // reject
+                  context
+                      .read<TransactionSendBloc>()
+                      .add(TransactionSendRejectEvent(widget.command));
+                }
               },
               child: Text(
                 widget.traductions.transactionFormVerificationBtnReject,

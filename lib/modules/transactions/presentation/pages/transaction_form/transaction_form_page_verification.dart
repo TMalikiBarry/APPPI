@@ -126,10 +126,10 @@ class TransactionVerificationPage extends StatelessWidget {
             appBar: AppBar(),
             // Contenu de la page de connexion
             body: MyPageContainer(
-              child: SingleChildScrollView(
+              child: SafeArea(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Titre de la page
                     Text(
@@ -145,7 +145,7 @@ class TransactionVerificationPage extends StatelessWidget {
                     ),
                     //
                     const SizedBox(height: 32),
-
+                
                     // Alias
                     if (command.alias != null) ... [
                       CustomTextInput(
@@ -155,7 +155,7 @@ class TransactionVerificationPage extends StatelessWidget {
                         readOnly: true,
                       ),
                     ]
-
+                
                     // IBAN
                     else if (command.iban != null) ...[
                       // Type
@@ -167,10 +167,10 @@ class TransactionVerificationPage extends StatelessWidget {
                         ),
                         readOnly: true,
                       ),
-
+                
                       // Séparateur
                       const SizedBox(height: 16),
-
+                
                       // Valeur de l'iban
                       CustomTextInput(
                         labelText: traductions.transactionFormIbanHint,
@@ -178,10 +178,10 @@ class TransactionVerificationPage extends StatelessWidget {
                             text: command.iban!.value.toString()),
                         readOnly: true,
                       ),
-
+                
                       // Séparateur
                       const SizedBox(height: 16),
-
+                
                       // Nom de la Banque
                       CustomTextInput(
                         labelText: traductions.transactionFormIbanNomLabel,
@@ -189,7 +189,7 @@ class TransactionVerificationPage extends StatelessWidget {
                         readOnly: true,
                       ),
                     ]
-
+                
                     // Othr
                     else if (command.othr != null) ...[
                       // Type
@@ -201,10 +201,10 @@ class TransactionVerificationPage extends StatelessWidget {
                         ),
                         readOnly: true,
                       ),
-
+                
                       // Séparateur
                       const SizedBox(height: 16),
-
+                
                       // Valeur de l'oth
                       CustomTextInput(
                         labelText: traductions.transactionFormOthrLabel,
@@ -212,10 +212,10 @@ class TransactionVerificationPage extends StatelessWidget {
                             text: command.othr!.value.toString()),
                         readOnly: true,
                       ),
-
+                
                       // Séparateur
                       const SizedBox(height: 16),
-
+                
                       // Institution
                       CustomTextInput(
                         labelText: traductions.transactionFormOthrNomLabel,
@@ -224,10 +224,10 @@ class TransactionVerificationPage extends StatelessWidget {
                         readOnly: true,
                       ),
                     ],
-
+                
                     // Séparateur
                     const SizedBox(height: 16),
-
+                
                     // Pays  de l'institution
                     if (transaction.clientPays.isNotEmpty)
                         CustomTextInput(
@@ -237,10 +237,10 @@ class TransactionVerificationPage extends StatelessWidget {
                           ),
                           readOnly: true,
                         ),
-
+                
                         // Séparateur
                         const SizedBox(height: 16),
-
+                
                     // Nom du client
                     if (transaction.clientNom.isNotEmpty)
                         CustomTextInput(
@@ -252,10 +252,10 @@ class TransactionVerificationPage extends StatelessWidget {
                           ),
                           readOnly: true,
                         ),
-
+                
                         // Séparateur
                         const SizedBox(height: 16),
-
+                
                     // Montant
                     CustomTextInput(
                       labelText: traductions.transactionFormAmountHint,
@@ -264,10 +264,10 @@ class TransactionVerificationPage extends StatelessWidget {
                       ),
                       readOnly: true,
                     ),
-
+                
                     // Séparateur
                     const SizedBox(height: 16),
-
+                
                     // Motif
                     CustomTextInput(
                       labelText: traductions.transactionFormMotifLabel,
@@ -276,24 +276,26 @@ class TransactionVerificationPage extends StatelessWidget {
                       ),
                       readOnly: true,
                     ),
-
-                    const SizedBox(height: 32),
-
-                    // Bouton de confirmation ou rejet ou programmation
-                    // Espacement de 32 pixels
-                    const SizedBox(height: 32),
+                    const Spacer(),
+                    //const SizedBox(height: 32),
+                    TransactionFormBtnConfirm(
+                        command: command,
+                        transaction: transaction,
+                        traductions: traductions,
+                      ),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
             ),
-            bottomNavigationBar: Padding(
+          /*  bottomNavigationBar: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: TransactionFormBtnConfirm(
                 command: command,
                 transaction: transaction,
                 traductions: traductions,
               ),
-            ),
+            ),*/
           );
         } else {
           return const Scaffold(

@@ -75,6 +75,7 @@ class TransactionRtpPageActions extends StatelessWidget {
               child: BlocListener<ContactBloc, ContactState>(
                 listenWhen: (previous, current) => previous.contacts != current.contacts,
                 listener: (context, state) {
+                  //logger.i("contact state : $state");
                   if (state.contacts!.isNotEmpty) {
                     bloc.add(TransactionRtpAcceptPayEvent(tx, TransactionSendMethod.rtpAcceptPay));
                   } else {
@@ -84,19 +85,12 @@ class TransactionRtpPageActions extends StatelessWidget {
                 child: Builder(builder: (context) {
                   final state = context.watch<ContactBloc>().state;
                   return ElevatedButton(
-                    onPressed: () async {
-                      final contactBloc = context.read<ContactBloc>();
-
-                      // Charger les contacts si nécessaire
-                      if (contactBloc.state.contactsAll?.isEmpty ?? true) {
-                        contactBloc.add(const ContactListEvent(null));
-                        // Attendre que les contacts soient chargés
-                        await Future.delayed(const Duration(milliseconds: 500));
-                      }
-
-                      // Puis effectuer la recherche
+                    onPressed: () {
                       final aliasNormalise = normalizeAlias(tx.clientAlias!);
-                      contactBloc.add(ContactSearchEvent(aliasNormalise));
+                      //logger.i("tx:: ${tx.toJson()}");
+                      //logger.i("tx.clientAlias ${tx.clientAlias}");
+                      //logger.i("aliasNormalise $aliasNormalise");
+                      context.read<ContactBloc>().add(ContactSearchEvent(aliasNormalise));
                     },
                     child: Text(traductions.btnTextPay),
                   );
@@ -153,6 +147,7 @@ String normalizeAlias(String input) {
   final patternSHID = RegExp(
     r'^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$',
   );
+  logger.i("patternSHID.hasMatch(raw) ${patternSHID.hasMatch(raw)}");
   if (patternSHID.hasMatch(raw)) {
     return raw;
   }
@@ -162,8 +157,16 @@ String normalizeAlias(String input) {
 
   // Sénégal (local ou international)
   final regexSn = RegExp(r'^(\+221)?(77|76|70|78|75|71)\d{7}$');
+  logger.i("regexSn.hasMatch(normalized) ${regexSn.hasMatch(normalized)}");
   if (regexSn.hasMatch(normalized)) {
     return normalized.replaceFirst(RegExp(r'^\+221'), '');
+  }
+
+  // Côte d’Ivoire(local ou international)
+  final regexCI = RegExp(r'^(\+225)?(01|05|07|27)\d{8}$');
+  logger.i("regexCI.hasMatch(normalized) ${regexCI.hasMatch(normalized)}");
+  if (regexCI.hasMatch(normalized)) {
+    return normalized.replaceFirst(RegExp(r'^\+225'), '');
   }
 
   // Autres pays

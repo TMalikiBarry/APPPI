@@ -234,8 +234,8 @@ class NotificationPageListeItem extends StatelessWidget {
             : 0.0,
         clientNom: notification.details?["clientName"] ?? "",
         clientPays: notification.details?["clientCountry"] ?? "Pays inconnu",
-        endToEndId: notification.details?["guID"] ?? "",
-        guID: notification.idObject,
+        guID: notification.details?["guID"] ?? "",
+        endToEndId: notification.idObject ?? "",
         annulationDate: _parseImpactDate(notification.details?['impactDate']),
         dateOperation: _parseImpactDate(notification.details!['impactDate']),
         annulationRaison: TransactionCancelReasonX.fromCode(

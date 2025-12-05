@@ -489,7 +489,7 @@ class AppNotifications {
     String deviceId = await _getDeviceId();
 
     if (kDebugMode) {
-      print("Device ID récupéré : $deviceId");
+     //print"Device ID récupéré : $deviceId");
     }
 
     try {
@@ -522,7 +522,7 @@ class AppNotifications {
     if (await areNotificationsEnabled()) {
       FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
         if (kDebugMode) {
-          print("Nouveau FCM Token : $newToken");
+         //print"Nouveau FCM Token : $newToken");
         }
 
         try {

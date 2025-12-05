@@ -43,7 +43,7 @@ class AliasOutputRemote {
       logger.i("Exception : ApiException ${e.error}");
       if (e.error == ApiError.notFound) {
         logger.i("🔁 Throwing AliasRetrieveException with notFound");
-        print("🔁 Throwing AliasRetrieveException with notFound");
+       //print"🔁 Throwing AliasRetrieveException with notFound");
         throw AliasRetrieveException(error: ApiError.notFound);
       } else {
         logger.i("🔁 Throwing AliasRetrieveException with ${e.error}");

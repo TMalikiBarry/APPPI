@@ -123,7 +123,7 @@ class AliasPage extends StatelessWidget {
         appBar: AppBar(
           leading: BackButton(
             onPressed: () {
-              print("aliasState $aliasState");
+             //print"aliasState $aliasState");
               if (aliasState is AliasMBNOCreationState) {
                 print("aliasBloc.add(FetchAliasEvent(compte))");
                 aliasBloc.add(FetchAliasEvent(compte));

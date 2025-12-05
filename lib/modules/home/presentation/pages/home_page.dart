@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("Into home page");   //
+   //print"Into home page");   //
     AppLocalizations traductions = AppLocalizations.of(context)!;
 
     return BlocBuilder<LoginBloc, LoginState>(
